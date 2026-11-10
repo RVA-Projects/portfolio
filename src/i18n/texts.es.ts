@@ -29,6 +29,25 @@ export const es = {
     madeBy: 'Hecho por',
     older: 'Portfolio anterior',
   },
+  /** Filtro del carrusel (RF-07). */
+  filter: {
+    all: 'Todas',
+    label: 'Filtrar proyectos por tecnología',
+    count: (n: number) => (n === 1 ? '1 proyecto' : `${n} proyectos`),
+    a11yCount: (n: number) => (n === 1 ? '1 resultado' : `${n} resultados`),
+  },
+  projectOverlay: {
+    open: 'Abrir proyecto',
+    prev: 'Proyecto anterior',
+    next: 'Proyecto siguiente',
+    gallery: 'Galería del proyecto',
+  },
+  categories: {
+    web: 'Web',
+    desktop: 'Escritorio',
+    android: 'Android',
+    collab: 'Colaboración',
+  },
 }
 
 export type Texts = typeof es

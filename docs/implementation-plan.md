@@ -48,12 +48,12 @@ Estados: `pendiente · en curso · hecha · bloqueada`
 - F5.5 `OverlayBase (Modal)` con focus-trap + scroll-lock ✅
 - CA pendiente: revisión del propietario en móvil (375–414px) ANTES de afrontar todas las secciones. | i18n LanguageProvider ya conectado (D12: localStorage > navigator > es).
 
-## Fase 6 — Componentes y funcionalidades — pendiente
+## Fase 6 — Componentes y funcionalidades — en curso
 
 Orden por dependencia (cada bloque tiene su CA propia en `testing.md`):
 
-1. F6.1 Datos: tecnologías + proyectos (tipos es/en) → da soporte al resto
-2. F6.2 ProjectCard + TechnologyFilter + ProjectCarousel (filtro + contador + swipe + teclado)
+1. F6.1 Datos: tecnologías 3 niveles + catálogo de 8 proyectos (es/en, ids estables, `year` opcional) ✅
+2. F6.2 ProjectCard (botón a toda tarjeta + fallback de imagen) + TechnologyFilter (aria-pressed) + ProjectCarousel (scroll-snap nativo, prev/next, teclado ←/→, indicador 1/N aria-live) + `utils/filter.ts` (puro/testeado) + `hooks/useCarousel.ts` ✅
 3. F6.3 ProjectOverlay + MediaGallery (galería: miniaturas, vídeo, YouTube lazy, indicador)
 4. F6.4 Navegación entre proyectos (prev/next, swipe, teclado, conservando idioma y overlay)
 5. F6.5 ExperienceSection (4 tipos, componentes por datos)

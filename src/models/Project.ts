@@ -27,7 +27,8 @@ export interface EducationalTextItem {
 export interface Project extends BaseEntity {
   /** Coincide con la carpeta de media y con el fichero de datos. */
   slug: string
-  year: number
+  /** Año de realización si se conoce; ausente si no hay dato verificado. */
+  year?: number
   name: LocalizedText
   /** Texto breve de la tarjeta. */
   summary: LocalizedText

@@ -30,4 +30,23 @@ export const en: Texts = {
     madeBy: 'Made by',
     older: 'Older portfolio',
   },
+  /** RF-07 project filter. */
+  filter: {
+    all: 'All',
+    label: 'Filter projects by technology',
+    count: (n: number) => (n === 1 ? '1 project' : `${n} projects`),
+    a11yCount: (n: number) => (n === 1 ? '1 result' : `${n} results`),
+  },
+  projectOverlay: {
+    open: 'Open project',
+    prev: 'Previous project',
+    next: 'Next project',
+    gallery: 'Project gallery',
+  },
+  categories: {
+    web: 'Web',
+    desktop: 'Desktop',
+    android: 'Android',
+    collab: 'Collab',
+  },
 }

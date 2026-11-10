@@ -89,3 +89,16 @@ button {
     transition-duration: 0.01ms !important;
   }
 }
+
+/* Visually-hidden: legible por lectores de pantalla, invisible en pantalla */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}

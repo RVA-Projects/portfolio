@@ -67,7 +67,8 @@ export interface ProjectLink {
 
 export interface Project extends BaseEntity {
   slug: string // coincide con carpeta de media y con el fichero de datos
-  year: number
+  /** Año de realización si se conoce; ausente si no hay dato verificado. */
+  year?: number
   name: LocalizedText
   summary: LocalizedText // texto de tarjeta
   category: CategoryId
