@@ -1,4 +1,7 @@
-import { useEffect, type ReactNode } from 'react'
+import { useEffect, useRef, type ReactNode } from 'react'
+import { useBodyScrollLock } from '../../hooks/useBodyScrollLock'
+import { useFocusTrap } from '../../hooks/useFocusTrap'
+import styles from './Modal.module.css'
 
 interface ModalProps {
   open: boolean
@@ -11,35 +14,43 @@ interface ModalProps {
 /**
  * OverlayBase: primitiva de TODOS los overlays (ProjectOverlay, DocumentViewerOverlay).
  * Comporta: aria-modal, cierre con Escape, clic en backdrop, bloqueo del scroll
- * del body y restauración del foco al trigger al cerrar.
- *
- * TODO(F5.5): focus-trap completo (useFocusTrap), gestión de scroll-lock robusto
- * (varios overlays), inicio del foco dentro del panel.
+ * del body (useBodyScrollLock) y focus-trap + restauración del foco al cerrar
+ * (useFocusTrap).
  */
 export function Modal({ open, onClose, labelledById, children }: ModalProps) {
+  const panelRef = useRef<HTMLDivElement>(null)
+
   useEffect(() => {
     if (!open) return
     const onKey = (e: KeyboardEvent) => {
       if (e.key === 'Escape') onClose()
     }
     document.addEventListener('keydown', onKey)
-    document.body.style.overflow = 'hidden'
     return () => {
       document.removeEventListener('keydown', onKey)
-      document.body.style.overflow = ''
     }
   }, [open, onClose])
+
+  useBodyScrollLock(open)
+  useFocusTrap(panelRef, open)
 
   if (!open) return null
 
   return (
     <div
-      className="modal__backdrop"
+      className={styles.backdrop}
       onClick={(e) => {
         if (e.target === e.currentTarget) onClose()
       }}
     >
-      <div role="dialog" aria-modal="true" aria-labelledby={labelledById} className="modal__panel">
+      <div
+        ref={panelRef}
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby={labelledById}
+        className={styles.panel}
+        tabIndex={-1}
+      >
         {children}
       </div>
     </div>

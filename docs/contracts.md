@@ -159,21 +159,21 @@ export interface ContactLink extends BaseEntity {
 
 Todos los componentes reciben datos por props; ninguno importa entidades concretas de `data/` (la inyección es del árbol de secciones).
 
-| Componente              | Props (esencia)                                                                                 |
-| ----------------------- | ----------------------------------------------------------------------------------------------- |
-| `SectionHeading`        | `title: LocalizedText; subtitle?: LocalizedText`                                                |
-| `Tag`                   | `label: string; variant?: 'tech' \| 'category' \| 'accent'; onClick?`                           |
-| `Button`                | `label; variant; onClick; icon?; ariaLabel?; disabled?`                                         |
-| `ProjectCard`           | `project; onSelect(projectId)`                                                                  |
-| `TechnologyFilter`      | `technologies; activeId: TechnologyFilterValue; onChange(id: TechnologyFilterValue)`            |
-| `ProjectCarousel`       | `projects; onSelect(projectId)` — interno: keyboard/táctil/botones en hook `useCarousel`        |
-| `ProjectOverlay`        | `project; onClose(); onPrev?(); onNext?(); hasPrev; hasNext; language`                          |
-| `MediaGallery`          | `items; onItemClick(item);` interna: índice activo, teclado, indicadores                        |
-| `EducationCard`         | `education; onOpenDocument(documentRef)`                                                        |
-| `ExperienceCard`        | `experience` (agrupa por `kind` en la sección)                                                  |
-| `LanguageCard`          | `profile: LanguageProfile; onOpenDocument(documentRef)`                                         |
-| `DocumentViewerOverlay` | `document: DocumentRef; title: LocalizedText; onClose()` — embebido inline, NO nueva pestaña    |
-| `Modal` (OverlayBase)   | `open; onClose(); labelledBy; children` — encapsula focus-trap, Escape, clic-fuera, scroll-lock |
+| Componente              | Props (esencia)                                                                                                    |
+| ----------------------- | ------------------------------------------------------------------------------------------------------------------ |
+| `SectionHeading`        | `kicker: string; title: string; subtitle?: string` — textos ya traducidos por la sección (i18n resuelve a strings) |
+| `Tag`                   | `label: string; variant?: 'tech' \| 'category' \| 'accent'; onClick?`                                              |
+| `Button`                | `label: string; onClick?; href?; external?: boolean; variant; icon?; ariaLabel?; disabled?` (`href` ⇒ `<a>`)       |
+| `ProjectCard`           | `project; onSelect(projectId)`                                                                                     |
+| `TechnologyFilter`      | `technologies; activeId: TechnologyFilterValue; onChange(id: TechnologyFilterValue)`                               |
+| `ProjectCarousel`       | `projects; onSelect(projectId)` — interno: keyboard/táctil/botones en hook `useCarousel`                           |
+| `ProjectOverlay`        | `project; onClose(); onPrev?(); onNext?(); hasPrev; hasNext; language`                                             |
+| `MediaGallery`          | `items; onItemClick(item);` interna: índice activo, teclado, indicadores                                           |
+| `EducationCard`         | `education; onOpenDocument(documentRef)`                                                                           |
+| `ExperienceCard`        | `experience` (agrupa por `kind` en la sección)                                                                     |
+| `LanguageCard`          | `profile: LanguageProfile; onOpenDocument(documentRef)`                                                            |
+| `DocumentViewerOverlay` | `document: DocumentRef; title: LocalizedText; onClose()` — embebido inline, NO nueva pestaña                       |
+| `Modal` (OverlayBase)   | `open; onClose(); labelledBy; children` — encapsula focus-trap, Escape, clic-fuera, scroll-lock                    |
 
 `TechnologyFilterValue = string | null` (`null` = All).
 

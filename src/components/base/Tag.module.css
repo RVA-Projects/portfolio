@@ -1,0 +1,25 @@
+.tag {
+  display: inline-flex;
+  align-items: center;
+  padding: var(--space-1) var(--space-3);
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-sm);
+  font-family: var(--font-mono);
+  font-size: var(--fs-small);
+  line-height: 1.4;
+  color: var(--color-text-muted);
+  white-space: nowrap;
+}
+
+.tag--category {
+  color: var(--color-text);
+  border-color: var(--color-line-strong);
+  font-weight: 500;
+}
+
+/* Estado activo (filtro) o resaltado selectivo */
+.tag--accent {
+  color: #fff;
+  background: var(--color-accent);
+  border-color: var(--color-accent);
+}

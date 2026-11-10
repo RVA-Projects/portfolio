@@ -1,3 +1,5 @@
+import styles from './SectionHeading.module.css'
+
 interface SectionHeadingProps {
   /** Rótulo pequeño (número de sección o etiqueta tipo "Section 01"). */
   kicker: string
@@ -11,10 +13,10 @@ interface SectionHeadingProps {
  */
 export function SectionHeading({ kicker, title, subtitle }: SectionHeadingProps) {
   return (
-    <header className="section-heading">
-      <p className="section-heading__kicker">{kicker}</p>
-      <h2 className="section-heading__title">{title}</h2>
-      {subtitle !== undefined && <p className="section-heading__subtitle">{subtitle}</p>}
+    <header className={styles.heading}>
+      <p className={styles.kicker}>{kicker}</p>
+      <h2 className={styles.title}>{title}</h2>
+      {subtitle !== undefined && <p className={styles.subtitle}>{subtitle}</p>}
     </header>
   )
 }

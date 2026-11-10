@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react'
+import styles from './IconButton.module.css'
 
 interface IconButtonProps {
   ariaLabel: string
@@ -12,7 +13,7 @@ export function IconButton({ ariaLabel, onClick, icon, disabled }: IconButtonPro
   return (
     <button
       type="button"
-      className="icon-btn"
+      className={styles.iconBtn}
       aria-label={ariaLabel}
       onClick={onClick}
       disabled={disabled}

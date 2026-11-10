@@ -1,13 +1,12 @@
 # memory.md — RVA Portfolio
 
 > Memoria operativa del agente. Actualizar tras cada cambio relevante.
-> Última actualización: 2026-11-10 (Fases 0–4 hechas; Fase 5 pendiente).
+> Última actualización: 2026-11-10 (Fase 5 casi completa — revisión móvil del propietario pendiente).
 
 ## Estado actual
 
-- **Fases:** 0 ✅ · 1 ✅ · 2 ✅ · 3 ✅ · 4 ✅ (F4.4 deploy parcial: falta remoto) — **Fase 5 (sistema visual) es la siguiente**.
-- **Git:** inicializado, commit `e31ab2b` (55 ficheros). Rama `master`.
-- **Harness:** `npm run validate` en VERDE (typecheck + lint + format:check + test + build).
+- **Fases:** 0 ✅ · 1 ✅ · 2 ✅ · 3 ✅ · 4 ✅ (F4.4 deploy parcial: falta remoto) · **5 🔶 (F5.1–F5.5 hechas, falta tu revisión en móvil)**.
+- **Harness:** `npm run validate` en VERDE (7 tests pasando).
 - **Build:** JS 69.39KB gzip / CSS 0.32KB; base `/portfolio/` verificado en `dist/index.html`.
 
 ## Decisiones cerradas con el propietario (2026-11-10)
@@ -46,9 +45,11 @@ Ver detalle en `docs/decisions.md` (D01–D12). Resumen:
 
 ## Últimos cambios
 
+- 2026-11-10 (tarde 2): **Fase 5 (5.1–5.5)** — fuentes + tokens definitivos, componentes base con CSS Modules, TopBar+NavigationMenu funcionales (anclas/Escape/clic-fuera/auto-ocultación/scroll-spy), Introduction con contenido real (3 niveles de tecnología, copiar-email), Footer, Modal con focus-trap, LanguageProvider (D12). Tests 7/7. Build JS 74KB gzip.
 - 2026-11-10 (tarde): **Fases 3–4** — modelos TS, esqueletos, Git init (`e31ab2b`), Vite+TS strict+ESLint+Prettier+Vitest, workflow deploy, README. `validate` verde (JS 69KB gzip). D03/D04 actualizadas (PDFs locales + visor tolerante; alemán "Starter"). Fase 5 pendiente.
 - 2026-11-10 (mañana): Fases 0–2 — docs de especificación/arquitectura/decisiones + AGENTS.md.
 
 ## Próxima tarea recomendada
 
-- **Fase 5 — Sistema visual** (F5.1→F5.5 por el plan): fuentes + tokens definitivos, base components (Button/Tag/SectionHeading), TopBar+NavigationMenu, Introduction, OverlayBase con focus-trap — **con revisión en móvil antes de continuar**. Después Fase 6 (datos + carrusel + overlays + i18n).
+1. **Revisión del propietario en móvil** de lo hecho (CA de Fase 5): `npm run dev` y comprobar en un móvil real o devtools 375px: menú, contacto, tecnologías, sin overflow horizontal.
+2. Después **Fase 6** en orden del plan: datos de proyectos (F6.1) → tarjetas/filtro/carrusel (F6.2) → overlay+galería (F6.3–6.4) → resto de secciones + DocumentViewerOverlay + Canvas.

@@ -39,14 +39,14 @@ Estados: `pendiente · en curso · hecha · bloqueada`
 - F4.4 Workflow `deploy.yml` — creado 🔶 | CA: branch de test despliega y la app es visible con assets correctos → bloqueado hasta conectar el remoto (propietario)
 - F4.5 README mínimo de operación ✅
 
-## Fase 5 — Sistema visual — pendiente (depende F4, parcialmente F3)
+## Fase 5 — Sistema visual 🔶 en curso (5.1–5.5 hechas; está en revisión del propietario)
 
-- F5.1 tokens.css + base.css + fuentes cargadas
-- F5.2 `base/`: Button, Tag, IconButton, SectionHeading
-- F5.3 `layout/`: TopBar + NavigationMenu (con a11y: aria-expanded, foco, Escape, clic-fuera)
-- F5.4 `sections/Introduction` + microinteracciones de entrada
-- F5.5 `OverlayBase (Modal)` con focus-trap + scroll-lock
-- CA: revisión del propietario en móvil (375–414px) ANTES de afrontar todas las secciones; sin desbordes; targets 44px.
+- F5.1 tokens.css + base.css + fuentes cargadas ✅ (Space Grotesk / Inter / JetBrains Mono, latin+latin-ext, display=swap)
+- F5.2 `base/`: Button (+href), Tag, IconButton, SectionHeading, Modal (OverlayBase con focus-trap + scroll-lock + Escape) ✅
+- F5.3 `layout/`: TopBar + NavigationMenu ✅ (anclas, indicador activo via useScrollSpy, cierre por Escape/clic-fuera/selección, auto-ocultación al scroll con useMenuVisibility)
+- F5.4 `sections/Introduction` ✅ (nombre, rol estático, ubicación, descripción, contacto rápido con copiar email aria-live, tecnologías 3 niveles; aparición progresiva; solo falta foto/CV F7) + Footer con "Older Portfolio" ✅
+- F5.5 `OverlayBase (Modal)` con focus-trap + scroll-lock ✅
+- CA pendiente: revisión del propietario en móvil (375–414px) ANTES de afrontar todas las secciones. | i18n LanguageProvider ya conectado (D12: localStorage > navigator > es).
 
 ## Fase 6 — Componentes y funcionalidades — pendiente
 
@@ -87,11 +87,11 @@ Orden por dependencia (cada bloque tiene su CA propia en `testing.md`):
 
 ## Riesgos abiertos
 
-| Riesgo                                                               | Mitigación                                                                              |
-| -------------------------------------------------------------------- | --------------------------------------------------------------------------------------- |
-| Configuración del repo remoto (rama Pages, Actions)                  | Confirmar al conectar el remoto (F4.1). Probar deploy en rama antes de fusionar         |
-| Drive PDFs bloqueados en algunos navegadores si no se copian locales | D03 recomienda copia local; visor soporta ambos                                         |
-| Contenido pesado (imágenes grandes heredadas del site anterior)      | Presupuestos de `testing.md` + conversión/comprimación en F7                            |
-| Dependencia del propietario para PDFs/fotos/EN-ES definitivos        | Fase 7 marcada como bloqueada hasta entrega                                             |
-| Localización del viejo portfolio en `/portfolio/old/`                | Copiar ficheros del repo actual a `public/old/` en F4 antes del primer deploy del nuevo |
+| Riesgo                                                               | Mitigación                                                                                                |
+| -------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------- |
+| Configuración del repo remoto (rama Pages, Actions)                  | Confirmar al conectar el remoto (F4.1). Probar deploy en rama antes de fusionar                           |
+| Drive PDFs bloqueados en algunos navegadores si no se copian locales | D03 recomienda copia local; visor soporta ambos                                                           |
+| Contenido pesado (imágenes grandes heredadas del site anterior)      | Presupuestos de `testing.md` + conversión/comprimación en F7                                              |
+| Dependencia del propietario para PDFs/fotos/EN-ES definitivos        | Fase 7 marcada como bloqueada hasta entrega                                                               |
+| Localización del viejo portfolio en `/portfolio/old/`                | Copiar ficheros del repo actual a `public/old/` en F4 antes del primer deploy del nuevo                   |
 | Deploy sin remoto conectado                                          | F4.4 bloqueada: al recibir la info del repo (propietario), probar deploy en rama antes de fusionar a main |
