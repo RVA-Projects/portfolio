@@ -1,17 +1,17 @@
 # memory.md — RVA Portfolio
 
 > Memoria operativa del agente. Actualizar tras cada cambio relevante.
-> Última actualización: 2026-11-10 (F6.1–F6.5 completas — proyectos, experiencia).
+> Última actualización: 2026-11-10 (F6-ajustes: experiencia sin freelance + fechas, Snake, TechIcon, flechas flotantes).
 
 ## Estado actual
 
-- **Fases:** 0 ✅ · 1 ✅ · 2 ✅ · 3 ✅ · 4 ✅ (deploy pendiente de remoto) · 5 ✅ (revisión móvil aplazada a post-despliegue, decisión del propietario) · **6 🔶 (F6.1–F6.5 hechas; sigue F6.6 EducationSection + DocumentViewerOverlay)**.
-- **Harness:** `npm run validate` en VERDE (40 tests pasando; 1 warning aceptable react-refresh en `src/i18n/index.tsx`).
-- **Build:** JS 280.76KB (87.48KB gzip) / CSS 17.63KB; base `/portfolio/` verificada.
+- **Fases:** 0 ✅ · 1 ✅ · 2 ✅ · 3 ✅ · 4 ✅ (deploy pendiente de remoto) · 5 ✅ (revisión móvil aplazada a post-despliegue, decisión del propietario) · **6 🔶 (F6.1–F6.5 + ronda de ajustes hechas; sigue F6.6 EducationSection + DocumentViewerOverlay)**.
+- **Harness:** `npm run validate` en VERDE (53 tests pasando; 1 warning aceptable react-refresh en `src/i18n/index.tsx`).
+- **Build:** JS 332.47KB (105.93KB gzip) / CSS 18.60KB; base `/portfolio/` verificada; cero dependencias de runtime (iconos como assets).
 
 ## Decisiones cerradas con el propietario (2026-11-10)
 
-Ver detalle en `docs/decisions.md` (D01–D12). Resumen:
+Ver detalle en `docs/decisions.md` (D01–D15). Resumen:
 
 - El nuevo portfolio ocupa el repo del viejo (base `/portfolio/`); el viejo queda en `public/old/` como "Older Portfolio".
 - Contacto solo por email (sin formulario EmailJS).
@@ -28,8 +28,14 @@ Ver detalle en `docs/decisions.md` (D01–D12). Resumen:
 - **Fase 3:** modelos TS completos (`src/models/`) + esqueletos tipados de todos los componentes.
 - **Fase 4:** Git + Vite 7 + TS strict + ESLint 9/Prettier + Vitest/jsdom + testing-library; scripts `validate`, workflow `deploy.yml`, README; estilos tokens/base.
 - **Fase 5:** fuentes + tokens, base (Button/Tag/IconButton/SectionHeading/Modal focus-trap), TopBar+NavigationMenu, Introduction, Footer, LanguageProvider (D12).
-- **Fase 6 (F6.1–F6.5):** datos de 8 proyectos reales es/en (`src/data/projects/`), catálogo tecnologías 3 niveles; `utils/filter.ts` + `hooks/useCarousel.ts`; TechnologyFilter/ProjectCard/ProjectCarousel/ProjectsSection; **ProjectOverlay** (Modal base + variante `flush`, layout 50/50 desktop, móvil apilado) + **MediaGallery** (miniaturas, prev/next, indicador 1/N aria-live, teclado ←/→ con stopPropagation, YouTube lazy con facade ▶, fallback de media ausente) + navegación prev/next entre proyectos respeta el filtro activo; `utils/media.ts`; **ExperienceSection** con datos del inventario en `src/data/experience.ts` (8 entradas: freelance ×5 incl. 2 de Upwork, collab dawdam, independientes TaskManager/GB-Utility) + ExperienceCard agrupada por kind (grupo _professional_ vacío no se renderiza) + i18n `experience`; `Experience.period` opcional (inventario sin fechas; igual justificación que `Project.year`). Tests 40/40.
+- **Fase 6 (F6.1–F6.5):** datos de 8 proyectos reales es/en (`src/data/projects/`), catálogo tecnologías 3 niveles; `utils/filter.ts` + `hooks/useCarousel.ts`; TechnologyFilter/ProjectCard/ProjectCarousel/ProjectsSection; **ProjectOverlay** (Modal base + variante `flush`, layout 50/50 desktop, móvil apilado) + **MediaGallery** (miniaturas, prev/next, indicador 1/N aria-live, teclado ←/→ con stopPropagation, YouTube lazy con facade ▶, fallback de media ausente) + navegación prev/next entre proyectos respeta el filtro activo; `utils/media.ts`; ExperienceSection con datos del inventario + ExperienceCard agrupada por kind + i18n `experience`.
   - `year` ahora opcional en `Project` (no se inventan fechas; sync con contracts.md).
+- **F6-ajustes (ronda del 2026-11-10, ADRs D13–D15):**
+  - **Experiencia reclasificada (D13):** `ExperienceKind` sin `freelance`; 13 entradas en `src/data/experience.ts` (professional ×7 —incluye redes sociales Meta Business Suite y agente IA Echo KB + Gemini API como entradas propias—, independent ×5, collab ×1); fechas reales (`period` acepta `YYYY`|`YYYY-MM`); 2 entradas Upwork con el perfil real enlazado y etiqueta "Perfil de Upwork". Group order: professional → independent → collab.
+  - **Snake:** proyecto nuevo `ai-assisted` (categoría "Con IA"/"AI-assisted"), 9 fichas con años reales; MiniCRM con Room; demo `https://rva-projects.github.io/snake/` + repo real. ⚠ Media `snake-cover.png` declarada pero fichero PENDIENTE.
+  - **TechIcon (D14):** componente `src/components/base/TechIcon.tsx` con devicon SVG como assets locales (`src/components/base/icons/*.svg` via `import.meta.glob`) + PNGs propios python/unity/xampp en `public/assets/img/icons/`; grid icono+nombre en los 3 niveles de Introduction (deriva del catálogo). `tests/technologies.test.ts` garantiza que toda tecnología tiene icono. Catálogo: core + Python/C#/Java; añadidos room, github.
+  - **Flechas flotantes (D15):** prev/next del overlay fuera del panel (slot `aside` nuevo en Modal, focus-trap sobre todo el backdrop; IconButton acepta `className`); ocultas <768px; ←/→ a nivel documento. Cerrar único botón del header.
+  - **Chore:** `@types/node` dev-dep (tests con node:fs); `vite/client` en tsconfig types; `oldPortfolio/` fuera de ESLint/Vitest/gitignore; HTML/CSS del catálogo mapeados (`html.svg`/`css.svg` desde html5/css3 de devicon).
 
 ## Pendientes del propietario (para Fase 7 y despliegue)
 
@@ -45,8 +51,11 @@ Ver detalle en `docs/decisions.md` (D01–D12). Resumen:
 - El contenido EN del site anterior tiene erratas ("develpment"); se reescribe desde cero, no se copia.
 - jsdom no implemente `Element.scrollTo`: stub no-op añadido a `src/test/setup.ts`.
 - Los ficheros de media de proyectos (`public/media/projects/<slug>/`) aún no existen (F7): ProjectCard muestra fallback controlado sin crash.
+- **`snake-cover.png` pendiente:** la media está declarada en `snake.ts` pero el fichero no existe aún; la generación por IA quedó bloqueada por cuota (reintento ~10 h). Alternativas: captura real del propietario en `https://rva-projects.github.io/snake/` (preferible, es media real) o reintentar generación. Al añadir el fichero, extender `tests/projects.test.ts` con `existsSync` para media local.
 
 ## Últimos cambios
+
+- 2026-11-10 (noche 4): **F6-ajustes (commits `35b235e`, `a1f9734`)** — experiencia sin freelance (D13) con fechas reales y Upwork real; Snake como proyecto `ai-assisted` (9 fichas); TechIcon con devicon local + PNGs propios (D14) y grid icono+nombre en Introduction; flechas del overlay flotantes fuera del panel con Modal `aside` (D15). Tests 40→53, build 105.93KB gzip. Pendiente: snake-cover.png.
 
 - 2026-11-10 (noche 3): **Fase 6 (F6.5)** — datos de experiencia del inventario (8 entradas re-clasificadas, sin fechas sin verificar: `period` opcional en modelo+contratos), ExperienceCard + ExperienceSection con agrupación por tipo, claves i18n `experience`, integrada en App tras Proyectos. Inputs del propietario marcados en F7 (fechas; ¿experiencia empleada?). Tests 40/40, build 87.48KB gzip.
 - 2026-11-10 (noche 2): **Fase 6 (F6.3–F6.4)** — ProjectOverlay completo sobre Modal base (nueva prop `flush`), MediaGallery con YouTube lazy y fallbacks sin crash, navegación prev/next entre proyectos respetando filtro, teclado por niveles (galería stopPropagation; overlay ←/→), claves i18n nuevas + separación semántica de botones carrusel vs overlay. contracts.md sincronizado (ProjectOverlay/MediaGallery/Modal). Tests 30/30, build 85.32KB gzip.
@@ -57,5 +66,6 @@ Ver detalle en `docs/decisions.md` (D01–D12). Resumen:
 
 ## Próxima tarea recomendada
 
+0. **snake-cover.png:** al tener la imagen (captura del propietario o reintentar IA), añadirla a `public/media/projects/snake/` y extender `tests/projects.test.ts` con `existsSync` para media local declarada.
 1. **F6.6:** EducationSection + DocumentViewerOverlay (PDF embebido inline, tolerante a fichero ausente — D03) + categorías. Requiere revisar `src/data/education.ts` (pendiente de crear desde inventario §4) y `DocumentRef`.
 2. Después F6.7 Languages → F6.8 Contact → F6.10 Canvas. La revisión móvil se hace post-despliegue.

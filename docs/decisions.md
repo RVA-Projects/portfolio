@@ -65,3 +65,18 @@ Registro de decisiones (ADR ligero). Pueden añadirse con cualquier estado: `pro
 ## D12 — Idioma por defecto español con detección de navegador — ✅ Aprobada (2026-11-10)
 
 - **Decisión:** primera visita: `navigator.language` si `es|en`; fallback `es`. Elección manual persiste en `localStorage`. Cambio inmediato sin recargar, conservando scroll y overlays.
+
+## D13 — Reclasificación de la experiencia: fin de `freelance` — ✅ Aprobada (2026-11-10)
+
+- **Decisión:** el tipo `ExperienceKind` pierde `freelance`; todo el trabajo remunerado pasa a `professional` (7 entradas: web cmV 2025, redes sociales 2025, agente IA 2026, firma digital 2026, Loki Home 2025, Smarti DATA y comandos de voz vía Upwork sin fecha). Group order: professional → independent → collab.
+- **Motivo:** decisión del propietario: "profesional" ya incluye el trabajo freelance remunerado; un grupo freelance separado fragmentaba sin aportar. El perfil real de Upwork se enlaza en las dos entradas de Upwork con etiqueta dedicada ("Perfil de Upwork").
+
+## D14 — Iconos de tecnología híbridos (SVG devicon local + PNG propios) — ✅ Aprobada (2026-11-10)
+
+- **Decisión:** componente `TechIcon` en `src/components/base/`: SVG originales de devicon descargados como assets locales (`src/components/base/icons/*.svg`, empaquetados por Vite, **sin CDN**) y PNGs propios (`python`, `unity`, `xampp`) en `public/assets/img/icons/` declarados vía `Technology.icon`. Grid uniforme icono+nombre en los 3 niveles de la Introduction (deriva del catálogo, no a mano).
+- **Motivo:** fidelidad visual de marca (paths exactos de devicon en vez de aproximaciones a mano) manteniendo cero dependencias de runtime y sin peticiones externas en producción. `tests/technologies.test.ts` garantiza cobertura: toda tecnología del catálogo tiene icono (PNG o SVG).
+
+## D15 — Flechas de navegación del overlay fuera del panel — ✅ Aprobada (2026-11-10)
+
+- **Decisión:** prev/next del ProjectOverlay flotan (`position: fixed`) en los bordes izquierdo/derecho del viewport, centrados verticalmente, ocultos <768px (swipe + teclado cubren móvil). `Modal` incorpora un slot `aside` renderizado dentro del backdrop y el focus-trap pasa a abarcar todo el backdrop. El manejo de ←/→ sube a listener de documento (la galería mantiene su `stopPropagation`).
+- **Motivo:** los botones en la cabecera competían con el título/cerrar y quedaban lejos de la galería; flotarlos fuera del panel evita el `overflow:hidden`+animación del panel y mantiene el trap. El botón de cerrar queda como único control del header.
