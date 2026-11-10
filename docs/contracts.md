@@ -175,7 +175,7 @@ Todos los componentes reciben datos por props; ninguno importa entidades concret
 | `ExperienceCard`        | `experience` (agrupa por `kind` en la sección)                                                                                                                                     |
 | `LanguageCard`          | `profile: LanguageProfile; onOpenDocument(documentRef)`                                                                                                                            |
 | `DocumentViewerOverlay` | `document: DocumentRef; title: LocalizedText; onClose()` — embebido inline, NO nueva pestaña                                                                                       |
-| `Modal` (OverlayBase)   | `open; onClose(); labelledById; flush?; children` — encapsula focus-trap, Escape, clic-fuera, scroll-lock; `flush` desactiva el scroll del panel (layout 50/50 del ProjectOverlay) |
+| `Modal` (OverlayBase)   | `open; onClose(); labelledById; flush?; aside?; children` — encapsula focus-trap, Escape, clic-fuera, scroll-lock; `flush` desactiva el scroll del panel (layout 50/50 del ProjectOverlay); `aside` renderiza contenido complementario dentro del backdrop (fuera del `overflow` del panel, p. ej. flechas flotantes del ProjectOverlay) y queda cubierto por el focus-trap, que ahora abarca TODO el backdrop |
 
 `TechnologyFilterValue = string | null` (`null` = All).
 

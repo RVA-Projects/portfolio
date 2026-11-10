@@ -6,14 +6,16 @@ interface IconButtonProps {
   onClick: () => void
   icon: ReactNode
   disabled?: boolean
+  /** Clase extra (CSS module) para variantes visuales (p. ej. flechas flotantes). */
+  className?: string
 }
 
 /** Botón puramente icónico: ariaLabel OBLIGATORIO (requisito de a11y del sistema). */
-export function IconButton({ ariaLabel, onClick, icon, disabled }: IconButtonProps) {
+export function IconButton({ ariaLabel, onClick, icon, disabled, className }: IconButtonProps) {
   return (
     <button
       type="button"
-      className={styles.iconBtn}
+      className={className !== undefined ? `${styles.iconBtn} ${className}` : styles.iconBtn}
       aria-label={ariaLabel}
       onClick={onClick}
       disabled={disabled}

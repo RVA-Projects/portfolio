@@ -13,6 +13,13 @@ interface ModalProps {
    * el scroll lo gestionan las columnas hijas (layout 50/50 del ProjectOverlay).
    */
   flush?: boolean
+  /**
+   * Contenido complementario DEL LADO del panel (p. ej. flechas flotantes de
+   * navegación del ProjectOverlay, position:fixed): se renderiza dentro del
+   * backdrop —fuera del `overflow` del panel— y por tanto dentro del
+   * focus-trap (el trap abarca todo el backdrop).
+   */
+  aside?: ReactNode
   children: ReactNode
 }
 
@@ -20,9 +27,11 @@ interface ModalProps {
  * OverlayBase: primitiva de TODOS los overlays (ProjectOverlay, DocumentViewerOverlay).
  * Comporta: aria-modal, cierre con Escape, clic en backdrop, bloqueo del scroll
  * del body (useBodyScrollLock) y focus-trap + restauración del foco al cerrar
- * (useFocusTrap).
+ * (useFocusTrap). El trap usa el BACKDROP completo, así que los nodos `aside`
+ * quedan atrapados sin abandonar el overflow del panel.
  */
-export function Modal({ open, onClose, labelledById, flush = false, children }: ModalProps) {
+export function Modal({ open, onClose, labelledById, flush = false, aside, children }: ModalProps) {
+  const backdropRef = useRef<HTMLDivElement>(null)
   const panelRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -37,12 +46,13 @@ export function Modal({ open, onClose, labelledById, flush = false, children }: 
   }, [open, onClose])
 
   useBodyScrollLock(open)
-  useFocusTrap(panelRef, open)
+  useFocusTrap(backdropRef, open)
 
   if (!open) return null
 
   return (
     <div
+      ref={backdropRef}
       className={styles.backdrop}
       onClick={(e) => {
         if (e.target === e.currentTarget) onClose()
@@ -58,6 +68,7 @@ export function Modal({ open, onClose, labelledById, flush = false, children }: 
       >
         {children}
       </div>
+      {aside}
     </div>
   )
 }

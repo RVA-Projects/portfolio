@@ -34,6 +34,52 @@
   flex: none;
 }
 
+/* ——— Flechas de navegación flotantes (slot `aside` del Modal) ——— */
+.navArrow {
+  position: fixed;
+  top: 50%;
+  transform: translateY(-50%);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  inline-size: 48px;
+  block-size: 48px;
+  border-radius: 50%;
+  border: 1px solid var(--color-line-strong);
+  background: var(--color-surface-2);
+  color: var(--color-text);
+  cursor: pointer;
+  transition:
+    color 150ms ease,
+    border-color 150ms ease,
+    opacity 150ms ease;
+}
+
+.navArrow:hover:not(:disabled) {
+  color: var(--color-accent);
+  border-color: var(--color-accent);
+}
+
+.navArrow:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+
+.navPrev {
+  left: var(--space-5);
+}
+
+.navNext {
+  right: var(--space-5);
+}
+
+/* Móvil (<768px): swipe + teclado cubren la navegación; sin flechas flotantes */
+@media (max-width: 767px) {
+  .navArrow {
+    display: none;
+  }
+}
+
 /* Móvil: flujo único, el panel del overlay hace scroll (variante flush off) */
 .body {
   display: grid;

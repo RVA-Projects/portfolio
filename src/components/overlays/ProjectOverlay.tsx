@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import { technologyNameById } from '../../data/technologies'
 import { useLanguage } from '../../i18n'
 import type { EducationalTextItem, Project } from '../../models/Project'
@@ -49,6 +50,9 @@ interface ProjectOverlayProps {
  * (focus-trap, Escape, clic-fuera, scroll-lock, restauración de foco).
  * Escritorio 50/50 (galería | info con scroll independiente); móvil apilado.
  * La navegación prev/next NO cierra el overlay y respeta el filtro activo.
+ * Las flechas flotan FUERA del panel (slot `aside` del Modal, ocultas <768px:
+ * swipe + teclado cubren móvil) y ←/→ se escuchan a nivel documento — la
+ * galería consume sus flechas con stopPropagation, igual que antes (F6.4).
  */
 export function ProjectOverlay({
   project,
@@ -60,28 +64,58 @@ export function ProjectOverlay({
 }: ProjectOverlayProps) {
   const { language, texts } = useLanguage()
 
+  useEffect(() => {
+    if (project === null) return
+    const onKey = (event: KeyboardEvent) => {
+      /* F6.4 teclado: ←/→ cambian de proyecto salvo que la galería los
+         consuma (ella hace stopPropagation, así que no llegan aquí). */
+      if (event.key === 'ArrowLeft' && hasPrev && onPrev !== undefined) {
+        event.preventDefault()
+        onPrev()
+      }
+      if (event.key === 'ArrowRight' && hasNext && onNext !== undefined) {
+        event.preventDefault()
+        onNext()
+      }
+    }
+    document.addEventListener('keydown', onKey)
+    return () => {
+      document.removeEventListener('keydown', onKey)
+    }
+  }, [project, hasPrev, hasNext, onPrev, onNext])
+
   if (project === null) return null
 
   const prevHandler = hasPrev ? onPrev : undefined
   const nextHandler = hasNext ? onNext : undefined
 
+  const floatingNav =
+    onPrev === undefined && onNext === undefined ? undefined : (
+      <>
+        {onPrev !== undefined && (
+          <IconButton
+            ariaLabel={texts.projectOverlay.prev}
+            onClick={prevHandler ?? (() => {})}
+            disabled={!hasPrev}
+            icon={<IconChevronLeft />}
+            className={hasPrev ? `${styles.navArrow} ${styles.navPrev}` : styles.navArrow}
+          />
+        )}
+        {onNext !== undefined && (
+          <IconButton
+            ariaLabel={texts.projectOverlay.next}
+            onClick={nextHandler ?? (() => {})}
+            disabled={!hasNext}
+            icon={<IconChevronRight />}
+            className={hasNext ? `${styles.navArrow} ${styles.navNext}` : styles.navArrow}
+          />
+        )}
+      </>
+    )
+
   return (
-    <Modal open onClose={onClose} labelledById={TITLE_ID} flush>
-      <div
-        className={styles.inner}
-        onKeyDown={(event) => {
-          /* F6.4 teclado: ←/→ cambian de proyecto salvo que la galería los
-             consuma (ella hace stopPropagation). */
-          if (event.key === 'ArrowLeft' && hasPrev && onPrev !== undefined) {
-            event.preventDefault()
-            onPrev()
-          }
-          if (event.key === 'ArrowRight' && hasNext && onNext !== undefined) {
-            event.preventDefault()
-            onNext()
-          }
-        }}
-      >
+    <Modal open onClose={onClose} labelledById={TITLE_ID} flush aside={floatingNav}>
+      <div className={styles.inner}>
         <header className={styles.header}>
           <div>
             <h2 id={TITLE_ID} className={styles.title}>
@@ -97,22 +131,6 @@ export function ProjectOverlay({
             </p>
           </div>
           <div className={styles.navRow}>
-            {onPrev !== undefined && (
-              <IconButton
-                ariaLabel={texts.projectOverlay.prev}
-                onClick={prevHandler ?? (() => {})}
-                disabled={!hasPrev}
-                icon={<IconChevronLeft />}
-              />
-            )}
-            {onNext !== undefined && (
-              <IconButton
-                ariaLabel={texts.projectOverlay.next}
-                onClick={nextHandler ?? (() => {})}
-                disabled={!hasNext}
-                icon={<IconChevronRight />}
-              />
-            )}
             <IconButton
               ariaLabel={texts.projectOverlay.close}
               onClick={onClose}

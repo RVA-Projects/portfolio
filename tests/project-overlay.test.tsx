@@ -26,9 +26,10 @@ describe('ProjectOverlay (RF-10/RF-12/RF-13/RF-14)', () => {
 
   it('navega entre proyectos con prev/next SIN cerrar y respeta extremos', () => {
     render(<App />)
-    const dialog = openProject('Signature Application')
-    const prev = within(dialog).getByRole('button', { name: 'Proyecto anterior' })
-    const next = within(dialog).getByRole('button', { name: 'Proyecto siguiente' })
+    openProject('Signature Application')
+    // Flechas flotantes FUERA del panel (slot aside del Modal), a nivel pantalla
+    const prev = screen.getByRole('button', { name: 'Proyecto anterior' })
+    const next = screen.getByRole('button', { name: 'Proyecto siguiente' })
     // Primer proyecto del carrusel: prev deshabilitado
     expect(prev).toBeDisabled()
     fireEvent.click(next)
@@ -39,10 +40,10 @@ describe('ProjectOverlay (RF-10/RF-12/RF-13/RF-14)', () => {
 
   it('el último proyecto (snake) tiene next deshabilitado y prev vuelve al anterior', () => {
     render(<App />)
-    const dialog = openProject('Snake')
-    const next = within(dialog).getByRole('button', { name: 'Proyecto siguiente' })
+    openProject('Snake')
+    const next = screen.getByRole('button', { name: 'Proyecto siguiente' })
     expect(next).toBeDisabled()
-    const prev = within(dialog).getByRole('button', { name: 'Proyecto anterior' })
+    const prev = screen.getByRole('button', { name: 'Proyecto anterior' })
     expect(prev).toBeEnabled()
     fireEvent.click(prev)
     expect(screen.getByRole('dialog', { name: 'dawdam.top' })).toBeInTheDocument()
