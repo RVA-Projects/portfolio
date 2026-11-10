@@ -39,6 +39,7 @@ Ver detalle en `docs/decisions.md` (D01–D15). Resumen:
 
 ## Pendientes del propietario (para Fase 7 y despliegue)
 
+0. **Captura de Snake:** screenshot real del juego en `https://rva-projects.github.io/snake/` → `public/media/projects/snake/snake-cover.png` (decisión 2026-11-10; la media ya declarada).
 1. Acceso/URL del repo remoto `RVA-Projects/portfolio` (clonar o conectar en F4.1).
 2. Copiar PDFs (CV + certificados) — preferible a `public/docs/`.
 3. Copiar foto personal a `public/assets/img/`.
@@ -51,7 +52,7 @@ Ver detalle en `docs/decisions.md` (D01–D15). Resumen:
 - El contenido EN del site anterior tiene erratas ("develpment"); se reescribe desde cero, no se copia.
 - jsdom no implemente `Element.scrollTo`: stub no-op añadido a `src/test/setup.ts`.
 - Los ficheros de media de proyectos (`public/media/projects/<slug>/`) aún no existen (F7): ProjectCard muestra fallback controlado sin crash.
-- **`snake-cover.png` pendiente:** la media está declarada en `snake.ts` pero el fichero no existe aún; la generación por IA quedó bloqueada por cuota (reintento ~10 h). Alternativas: captura real del propietario en `https://rva-projects.github.io/snake/` (preferible, es media real) o reintentar generación. Al añadir el fichero, extender `tests/projects.test.ts` con `existsSync` para media local.
+- **`snake-cover.png` pendiente del propietario (decisión 2026-11-10):** captura REAL del juego en `https://rva-projects.github.io/snake/` → `public/media/projects/snake/snake-cover.png` (la media ya está declarada en `snake.ts`; ProjectCard/galería muestran fallback sin crash mientras tanto). Al añadir el fichero, extender `tests/projects.test.ts` con `existsSync` para media local.
 
 ## Últimos cambios
 
@@ -66,6 +67,6 @@ Ver detalle en `docs/decisions.md` (D01–D15). Resumen:
 
 ## Próxima tarea recomendada
 
-0. **snake-cover.png:** al tener la imagen (captura del propietario o reintentar IA), añadirla a `public/media/projects/snake/` y extender `tests/projects.test.ts` con `existsSync` para media local declarada.
+0. **snake-cover.png:** el propietario aporta captura real (pendiente 0 arriba). Al llegar: verificar que el fichero cae en `public/media/projects/snake/snake-cover.png` y extender `tests/projects.test.ts` con `existsSync` para media local declarada.
 1. **F6.6:** EducationSection + DocumentViewerOverlay (PDF embebido inline, tolerante a fichero ausente — D03) + categorías. Requiere revisar `src/data/education.ts` (pendiente de crear desde inventario §4) y `DocumentRef`.
 2. Después F6.7 Languages → F6.8 Contact → F6.10 Canvas. La revisión móvil se hace post-despliegue.
