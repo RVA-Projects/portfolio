@@ -24,20 +24,20 @@ Estados: `pendiente · en curso · hecha · bloqueada`
 - F2.3 `decisions.md` (D01–D12) ✅
 - F2.4 `AGENTS.md` maestro ✅
 
-## Fase 3 — Contratos y esqueletos — pendiente
+## Fase 3 — Contratos y esqueletos ✅ hecha
 
-- F3.1 `src/models/*.ts` (common, Technology, Project, Education, Experience, LanguageProfile, ContactLink)
-- CA: compila con strict; modelos completos para todas las entidades, con `LocalizedText` en los campos de contenido.
-- F3.2 Esqueletos de componentes con props y `TODO` (sin estilos ni lógica real)
-- CA: `typecheck` verde; nada de datos particulares hardcodeados.
+- F3.1 `src/models/*.ts` (common, Technology, Project, Education, Experience, LanguageProfile, ContactLink) ✅
+- CA: compila con strict; modelos completos para todas las entidades, con `LocalizedText` en los campos de contenido. ✅
+- F3.2 Esqueletos de componentes con props y `TODO` (sin estilos ni lógica real) ✅
+- CA: `typecheck` verde; nada de datos particulares hardcodeados. ✅
 
-## Fase 4 — Harness y entorno — pendiente
+## Fase 4 — Harness y entorno ✅ hecha (F4.4 parcial, bloqueada por remoto)
 
-- F4.1 Git init + `.gitignore` + primer commit de scaffold | CA: repo limpio, histórico con commit inicial
-- F4.2 Vite + React + TS strict + ESLint/Prettier + Vitest | CA: `npm run validate` verde
-- F4.3 `vite.config.ts` con `base: '/portfolio/'` + estilos tokens/base | CA: build verde respetando base
-- F4.4 Workflow `deploy.yml` | CA: branch de test despliega y la app es visible con assets correctos
-- F4.5 README mínimo de operación (comandos, cómo desplegar, cómo añadir contenido)
+- F4.1 Git init + `.gitignore` + primer commit de scaffold ✅ | CA: repo limpio, histórico con commit inicial ✅
+- F4.2 Vite + React + TS strict + ESLint/Prettier + Vitest ✅ | CA: `npm run validate` verde ✅
+- F4.3 `vite.config.ts` con `base: '/portfolio/'` + estilos tokens/base ✅ | CA: build verde respetando base ✅ (verificado: assets en `/portfolio/assets/…`)
+- F4.4 Workflow `deploy.yml` — creado 🔶 | CA: branch de test despliega y la app es visible con assets correctos → bloqueado hasta conectar el remoto (propietario)
+- F4.5 README mínimo de operación ✅
 
 ## Fase 5 — Sistema visual — pendiente (depende F4, parcialmente F3)
 
@@ -94,3 +94,4 @@ Orden por dependencia (cada bloque tiene su CA propia en `testing.md`):
 | Contenido pesado (imágenes grandes heredadas del site anterior)      | Presupuestos de `testing.md` + conversión/comprimación en F7                            |
 | Dependencia del propietario para PDFs/fotos/EN-ES definitivos        | Fase 7 marcada como bloqueada hasta entrega                                             |
 | Localización del viejo portfolio en `/portfolio/old/`                | Copiar ficheros del repo actual a `public/old/` en F4 antes del primer deploy del nuevo |
+| Deploy sin remoto conectado                                          | F4.4 bloqueada: al recibir la info del repo (propietario), probar deploy en rama antes de fusionar a main |
