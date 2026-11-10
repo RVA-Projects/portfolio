@@ -56,7 +56,7 @@ Orden por dependencia (cada bloque tiene su CA propia en `testing.md`):
 2. F6.2 ProjectCard (botón a toda tarjeta + fallback de imagen) + TechnologyFilter (aria-pressed) + ProjectCarousel (scroll-snap nativo, prev/next, teclado ←/→, indicador 1/N aria-live) + `utils/filter.ts` (puro/testeado) + `hooks/useCarousel.ts` ✅
 3. F6.3 ProjectOverlay (Modal flush 50/50, foco-trap/Escape/backdrop/scroll-lock) + MediaGallery (miniaturas, prev/next, indicador 1/N, YouTube lazy con facade, fallback de media ausente sin crash) + `utils/media.ts` (extractYouTubeId testeado) ✅
 4. F6.4 Navegación entre proyectos prev/next (botones + teclado ←/→ a nivel overlay; la galería consume sus propias flechas con stopPropagation) RESPECTA el filtro activo: índice dentro de filteredProjects ✅
-5. F6.5 ExperienceSection (4 tipos, componentes por datos)
+5. F6.5 ExperienceSection (4 tipos, componentes por datos) ✅ — datos del inventario §5 en `src/data/experience.ts` (8 entradas: freelance ×5, colaboración ×1, independientes ×2); `period` opcional (sin fechas verificadas, F7); ExperienceCard reutilizable; agrupación por kind sin grupos vacíos; i18n `experience`; tests de integridad + integración. ⚠ Input del propietario: confirmar fechas y si existe experiencia _empleada_ (profesional) — no hay en el inventario.
 6. F6.6 EducationSection + categorías + DocumentViewerOverlay (embebido, sin pestaña nueva)
 7. F6.7 LanguagesSection reutilizando DocumentViewerOverlay
 8. F6.8 ContactSection (email + enlaces) + Footer ( enlace "Older Portfolio")

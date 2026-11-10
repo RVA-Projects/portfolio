@@ -120,7 +120,7 @@ export type ExperienceKind = 'professional' | 'freelance' | 'independent' | 'col
 export interface Experience extends BaseEntity {
   kind: ExperienceKind
   organization: LocalizedText // o nombre del proyecto independiente
-  period: { start: string; end?: string } // p. ej. "2024-09" a hoy (end indefinido)
+  period?: { start: string; end?: string } // p. ej. "2024-09" a hoy; opcional: sin fechas verificadas (F7), no se inventan
   role?: LocalizedText
   responsibilities: { id: string; text: LocalizedText }[]
   description?: LocalizedText

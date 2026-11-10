@@ -42,6 +42,18 @@ export const es = {
     next: 'Desplazar a proyectos siguientes',
     viewport: 'Carrusel de proyectos',
   },
+  /** Sección de experiencia (RF-15), agrupada por tipo. */
+  experience: {
+    groups: {
+      professional: 'Experiencia profesional',
+      freelance: 'Freelance',
+      independent: 'Proyectos independientes',
+      collab: 'Colaboraciones',
+    },
+    current: 'Actualidad',
+    responsibilities: 'Funciones',
+    outcomes: 'Logros',
+  },
   projectOverlay: {
     open: 'Abrir proyecto',
     prev: 'Proyecto anterior',

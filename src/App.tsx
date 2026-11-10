@@ -9,6 +9,7 @@ import { NavigationMenu } from './components/layout/NavigationMenu'
 import { TopBar } from './components/layout/TopBar'
 import { Introduction } from './components/sections/Introduction'
 import { ProjectsSection } from './components/sections/ProjectsSection'
+import { ExperienceSection } from './components/sections/ExperienceSection'
 import { Footer } from './components/sections/Footer'
 
 /** Respeta prefers-reduced-motion al navegar por anclas (RF-04/RNF-02). */
@@ -50,6 +51,7 @@ function AppRoutes() {
       <main>
         <Introduction />
         <ProjectsSection />
+        <ExperienceSection />
       </main>
       <Footer />
     </>

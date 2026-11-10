@@ -43,6 +43,18 @@ export const en: Texts = {
     next: 'Scroll to next projects',
     viewport: 'Projects carousel',
   },
+  /** RF-15 experience section, grouped by kind. */
+  experience: {
+    groups: {
+      professional: 'Professional experience',
+      freelance: 'Freelance',
+      independent: 'Independent projects',
+      collab: 'Collaborations',
+    },
+    current: 'Present',
+    responsibilities: 'Duties',
+    outcomes: 'Outcomes',
+  },
   projectOverlay: {
     open: 'Open project',
     prev: 'Previous project',
