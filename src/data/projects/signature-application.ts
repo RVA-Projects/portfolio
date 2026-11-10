@@ -4,6 +4,7 @@ import type { Project } from '../../models/Project'
 export const signatureApplication: Project = {
   id: 'signature-application',
   slug: 'signature-application',
+  year: 2026,
   name: { es: 'Signature Application', en: 'Signature Application' },
   summary: {
     es: 'Aplicación de firma digital integrada con hardware ePadLink para la recogida de consentimientos de datos en informes médicos.',

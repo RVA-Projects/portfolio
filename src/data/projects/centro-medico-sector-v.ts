@@ -3,6 +3,7 @@ import type { Project } from '../../models/Project'
 export const centroMedicoSectorV: Project = {
   id: 'centro-medico-sector-v',
   slug: 'centro-medico-sector-v',
+  year: 2025,
   name: { es: 'Centro Médico Sector V', en: 'Centro Médico Sector V' },
   summary: {
     es: 'Web del centro médico con WordPress, posicionamiento SEO, formulario de contacto por WhatsApp y asistente de IA con Gemini API.',

@@ -16,7 +16,7 @@ export interface LocalizedText {
   en: string
 }
 
-export type CategoryId = 'web' | 'desktop' | 'android' | 'collab'
+export type CategoryId = 'web' | 'desktop' | 'android' | 'collab' | 'ai-assisted'
 
 export interface LinkDefinition {
   id: LinkId // 'github' | 'demo' | 'web' | 'docs' | 'cv' | 'older-portfolio'
@@ -36,10 +36,10 @@ export interface BaseEntity {
 export type TechnologyTier = 'core' | 'project' | 'tool'
 
 export interface Technology extends BaseEntity {
-  name: string // nombre canónico por idioma (unificado en ambos)
+  name: string
   tier: TechnologyTier // core | project | tool
-  shortLabel?: string
-}
+  icon?: 'python' | 'unity' | 'xampp' | 'odoo' // PNG custom en /assets/img/icons/; resto ⇒ SVG inline (TechIcon)
+} // nombre canónico sin traducir; icon opcional (PNG custom) o SVG inline resuelto por TechIcon
 ```
 
 - Los proyectos referencian tecnologías por `technologyIds: string[]`, nunca copian el nombre.
@@ -115,12 +115,13 @@ export interface DocumentRef {
 
 ```ts
 // models/Experience.ts
-export type ExperienceKind = 'professional' | 'freelance' | 'independent' | 'collab'
+export type ExperienceKind = 'professional' | 'independent' | 'collab'
+// 'freelance' eliminado: 'profesional' incluye el trabajo freelance remunerado (decisión propietario 2026-11)
 
 export interface Experience extends BaseEntity {
   kind: ExperienceKind
   organization: LocalizedText // o nombre del proyecto independiente
-  period?: { start: string; end?: string } // p. ej. "2024-09" a hoy; opcional: sin fechas verificadas (F7), no se inventan
+  period?: { start: string; end?: string } // "YYYY" | "YYYY-MM"; sin fecha confirmada ⇒ ausente (no se inventan)
   role?: LocalizedText
   responsibilities: { id: string; text: LocalizedText }[]
   description?: LocalizedText

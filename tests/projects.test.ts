@@ -54,12 +54,57 @@ describe('audit:content — integridad de datos de proyectos (RF-09)', () => {
   })
 
   it('los enlaces están bien formados y ninguno está inventado (solo dominios conocidos)', () => {
-    const allowed = ['github.com', 'lokihome.com', 'centromedicosectorv.es', 'dawdam.top']
+    const allowed = [
+      'github.com',
+      'lokihome.com',
+      'centromedicosectorv.es',
+      'dawdam.top',
+      'rva-projects.github.io',
+    ]
     for (const project of projects) {
       for (const link of project.links) {
         expect(allowed.some((domain) => link.url.includes(domain))).toBe(true)
       }
     }
+  })
+
+  it('los años, si existen, son reales y coherentes (2000–año actual)', () => {
+    const currentYear = new Date().getFullYear()
+    for (const project of projects) {
+      if (project.year !== undefined) {
+        expect(project.year).toBeGreaterThanOrEqual(2000)
+        expect(project.year).toBeLessThanOrEqual(currentYear)
+      }
+    }
+  })
+
+  it('el catálogo refleja los proyectos validados (9 fichas) con la categoría ai-assisted', () => {
+    expect(projects).toHaveLength(9)
+    expect(projects.map((p) => p.id)).toEqual(
+      expect.arrayContaining([
+        'signature-application',
+        'centro-medico-sector-v',
+        'loki-home',
+        'task-manager',
+        'gb-utility',
+        'flashcards-app',
+        'mini-crm',
+        'dawdam-top',
+        'snake',
+      ]),
+    )
+    const snake = projects.find((p) => p.id === 'snake')
+    expect(snake?.category).toBe('ai-assisted')
+    expect(snake?.year).toBe(2026)
+    expect(snake?.technologyIds).toEqual(['html', 'css', 'javascript', 'git'])
+  })
+
+  it('la ficha snake enlaza demo y repo reales publicados', () => {
+    const snake = projects.find((p) => p.id === 'snake')
+    expect(snake).toBeDefined()
+    const urls = (snake?.links ?? []).map((link) => link.url)
+    expect(urls).toContain('https://rva-projects.github.io/snake/')
+    expect(urls).toContain('https://github.com/RVA-Projects/snake')
   })
 })
 

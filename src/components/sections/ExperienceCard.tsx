@@ -71,13 +71,20 @@ export function ExperienceCard({ item }: ExperienceCardProps) {
 
       {item.links !== undefined && item.links.length > 0 && (
         <div className={styles.links}>
-          {item.links.map((link) => {
-            const label =
-              link.id === 'github'
-                ? texts.projectOverlay.links.github
-                : texts.projectOverlay.links.web
-            return <Button key={link.id} label={label} href={link.url} external />
-          })}
+          {item.links.map((link) => (
+            <Button
+              key={link.id}
+              label={
+                link.url.includes('upwork.com')
+                  ? texts.experience.upwork
+                  : link.url.includes('github.com')
+                    ? texts.projectOverlay.links.github
+                    : texts.projectOverlay.links.web
+              }
+              href={link.url}
+              external
+            />
+          ))}
         </div>
       )}
     </article>

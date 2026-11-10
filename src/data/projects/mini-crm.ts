@@ -3,13 +3,14 @@ import type { Project } from '../../models/Project'
 export const miniCrm: Project = {
   id: 'mini-crm',
   slug: 'mini-crm',
+  year: 2026,
   name: { es: 'MiniCRM', en: 'MiniCRM' },
   summary: {
     es: 'App Android minimalista de gestión de clientes: contactos, notas y seguimiento sencillo.',
     en: 'Minimalist Android CRM app: contacts, notes and simple follow-up management.',
   },
   category: 'android',
-  technologyIds: ['kotlin', 'android-studio'],
+  technologyIds: ['kotlin', 'room', 'android-studio'],
   media: [
     {
       id: 'crm-1',
@@ -75,8 +76,8 @@ export const miniCrm: Project = {
     en: 'Design and development of the whole app in Kotlin.',
   },
   architecture: {
-    es: 'App nativa Android en Kotlin (Android Studio) con almacenamiento local de clientes y notas.',
-    en: 'Native Android app in Kotlin (Android Studio) with local storage of clients and notes.',
+    es: 'App nativa Android en Kotlin (Android Studio) con persistencia local mediante Room (SQLite) para clientes y notas.',
+    en: 'Native Android app in Kotlin (Android Studio) with local Room (SQLite) persistence for clients and notes.',
   },
   features: [
     {

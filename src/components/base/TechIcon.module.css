@@ -1,0 +1,15 @@
+/* Caja uniforme para todos los iconos de tecnología (SVG y PNG custom). */
+.techIcon {
+  display: block;
+  width: var(--tech-icon-size, 24px);
+  height: var(--tech-icon-size, 24px);
+  object-fit: contain;
+  flex-shrink: 0;
+  transition: transform 150ms ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .techIcon {
+    transition: none;
+  }
+}

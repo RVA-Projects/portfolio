@@ -3,6 +3,7 @@ import type { Project } from '../../models/Project'
 export const flashcardsApp: Project = {
   id: 'flashcards-app',
   slug: 'flashcards-app',
+  year: 2025,
   name: { es: 'Flashcards App', en: 'Flashcards App' },
   summary: {
     es: 'App Android para estudiar con tarjetas CSV en formato flashcard, con importación y práctica por sesiones.',

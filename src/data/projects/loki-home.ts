@@ -3,6 +3,7 @@ import type { Project } from '../../models/Project'
 export const lokiHome: Project = {
   id: 'loki-home',
   slug: 'loki-home',
+  year: 2025,
   name: { es: 'Loki Home', en: 'Loki Home' },
   summary: {
     es: 'Sitio web corporativo responsive desarrollado y publicado para la marca Loki Home.',

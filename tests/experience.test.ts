@@ -1,12 +1,27 @@
 import { describe, expect, it } from 'vitest'
 import { experience } from '../src/data/experience'
 import { technologies } from '../src/data/technologies'
+import type { ExperienceKind } from '../src/models/Experience'
 import { projects } from '../src/data/projects'
+
+const projectSlugs = new Set(projects.map((project) => project.slug))
 
 describe('audit:content — integridad de datos de experiencia (RF-15)', () => {
   it('no hay IDs duplicados', () => {
     const ids = experience.map((item) => item.id)
     expect(new Set(ids).size).toBe(ids.length)
+  })
+
+  it('los kinds son solo los del modelo (freelance eliminado, decisión propietario)', () => {
+    const valid: ExperienceKind[] = ['professional', 'independent', 'collab']
+    for (const item of experience) {
+      expect(valid).toContain(item.kind)
+    }
+    // Cobertura de los tres grupos
+    const kinds = new Set(experience.map((item) => item.kind))
+    expect(kinds.has('professional')).toBe(true)
+    expect(kinds.has('independent')).toBe(true)
+    expect(kinds.has('collab')).toBe(true)
   })
 
   it('todas las technologyIds existen en el catálogo', () => {
@@ -41,21 +56,33 @@ describe('audit:content — integridad de datos de experiencia (RF-15)', () => {
     }
   })
 
-  it('los periodos, si existen, tienen formato YYYY-MM y no se inventan fechas por defecto', () => {
+  it('los periodos, si existen, tienen formato YYYY o YYYY-MM (fechas verificadas por el propietario)', () => {
     for (const item of experience) {
-      // Al no haber fechas verificadas en el inventario, ninguna entrada las declara aún
-      expect(item.period).toBeUndefined()
       if (item.period !== undefined) {
-        expect(item.period.start).toMatch(/^\d{4}-\d{2}$/)
+        expect(item.period.start).toMatch(/^\d{4}(-\d{2})?$/)
         if (item.period.end !== undefined) {
-          expect(item.period.end).toMatch(/^\d{4}-\d{2}$/)
+          expect(item.period.end).toMatch(/^\d{4}(-\d{2})?$/)
         }
       }
     }
   })
 
-  it('los enlaces son solo dominios verificados (sin Upwork, sin repos inventados)', () => {
-    const allowed = ['github.com', 'lokihome.com', 'centromedicosectorv.es', 'dawdam.top']
+  it('las entradas sin fecha confirmada no declaran periodo (no se inventan datos)', () => {
+    const undated = experience.filter((item) => item.period === undefined)
+    // Smarti DATA y la captación de voz (Upwork) no tienen fecha confirmada
+    expect(undated.map((item) => item.id)).toEqual(
+      expect.arrayContaining(['smarti-data-datasets', 'voz-asistentes-ia']),
+    )
+  })
+
+  it('los enlaces son solo dominios verificados (incl. perfil real de Upwork)', () => {
+    const allowed = [
+      'github.com',
+      'lokihome.com',
+      'centromedicosectorv.es',
+      'dawdam.top',
+      'upwork.com',
+    ]
     for (const item of experience) {
       for (const link of item.links ?? []) {
         expect(allowed.find((domain) => link.url.includes(domain))).toBeTruthy()
@@ -63,18 +90,33 @@ describe('audit:content — integridad de datos de experiencia (RF-15)', () => {
     }
   })
 
-  it('cada entrada de freelance/independiente puede referenciar un proyecto del portfolio', () => {
-    // Coherencia alta: las organizaciones de experiencia coinciden con nombres de proyectos
-    const projectSlugs = new Set(projects.map((project) => project.slug))
+  it('el perfil de Upwork enlazado es el real del propietario', () => {
+    const upworkUrls = experience
+      .flatMap((item) => item.links ?? [])
+      .filter((link) => link.url.includes('upwork.com'))
+    expect(upworkUrls.length).toBeGreaterThan(0)
+    for (const link of upworkUrls) {
+      expect(link.url).toBe(
+        'https://www.upwork.com/freelancers/~011b7fd9b75d981e3c?mp_source=share',
+      )
+    }
+  })
+
+  it('el catálogo de experiencia es el validado con el propietario (13 entradas)', () => {
     const expected = new Set([
       'centro-medico-sector-v-web',
+      'redes-sociales-centro-medico',
+      'agente-ia-centro-medico',
       'signature-application',
       'loki-home',
       'smarti-data-datasets',
       'voz-asistentes-ia',
-      'dawdam-top',
+      'snake',
+      'mini-crm',
+      'flashcards-app',
       'task-manager',
       'gb-utility',
+      'dawdam-top',
     ])
     expect(new Set(experience.map((item) => item.id))).toEqual(expected)
     expect(projectSlugs.size).toBeGreaterThan(0)

@@ -1,11 +1,12 @@
 import type { Technology } from '../models/Technology'
 
 /**
- * Catálogo de tecnologías (modelo `Technology`, fase F6.2). Clasificación por
- * niveles (RF-03) extraída del inventario del portfolio anterior:
- * core ⇒ principales · project ⇒ usadas en proyectos · tool ⇒ complementarias.
+ * Catálogo de tecnologías (modelo `Technology`). Clasificación por niveles
+ * (RF-03) confirmada con el propietario: core ⇒ stack principal (añade
+ * Python, C#, Java) · project ⇒ usadas en proyectos · tool ⇒ complementarias.
+ * Los iconos PNG custom (python, unity, xampp) viven en
+ * `public/assets/img/icons/`; el resto los resuelve TechIcon con SVG inline.
  *
- * NOTA: distribución provisional; el propietario la ajusta en Fase 7.
  * NUNCA inventar tecnologías fuera de este catálogo.
  */
 export const technologies: Technology[] = [
@@ -17,28 +18,31 @@ export const technologies: Technology[] = [
   { id: 'css', name: 'CSS', tier: 'core' },
   { id: 'sql', name: 'SQL', tier: 'core' },
   { id: 'git', name: 'Git', tier: 'core' },
+  { id: 'java', name: 'Java', tier: 'core' },
+  { id: 'python', name: 'Python', tier: 'core', icon: 'python' },
+  { id: 'csharp', name: 'C#', tier: 'core' },
 
-  // ——— Usadas en proyectos (inventario: Signature, TaskManager, GB-Utility, Flashcards, MiniCRM, webs)
-  { id: 'csharp', name: 'C#', tier: 'project' },
-  { id: 'kotlin', name: 'Kotlin', tier: 'project' },
+  // ——— Usadas en proyectos
   { id: 'wordpress', name: 'WordPress', tier: 'project' },
+  { id: 'kotlin', name: 'Kotlin', tier: 'project' },
+  { id: 'room', name: 'Room', tier: 'project' },
   { id: 'sqlite', name: 'SQLite', tier: 'project' },
+  { id: 'android-studio', name: 'Android Studio', tier: 'project' },
 
-  // ——— Herramientas y complementarios
-  { id: 'python', name: 'Python', tier: 'tool' },
+  // ——— Herramientas y complementarios (grid del portfolio original)
   { id: 'nodejs', name: 'Node.js', tier: 'tool' },
   { id: 'mysql', name: 'MySQL', tier: 'tool' },
   { id: 'postgresql', name: 'PostgreSQL', tier: 'tool' },
   { id: 'docker', name: 'Docker', tier: 'tool' },
   { id: 'firebase', name: 'Firebase', tier: 'tool' },
-  { id: 'unity', name: 'Unity', tier: 'tool' },
-  { id: 'android-studio', name: 'Android Studio', tier: 'tool' },
+  { id: 'unity', name: 'Unity', tier: 'tool', icon: 'unity' },
+  { id: 'xampp', name: 'XAMPP', tier: 'tool', icon: 'xampp' },
   { id: 'eclipse', name: 'Eclipse', tier: 'tool' },
   { id: 'netbeans', name: 'NetBeans', tier: 'tool' },
   { id: 'postman', name: 'Postman', tier: 'tool' },
   { id: 'visual-studio', name: 'Visual Studio', tier: 'tool' },
   { id: 'vscode', name: 'VS Code', tier: 'tool' },
-  { id: 'xampp', name: 'XAMPP', tier: 'tool' },
+  { id: 'github', name: 'GitHub', tier: 'tool' },
 ]
 
 export function technologiesByTier(tier: Technology['tier']): Technology[] {

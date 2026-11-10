@@ -3,6 +3,7 @@ import type { Project } from '../../models/Project'
 export const taskManager: Project = {
   id: 'task-manager',
   slug: 'task-manager',
+  year: 2024,
   name: { es: 'Task Manager', en: 'Task Manager' },
   summary: {
     es: 'Aplicación de escritorio para la gestión de tareas diarias, con persistencia local en SQLite.',

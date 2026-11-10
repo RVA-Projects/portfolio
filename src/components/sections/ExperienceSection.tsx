@@ -6,8 +6,8 @@ import { SectionHeading } from '../base/SectionHeading'
 import { ExperienceCard } from './ExperienceCard'
 import styles from './ExperienceSection.module.css'
 
-/** Orden estable y Semántica de grupos (inventario §5). */
-const GROUP_ORDER: ExperienceKind[] = ['professional', 'freelance', 'independent', 'collab']
+/** Orden estable y semántica de grupos (inventario §5 + decisión D-F6: sin 'freelance'). */
+const GROUP_ORDER: ExperienceKind[] = ['professional', 'independent', 'collab']
 
 function groupByKind(items: Experience[]): Partial<Record<ExperienceKind, Experience[]>> {
   const groups: Partial<Record<ExperienceKind, Experience[]>> = {}

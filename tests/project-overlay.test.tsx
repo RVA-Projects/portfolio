@@ -37,15 +37,15 @@ describe('ProjectOverlay (RF-10/RF-12/RF-13/RF-14)', () => {
     expect(screen.queryByRole('dialog', { name: 'Signature Application' })).not.toBeInTheDocument()
   })
 
-  it('el último proyecto tiene next deshabilitado y prev vuelve al anterior', () => {
+  it('el último proyecto (snake) tiene next deshabilitado y prev vuelve al anterior', () => {
     render(<App />)
-    const dialog = openProject('dawdam.top')
+    const dialog = openProject('Snake')
     const next = within(dialog).getByRole('button', { name: 'Proyecto siguiente' })
     expect(next).toBeDisabled()
     const prev = within(dialog).getByRole('button', { name: 'Proyecto anterior' })
     expect(prev).toBeEnabled()
     fireEvent.click(prev)
-    expect(screen.getByRole('dialog', { name: 'MiniCRM' })).toBeInTheDocument()
+    expect(screen.getByRole('dialog', { name: 'dawdam.top' })).toBeInTheDocument()
   })
 
   it('cierra con Escape y con el botón de cerrar (restaura el foco al DOM)', () => {

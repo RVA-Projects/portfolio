@@ -7,4 +7,10 @@ export interface Technology extends BaseEntity {
   name: string
   /** Nivel: principal | usada en proyectos | herramienta complementaria. */
   tier: TechnologyTier
+  /**
+   * Icono: ruta/slug custom en /assets/img/icons/<x>.png (logotipos sin
+   * SVG disponible) o ausente ⇒ el componente TechIcon resuelve su SVG
+   * inline por `id` (sin CDN externo).
+   */
+  icon?: 'python' | 'unity' | 'xampp' | 'odoo'
 }

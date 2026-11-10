@@ -1,10 +1,11 @@
 import { useCallback, useState } from 'react'
 import { useLanguage } from '../../i18n'
 import { technologiesByTier } from '../../data/technologies'
+import type { Technology } from '../../models/Technology'
 import { site } from '../../data/site'
 import { Button } from '../base/Button'
 import { IconGitHub, IconLinkedIn } from '../base/Icons'
-import { Tag } from '../base/Tag'
+import { TechIcon } from '../base/TechIcon'
 import styles from './Introduction.module.css'
 
 /**
@@ -65,32 +66,34 @@ export function Introduction() {
       <div className={styles.tech}>
         <div>
           <p className={styles.techTitle}>{texts.intro.mainStack}</p>
-          <div className={styles.techChips}>
-            {coreTechs.map((tech) => (
-              <Tag key={tech.id} label={tech.name} variant="accent" />
-            ))}
-          </div>
+          <TechGrid techs={coreTechs} />
         </div>
 
         <div>
           <p className={styles.techTitle}>{texts.intro.projectStack}</p>
-          <div className={styles.techChips}>
-            {projectTechs.map((tech) => (
-              <Tag key={tech.id} label={tech.name} />
-            ))}
-          </div>
+          <TechGrid techs={projectTechs} />
         </div>
 
         <div>
           <p className={styles.techTitle}>{texts.intro.tools}</p>
-          <ul className={styles.techList}>
-            {toolTechs.map((tech) => (
-              <li key={tech.id}>{tech.name}</li>
-            ))}
-          </ul>
+          <TechGrid techs={toolTechs} />
         </div>
       </div>
     </section>
+  )
+}
+
+/** Grid declarativo icono + nombre para un tier del catálogo (RF-03). */
+function TechGrid({ techs }: { techs: Technology[] }) {
+  return (
+    <ul className={styles.techGrid}>
+      {techs.map((tech) => (
+        <li key={tech.id} className={styles.techItem}>
+          <TechIcon technologyId={tech.id} icon={tech.icon} />
+          <span>{tech.name}</span>
+        </li>
+      ))}
+    </ul>
   )
 }
 

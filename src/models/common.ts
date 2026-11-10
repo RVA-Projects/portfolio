@@ -8,7 +8,8 @@ export interface LocalizedText {
   en: string
 }
 
-export type CategoryId = 'web' | 'desktop' | 'android' | 'collab'
+/** Categoría de proyecto. `ai-assisted`: desarrollado con agentes IA (OpenCode). */
+export type CategoryId = 'web' | 'desktop' | 'android' | 'collab' | 'ai-assisted'
 
 export type GlobalLinkId = 'github' | 'demo' | 'web' | 'docs' | 'cv' | 'older-portfolio'
 

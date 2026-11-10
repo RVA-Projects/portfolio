@@ -45,14 +45,14 @@ export const es = {
   /** Sección de experiencia (RF-15), agrupada por tipo. */
   experience: {
     groups: {
-      professional: 'Experiencia profesional',
-      freelance: 'Freelance',
+      professional: 'Profesional',
       independent: 'Proyectos independientes',
       collab: 'Colaboraciones',
     },
     current: 'Actualidad',
     responsibilities: 'Funciones',
     outcomes: 'Logros',
+    upwork: 'Perfil de Upwork',
   },
   projectOverlay: {
     open: 'Abrir proyecto',
@@ -90,6 +90,7 @@ export const es = {
     desktop: 'Escritorio',
     android: 'Android',
     collab: 'Colaboración',
+    'ai-assisted': 'Con IA',
   },
 }
 

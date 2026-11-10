@@ -3,6 +3,7 @@ import type { Project } from '../../models/Project'
 export const gbUtility: Project = {
   id: 'gb-utility',
   slug: 'gb-utility',
+  year: 2024,
   name: { es: 'GB Utility (Magic & Monsters)', en: 'GB Utility (Magic & Monsters)' },
   summary: {
     es: 'Complemento de escritorio para un juego de mesa: gestión de personajes/NPCs, misiones y eventos aleatorios y sistema de recompensas.',

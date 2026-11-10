@@ -9,9 +9,9 @@ beforeEach(() => {
 })
 
 describe('ProjectsSection (RF-06/RF-07/RF-08)', () => {
-  it('muestra 8 proyectos con el filtro All', () => {
+  it('muestra 9 proyectos con el filtro All', () => {
     render(<App />)
-    expect(screen.getByText('8 proyectos')).toBeInTheDocument()
+    expect(screen.getByText('9 proyectos')).toBeInTheDocument()
     expect(screen.getByRole('region', { name: 'Carrusel de proyectos' })).toBeInTheDocument()
   })
 
@@ -26,7 +26,7 @@ describe('ProjectsSection (RF-06/RF-07/RF-08)', () => {
     render(<App />)
     fireEvent.click(screen.getByRole('button', { name: 'WordPress' }))
     fireEvent.click(screen.getByRole('button', { name: 'Todas' }))
-    expect(screen.getByText('8 proyectos')).toBeInTheDocument()
+    expect(screen.getByText('9 proyectos')).toBeInTheDocument()
   })
 
   it('el carrusel navega con botones prev/next y se deshabilita en extremos', () => {

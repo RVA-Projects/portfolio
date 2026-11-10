@@ -3,6 +3,7 @@ import type { Project } from '../../models/Project'
 export const dawdamTop: Project = {
   id: 'dawdam-top',
   slug: 'dawdam-top',
+  year: 2024,
   name: { es: 'dawdam.top', en: 'dawdam.top' },
   summary: {
     es: 'Colaboración en la plataforma dawdam.top: gestión de cursos y contenidos, y optimización de flujos de trabajo en WordPress.',

@@ -82,28 +82,32 @@
   margin-bottom: var(--space-3);
 }
 
-.techChips {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-2);
-  /* Los principales destacan; el resto comparte fila uniforme */
-}
-
-.techList {
+/* Grid icono + nombre, uniforme en los tres niveles */
+.techGrid {
   margin: 0;
   padding: 0;
   list-style: none;
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-2) var(--space-3);
-  color: var(--color-text-muted);
-  font-size: var(--fs-small);
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: var(--space-3) var(--space-4);
 }
 
-.techList li + li::before {
-  content: '·';
-  margin-right: var(--space-3);
-  color: var(--color-line-strong);
+.techItem {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--fs-small);
+  color: var(--color-text-muted);
+  min-height: 24px;
+}
+
+.techItem:hover {
+  color: var(--color-text);
+}
+
+/* Zoom suave del icono al pasar por la fila (interacción nunca solo-hover) */
+.techItem:hover img {
+  transform: scale(1.15);
 }
 
 @keyframes riseIn {

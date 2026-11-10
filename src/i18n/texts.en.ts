@@ -46,14 +46,14 @@ export const en: Texts = {
   /** RF-15 experience section, grouped by kind. */
   experience: {
     groups: {
-      professional: 'Professional experience',
-      freelance: 'Freelance',
+      professional: 'Professional',
       independent: 'Independent projects',
       collab: 'Collaborations',
     },
     current: 'Present',
     responsibilities: 'Duties',
     outcomes: 'Outcomes',
+    upwork: 'Upwork profile',
   },
   projectOverlay: {
     open: 'Open project',
@@ -91,5 +91,6 @@ export const en: Texts = {
     desktop: 'Desktop',
     android: 'Android',
     collab: 'Collab',
+    'ai-assisted': 'AI-assisted',
   },
 }
