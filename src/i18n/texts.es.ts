@@ -36,11 +36,42 @@ export const es = {
     count: (n: number) => (n === 1 ? '1 proyecto' : `${n} proyectos`),
     a11yCount: (n: number) => (n === 1 ? '1 resultado' : `${n} resultados`),
   },
+  /** Controles de desplazamiento del carrusel (RF-08). */
+  carousel: {
+    prev: 'Desplazar a proyectos anteriores',
+    next: 'Desplazar a proyectos siguientes',
+    viewport: 'Carrusel de proyectos',
+  },
   projectOverlay: {
     open: 'Abrir proyecto',
     prev: 'Proyecto anterior',
     next: 'Proyecto siguiente',
     gallery: 'Galería del proyecto',
+    close: 'Cerrar detalles del proyecto',
+    year: 'Año',
+    labels: {
+      goal: 'Objetivo',
+      problem: 'Problema a resolver',
+      role: 'Mi rol',
+      architecture: 'Arquitectura',
+      features: 'Funcionalidades',
+      technicalDecisions: 'Decisiones técnicas',
+      outcomes: 'Resultados',
+      learnings: 'Aprendizajes',
+    },
+    links: {
+      github: 'Repositorio en GitHub',
+      demo: 'Ver demo',
+      web: 'Ver sitio web',
+      docs: 'Documentación',
+    },
+  },
+  /** Galería de media dentro del overlay (RF-11). */
+  gallery: {
+    prev: 'Media anterior',
+    next: 'Media siguiente',
+    play: 'Reproducir vídeo',
+    unavailable: 'Medio no disponible todavía',
   },
   categories: {
     web: 'Web',

@@ -31,13 +31,13 @@ export function ProjectCarousel({ projects, onSelect }: ProjectCarouselProps) {
         </p>
         <div className={styles.buttons}>
           <IconButton
-            ariaLabel={texts.projectOverlay.prev}
+            ariaLabel={texts.carousel.prev}
             onClick={state.scrollPrev}
             disabled={!state.canPrev}
             icon={<IconChevronLeft />}
           />
           <IconButton
-            ariaLabel={texts.projectOverlay.next}
+            ariaLabel={texts.carousel.next}
             onClick={state.scrollNext}
             disabled={!state.canNext}
             icon={<IconChevronRight />}
@@ -52,7 +52,7 @@ export function ProjectCarousel({ projects, onSelect }: ProjectCarouselProps) {
         onKeyDown={state.onKeyDown}
         tabIndex={0}
         role="region"
-        aria-label={texts.projectOverlay.gallery}
+        aria-label={texts.carousel.viewport}
       >
         {projects.map((project) => (
           <ProjectCard key={project.id} project={project} onSelect={onSelect} />

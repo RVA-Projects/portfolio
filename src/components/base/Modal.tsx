@@ -8,6 +8,11 @@ interface ModalProps {
   onClose: () => void
   /** id del elemento que etiqueta el dialog (obligatorio para aria-labelledby). */
   labelledById: string
+  /**
+   * `flush`: el panel NO hace scroll por sí mismo (overflow hidden + flex);
+   * el scroll lo gestionan las columnas hijas (layout 50/50 del ProjectOverlay).
+   */
+  flush?: boolean
   children: ReactNode
 }
 
@@ -17,7 +22,7 @@ interface ModalProps {
  * del body (useBodyScrollLock) y focus-trap + restauración del foco al cerrar
  * (useFocusTrap).
  */
-export function Modal({ open, onClose, labelledById, children }: ModalProps) {
+export function Modal({ open, onClose, labelledById, flush = false, children }: ModalProps) {
   const panelRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -48,7 +53,7 @@ export function Modal({ open, onClose, labelledById, children }: ModalProps) {
         role="dialog"
         aria-modal="true"
         aria-labelledby={labelledById}
-        className={styles.panel}
+        className={flush ? `${styles.panel} ${styles.panelFlush}` : styles.panel}
         tabIndex={-1}
       >
         {children}

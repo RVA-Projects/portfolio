@@ -41,3 +41,18 @@
 }
 
 /* Dimensiones del panel por overlay (ProjectOverlay usa su propio layout) */
+
+/* Variante `flush`: el contenido hijo gestiona el scroll (overlay 50/50) */
+.panelFlush {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+@media (max-width: 1023px) {
+  /* En móvil el panel vuelve a hacer scroll completo (layout apilado) */
+  .panelFlush {
+    overflow: auto;
+    display: block;
+  }
+}

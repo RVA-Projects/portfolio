@@ -37,11 +37,42 @@ export const en: Texts = {
     count: (n: number) => (n === 1 ? '1 project' : `${n} projects`),
     a11yCount: (n: number) => (n === 1 ? '1 result' : `${n} results`),
   },
+  /** RF-08 carousel scroll controls. */
+  carousel: {
+    prev: 'Scroll to previous projects',
+    next: 'Scroll to next projects',
+    viewport: 'Projects carousel',
+  },
   projectOverlay: {
     open: 'Open project',
     prev: 'Previous project',
     next: 'Next project',
     gallery: 'Project gallery',
+    close: 'Close project details',
+    year: 'Year',
+    labels: {
+      goal: 'Goal',
+      problem: 'Problem to solve',
+      role: 'My role',
+      architecture: 'Architecture',
+      features: 'Features',
+      technicalDecisions: 'Technical decisions',
+      outcomes: 'Outcomes',
+      learnings: 'Learnings',
+    },
+    links: {
+      github: 'GitHub repository',
+      demo: 'View demo',
+      web: 'Visit website',
+      docs: 'Documentation',
+    },
+  },
+  /** RF-11 media gallery inside the overlay. */
+  gallery: {
+    prev: 'Previous media',
+    next: 'Next media',
+    play: 'Play video',
+    unavailable: 'Media not available yet',
   },
   categories: {
     web: 'Web',

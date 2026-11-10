@@ -54,8 +54,8 @@ Orden por dependencia (cada bloque tiene su CA propia en `testing.md`):
 
 1. F6.1 Datos: tecnologías 3 niveles + catálogo de 8 proyectos (es/en, ids estables, `year` opcional) ✅
 2. F6.2 ProjectCard (botón a toda tarjeta + fallback de imagen) + TechnologyFilter (aria-pressed) + ProjectCarousel (scroll-snap nativo, prev/next, teclado ←/→, indicador 1/N aria-live) + `utils/filter.ts` (puro/testeado) + `hooks/useCarousel.ts` ✅
-3. F6.3 ProjectOverlay + MediaGallery (galería: miniaturas, vídeo, YouTube lazy, indicador)
-4. F6.4 Navegación entre proyectos (prev/next, swipe, teclado, conservando idioma y overlay)
+3. F6.3 ProjectOverlay (Modal flush 50/50, foco-trap/Escape/backdrop/scroll-lock) + MediaGallery (miniaturas, prev/next, indicador 1/N, YouTube lazy con facade, fallback de media ausente sin crash) + `utils/media.ts` (extractYouTubeId testeado) ✅
+4. F6.4 Navegación entre proyectos prev/next (botones + teclado ←/→ a nivel overlay; la galería consume sus propias flechas con stopPropagation) RESPECTA el filtro activo: índice dentro de filteredProjects ✅
 5. F6.5 ExperienceSection (4 tipos, componentes por datos)
 6. F6.6 EducationSection + categorías + DocumentViewerOverlay (embebido, sin pestaña nueva)
 7. F6.7 LanguagesSection reutilizando DocumentViewerOverlay

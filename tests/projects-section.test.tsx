@@ -12,7 +12,7 @@ describe('ProjectsSection (RF-06/RF-07/RF-08)', () => {
   it('muestra 8 proyectos con el filtro All', () => {
     render(<App />)
     expect(screen.getByText('8 proyectos')).toBeInTheDocument()
-    expect(screen.getByRole('region', { name: 'Galería del proyecto' })).toBeInTheDocument()
+    expect(screen.getByRole('region', { name: 'Carrusel de proyectos' })).toBeInTheDocument()
   })
 
   it('filtra por tecnología y actualiza el contador', () => {
@@ -31,10 +31,10 @@ describe('ProjectsSection (RF-06/RF-07/RF-08)', () => {
 
   it('el carrusel navega con botones prev/next y se deshabilita en extremos', () => {
     render(<App />)
-    const prev = screen.getByRole('button', { name: 'Proyecto anterior' })
-    const next = screen.getByRole('button', { name: 'Proyecto siguiente' })
+    const prev = screen.getByRole('button', { name: 'Desplazar a proyectos anteriores' })
+    const next = screen.getByRole('button', { name: 'Desplazar a proyectos siguientes' })
     expect(prev).toBeDisabled()
     expect(next).toBeEnabled()
-    fireEvent.scroll(screen.getByRole('region', { name: 'Galería del proyecto' }))
+    fireEvent.scroll(screen.getByRole('region', { name: 'Carrusel de proyectos' }))
   })
 })
