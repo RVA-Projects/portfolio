@@ -1,0 +1,196 @@
+# contracts.md — RVA Portfolio
+
+Contratos TypeScript de dominio y de props de componentes. Es la referencia que delimita responsabilidades: quien implementa un componente respeta este documento; cambiar un contrato exige actualizar aquí y en `src/models/` (cuando existan), y registrar el motivo en `decisions.md`.
+
+Estado: **borrador aprobado para Fase 3 (esqueletos)**. Los nombres pueden afinarse en implementación, pero la semántica no cambia sin ADR.
+
+## 1. Primitivas comunes
+
+```ts
+// models/common.ts
+export type LanguageId = 'es' | 'en'
+
+/** Cualquier contenido de entidad localizable: ES y EN obligatorios. */
+export interface LocalizedText {
+  es: string
+  en: string
+}
+
+export type CategoryId = 'web' | 'desktop' | 'android' | 'collab'
+
+export interface LinkDefinition {
+  id: LinkId // 'github' | 'demo' | 'web' | 'docs' | 'cv' | 'older-portfolio'
+  url: string // validado por audit:content (https, bien formada)
+  ariaLabel: LocalizedText
+}
+
+export interface BaseEntity {
+  id: string // estable, kebab-case, NO nombre visible
+}
+```
+
+## 2. Tecnologías
+
+```ts
+// models/Technology.ts
+export type TechnologyTier = 'core' | 'project' | 'tool'
+
+export interface Technology extends BaseEntity {
+  name: string // nombre canónico por idioma (unificado en ambos)
+  tier: TechnologyTier // core | project | tool
+  shortLabel?: string
+}
+```
+
+- Los proyectos referencian tecnologías por `technologyIds: string[]`, nunca copian el nombre.
+- `All` es estado del filtro (`null`), no una tecnología.
+
+## 3. Proyectos
+
+```ts
+// models/Project.ts
+export type MediaKind = 'image' | 'gif' | 'video-local' | 'video-youtube' | 'external-demo'
+
+export interface MediaItem extends BaseEntity {
+  kind: MediaKind
+  src: string // ruta local bajo /media/projects/<slug>/ o URL externa
+  alt: LocalizedText // obligatorio para imagenes; descripción para vídeo
+  thumbnail?: string
+}
+
+export type ProjectLinkId = 'github' | 'demo' | 'web' | 'docs'
+
+export interface ProjectLink {
+  id: ProjectLinkId
+  url: string
+}
+
+export interface Project extends BaseEntity {
+  slug: string // coincide con carpeta de media y con el fichero de datos
+  year: number
+  name: LocalizedText
+  summary: LocalizedText // texto de tarjeta
+  category: CategoryId
+  technologyIds: string[]
+  media: MediaItem[] // ≥1; el primero es el principal
+  links: ProjectLink[] // solo los que existan (sin inventar)
+
+  // Detalle del overlay (RF-09/RF-12)
+  goal: LocalizedText // objetivo y problema resuelto (puede dividirse en dos campos si el contenido lo necesita: goal / problem)
+  problem: LocalizedText
+  role: LocalizedText // responsabilidad del desarrollador
+  architecture: LocalizedText
+  features: { id: string; text: LocalizedText }[]
+  technicalDecisions: { id: string; text: LocalizedText }[]
+  outcomes: LocalizedText
+  learnings: LocalizedText
+}
+```
+
+## 4. Formación
+
+```ts
+// models/Education.ts
+export type EducationKind = 'official' | 'certification' | 'course'
+
+export interface Education extends BaseEntity {
+  kind: EducationKind
+  name: LocalizedText
+  issuer: string // organismo (propio nombre; no traducible salvo necesidad)
+  date?: string // ISO 8601 (YYYY-MM | YYYY) — opcional
+  duration?: string // texto libre, ej: "40 h"
+  description?: LocalizedText
+  document?: DocumentRef // acreditación, opcional
+}
+
+export interface DocumentRef {
+  /** Ruta local (/docs/…) si el propietario copia el PDF al repo; o URL de Drive/YouTube. */
+  src: string
+  name: LocalizedText // nombre del documento para el visor
+}
+```
+
+## 5. Experiencia
+
+```ts
+// models/Experience.ts
+export type ExperienceKind = 'professional' | 'freelance' | 'independent' | 'collab'
+
+export interface Experience extends BaseEntity {
+  kind: ExperienceKind
+  organization: LocalizedText // o nombre del proyecto independiente
+  period: { start: string; end?: string } // p. ej. "2024-09" a hoy (end indefinido)
+  role?: LocalizedText
+  responsibilities: { id: string; text: LocalizedText }[]
+  description?: LocalizedText
+  technologyIds: string[]
+  outcomes?: { id: string; text: LocalizedText }[]
+  links?: { id: string; url: string }[]
+}
+```
+
+## 6. Idiomas
+
+```ts
+// models/LanguageProfile.ts
+export interface LanguageProfile extends BaseEntity {
+  /** Código ISO del idioma, p. ej. 'ca' para valenciano, 'de' para alemán. */
+  code: string
+  name: LocalizedText
+  cefr?: string // 'Nativo' | 'C1' | 'B2' | 'A1'…
+  spoken?: string
+  written?: string
+  document?: DocumentRef // mismo DocumentRef del visor (valenciano C1, inglés B2)
+}
+```
+
+## 7. Contacto
+
+```ts
+// models/ContactLink.ts
+export interface ContactLink extends BaseEntity {
+  id: 'github' | 'linkedin' | 'email' | 'cv'
+  url: string // email → mailto:…
+  ariaLabel: LocalizedText
+}
+```
+
+## 8. Contratos de componentes (props, resumidos)
+
+Todos los componentes reciben datos por props; ninguno importa entidades concretas de `data/` (la inyección es del árbol de secciones).
+
+| Componente              | Props (esencia)                                                                                 |
+| ----------------------- | ----------------------------------------------------------------------------------------------- |
+| `SectionHeading`        | `title: LocalizedText; subtitle?: LocalizedText`                                                |
+| `Tag`                   | `label: string; variant?: 'tech' \| 'category' \| 'accent'; onClick?`                           |
+| `Button`                | `label; variant; onClick; icon?; ariaLabel?; disabled?`                                         |
+| `ProjectCard`           | `project; onSelect(projectId)`                                                                  |
+| `TechnologyFilter`      | `technologies; activeId: TechnologyFilterValue; onChange(id: TechnologyFilterValue)`            |
+| `ProjectCarousel`       | `projects; onSelect(projectId)` — interno: keyboard/táctil/botones en hook `useCarousel`        |
+| `ProjectOverlay`        | `project; onClose(); onPrev?(); onNext?(); hasPrev; hasNext; language`                          |
+| `MediaGallery`          | `items; onItemClick(item);` interna: índice activo, teclado, indicadores                        |
+| `EducationCard`         | `education; onOpenDocument(documentRef)`                                                        |
+| `ExperienceCard`        | `experience` (agrupa por `kind` en la sección)                                                  |
+| `LanguageCard`          | `profile: LanguageProfile; onOpenDocument(documentRef)`                                         |
+| `DocumentViewerOverlay` | `document: DocumentRef; title: LocalizedText; onClose()` — embebido inline, NO nueva pestaña    |
+| `Modal` (OverlayBase)   | `open; onClose(); labelledBy; children` — encapsula focus-trap, Escape, clic-fuera, scroll-lock |
+
+`TechnologyFilterValue = string | null` (`null` = All).
+
+## 9. Filtro (lógica pura, testeable)
+
+```ts
+// utils/filter.ts
+export function filterProjects(projects: Project[], tech: TechnologyFilterValue): Project[]
+export function technologiesInProjects(projects: Project[]): Technology[] // para construir el filtro
+```
+
+## 10. Reglas de validación de datos (`audit:content` en Vitest)
+
+1. IDs de `technologyIds` existen en el catálogo de tecnologías.
+2. No hay IDs duplicados en ninguna colección.
+3. Todo `LocalizedText` tiene `es` y `en` no vacíos.
+4. URLs: absolutas `https://` o de `mailto:`; `src` de media/documentos existen bajo `public/` (o son URLs de Drive/YouTube válidas).
+5. `Project.media` con ≥1 item y `alt` siempre presente en píxeles de imagen.
+6. Certificados con `document.src` habilitados para verificar antes de entrar a Fase 7.
+7. Campos obligatorios de ProjectOverlay (goal/problem/role/architecture/outcomes/learnings) con contenido en ambos idiomas.

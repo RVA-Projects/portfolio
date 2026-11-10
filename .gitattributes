@@ -1,0 +1,12 @@
+* text=auto eol=lf
+
+# Binarios — evita que Git los toque como texto
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.webp binary
+*.avif binary
+*.gif binary
+*.mp4 binary
+*.webm binary
+*.pdf binary

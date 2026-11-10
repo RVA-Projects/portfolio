@@ -1,0 +1,21 @@
+/* ============ RVA Portfolio — tokens (Fase 5 completa los definitivos) ============ */
+:root {
+  /* D07: paleta cerrada — negro/blanco/gris + acento rojo */
+  --color-bg: #0b0b0c;
+  --color-surface: #141416;
+  --color-surface-2: #1e1e21;
+  --color-line: #2a2a2e;
+  --color-text: #f4f4f5;
+  --color-text-muted: #9a9aa0;
+  --color-accent: #e23744;
+
+  /* Radios y movimiento (design-system.md §6) */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --ease: cubic-bezier(0.2, 0, 0, 1);
+
+  /* Breakpoints reales (escala en Fase 5): 576/768/1024/1440 */
+}
+
+/* TODO(F5.1): fuentes Space Grotesk / Inter / JetBrains Mono (latin + latin-ext) */
