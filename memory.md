@@ -1,12 +1,12 @@
 # memory.md — RVA Portfolio
 
 > Memoria operativa del agente. Actualizar tras cada cambio relevante.
-> Última actualización: 2026-11-10 (F6-ajustes: experiencia sin freelance + fechas, Snake, TechIcon, flechas flotantes).
+> Última actualización: 2026-11-11 (F6.6: EducationSection + DocumentViewerOverlay, D16).
 
 ## Estado actual
 
-- **Fases:** 0 ✅ · 1 ✅ · 2 ✅ · 3 ✅ · 4 ✅ (deploy pendiente de remoto) · 5 ✅ (revisión móvil aplazada a post-despliegue, decisión del propietario) · **6 🔶 (F6.1–F6.5 + ronda de ajustes hechas; sigue F6.6 EducationSection + DocumentViewerOverlay)**.
-- **Harness:** `npm run validate` en VERDE (53 tests pasando; 1 warning aceptable react-refresh en `src/i18n/index.tsx`).
+- **Fases:** 0 ✅ · 1 ✅ · 2 ✅ · 3 ✅ · 4 ✅ (deploy pendiente de remoto) · 5 ✅ (revisión móvil aplazada a post-despliegue, decisión del propietario) · **6 🔶 (F6.1–F6.6 hechas; sigue F6.7 LanguagesSection reutilizando DocumentViewerOverlay)**.
+- **Harness:** `npm run validate` en VERDE (72 tests pasando; 1 warning aceptable react-refresh en `src/i18n/index.tsx`).
 - **Build:** JS 332.47KB (105.93KB gzip) / CSS 18.60KB; base `/portfolio/` verificada; cero dependencias de runtime (iconos como assets).
 
 ## Decisiones cerradas con el propietario (2026-11-10)
@@ -36,12 +36,13 @@ Ver detalle en `docs/decisions.md` (D01–D15). Resumen:
   - **TechIcon (D14):** componente `src/components/base/TechIcon.tsx` con devicon SVG como assets locales (`src/components/base/icons/*.svg` via `import.meta.glob`) + PNGs propios python/unity/xampp en `public/assets/img/icons/`; grid icono+nombre en los 3 niveles de Introduction (deriva del catálogo). `tests/technologies.test.ts` garantiza que toda tecnología tiene icono. Catálogo: core + Python/C#/Java; añadidos room, github.
   - **Flechas flotantes (D15):** prev/next del overlay fuera del panel (slot `aside` nuevo en Modal, focus-trap sobre todo el backdrop; IconButton acepta `className`); ocultas <768px; ←/→ a nivel documento. Cerrar único botón del header.
   - **Chore:** `@types/node` dev-dep (tests con node:fs); `vite/client` en tsconfig types; `oldPortfolio/` fuera de ESLint/Vitest/gitignore; HTML/CSS del catálogo mapeados (`html.svg`/`css.svg` desde html5/css3 de devicon).
+- **F6.6 (2026-11-11, D16):** `src/data/education.ts` (11 entradas del inventario §4 con enlaces REALES extraídos de `oldPortfolio/index.html`: 2 Credly, 1 CertView, 6 PDFs OpenWebinars → rutas locales `/portfolio/docs/<slug>.pdf`); `issuer` opcional en `Education` (DAM sin organismo, no se inventa); Java Foundations sin documento; sin fechas/duraciones. `EducationCard` + `EducationSection` (patrón Experience, kicker «04 — Education», grupos official→certification→course, grupos vacíos ocultos) integrada en App tras Experiencia. **DocumentViewerOverlay** sobre `Modal`: iframe embebido, Drive→`/preview` (`googleDriveEmbedUrl` en `utils/media.ts`), timeout 8s/onError ⇒ error controlado con «Abrir en pestaña nueva» + «Descargar» (`Button.download` nuevo). i18n `education.*` + `documentViewer.*` es/en. Tests: `education.test.ts` (integridad+Drive), `education-section.test.tsx`, `document-viewer.test.tsx` (timeout con fake timers + act).
 
 ## Pendientes del propietario (para Fase 7 y despliegue)
 
 0. **Captura de Snake:** screenshot real del juego en `https://rva-projects.github.io/snake/` → `public/media/projects/snake/snake-cover.png` (decisión 2026-11-10; la media ya declarada).
 1. Acceso/URL del repo remoto `RVA-Projects/portfolio` (clonar o conectar en F4.1).
-2. Copiar PDFs (CV + certificados) — preferible a `public/docs/`.
+2. Copiar PDFs (CV + certificados) — preferible a `public/docs/`. Los 6 PDFs de OpenWebinars de formación ya declarados: `react-fundamentals`, `javascript-fundamentals`, `spring-boot-spring-mvc-5`, `python`, `kotlin`, `git` (nombres exactos de fichero).
 3. Copiar foto personal a `public/assets/img/`.
 4. Subir PDFs a `public/docs/` y la foto a `public/assets/img/` (Fase 7).
 5. Contenido es/en definitivo de proyectos (descripción, objetivos, resultados) — se pedirá en F7.1.
@@ -56,6 +57,8 @@ Ver detalle en `docs/decisions.md` (D01–D15). Resumen:
 
 ## Últimos cambios
 
+- 2026-11-11: **F6.6** — EducationSection + DocumentViewerOverlay (D16): datos desde inventario §4 con enlaces reales, `issuer` opcional, PDFs locales pendientes de subida, visor embebido con error controlado (timeout 8s) y acciones abrir/descargar. Tests 53→72. Pendiente: subir los 6 PDFs a `public/docs/` (F7.3).
+
 - 2026-11-10 (noche 4): **F6-ajustes (commits `35b235e`, `a1f9734`)** — experiencia sin freelance (D13) con fechas reales y Upwork real; Snake como proyecto `ai-assisted` (9 fichas); TechIcon con devicon local + PNGs propios (D14) y grid icono+nombre en Introduction; flechas del overlay flotantes fuera del panel con Modal `aside` (D15). Tests 40→53, build 105.93KB gzip. Pendiente: snake-cover.png.
 
 - 2026-11-10 (noche 3): **Fase 6 (F6.5)** — datos de experiencia del inventario (8 entradas re-clasificadas, sin fechas sin verificar: `period` opcional en modelo+contratos), ExperienceCard + ExperienceSection con agrupación por tipo, claves i18n `experience`, integrada en App tras Proyectos. Inputs del propietario marcados en F7 (fechas; ¿experiencia empleada?). Tests 40/40, build 87.48KB gzip.
@@ -68,5 +71,5 @@ Ver detalle en `docs/decisions.md` (D01–D15). Resumen:
 ## Próxima tarea recomendada
 
 0. **snake-cover.png:** el propietario aporta captura real (pendiente 0 arriba). Al llegar: verificar que el fichero cae en `public/media/projects/snake/snake-cover.png` y extender `tests/projects.test.ts` con `existsSync` para media local declarada.
-1. **F6.6:** EducationSection + DocumentViewerOverlay (PDF embebido inline, tolerante a fichero ausente — D03) + categorías. Requiere revisar `src/data/education.ts` (pendiente de crear desde inventario §4) y `DocumentRef`.
-2. Después F6.7 Languages → F6.8 Contact → F6.10 Canvas. La revisión móvil se hace post-despliegue.
+1. **F6.7 LanguagesSection** reutilizando `DocumentViewerOverlay` (ya probado): datos de idiomas (Castellano nativo, Valenciano C1 cert, Rumano nativo, Inglés B2 cert, Alemán Starter), `LanguageCard` con botón de documento para los certificados.
+2. Después F6.8 Contact → F6.10 Canvas. La revisión móvil se hace post-despliegue.

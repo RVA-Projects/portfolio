@@ -10,6 +10,8 @@ interface ButtonProps {
   /** Si se define, renderiza un <a>; enlaces de contacto, CV, etc. */
   href?: string
   external?: boolean
+  /** Solo con `href`: añade el atributo download (documentos del visor). */
+  download?: boolean
   icon?: ReactNode
   ariaLabel?: string
   disabled?: boolean
@@ -26,6 +28,7 @@ export function Button({
   onClick,
   href,
   external,
+  download,
   icon,
   ariaLabel,
   disabled,
@@ -39,6 +42,7 @@ export function Button({
         href={href}
         aria-label={ariaLabel}
         {...(external ? { target: '_blank', rel: 'noreferrer noopener' } : {})}
+        {...(download === true ? { download: '' } : {})}
       >
         {icon}
         <span>{label}</span>

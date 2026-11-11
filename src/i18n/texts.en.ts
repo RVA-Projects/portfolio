@@ -55,6 +55,24 @@ export const en: Texts = {
     outcomes: 'Outcomes',
     upwork: 'Upwork profile',
   },
+  /** RF-16 education section, grouped by hierarchy. */
+  education: {
+    groups: {
+      official: 'Official education',
+      certification: 'Certifications',
+      course: 'Courses',
+    },
+    openDocument: 'View accreditation',
+  },
+  /** Embedded document viewer (RF-18, shared by education and languages). */
+  documentViewer: {
+    close: 'Close document viewer',
+    openNewTab: 'Open in a new tab',
+    download: 'Download document',
+    errorTitle: 'Document unavailable',
+    errorBody:
+      'The document cannot be displayed embedded yet. You can open it in a new tab or download it.',
+  },
   projectOverlay: {
     open: 'Open project',
     prev: 'Previous project',

@@ -54,6 +54,24 @@ export const es = {
     outcomes: 'Logros',
     upwork: 'Perfil de Upwork',
   },
+  /** Sección de formación (RF-16), agrupada por jerarquía. */
+  education: {
+    groups: {
+      official: 'Formación oficial',
+      certification: 'Certificaciones',
+      course: 'Cursos',
+    },
+    openDocument: 'Ver acreditación',
+  },
+  /** Visor de documentos embebido (RF-18, compartido por formación e idiomas). */
+  documentViewer: {
+    close: 'Cerrar visor de documento',
+    openNewTab: 'Abrir en una pestaña nueva',
+    download: 'Descargar documento',
+    errorTitle: 'Documento no disponible',
+    errorBody:
+      'El documento no se puede mostrar embebido todavía. Puedes abrirlo en una pestaña nueva o descargarlo.',
+  },
   projectOverlay: {
     open: 'Abrir proyecto',
     prev: 'Proyecto anterior',

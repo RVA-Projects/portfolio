@@ -5,9 +5,12 @@ export type EducationKind = 'official' | 'certification' | 'course'
 export interface Education extends BaseEntity {
   kind: EducationKind
   name: LocalizedText
-  /** Organismo emisor, tal como se publica. */
-  issuer: string
-  /** ISO 8601 parcial: "YYYY-MM" o "YYYY". */
+  /**
+   * Organismo emisor, tal como se publica. Opcional: algunos ítems (DAM)
+   * no declaran organismo en la fuente y NO se inventa.
+   */
+  issuer?: string
+  /** ISO 8601 parcial: "YYYY-MM" o "YYYY". Ausente si no hay dato verificado. */
   date?: string
   /** Duración en formato libre ("40 h"). */
   duration?: string

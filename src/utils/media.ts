@@ -21,3 +21,14 @@ export function extractYouTubeId(src: string): string | null {
   if (new RegExp(`^${idPattern}$`).test(src.trim())) return src.trim()
   return null
 }
+
+/**
+ * Convierte una URL de visor de Google Drive (`/file/d/<id>/view…`) en la
+ * URL de embebido (`/preview`), la única que los iframes de Drive aceptan.
+ * Devuelve null si la URL no es de Drive (el visor la usa tal cual).
+ */
+export function googleDriveEmbedUrl(src: string): string | null {
+  const match = src.match(/^https:\/\/drive\.google\.com\/file\/d\/([A-Za-z0-9_-]+)\/view/)
+  if (match === null) return null
+  return `https://drive.google.com/file/d/${match[1]}/preview`
+}

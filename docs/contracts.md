@@ -97,9 +97,9 @@ export type EducationKind = 'official' | 'certification' | 'course'
 export interface Education extends BaseEntity {
   kind: EducationKind
   name: LocalizedText
-  issuer: string // organismo (propio nombre; no traducible salvo necesidad)
-  date?: string // ISO 8601 (YYYY-MM | YYYY) — opcional
-  duration?: string // texto libre, ej: "40 h"
+  issuer?: string // organismo emisor; opcional (DAM no declara organismo — no se inventa)
+  date?: string // ISO 8601 (YYYY-MM | YYYY) — opcional, ausente si no hay dato verificado
+  duration?: string // texto libre, ej: "40 h" — opcional
   description?: LocalizedText
   document?: DocumentRef // acreditación, opcional
 }
@@ -165,16 +165,16 @@ Todos los componentes reciben datos por props; ninguno importa entidades concret
 | ----------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `SectionHeading`        | `kicker: string; title: string; subtitle?: string` — textos ya traducidos por la sección (i18n resuelve a strings)                                                                                                                                                                                                                                                                                             |
 | `Tag`                   | `label: string; variant?: 'tech' \| 'category' \| 'accent'; onClick?`                                                                                                                                                                                                                                                                                                                                          |
-| `Button`                | `label: string; onClick?; href?; external?: boolean; variant; icon?; ariaLabel?; disabled?` (`href` ⇒ `<a>`)                                                                                                                                                                                                                                                                                                   |
+| `Button`                | `label: string; onClick?; href?; external?: boolean; download?: boolean; variant; icon?; ariaLabel?; disabled?` (`href` ⇒ `<a>`; `download` añade el atributo download, usado por el visor de documentos)                                                                                                                                                                                                      |
 | `ProjectCard`           | `project; onSelect(projectId)`                                                                                                                                                                                                                                                                                                                                                                                 |
 | `TechnologyFilter`      | `technologies; activeId: TechnologyFilterValue; onChange(id: TechnologyFilterValue)`                                                                                                                                                                                                                                                                                                                           |
 | `ProjectCarousel`       | `projects; onSelect(projectId)` — interno: keyboard/táctil/botones en hook `useCarousel`                                                                                                                                                                                                                                                                                                                       |
 | `ProjectOverlay`        | `project \| null; onClose(); onPrev?(); onNext?(); hasPrev; hasNext` — textos vía `useLanguage()` (justificación: evita pasar language + tablas duplicadas por props)                                                                                                                                                                                                                                          |
 | `MediaGallery`          | `items` — interna: índice activo, teclado ←/→, miniaturas, indicador 1/N aria-live; YouTube lazy (facade + botón ▶)                                                                                                                                                                                                                                                                                            |
-| `EducationCard`         | `education; onOpenDocument(documentRef)`                                                                                                                                                                                                                                                                                                                                                                       |
+| `EducationCard`         | `item: Education; onOpenDocument(document: DocumentRef)` — botón «Ver acreditación» solo con `document`                                                                                                                                                                                                                                                                                                        |
 | `ExperienceCard`        | `experience` (agrupa por `kind` en la sección)                                                                                                                                                                                                                                                                                                                                                                 |
 | `LanguageCard`          | `profile: LanguageProfile; onOpenDocument(documentRef)`                                                                                                                                                                                                                                                                                                                                                        |
-| `DocumentViewerOverlay` | `document: DocumentRef; title: LocalizedText; onClose()` — embebido inline, NO nueva pestaña                                                                                                                                                                                                                                                                                                                   |
+| `DocumentViewerOverlay` | `document: DocumentRef \| null; onClose(); ui: { close; openNewTab; download; errorTitle; errorBody }` — embebido inline, NUNCA pestaña nueva; Drive se transforma a `/preview` (`googleDriveEmbedUrl`); timeout/onError ⇒ error controlado con acciones abrir/descargar                                                                                                                                       |
 | `Modal` (OverlayBase)   | `open; onClose(); labelledById; flush?; aside?; children` — encapsula focus-trap, Escape, clic-fuera, scroll-lock; `flush` desactiva el scroll del panel (layout 50/50 del ProjectOverlay); `aside` renderiza contenido complementario dentro del backdrop (fuera del `overflow` del panel, p. ej. flechas flotantes del ProjectOverlay) y queda cubierto por el focus-trap, que ahora abarca TODO el backdrop |
 
 `TechnologyFilterValue = string | null` (`null` = All).
@@ -185,6 +185,11 @@ Todos los componentes reciben datos por props; ninguno importa entidades concret
 // utils/filter.ts
 export function filterProjects(projects: Project[], tech: TechnologyFilterValue): Project[]
 export function technologiesInProjects(projects: Project[]): Technology[] // para construir el filtro
+```
+
+```ts
+// utils/media.ts (además de extractYouTubeId)
+export function googleDriveEmbedUrl(src: string): string | null // Drive /view → /preview para embeber (DocumentViewerOverlay)
 ```
 
 ## 10. Reglas de validación de datos (`audit:content` en Vitest)
