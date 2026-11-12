@@ -10,9 +10,10 @@ interface ExperienceCardProps {
 }
 
 /**
- * Tarjeta de experiencia (RF-15): puramente representativa. Muestra la
- * organización, tipo, periodo (solo si existe dato verificado), rol,
- * descripción, funciones, logros, tecnologías y enlaces existentes.
+ * Tarjeta de experiencia (RF-15, Fase 6): puramente representativa, sin
+ * grupos ni etiqueta de tipo. Muestra organización, periodo (solo si existe
+ * dato verificado), rol, descripción, funciones, logros, tecnologías y
+ * enlaces existentes. (El rediseño minimalista llega en Fase 5.)
  */
 export function ExperienceCard({ item }: ExperienceCardProps) {
   const { language, texts } = useLanguage()
@@ -28,7 +29,6 @@ export function ExperienceCard({ item }: ExperienceCardProps) {
         <div>
           <h3 className={styles.title}>{item.organization[language]}</h3>
           <p className={styles.meta}>
-            <Tag label={texts.experience.groups[item.kind]} variant="category" />
             {item.role !== undefined && <span>{item.role[language]}</span>}
             {periodLabel !== null && <span>{periodLabel}</span>}
           </p>

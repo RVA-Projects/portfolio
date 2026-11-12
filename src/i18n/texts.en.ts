@@ -52,13 +52,8 @@ export const en: Texts = {
     next: 'Scroll to next projects',
     viewport: 'Projects carousel',
   },
-  /** RF-15 experience section, grouped by kind. */
+  /** RF-15 experience section, flat list since Phase 6. */
   experience: {
-    groups: {
-      professional: 'Professional',
-      independent: 'Independent projects',
-      collab: 'Collaborations',
-    },
     current: 'Present',
     responsibilities: 'Duties',
     outcomes: 'Outcomes',

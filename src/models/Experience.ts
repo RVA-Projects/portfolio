@@ -1,11 +1,13 @@
 import type { BaseEntity, LocalizedText } from './common'
 import type { EducationalTextItem } from './Project'
 
-export type ExperienceKind = 'professional' | 'independent' | 'collab'
-
+/**
+ * Fase 6 (plan de actualización): experiencia = lista plana de trabajo
+ * profesional. Los proyectos propios/colaboraciones viven en el catálogo de
+ * Proyectos (fichas), no aquí — `kind` ya no existe.
+ */
 export interface Experience extends BaseEntity {
-  kind: ExperienceKind
-  /** Nombre de la organización o del proyecto independiente. */
+  /** Nombre de la organización o del contexto profesional. */
   organization: LocalizedText
   /**
    * Periodo con fecha real verificada por el propietario. `start`/`end`

@@ -1,27 +1,60 @@
 import { describe, expect, it } from 'vitest'
 import { experience } from '../src/data/experience'
 import { technologies } from '../src/data/technologies'
-import type { ExperienceKind } from '../src/models/Experience'
 import { projects } from '../src/data/projects'
 
-const projectSlugs = new Set(projects.map((project) => project.slug))
+const projectIds = new Set(projects.map((project) => project.id))
 
-describe('audit:content — integridad de datos de experiencia (RF-15)', () => {
+describe('audit:content — integridad de datos de experiencia (RF-15, Fase 6)', () => {
   it('no hay IDs duplicados', () => {
     const ids = experience.map((item) => item.id)
     expect(new Set(ids).size).toBe(ids.length)
   })
 
-  it('los kinds son solo los del modelo (freelance eliminado, decisión propietario)', () => {
-    const valid: ExperienceKind[] = ['professional', 'independent', 'collab']
+  it('el catálogo es la lista plana de trabajo profesional validada (7 entradas, Fase 6)', () => {
+    expect(experience.map((item) => item.id)).toEqual([
+      'centro-medico-sector-v-web',
+      'redes-sociales-centro-medico',
+      'agente-ia-centro-medico',
+      'signature-application',
+      'loki-home',
+      'smarti-data-datasets',
+      'voz-asistentes-ia',
+    ])
+  })
+
+  it('las únicas entradas con ficha de proyecto asociada son las aprobadas (Fase 5 las enlazará)', () => {
+    // signature-application y loki-home comparten id con su ficha: mismo trabajo
     for (const item of experience) {
-      expect(valid).toContain(item.kind)
+      if (projectIds.has(item.id)) {
+        expect(['signature-application', 'loki-home']).toContain(item.id)
+      }
     }
-    // Cobertura de los tres grupos
-    const kinds = new Set(experience.map((item) => item.kind))
-    expect(kinds.has('professional')).toBe(true)
-    expect(kinds.has('independent')).toBe(true)
-    expect(kinds.has('collab')).toBe(true)
+  })
+
+  it('las entradas independent/collab ya NO existen aquí (viven como fichas en Proyectos)', () => {
+    const ids = experience.map((item) => item.id)
+    for (const removed of [
+      'snake',
+      'mini-crm',
+      'flashcards-app',
+      'task-manager',
+      'gb-utility',
+      'dawdam-top',
+    ]) {
+      expect(ids).not.toContain(removed)
+    }
+    // Y sus fichas siguen existiendo en Proyectos con sus datos completos
+    for (const fichaId of [
+      'snake',
+      'mini-crm',
+      'flashcards-app',
+      'task-manager',
+      'gb-utility',
+      'dawdam-top',
+    ]) {
+      expect(projectIds.has(fichaId)).toBe(true)
+    }
   })
 
   it('todas las technologyIds existen en el catálogo', () => {
@@ -76,13 +109,7 @@ describe('audit:content — integridad de datos de experiencia (RF-15)', () => {
   })
 
   it('los enlaces son solo dominios verificados (incl. perfil real de Upwork)', () => {
-    const allowed = [
-      'github.com',
-      'lokihome.com',
-      'centromedicosectorv.es',
-      'dawdam.top',
-      'upwork.com',
-    ]
+    const allowed = ['lokihome.com', 'centromedicosectorv.es', 'upwork.com']
     for (const item of experience) {
       for (const link of item.links ?? []) {
         expect(allowed.find((domain) => link.url.includes(domain))).toBeTruthy()
@@ -100,25 +127,5 @@ describe('audit:content — integridad de datos de experiencia (RF-15)', () => {
         'https://www.upwork.com/freelancers/~011b7fd9b75d981e3c?mp_source=share',
       )
     }
-  })
-
-  it('el catálogo de experiencia es el validado con el propietario (13 entradas)', () => {
-    const expected = new Set([
-      'centro-medico-sector-v-web',
-      'redes-sociales-centro-medico',
-      'agente-ia-centro-medico',
-      'signature-application',
-      'loki-home',
-      'smarti-data-datasets',
-      'voz-asistentes-ia',
-      'snake',
-      'mini-crm',
-      'flashcards-app',
-      'task-manager',
-      'gb-utility',
-      'dawdam-top',
-    ])
-    expect(new Set(experience.map((item) => item.id))).toEqual(expected)
-    expect(projectSlugs.size).toBeGreaterThan(0)
   })
 })

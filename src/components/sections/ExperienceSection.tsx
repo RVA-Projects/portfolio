@@ -1,32 +1,17 @@
 import { experience } from '../../data/experience'
 import type { SectionId } from '../../data/site'
-import type { Experience, ExperienceKind } from '../../models/Experience'
 import { useLanguage } from '../../i18n'
 import { SectionHeading } from '../base/SectionHeading'
 import { ExperienceCard } from './ExperienceCard'
 import styles from './ExperienceSection.module.css'
 
-/** Orden estable y semántica de grupos (inventario §5 + decisión D-F6: sin 'freelance'). */
-const GROUP_ORDER: ExperienceKind[] = ['professional', 'independent', 'collab']
-
-function groupByKind(items: Experience[]): Partial<Record<ExperienceKind, Experience[]>> {
-  const groups: Partial<Record<ExperienceKind, Experience[]>> = {}
-  for (const item of items) {
-    const list = groups[item.kind] ?? []
-    list.push(item)
-    groups[item.kind] = list
-  }
-  return groups
-}
-
 /**
- * Sección de experiencia (RF-15): agrupa por tipo (freelance, independiente,
- * colaboración, profesional si existiera) y renderiza ExperienceCard por
- * datos. Sin lógica de presentación más allá del agrupado (puro).
+ * Sección de experiencia (RF-15, Fase 6): lista plana de trabajo profesional
+ * (los proyectos propios/colaboraciones viven en Proyectos). Sin lógica de
+ * presentación más allá del mapeo de tarjetas.
  */
 export function ExperienceSection() {
   const { texts } = useLanguage()
-  const groups = groupByKind(experience)
 
   return (
     <section
@@ -35,20 +20,11 @@ export function ExperienceSection() {
       aria-label={texts.sections.experience}
     >
       <SectionHeading kicker="03 — Experience" title={texts.sections.experience} />
-      {GROUP_ORDER.map((kind) => {
-        const items = groups[kind]
-        if (items === undefined || items.length === 0) return null
-        return (
-          <div key={kind} className={styles.group}>
-            <h3 className={styles.groupTitle}>{texts.experience.groups[kind]}</h3>
-            <div className={styles.cards}>
-              {items.map((item) => (
-                <ExperienceCard key={item.id} item={item} />
-              ))}
-            </div>
-          </div>
-        )
-      })}
+      <div className={styles.cards}>
+        {experience.map((item) => (
+          <ExperienceCard key={item.id} item={item} />
+        ))}
+      </div>
     </section>
   )
 }

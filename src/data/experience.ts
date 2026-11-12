@@ -2,18 +2,17 @@ import type { Experience } from '../models/Experience'
 
 /**
  * Experiencia declarativa (inventario §5 + fechas validadas por el
- * propietario, 2026-11). Clasificación: work remunerado y cargos reales
- * ⇒ `professional`; proyectos propios ⇒ `independent`; colaboración en
- * equipo ajeno ⇒ `collab`. `freelance` ya no existe como tipo (ADR F6).
+ * propietario, 2026-11). Fase 6 del plan de actualización: SOLO trabajo
+ * profesional remunerado/cargos reales; los proyectos propios y
+ * colaboraciones (snake, mini-crm, flashcards, task-manager, gb-utility,
+ * dawdam-top) viven como fichas en el catálogo de Proyectos — sin duplicar.
  *
  * Periodos: año o año-mes reales; ausencia ⇒ sin fecha visible (nunca inventada).
  * Enlaces: solo dominios/repos verificados (incl. perfil real de Upwork).
  */
 export const experience: Experience[] = [
-  // ——— Profesional
   {
     id: 'centro-medico-sector-v-web',
-    kind: 'professional',
     period: { start: '2025' },
     organization: {
       es: 'Centro Médico Sector V — web',
@@ -64,7 +63,6 @@ export const experience: Experience[] = [
   },
   {
     id: 'redes-sociales-centro-medico',
-    kind: 'professional',
     period: { start: '2025' },
     organization: {
       es: 'Centro Médico Sector V — redes sociales',
@@ -98,7 +96,6 @@ export const experience: Experience[] = [
   },
   {
     id: 'agente-ia-centro-medico',
-    kind: 'professional',
     period: { start: '2026' },
     organization: {
       es: 'Centro Médico Sector V — agente IA de asesoramiento',
@@ -132,7 +129,6 @@ export const experience: Experience[] = [
   },
   {
     id: 'signature-application',
-    kind: 'professional',
     period: { start: '2026' },
     organization: {
       es: 'Centro Médico Sector V — firma digital',
@@ -175,7 +171,6 @@ export const experience: Experience[] = [
   },
   {
     id: 'loki-home',
-    kind: 'professional',
     period: { start: '2025' },
     organization: { es: 'Loki Home', en: 'Loki Home' },
     role: {
@@ -207,7 +202,6 @@ export const experience: Experience[] = [
   },
   {
     id: 'smarti-data-datasets',
-    kind: 'professional',
     organization: {
       es: 'Smarti DATA — vía Upwork',
       en: 'Smarti DATA — via Upwork',
@@ -239,7 +233,6 @@ export const experience: Experience[] = [
   },
   {
     id: 'voz-asistentes-ia',
-    kind: 'professional',
     organization: {
       es: 'Captación de comandos de voz — vía Upwork',
       en: 'Voice command collection — via Upwork',
@@ -268,180 +261,5 @@ export const experience: Experience[] = [
         url: 'https://www.upwork.com/freelancers/~011b7fd9b75d981e3c?mp_source=share',
       },
     ],
-  },
-
-  // ——— Independientes
-  {
-    id: 'snake',
-    kind: 'independent',
-    period: { start: '2026' },
-    organization: { es: 'Snake', en: 'Snake' },
-    role: {
-      es: 'Desarrollo asistido con agentes IA (OpenCode)',
-      en: 'Development assisted by AI agents (OpenCode)',
-    },
-    description: {
-      es: 'Juego Snake para navegador desarrollado con OpenCode: administración con AGENTS.md/memory.md, documentación en docs/ y harness de pruebas Vitest. Publicado en GitHub Pages.',
-      en: 'Browser Snake game developed with OpenCode: AGENTS.md/memory.md governance, docs/ documentation and a Vitest test harness. Published on GitHub Pages.',
-    },
-    responsibilities: [
-      {
-        id: 'r-1',
-        text: {
-          es: 'Dirigir el desarrollo mediante agentes IA con control de decisiones',
-          en: 'Direct the development through AI agents with owner decisions',
-        },
-      },
-    ],
-    technologyIds: ['html', 'css', 'javascript', 'git'],
-    links: [{ id: 'github', url: 'https://github.com/RVA-Projects/snake' }],
-  },
-  {
-    id: 'mini-crm',
-    kind: 'independent',
-    period: { start: '2026' },
-    organization: { es: 'MiniCRM (Android)', en: 'MiniCRM (Android)' },
-    role: {
-      es: 'Diseño y desarrollo',
-      en: 'Design and development',
-    },
-    description: {
-      es: 'CRM ligero para Android (Kotlin + Room): contactos, notas y seguimiento sencillo sin cuentas ni nube.',
-      en: 'Lightweight Android CRM (Kotlin + Room): contacts, notes and simple follow-up with no accounts or cloud.',
-    },
-    responsibilities: [
-      {
-        id: 'r-1',
-        text: {
-          es: 'Modelar la persistencia con Room y las pantallas mínimas de uso real',
-          en: 'Model Room persistence and the minimal real-use screens',
-        },
-      },
-    ],
-    technologyIds: ['kotlin', 'room', 'android-studio'],
-  },
-  {
-    id: 'flashcards-app',
-    kind: 'independent',
-    period: { start: '2025' },
-    organization: { es: 'Flashcards App (Android)', en: 'Flashcards App (Android)' },
-    role: {
-      es: 'Diseño y desarrollo',
-      en: 'Design and development',
-    },
-    description: {
-      es: 'App de estudio con tarjetas importadas de CSV, práctica por sesiones y uso sin conexión. Código abierto en GitHub.',
-      en: 'Study app with CSV-imported flashcards, session-based practice and offline use. Open source on GitHub.',
-    },
-    responsibilities: [
-      {
-        id: 'r-1',
-        text: {
-          es: 'Implementar importación de CSV y el ciclo de práctica en Kotlin',
-          en: 'Implement CSV import and the practice cycle in Kotlin',
-        },
-      },
-    ],
-    technologyIds: ['kotlin', 'android-studio'],
-    links: [{ id: 'github', url: 'https://github.com/RVA-Projects/flashcards' }],
-  },
-  {
-    id: 'task-manager',
-    kind: 'independent',
-    period: { start: '2024' },
-    organization: { es: 'Task Manager', en: 'Task Manager' },
-    role: {
-      es: 'Diseño y desarrollo',
-      en: 'Design and development',
-    },
-    description: {
-      es: 'Aplicación de escritorio en uso diario propio: gestión de tareas en C# (Windows Forms) con persistencia local en SQLite. Código abierto en GitHub.',
-      en: 'Desktop application in daily personal use: C# (Windows Forms) task management with local SQLite persistence. Open source on GitHub.',
-    },
-    responsibilities: [
-      {
-        id: 'r-1',
-        text: {
-          es: 'Modelar el almacenamiento local y el ciclo de vida de tareas',
-          en: 'Model local storage and the task lifecycle',
-        },
-      },
-    ],
-    outcomes: [
-      {
-        id: 'o-1',
-        text: { es: 'En uso diario propio', en: 'In daily personal use' },
-      },
-    ],
-    technologyIds: ['csharp', 'sqlite'],
-    links: [{ id: 'github', url: 'https://github.com/RVA-Projects/TaskManager' }],
-  },
-  {
-    id: 'gb-utility',
-    kind: 'independent',
-    period: { start: '2024' },
-    organization: {
-      es: 'GB Utility (Magic & Monsters)',
-      en: 'GB Utility (Magic & Monsters)',
-    },
-    role: {
-      es: 'Diseño y desarrollo',
-      en: 'Design and development',
-    },
-    description: {
-      es: 'Complemento de escritorio para un juego de mesa: personajes/NPCs, misiones y eventos aleatorios y sistema de recompensas. Código abierto en GitHub.',
-      en: 'Desktop companion for a board game: characters/NPCs, random quests/events and a reward system. Open source on GitHub.',
-    },
-    responsibilities: [
-      {
-        id: 'r-1',
-        text: {
-          es: 'Modelar reglas del juego como datos en SQLite para ampliar contenido sin reprogramar',
-          en: 'Model game rules as SQLite data so content grows without reprogramming',
-        },
-      },
-    ],
-    outcomes: [
-      {
-        id: 'o-1',
-        text: { es: 'En uso en partidas propias', en: 'In use at own sessions' },
-      },
-    ],
-    technologyIds: ['csharp', 'sqlite'],
-    links: [{ id: 'github', url: 'https://github.com/RVA-Projects/GB-Utility' }],
-  },
-
-  // ——— Colaboraciones
-  {
-    id: 'dawdam-top',
-    kind: 'collab',
-    period: { start: '2024' },
-    organization: { es: 'dawdam.top', en: 'dawdam.top' },
-    role: {
-      es: 'Colaboración en WordPress',
-      en: 'WordPress collaboration',
-    },
-    description: {
-      es: 'Colaboración en la plataforma de formación: gestión de asignaturas, contenidos y optimización del flujo de trabajo del CMS.',
-      en: 'Collaboration on the teaching platform: subject/content management and CMS workflow optimisation.',
-    },
-    responsibilities: [
-      {
-        id: 'r-1',
-        text: {
-          es: 'Gestionar asignaturas y contenidos de la plataforma',
-          en: 'Manage platform subjects and content',
-        },
-      },
-      {
-        id: 'r-2',
-        text: {
-          es: 'Simplificar tareas repetitivas del CMS',
-          en: 'Simplify repetitive CMS tasks',
-        },
-      },
-    ],
-    technologyIds: ['wordpress'],
-    links: [{ id: 'web', url: 'https://dawdam.top/' }],
   },
 ]
