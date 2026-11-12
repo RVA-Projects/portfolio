@@ -8,7 +8,11 @@ interface TopBarProps {
   /** Estado del NavigationMenu (controlled desde App). */
   menuOpen: boolean
   onToggleMenu: () => void
-  /** El menú desaparece al interactuar/scroll (RF-04). */
+  /**
+   * RF-04 (Fase 7.1): cerca del inicio o deslizando hacia arriba ⇒ barra
+   * normal; deslizando hacia abajo ⇒ COMPACTA flotante (nunca desaparece:
+   * el botón de menú sigue accesible en cualquier posición de scroll).
+   */
   visible: boolean
   /** Tema activo (D18): el botón ofrece el contrario. */
   theme: ThemeId
@@ -16,13 +20,15 @@ interface TopBarProps {
 }
 
 /**
- * Fase 5.3: barra superior minimalista. Disparador del menú + alternador de
- * tema (D18). Contenido permanente cero: el nombre vive en la intro.
+ * Fase 5.3/F7.1: barra superior minimalista. Disparador del menú +
+ * alternador de tema (D18). Contenido permanente cero: el nombre vive en la
+ * intro. Al deslizar hacia abajo se reduce (topbar--compact) en lugar de
+ * ocultarse: el menú es accesible desde cualquier punto de la página.
  */
 export function TopBar({ menuOpen, onToggleMenu, visible, theme, onToggleTheme }: TopBarProps) {
   const { texts } = useLanguage()
   const className =
-    visible || menuOpen ? styles.topbar : `${styles.topbar} ${styles['topbar--hidden']}`
+    visible || menuOpen ? styles.topbar : `${styles.topbar} ${styles['topbar--compact']}`
 
   return (
     <header className={className}>

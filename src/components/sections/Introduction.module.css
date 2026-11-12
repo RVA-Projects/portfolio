@@ -82,13 +82,14 @@
   margin-bottom: var(--space-3);
 }
 
-/* Grid icono + nombre, uniforme en los tres niveles */
+/* Grid icono + nombre, uniforme en los tres niveles. Fase 7.2: más grande
+   (columnas e iconos mayores) y jerárquico (texto pleno, no secundario). */
 .techGrid {
   margin: 0;
   padding: 0;
   list-style: none;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
   gap: var(--space-3) var(--space-4);
 }
 
@@ -96,16 +97,25 @@
   display: flex;
   align-items: center;
   gap: var(--space-2);
-  font-size: var(--fs-small);
-  color: var(--color-text-muted);
-  min-height: 24px;
-}
-
-.techItem:hover {
+  font-size: var(--fs-body);
   color: var(--color-text);
+  min-height: 32px;
+  --tech-icon-size: 28px;
 }
 
-/* Zoom suave del icono al pasar por la fila (interacción nunca solo-hover) */
+@media (min-width: 768px) {
+  .techGrid {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: var(--space-4) var(--space-5);
+  }
+
+  .techItem {
+    --tech-icon-size: 32px;
+    min-height: 36px;
+  }
+}
+
+/* Zoom suave del icono al pasar por la fila (decorativo; el texto ya es pleno) */
 .techItem:hover img {
   transform: scale(1.15);
 }

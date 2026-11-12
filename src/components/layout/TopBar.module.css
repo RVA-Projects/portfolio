@@ -10,11 +10,16 @@
     opacity var(--dur-base) var(--ease);
 }
 
-/* RF-04: el botón del menú NO es permanente — se oculta al deslizar abajo */
-.topbar--hidden {
-  transform: translateY(-120%);
-  opacity: 0;
-  pointer-events: none;
+/* RF-04 / Fase 7.1: el botón de menú SIEMPRE accesible. Al deslizar hacia
+   abajo la barra se reduce a pastilla compacta flotante translúcida
+   (antes se ocultaba: el menú quedaba inalcanzable en scroll largo). */
+.topbar--compact {
+  padding: var(--space-1);
+  border-radius: var(--radius-full, 999px);
+  background: var(--color-backdrop);
+  box-shadow: var(--shadow-overlay, 0 8px 24px rgba(0, 0, 0, 0.35));
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
 }
 
 @media (prefers-reduced-motion: reduce) {

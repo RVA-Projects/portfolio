@@ -50,6 +50,50 @@ function withinMenu(menu: HTMLElement) {
   return Array.from(menu.querySelectorAll('a')).map((a) => a.textContent)
 }
 
+describe('TopBar compacta (Fase 7.1 — RF-04)', () => {
+  async function scrollDown(pixels: number) {
+    Object.defineProperty(window, 'scrollY', { value: pixels, configurable: true })
+    fireEvent.scroll(window)
+    /* El hook encarga el cálculo a requestAnimationFrame */
+    await new Promise((resolve) => setTimeout(resolve, 50))
+  }
+
+  it('al deslizar hacia abajo la barra se reduce a compacta, SIN desaparecer', async () => {
+    render(<App />)
+    const menuButton = screen.getByRole('button', { name: MENU_OPEN_LABEL })
+    const bar = menuButton.closest('header') as HTMLElement
+    expect(bar.className).not.toContain('compact')
+
+    await scrollDown(500)
+    expect(bar.className).toContain('compact')
+    expect(bar.className).not.toContain('hidden')
+    /* El disparador del menú sigue interactuable en cualquier scroll */
+    expect(screen.getByRole('button', { name: MENU_OPEN_LABEL })).toBeEnabled()
+    Object.defineProperty(window, 'scrollY', { value: 0, configurable: true })
+  })
+
+  it('al volver cerca del inicio la barra recupera su tamaño normal', async () => {
+    render(<App />)
+    await scrollDown(500)
+    const menuButton = screen.getByRole('button', { name: MENU_OPEN_LABEL })
+    const bar = menuButton.closest('header') as HTMLElement
+    expect(bar.className).toContain('compact')
+
+    await scrollDown(0)
+    expect(bar.className).not.toContain('compact')
+  })
+
+  it('con el menú abierto nunca adopta la forma compacta', async () => {
+    render(<App />)
+    await scrollDown(500)
+    openMenu()
+    const menuButton = screen.getByRole('button', { name: 'Cerrar menú de navegación' })
+    const bar = menuButton.closest('header') as HTMLElement
+    expect(bar.className).not.toContain('compact')
+    Object.defineProperty(window, 'scrollY', { value: 0, configurable: true })
+  })
+})
+
 describe('i18n (RF-25/D12)', () => {
   it('usa inglés cuando el navegador es en-US y no hay elección persistida', () => {
     window.localStorage.clear()

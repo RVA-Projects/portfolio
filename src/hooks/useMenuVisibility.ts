@@ -1,9 +1,9 @@
 import { useLayoutEffect, useState } from 'react'
 
 /**
- * RF-04: el menú no permanece fijo. Devuelve `visible`:
- * cerca del inicio o deslizando hacia arriba ⇒ visible;
- * deslizando hacia abajo pasado el umbral ⇒ se oculta.
+ * RF-04 (Fase 7.1): el menú es accesible siempre. Devuelve `visible`:
+ * cerca del inicio o deslizando hacia arriba ⇒ barra normal;
+ * deslizando hacia abajo pasado el umbral ⇒ compacta flotante (TopBar).
  */
 export function useMenuVisibility(threshold = 320): boolean {
   const [visible, setVisible] = useState(true)
