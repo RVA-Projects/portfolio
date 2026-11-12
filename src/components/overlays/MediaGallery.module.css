@@ -10,7 +10,7 @@
   aspect-ratio: 16 / 10;
   min-height: 0;
   overflow: hidden;
-  background: #0a0a0b;
+  background: var(--color-media-stage);
   border: 1px solid var(--color-line);
   border-radius: var(--radius-md);
 }
@@ -20,7 +20,7 @@
   width: 100%;
   height: 100%;
   object-fit: contain;
-  background: #0a0a0b;
+  background: var(--color-media-stage);
   border: 0;
 }
 

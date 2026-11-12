@@ -8,6 +8,8 @@ export const en: Texts = {
     open: 'Open navigation menu',
     close: 'Close navigation menu',
     label: 'Main navigation',
+    toLight: 'Switch to light mode',
+    toDark: 'Switch to dark mode',
   },
   sections: {
     intro: 'Intro',

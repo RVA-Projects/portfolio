@@ -5,7 +5,7 @@
   display: grid;
   place-items: center;
   padding: var(--space-5);
-  background: rgba(10, 10, 11, 0.85);
+  background: var(--color-backdrop);
   backdrop-filter: blur(4px);
   animation: fadeIn var(--dur-base) var(--ease);
 }

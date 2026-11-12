@@ -10,6 +10,11 @@
   --color-text-muted: #9a9aa0;
   --color-accent: #e23744;
   --color-focus: #ffffff;
+  /* Backdrop de overlays (Modal); token para que ambos temas lo ajusten. */
+  --color-backdrop: rgba(10, 10, 11, 0.85);
+  /* Stage de reproductor/galería: oscuro en ambos temas (identidad de visor). */
+  --color-media-stage: #0a0a0b;
+  --shadow-overlay: 0 12px 32px rgba(0, 0, 0, 0.45);
 
   /* Tipografía (design-system §3) */
   --font-display: 'Space Grotesk', system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
@@ -51,4 +56,23 @@
   /* Z-index institucional */
   --z-nav: 40;
   --z-modal: 100;
+}
+
+/* ============ Tema claro (D18) ============
+   Misma identidad: blanco como fondo principal, casi negro para texto,
+   grises para superficies/líneas y el rojo de acento ligeramente oscurecido
+   para mantener contraste AA sobre fondo claro. SOLO se reescriben colores. */
+:root[data-theme='light'] {
+  --color-bg: #f7f7f8;
+  --color-surface: #ffffff;
+  --color-surface-2: #ececee;
+  --color-line: #d8d8dd;
+  --color-line-strong: #b4b4bc;
+  --color-text: #17171a;
+  --color-text-muted: #5a5a63;
+  --color-accent: #c0212c;
+  --color-focus: #17171a;
+  --color-backdrop: rgba(247, 247, 248, 0.9);
+  /* Sombra suave sobre fondo claro (misma geometría). */
+  --shadow-overlay: 0 12px 32px rgba(23, 23, 26, 0.18);
 }

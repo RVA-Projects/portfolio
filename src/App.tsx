@@ -5,6 +5,7 @@ import { LanguageProvider } from './i18n'
 import { useMenuVisibility } from './hooks/useMenuVisibility'
 import { useScrollSpy } from './hooks/useScrollSpy'
 import { useDisclosure } from './hooks/useDisclosure'
+import { useTheme } from './hooks/useTheme'
 import { NavigationMenu } from './components/layout/NavigationMenu'
 import { TopBar } from './components/layout/TopBar'
 import { Introduction } from './components/sections/Introduction'
@@ -29,6 +30,7 @@ function AppRoutes() {
   const menu = useDisclosure(false)
   const menuVisible = useMenuVisibility()
   const activeSection = useScrollSpy(SECTIONS)
+  const { theme, toggleTheme } = useTheme()
 
   /** Ancla nativa con desplazamiento suave (institucional, no mecánico) */
   const onSelect = useCallback(
@@ -43,7 +45,13 @@ function AppRoutes() {
 
   return (
     <>
-      <TopBar menuOpen={menu.open} onToggleMenu={menu.onToggle} visible={menuVisible} />
+      <TopBar
+        menuOpen={menu.open}
+        onToggleMenu={menu.onToggle}
+        visible={menuVisible}
+        theme={theme}
+        onToggleTheme={toggleTheme}
+      />
       <NavigationMenu
         open={menu.open}
         activeId={activeSection}

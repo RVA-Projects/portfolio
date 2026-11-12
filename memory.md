@@ -1,12 +1,12 @@
 # memory.md — RVA Portfolio
 
 > Memoria operativa del agente. Actualizar tras cada cambio relevante.
-> Última actualización: 2026-11-12 (F6.7 LanguagesSection; 88 tests).
+> Última actualización: 2026-11-12 (Fase 1 del plan de actualización: temas claro/oscuro, D18; 92 tests).
 
 ## Estado actual
 
-- **Fases:** 0 ✅ · 1 ✅ · 2 ✅ · 3 ✅ · 4 ✅ (deploy pendiente de remoto) · 5 ✅ (revisión móvil aplazada a post-despliegue, decisión del propietario) · **6 🔶 (F6.1–F6.7 hechas; sigue F6.8 ContactSection + Footer, luego F6.10 Canvas y F6.9 i18n full)**.
-- **Harness:** `npm run validate` en VERDE (88 tests pasando; 1 warning aceptable react-refresh en `src/i18n/index.tsx`).
+- **Fases:** 0 ✅ · 1 ✅ · 2 ✅ · 3 ✅ · 4 ✅ (deploy pendiente de remoto) · 5 ✅ (revisión móvil aplazada a post-despliegue, decisión del propietario) · 6 🔶 (F6.1–F6.7 hechas) · **PLAN DE ACTUALIZACIÓN 2026-11 en curso: Fase 1 (temas, D18) ✅; sigue Fase 2.1 carrusel** (orden aprobado: 1 → 2.1 → 2.2 → 4 → 6 → 5 → 3 → 7).
+- **Harness:** `npm run validate` en VERDE (92 tests pasando; 1 warning aceptable react-refresh en `src/i18n/index.tsx`).
 - **Build:** JS 332.47KB (105.93KB gzip) / CSS 18.60KB; base `/portfolio/` verificada; cero dependencias de runtime (iconos como assets).
 
 ## Decisiones cerradas con el propietario (2026-11-10)
@@ -38,6 +38,7 @@ Ver detalle en `docs/decisions.md` (D01–D15). Resumen:
   - **Chore:** `@types/node` dev-dep (tests con node:fs); `vite/client` en tsconfig types; `oldPortfolio/` fuera de ESLint/Vitest/gitignore; HTML/CSS del catálogo mapeados (`html.svg`/`css.svg` desde html5/css3 de devicon).
 - **F6.6 (2026-11-11, D16):** `src/data/education.ts` (11 entradas del inventario §4 con enlaces REALES extraídos de `oldPortfolio/index.html`: 2 Credly, 1 CertView, 6 PDFs OpenWebinars → rutas locales `/portfolio/docs/<slug>.pdf`); `issuer` opcional en `Education` (DAM sin organismo, no se inventa); Java Foundations sin documento; sin fechas/duraciones. `EducationCard` + `EducationSection` (patrón Experience, kicker «04 — Education», grupos official→certification→course, grupos vacíos ocultos) integrada en App tras Experiencia. **DocumentViewerOverlay** sobre `Modal`: iframe embebido, Drive→`/preview` (`googleDriveEmbedUrl` en `utils/media.ts`), timeout 8s/onError ⇒ error controlado con «Abrir en pestaña nueva» + «Descargar» (`Button.download` nuevo). i18n `education.*` + `documentViewer.*` es/en. Tests: `education.test.ts` (integridad+Drive), `education-section.test.tsx`, `document-viewer.test.tsx` (timeout con fake timers + act).
 - **F6.7 (2026-11-12):** `src/data/languages.ts` (5 idiomas D04: castellano nativo, valenciano C1, rumano nativo, inglés B2, alemán starter; sin desglose conversación/escrito — decisión del propietario, nivel único); `LanguageCard` + `LanguagesSection` (grid, kicker «05 — Languages») integrada en App tras Educación; reutiliza `DocumentViewerOverlay` sin cambios. Sin documentos declarados (PDFs valenciano/inglés pendientes F7.3: al subirlos, añadir `document` a los 2 idiomas + existsSync). i18n `languages.*` es/en. Tests 80→88.
+- **Plan de actualización 2026-11 — Fase 1 (D18):** temas claro/oscuro. `tokens.css`: `:root` = oscuro; `:root[data-theme='light']` reescribe solo las 12 vars de color (acento #c0212c en claro); tokens nuevos `--color-backdrop`, `--color-media-stage` (oscuro en ambos), `--shadow-overlay` (menú adaptable). Hook `src/hooks/useTheme.ts` (localStorage `rva-portfolio-theme` ?? `prefers-color-scheme`, fallback oscuro con guard); toggle IconSun/IconMoon en TopBar (labels `nav.toLight`/`toDark`); Modal backdrop tokenizado; auditoría de colores hardcoded: #fff sobre acento OK en ambos, SVG devicon OK. Tests 88→92 (`tests/theme.test.tsx`).
 
 ## Pendientes del propietario (para Fase 7 y despliegue)
 
@@ -57,6 +58,8 @@ Ver detalle en `docs/decisions.md` (D01–D15). Resumen:
 - Los PDFs de los 6 cursos OpenWebinars están en `public/docs/` y verificados con existsSync (2026-11-12). Faltan los certificados de idiomas (valenciano C1, inglés B2) y el CV (F7.3): nombres propuestos `valenciano-c1.pdf` / `english-b2.pdf`.
 
 ## Últimos cambios
+
+- 2026-11-12 (4): **Fase 1 — temas claro/oscuro (D18)** — tokens claro en `tokens.css` (solo vars de color), `useTheme` + toggle en TopBar, Modal backdrop tokenizado, `--color-media-stage`/`--shadow-overlay` nuevos; tests 88→92.
 
 - 2026-11-12 (3): **F6.7 LanguagesSection** — 5 idiomas D04 (niveles únicos, sin desglose), LanguageCard/LanguagesSection reutilizando DocumentViewerOverlay (kicker «05»); sin documentos declarados hasta que el propietario suba los PDFs de Valenciano C1 e Inglés B2 (entonces: `document` + existsSync). Tests 74→88.
 
