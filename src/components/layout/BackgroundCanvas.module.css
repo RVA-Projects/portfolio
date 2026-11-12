@@ -1,0 +1,18 @@
+.layer {
+  position: fixed;
+  inset: 0;
+  /* Decorativa: detrás de TODO el contenido, delante del fondo del body. */
+  z-index: -1;
+  pointer-events: none;
+  /* Baja la presencia de los puntos: se sienten, no se leen (D23). */
+  opacity: 0.42;
+  transition: opacity var(--dur-base) var(--ease);
+}
+
+/* Legibilidad (D23): con cualquier overlay (Modal) o menú de navegación
+   abierto el fondo se atenúa a la mitad. Degradación inocua: sin :has()
+   no se atenúa, pero los paneles son sólidos de todos modos. */
+body:has([role='dialog']) .layer,
+body:has([data-testid='menu-backdrop']) .layer {
+  opacity: 0.2;
+}

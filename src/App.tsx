@@ -8,6 +8,7 @@ import { useDisclosure } from './hooks/useDisclosure'
 import { useTheme } from './hooks/useTheme'
 import { NavigationMenu } from './components/layout/NavigationMenu'
 import { TopBar } from './components/layout/TopBar'
+import { BackgroundCanvas } from './components/layout/BackgroundCanvas'
 import { Introduction } from './components/sections/Introduction'
 import { ProjectsSection } from './components/sections/ProjectsSection'
 import { ExperienceSection } from './components/sections/ExperienceSection'
@@ -45,6 +46,7 @@ function AppRoutes() {
 
   return (
     <>
+      <BackgroundCanvas theme={theme} />
       <TopBar
         menuOpen={menu.open}
         onToggleMenu={menu.onToggle}

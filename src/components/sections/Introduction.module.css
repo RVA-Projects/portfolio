@@ -1,8 +1,22 @@
 .intro {
+  position: relative;
   max-width: var(--container-max);
   margin-inline: auto;
   padding-block: clamp(96px, 18vh, 160px) var(--space-9);
   padding-inline: var(--container-pad);
+}
+
+/* Scrim de legibilidad (D23): degradado radial del color de fondo tras el
+   bloque de texto; atenúa los puntos SOLO donde hay prosa larga. Sangrado
+   SOLO vertical: horizontal provocaría overflow-x en viewports estrechos. */
+.intro::before {
+  content: '';
+  position: absolute;
+  inset: -48px 0;
+  z-index: -1;
+  pointer-events: none;
+  background: radial-gradient(ellipse 58% 50% at 30% 22%, var(--color-bg) 35%, transparent 100%);
+  opacity: 0.85;
 }
 
 /* ——— Nombre protagonista ——— */
