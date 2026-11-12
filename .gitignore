@@ -6,6 +6,10 @@ dist/
 dist-ssr/
 coverage/
 
+# Playwright (Fase 8)
+test-results/
+playwright-report/
+
 # Entorno y sistema
 *.local
 .DS_Store

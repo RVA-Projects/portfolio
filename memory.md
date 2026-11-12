@@ -5,7 +5,7 @@
 
 ## Estado actual
 
-- **Fases:** 0 ✅ · 1 ✅ · 2 ✅ · 3 ✅ · 4 ✅ (deploy pendiente de remoto) · 5 ✅ (revisión móvil aplazada a post-despliegue, decisión del propietario) · 6 🔶 (F6.1–F6.7 hechas) · **PLAN DE ACTUALIZACIÓN 2026-11 en curso: Fase 1 (temas, D18) ✅ · Fase 2.1 (carrusel) ✅ · Fase 2.2 (filtros) ✅ · Fase 4 (flechas+fullscreen) ✅ · Fase 6 (integración experiencia) ✅ · Fase 5 (rediseño experiencia) ✅ · Fase 3 (visor ampliado/zoom, D21) ✅ · **Fase 7 (menú compacto + grid tecnologías, D22) ✅ — PLAN COMPLETO**.
+- **Fases:** 0 ✅ · 1 ✅ · 2 ✅ · 3 ✅ · 4 ✅ (deploy pendiente de remoto) · 5 ✅ (revisión móvil aplazada a post-despliegue, decisión del propietario) · 6 🔶 (F6.1–F6.7 hechas) · **PLAN DE ACTUALIZACIÓN 2026-11 en curso: Fase 1 (temas, D18) ✅ · Fase 2.1 (carrusel) ✅ · Fase 2.2 (filtros) ✅ · Fase 4 (flechas+fullscreen) ✅ · Fase 6 (integración experiencia) ✅ · Fase 5 (rediseño experiencia) ✅ · Fase 3 (visor ampliado/zoom, D21) ✅ · Fase 7 (menú compacto + grid tecnologías, D22) ✅ · **Fase 8 (e2e Playwright) ✅ — PLAN COMPLETO + e2e**.
 - **Harness:** `npm run validate` en VERDE (92 tests pasando; 1 warning aceptable react-refresh en `src/i18n/index.tsx`).
 - **Build:** JS 332.47KB (105.93KB gzip) / CSS 18.60KB; base `/portfolio/` verificada; cero dependencias de runtime (iconos como assets).
 
@@ -65,6 +65,8 @@ Ver detalle en `docs/decisions.md` (D01–D15). Resumen:
 - Los PDFs de los 6 cursos OpenWebinars están en `public/docs/` y verificados con existsSync (2026-11-12). Faltan los certificados de idiomas (valenciano C1, inglés B2) y el CV (F7.3): nombres propuestos `valenciano-c1.pdf` / `english-b2.pdf`.
 
 ## Últimos cambios
+
+- 2026-11-12 (11): **Fase 8** — Playwright e2e implementado: `@playwright/test` + Chromium, build+preview en :4173, 15 tests (humo/responsive 375-1440 sin scroll horizontal, overlays con jerarquía Escape del zoom D21, experiencia D20, temas D18 con persistencia, filtros con «0 proyectos», navegación D22); hallazgo: ContactSection sigue TODO F6.8 (sin #contact). `npm run test:e2e`.
 
 - 2026-11-12 (10): **Fase 7** — TopBar compacta flotante (nunca desaparece) + grid de tecnologías más grande y jerárquico (D22); tests 109→114.
 - 2026-11-12 (9): **Fase 3** — visor ampliado de imágenes (D21): galería controlada, lupa siempre visible, ImageZoomOverlay en slot aside (zoom botones/rueda/pinch, pan, swipe, Escape ×2, índice compartido); IconButton forwardRef; tests 103→109.

@@ -4,15 +4,15 @@ Principio: toda funcionalidad afirmada debe tener prueba ejecutable y reproducib
 
 ## 1. Niveles de prueba
 
-| Nivel                   | Herramienta                           | Qué cubre                                                                                       |
-| ----------------------- | ------------------------------------- | ----------------------------------------------------------------------------------------------- |
-| Tipado estático         | `tsc --noEmit` (strict)               | Contratos, props, LocalizedText completo                                                        |
-| Lint/format             | ESLint (react-hooks, a11y) + Prettier | Reglas de proyecto y accesibilidad estática                                                     |
-| Unitarios de lógica     | Vitest                                | Filtros, derivación de tecnologías, helpers de media, sanitización de URLs                      |
-| Hooks                   | Vitest + Testing Library              | `useCarousel` (teclado, índices, límites), `useFocusTrap`, `useBodyScrollLock`, `useScrollSpy`  |
-| Componentes             | Vitest + Testing Library (`jsdom`)    | Render con props, a11y mínima (roles, labels), interacción (clic filtro, abrir overlay, Escape) |
-| Datos (`audit:content`) | Vitest sobre `src/data/`              | Ver sección 3                                                                                   |
-| E2E / responsive        | Playwright (Fase 8)                   | Recorridos completos en 6 viewports, teclado, overlay, galería, visor PDF, i18n                 |
+| Nivel                   | Herramienta                               | Qué cubre                                                                                                                                                                                                                                                                            |
+| ----------------------- | ----------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Tipado estático         | `tsc --noEmit` (strict)                   | Contratos, props, LocalizedText completo                                                                                                                                                                                                                                             |
+| Lint/format             | ESLint (react-hooks, a11y) + Prettier     | Reglas de proyecto y accesibilidad estática                                                                                                                                                                                                                                          |
+| Unitarios de lógica     | Vitest                                    | Filtros, derivación de tecnologías, helpers de media, sanitización de URLs                                                                                                                                                                                                           |
+| Hooks                   | Vitest + Testing Library                  | `useCarousel` (teclado, índices, límites), `useFocusTrap`, `useBodyScrollLock`, `useScrollSpy`                                                                                                                                                                                       |
+| Componentes             | Vitest + Testing Library (`jsdom`)        | Render con props, a11y mínima (roles, labels), interacción (clic filtro, abrir overlay, Escape)                                                                                                                                                                                      |
+| Datos (`audit:content`) | Vitest sobre `src/data/`                  | Ver sección 3                                                                                                                                                                                                                                                                        |
+| E2E / responsive        | Playwright (`@playwright/test`, Chromium) | Recorridos completos contra el build real (`vite preview`, base `/portfolio/`): humo + responsive 375/768/1024/1440, overlays (proyecto con zoom D21, experiencia D20), temas (D18), filtros por categoría, navegación por anclas (D22). Specs en `e2e/`; comando `npm run test:e2e` |
 
 ## 2. Pruebas de interacción mínimas (Fase 6)
 
@@ -34,11 +34,17 @@ Principio: toda funcionalidad afirmada debe tener prueba ejecutable y reproducib
 - Sin datos ficticios: proyectos de prueba etiquetados `status: 'draft'` no aparecen en producción (se filtran y se testea).
 - IDs de experiencias/enlaces bien formados (sin caracteres prohibidos).
 
-## 4. Pruebas responsive (Fase 8, Playwright)
+## 4. Pruebas responsive (Fase 8, Playwright — IMPLEMENTADA parcialmente)
 
-Viewports: 320, 375, 414, 768, 1024, 1440 × densidad 2 · orientaciones portrait/landscape en tablets.
+Config: `playwright.config.ts` — Chromium; `colorScheme: 'dark'` (escenario determinista D18); `webServer` = `vite build && vite preview --port 4173 --strictPort` (base `/portfolio/`); español forzado vía `localStorage` (D12).
 
-Checks automáticos por viewport: sin overflow horizontal (`scrollWidth <= innerWidth`), sin elementos cortados, navegación táctil operativa (swipe del carrusel), targets ≥ 44px, overlays utilizables, focus visible. Informe con screenshots.
+Cobertura actual (15 tests):
+
+- **Humo + responsive** (`e2e/smoke.spec.ts`): 375/768/1024/1440 — sin scroll horizontal (`scrollWidth <= clientWidth`), menú SIEMPRE accesible tras desplazarse al final (D22), secciones presentes (`contact` pendiente de F6.8, excluido).
+- **Overlays** (`e2e/overlays.spec.ts`): ficha de proyecto abrir/cerrar con Escape; zoom D21 (lupa → capa → Escape ×2); prev/next con ←/→; experiencia D20 («Ver proyecto» abre la ficha); navegación por anclas + barra compacta.
+- **Temas + filtros** (`e2e/theme-filters.spec.ts`): html SIN atributo en oscuro (estado base), claro con persistencia tras recargar; filtros: categoría sin proyectos «0 proyectos», recuento = fichas, «Todas» restaura.
+
+Pendiente (opcional, post-deploy): viewports 320/414 + landscape, targets ≥44px medidos, axe-core en 3 estados clave (sección 5), screenshots del informe.
 
 ## 5. Accesibilidad
 
@@ -55,6 +61,6 @@ Checks automáticos por viewport: sin overflow horizontal (`scrollWidth <= inner
 ## 7. Comando maestro
 
 ```
-npm run validate  →  typecheck + lint + format:check + test + build (+ audit:content si está en Vitest)
-npm run e2e       →  Playwright (solo Fase 8)
+npm run validate   →  typecheck + lint + format:check + test + build (+ audit:content en Vitest)
+npm run test:e2e   →  Playwright (build + preview + 15 tests, Chromium)
 ```
