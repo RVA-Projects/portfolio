@@ -1,21 +1,24 @@
-import { technologyNameById } from '../../data/technologies'
+import { technologyById } from '../../data/technologies'
 import { useLanguage } from '../../i18n'
 import type { Experience } from '../../models/Experience'
-import { Button } from '../base/Button'
-import { Tag } from '../base/Tag'
+import { TechIcon } from '../base/TechIcon'
 import styles from './ExperienceCard.module.css'
 
 interface ExperienceCardProps {
   item: Experience
+  /** Abre ExperienceOverlay (la sección posee el estado del overlay). */
+  onOpen: (experienceId: string) => void
 }
 
 /**
- * Tarjeta de experiencia (RF-15, Fase 6): puramente representativa, sin
- * grupos ni etiqueta de tipo. Muestra organización, periodo (solo si existe
- * dato verificado), rol, descripción, funciones, logros, tecnologías y
- * enlaces existentes. (El rediseño minimalista llega en Fase 5.)
+ * Tarjeta de experiencia minimalista (Fase 5, plan de actualización): solo
+ * título (organización), periodo y pequeños indicadores visuales de las
+ * tecnologías (TechIcon). La descripción/funciones/logros/enlaces viven en
+ * ExperienceOverlay. Patrón "stretched button": el botón cubre toda la
+ * tarjeta (nunca solo-hover; accesible por teclado y táctil) con aria-label
+ * explícito, SIN envolver los encabezados (HTML válido).
  */
-export function ExperienceCard({ item }: ExperienceCardProps) {
+export function ExperienceCard({ item, onOpen }: ExperienceCardProps) {
   const { language, texts } = useLanguage()
 
   const periodLabel =
@@ -25,66 +28,24 @@ export function ExperienceCard({ item }: ExperienceCardProps) {
 
   return (
     <article className={styles.card}>
-      <div className={styles.header}>
-        <div>
-          <h3 className={styles.title}>{item.organization[language]}</h3>
-          <p className={styles.meta}>
-            {item.role !== undefined && <span>{item.role[language]}</span>}
-            {periodLabel !== null && <span>{periodLabel}</span>}
-          </p>
-        </div>
-      </div>
-
-      {item.description !== undefined && (
-        <p className={styles.description}>{item.description[language]}</p>
-      )}
-
-      {item.responsibilities.length > 0 && (
-        <div>
-          <p className={styles.listLabel}>{texts.experience.responsibilities}</p>
-          <ul className={styles.list}>
-            {item.responsibilities.map((item2) => (
-              <li key={item2.id}>{item2.text[language]}</li>
-            ))}
-          </ul>
-        </div>
-      )}
-
-      {item.outcomes !== undefined && item.outcomes.length > 0 && (
-        <div>
-          <p className={styles.listLabel}>{texts.experience.outcomes}</p>
-          <ul className={styles.list}>
-            {item.outcomes.map((item2) => (
-              <li key={item2.id}>{item2.text[language]}</li>
-            ))}
-          </ul>
-        </div>
-      )}
-
+      <button
+        type="button"
+        className={styles.trigger}
+        aria-label={`${texts.experience.open} ${item.organization[language]}`}
+        onClick={() => {
+          onOpen(item.id)
+        }}
+      />
+      <h3 className={styles.title}>{item.organization[language]}</h3>
+      {periodLabel !== null && <p className={styles.period}>{periodLabel}</p>}
       {item.technologyIds.length > 0 && (
-        <div className={styles.footer}>
-          {item.technologyIds.map((technologyId) => (
-            <Tag key={technologyId} label={technologyNameById(technologyId)} />
-          ))}
-        </div>
-      )}
-
-      {item.links !== undefined && item.links.length > 0 && (
-        <div className={styles.links}>
-          {item.links.map((link) => (
-            <Button
-              key={link.id}
-              label={
-                link.url.includes('upwork.com')
-                  ? texts.experience.upwork
-                  : link.url.includes('github.com')
-                    ? texts.projectOverlay.links.github
-                    : texts.projectOverlay.links.web
-              }
-              href={link.url}
-              external
-            />
-          ))}
+        <div className={styles.techs}>
+          {item.technologyIds.map((technologyId) => {
+            const technology = technologyById(technologyId)
+            return (
+              <TechIcon key={technologyId} technologyId={technologyId} icon={technology?.icon} />
+            )
+          })}
         </div>
       )}
     </article>

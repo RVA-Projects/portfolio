@@ -22,4 +22,10 @@ export interface Experience extends BaseEntity {
   technologyIds: string[]
   outcomes?: EducationalTextItem[]
   links?: { id: string; url: string }[]
+  /**
+   * Fase 5 (plan de actualización): fichas del catálogo de Proyectos
+   * asociadas a esta experiencia (ids validados contra `projects` en tests).
+   * Solo donde existe relación real; ausente ⇒ sin proyectos asociados.
+   */
+  projectIds?: string[]
 }

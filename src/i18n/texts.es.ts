@@ -57,6 +57,14 @@ export const es = {
     responsibilities: 'Funciones',
     outcomes: 'Logros',
     upwork: 'Perfil de Upwork',
+    open: 'Abrir experiencia:',
+  },
+  /** Overlay de experiencia (Fase 5 del plan de actualización). */
+  experienceOverlay: {
+    close: 'Cerrar detalles de la experiencia',
+    description: 'Descripción',
+    associatedProjects: 'Proyectos asociados',
+    viewProject: 'Ver proyecto',
   },
   /** Sección de formación (RF-16), agrupada por jerarquía. */
   education: {

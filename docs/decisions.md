@@ -100,3 +100,8 @@ Registro de decisiones (ADR ligero). Pueden añadirse con cualquier estado: `pro
 
 - **Decisión:** la experiencia profesional queda como LISTA PLANA de 7 entradas (solo trabajo remunerado/cargos reales); se eliminan las 6 entradas independent/collab (snake, mini-crm, flashcards-app, task-manager, gb-utility, dawdam-top) y el campo `kind` del modelo. Su contenido vive íntegro en las fichas del catálogo de Proyectos (auditoría campo a campo: organization/period/role/description/responsibilities/outcomes/tech/links de cada entrada ya estaban en su ficha — sin dato único que fusionar).
 - **Motivo:** petición del propietario (Fase 6): no mantener categorías separadas para contenidos representables en las dos secciones principales.
+
+## D20 — Overlay de experiencia minimalista y proyectos asociados — ✅. Aprobada (2026-11-12)
+
+- **Decisión:** `ExperienceCard` minimalista (título + periodo + TechIcon pequeños; botón estirado a toda la tarjeta con aria-label explícito, nunca solo-hover); `ExperienceOverlay` nuevo componiendo sobre `Modal` (patrón ProjectOverlay: header + bloques, una columna) con descripción/funciones/logros/tags/enlaces. Nuevo campo `Experience.projectIds?: string[]` con mapeo aprobado: cmV-web / redes-sociales / agente-IA → `centro-medico-sector-v`; signature → `signature-application`; loki-home → `loki-home`; Upwork ×2 → sin proyectos. «Ver proyecto» cierra el overlay de experiencia y abre el ProjectOverlay de la ficha (renderizado por ExperienceSection sin prev/next): sin dos Modales superpuestos ni doble Escape.
+- **Motivo:** petición del propietario (Fase 5): tarjetas legibles tipo ProjectCard y detalle en overlay reutilizando la arquitectura.

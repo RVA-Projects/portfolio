@@ -87,3 +87,8 @@ export function technologyNameById(id: string): string {
   const found = technologies.find((tech) => tech.id === id)
   return found !== undefined ? found.name : id
 }
+
+/** Catálogo completo por id (undefined si no existe): para TechIcon (icon PNG). */
+export function technologyById(id: string): Technology | undefined {
+  return technologies.find((tech) => tech.id === id)
+}

@@ -1,5 +1,5 @@
 import { beforeEach, describe, expect, it } from 'vitest'
-import { cleanup, render, screen, within } from '@testing-library/react'
+import { cleanup, fireEvent, render, screen, within } from '@testing-library/react'
 import { App } from '../src/App'
 
 beforeEach(() => {
@@ -8,17 +8,15 @@ beforeEach(() => {
   window.localStorage.setItem('rva-portfolio-language', 'es')
 })
 
-describe('ExperienceSection (RF-15, Fase 6 — lista plana)', () => {
-  it('NO muestra grupos (ni encabezados de proyectos independientes o colaboraciones)', () => {
-    render(<App />)
-    expect(screen.queryByRole('heading', { name: 'Profesional' })).not.toBeInTheDocument()
-    expect(
-      screen.queryByRole('heading', { name: 'Proyectos independientes' }),
-    ).not.toBeInTheDocument()
-    expect(screen.queryByRole('heading', { name: 'Colaboraciones' })).not.toBeInTheDocument()
-  })
+function openExperience(name: string) {
+  cleanup()
+  render(<App />)
+  fireEvent.click(screen.getByRole('button', { name: `Abrir experiencia: ${name}` }))
+  return screen.getByRole('dialog', { name })
+}
 
-  it('renderiza las 7 entradas profesionales, SIN las fichas movidas a Proyectos', () => {
+describe('ExperienceSection (Fase 5/6 — tarjetas minimalistas + overlay)', () => {
+  it('las tarjetas son minimalistas: título + periodo, SIN descripción ni listas', () => {
     render(<App />)
     const section = document.getElementById('experience')
     expect(section).not.toBeNull()
@@ -34,60 +32,98 @@ describe('ExperienceSection (RF-15, Fase 6 — lista plana)', () => {
       'Smarti DATA — vía Upwork',
       'Captación de comandos de voz — vía Upwork',
     ])
-    // Snake/MiniCRM/etc. ya no están en experiencia: están en Proyectos
-    expect(headings).not.toContain('Snake')
-    expect(headings).not.toContain('MiniCRM (Android)')
-    expect(headings).not.toContain('dawdam.top')
+    // Minimalista: las descripciones/listas viven SOLO en el overlay
+    expect(within(section as HTMLElement).queryByText('Funciones')).not.toBeInTheDocument()
+    expect(
+      within(section as HTMLElement).queryByText(/Página web oficial del centro/),
+    ).not.toBeInTheDocument()
   })
 
-  it('sin etiqueta de grupo en las tarjetas (sin chips Profesional/Colaboraciones)', () => {
+  it('cada tarjeta es un botón accesible con aria-label explícito (nunca solo-hover)', () => {
     render(<App />)
     const section = document.getElementById('experience')
-    expect(section).not.toBeNull()
-    expect(within(section as HTMLElement).queryByText('Profesional')).not.toBeInTheDocument()
-    expect(within(section as HTMLElement).queryByText('Colaboración')).not.toBeInTheDocument()
-  })
-
-  it('muestra los periodos reales y las entradas sin fecha no muestran periodo', () => {
-    render(<App />)
-    const section = document.getElementById('experience')
-    expect(section).not.toBeNull()
-    // Fechas verificadas por el propietario
-    expect(within(section as HTMLElement).getAllByText(/Actualidad/).length).toBeGreaterThan(0)
-    // Loki Home: 2025 – Actualidad (dentro de SU tarjeta)
-    const lokiHeading = within(section as HTMLElement).getByRole('heading', {
-      name: 'Loki Home',
-      level: 3,
+    const buttons = within(section as HTMLElement).getAllByRole('button', {
+      name: /^Abrir experiencia:/,
     })
-    const lokiCard = lokiHeading.closest('article')
+    expect(buttons).toHaveLength(7)
+  })
+
+  it('la tarjeta muestra periodo real y entradas sin fecha no muestran periodo', () => {
+    render(<App />)
+    const section = document.getElementById('experience')
+    expect(within(section as HTMLElement).getAllByText(/Actualidad/).length).toBeGreaterThan(0)
+    // Smarti DATA (sin fecha confirmada): su tarjeta no muestra "–"
+    const smarti = screen
+      .getByRole('button', {
+        name: 'Abrir experiencia: Smarti DATA — vía Upwork',
+      })
+      .closest('article')
+    expect(within(smarti as HTMLElement).queryByText(/–/)).not.toBeInTheDocument()
+  })
+
+  it('el overlay muestra la info ampliada: descripción, funciones, enlaces y tecnologías', () => {
+    const dialog = openExperience('Loki Home')
+    expect(within(dialog).getByText(/Página web oficial de la marca/)).toBeInTheDocument()
+    expect(within(dialog).getByRole('heading', { name: 'Funciones' })).toBeInTheDocument()
+    // Enlaces de la experiencia al overlay (ya no en la tarjeta)
+    expect(within(dialog).getByRole('link', { name: 'Ver sitio web' })).toHaveAttribute(
+      'href',
+      'https://lokihome.com/',
+    )
+    // La tarjeta minimalista ya no contiene el enlace (vive en el overlay)
+    const section = document.getElementById('experience') as HTMLElement
+    const lokiCard = within(section)
+      .getByRole('heading', { name: 'Loki Home', level: 3 })
+      .closest('article')
     expect(lokiCard).not.toBeNull()
-    expect(within(lokiCard as HTMLElement).getByText('2025 – Actualidad')).toBeInTheDocument()
+    expect(
+      within(lokiCard as HTMLElement).queryByRole('link', { name: 'Ver sitio web' }),
+    ).not.toBeInTheDocument()
   })
 
-  it('enlaza solo a dominios verificados desde las tarjetas (incl. perfil Upwork real)', () => {
+  it('el overlay de Centro Médico (web) lista su proyecto asociado y navega a su ficha', () => {
+    const dialog = openExperience('Centro Médico Sector V — web')
+    expect(within(dialog).getByRole('heading', { name: 'Logros' })).toBeInTheDocument()
+    const viewButton = within(dialog).getByRole('button', {
+      name: 'Ver proyecto: Centro Médico Sector V',
+    })
+    fireEvent.click(viewButton)
+    // El overlay de experiencia se cierra; abre el ProjectOverlay de la ficha
+    expect(
+      screen.queryByRole('dialog', { name: 'Centro Médico Sector V — web' }),
+    ).not.toBeInTheDocument()
+    const projectDialog = screen.getByRole('dialog', { name: 'Centro Médico Sector V' })
+    expect(
+      within(projectDialog).getByRole('region', { name: 'Galería del proyecto' }),
+    ).toBeInTheDocument()
+  })
+
+  it('sin proyectos asociados (Upwork) el overlay no muestra la sección', () => {
+    const dialog = openExperience('Smarti DATA — vía Upwork')
+    expect(
+      within(dialog).queryByRole('heading', { name: 'Proyectos asociados' }),
+    ).not.toBeInTheDocument()
+  })
+
+  it('el overlay se cierra con Escape y con la X', () => {
+    openExperience('Loki Home')
+    fireEvent.keyDown(document, { key: 'Escape' })
+    expect(screen.queryByRole('dialog')).not.toBeInTheDocument()
+
+    openExperience('Loki Home')
+    fireEvent.click(screen.getByRole('button', { name: 'Cerrar detalles de la experiencia' }))
+    expect(screen.queryByRole('dialog')).not.toBeInTheDocument()
+  })
+
+  it('sin grupos ni etiquetas de kind (Fase 6)', () => {
     render(<App />)
     const section = document.getElementById('experience')
     expect(section).not.toBeNull()
-    for (const link of within(section as HTMLElement).getAllByRole('link')) {
-      const href = link.getAttribute('href') ?? ''
-      expect(
-        ['lokihome.com', 'centromedicosectorv.es', 'upwork.com'].some((domain) =>
-          href.includes(domain),
-        ),
-      ).toBe(true)
-    }
-  })
-
-  it('las entradas vía Upwork enlazan con la etiqueta "Perfil de Upwork"', () => {
-    render(<App />)
-    const section = document.getElementById('experience')
-    expect(section).not.toBeNull()
-    const upworkLinks = within(section as HTMLElement)
-      .getAllByRole('link')
-      .filter((link) => (link.getAttribute('href') ?? '').includes('upwork.com'))
-    expect(upworkLinks.length).toBe(2)
-    for (const link of upworkLinks) {
-      expect(link).toHaveAccessibleName('Perfil de Upwork')
-    }
+    expect(
+      within(section as HTMLElement).queryByRole('heading', { name: 'Profesional' }),
+    ).not.toBeInTheDocument()
+    expect(
+      within(section as HTMLElement).queryByRole('heading', { name: 'Colaboraciones' }),
+    ).not.toBeInTheDocument()
   })
 })

@@ -66,6 +66,29 @@ describe('audit:content — integridad de datos de experiencia (RF-15, Fase 6)',
     }
   })
 
+  it('los projectIds declarados existen en el catálogo de Proyectos (mapeo aprobado, Fase 5)', () => {
+    const expected = new Map<string, string[]>([
+      ['centro-medico-sector-v-web', ['centro-medico-sector-v']],
+      ['redes-sociales-centro-medico', ['centro-medico-sector-v']],
+      ['agente-ia-centro-medico', ['centro-medico-sector-v']],
+      ['signature-application', ['signature-application']],
+      ['loki-home', ['loki-home']],
+    ])
+    for (const item of experience) {
+      if (item.projectIds !== undefined) {
+        expect(expected.get(item.id), `mapeo inesperado en ${item.id}`).toEqual(item.projectIds)
+        for (const projectId of item.projectIds) {
+          expect(projectIds.has(projectId), `ficha inexistente: ${projectId}`).toBe(true)
+        }
+      }
+    }
+    // Las 2 entradas Upwork NO tienen proyectos asociados (aprobado)
+    expect(
+      experience.find((item) => item.id === 'smarti-data-datasets')?.projectIds,
+    ).toBeUndefined()
+    expect(experience.find((item) => item.id === 'voz-asistentes-ia')?.projectIds).toBeUndefined()
+  })
+
   it('todo LocalizedText tiene es/en no vacíos', () => {
     for (const item of experience) {
       expect(item.organization.es.trim().length).toBeGreaterThan(0)

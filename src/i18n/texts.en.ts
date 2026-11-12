@@ -58,6 +58,14 @@ export const en: Texts = {
     responsibilities: 'Duties',
     outcomes: 'Outcomes',
     upwork: 'Upwork profile',
+    open: 'Open experience:',
+  },
+  /** Experience overlay (Phase 5 of the update plan). */
+  experienceOverlay: {
+    close: 'Close experience details',
+    description: 'Description',
+    associatedProjects: 'Associated projects',
+    viewProject: 'View project',
   },
   /** RF-16 education section, grouped by hierarchy. */
   education: {

@@ -60,6 +60,7 @@ export const experience: Experience[] = [
     ],
     technologyIds: ['wordpress', 'html', 'css', 'javascript'],
     links: [{ id: 'web', url: 'https://centromedicosectorv.es' }],
+    projectIds: ['centro-medico-sector-v'],
   },
   {
     id: 'redes-sociales-centro-medico',
@@ -93,6 +94,7 @@ export const experience: Experience[] = [
       },
     ],
     technologyIds: [],
+    projectIds: ['centro-medico-sector-v'],
   },
   {
     id: 'agente-ia-centro-medico',
@@ -126,6 +128,7 @@ export const experience: Experience[] = [
       },
     ],
     technologyIds: ['wordpress'],
+    projectIds: ['centro-medico-sector-v'],
   },
   {
     id: 'signature-application',
@@ -168,6 +171,7 @@ export const experience: Experience[] = [
       },
     ],
     technologyIds: ['html', 'css', 'javascript', 'csharp'],
+    projectIds: ['signature-application'],
   },
   {
     id: 'loki-home',
@@ -199,6 +203,7 @@ export const experience: Experience[] = [
     ],
     technologyIds: ['html', 'css', 'javascript'],
     links: [{ id: 'web', url: 'https://lokihome.com/' }],
+    projectIds: ['loki-home'],
   },
   {
     id: 'smarti-data-datasets',
