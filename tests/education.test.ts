@@ -1,3 +1,5 @@
+import { existsSync } from 'node:fs'
+import { join } from 'node:path'
 import { describe, expect, it } from 'vitest'
 import { education } from '../src/data/education'
 import { googleDriveEmbedUrl } from '../src/utils/media'
@@ -59,6 +61,16 @@ describe('data/education — integridad (F6.6, RF-16)', () => {
     for (const course of courses) {
       expect(course.issuer).toBe('OpenWebinars')
       expect(course.document?.src).toMatch(/^\/portfolio\/docs\/[a-z0-9-]+\.pdf$/)
+    }
+  })
+
+  it('todo PDF local declarado existe en public/docs/ (subida del propietario integrada, F7.3)', () => {
+    for (const item of education) {
+      const src = item.document?.src
+      if (src !== undefined && src.startsWith('/portfolio/')) {
+        const file = join(process.cwd(), 'public', src.slice('/portfolio/'.length))
+        expect(existsSync(file), `falta: ${src}`).toBe(true)
+      }
     }
   })
 })

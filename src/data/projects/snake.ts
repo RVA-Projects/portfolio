@@ -2,8 +2,7 @@ import type { Project } from '../../models/Project'
 
 /**
  * Juego Snake desarrollado con OpenCode (agentes IA) y publicado en
- * GitHub Pages. La captura del juego se genera en F6 (media generada,
- * aprobación del propietario en revisión F7).
+ * GitHub Pages. Media: capturas reales aportadas por el propietario.
  */
 export const snake: Project = {
   id: 'snake',
@@ -20,10 +19,28 @@ export const snake: Project = {
     {
       id: 'snake-1',
       kind: 'image',
-      src: '/portfolio/media/projects/snake/snake-cover.png',
+      src: '/portfolio/media/projects/snake/snake1.png',
       alt: {
-        es: 'Captura del juego Snake jugando en el navegador',
-        en: 'Screenshot of the Snake game playing in the browser',
+        es: 'Partida de Snake en curso, con la serpiente avanzando hacia una fruta (interfaz en español)',
+        en: 'Ongoing Snake game with the snake heading towards a fruit (Spanish interface)',
+      },
+    },
+    {
+      id: 'snake-2',
+      kind: 'image',
+      src: '/portfolio/media/projects/snake/snake2.png',
+      alt: {
+        es: 'Partida de Snake en curso con la serpiente pegada al muro derecho (interfaz en inglés)',
+        en: 'Ongoing Snake game with the snake along the right wall (English interface)',
+      },
+    },
+    {
+      id: 'snake-3',
+      kind: 'image',
+      src: '/portfolio/media/projects/snake/snake3.png',
+      alt: {
+        es: 'Pantalla de fin de partida (Game Over) de Snake',
+        en: 'Snake game-over screen',
       },
     },
   ],

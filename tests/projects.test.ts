@@ -1,3 +1,5 @@
+import { existsSync } from 'node:fs'
+import { join } from 'node:path'
 import { describe, expect, it } from 'vitest'
 import { projects } from '../src/data/projects'
 import { technologies } from '../src/data/technologies'
@@ -64,6 +66,17 @@ describe('audit:content — integridad de datos de proyectos (RF-09)', () => {
     for (const project of projects) {
       for (const link of project.links) {
         expect(allowed.some((domain) => link.url.includes(domain))).toBe(true)
+      }
+    }
+  })
+
+  it('toda media local declarada existe en public/ (media integrada, F7.2)', () => {
+    for (const project of projects) {
+      for (const mediaItem of project.media) {
+        if (mediaItem.src.startsWith('/portfolio/')) {
+          const file = join(process.cwd(), 'public', mediaItem.src.slice('/portfolio/'.length))
+          expect(existsSync(file), `falta: ${mediaItem.src}`).toBe(true)
+        }
       }
     }
   })

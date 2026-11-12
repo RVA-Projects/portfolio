@@ -13,6 +13,12 @@ export const miniCrm: Project = {
   technologyIds: ['kotlin', 'room', 'android-studio'],
   media: [
     {
+      id: 'crm-0',
+      kind: 'image',
+      src: '/portfolio/media/projects/mini-crm/mcrm0.jpeg',
+      alt: { es: 'Vista general del MiniCRM', en: 'MiniCRM overview' },
+    },
+    {
       id: 'crm-1',
       kind: 'image',
       src: '/portfolio/media/projects/mini-crm/mcrm1.jpeg',

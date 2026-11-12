@@ -1,7 +1,7 @@
 # memory.md — RVA Portfolio
 
 > Memoria operativa del agente. Actualizar tras cada cambio relevante.
-> Última actualización: 2026-11-11 (F6.6: EducationSection + DocumentViewerOverlay, D16).
+> Última actualización: 2026-11-12 (media+PDFs del propietario integrados y verificados con existsSync; snake 3 capturas reales).
 
 ## Estado actual
 
@@ -40,22 +40,24 @@ Ver detalle en `docs/decisions.md` (D01–D15). Resumen:
 
 ## Pendientes del propietario (para Fase 7 y despliegue)
 
-0. **Captura de Snake:** screenshot real del juego en `https://rva-projects.github.io/snake/` → `public/media/projects/snake/snake-cover.png` (decisión 2026-11-10; la media ya declarada).
+0. ~~Captura de Snake~~ ✅ RESUELTO (2026-11-12): 3 capturas reales en `public/media/projects/snake/`.
 1. Acceso/URL del repo remoto `RVA-Projects/portfolio` (clonar o conectar en F4.1).
-2. Copiar PDFs (CV + certificados) — preferible a `public/docs/`. Los 6 PDFs de OpenWebinars de formación ya declarados: `react-fundamentals`, `javascript-fundamentals`, `spring-boot-spring-mvc-5`, `python`, `kotlin`, `git` (nombres exactos de fichero).
-3. Copiar foto personal a `public/assets/img/`.
-4. Subir PDFs a `public/docs/` y la foto a `public/assets/img/` (Fase 7).
-5. Contenido es/en definitivo de proyectos (descripción, objetivos, resultados) — se pedirá en F7.1.
+2. **Foto personal:** pegarla en `public/assets/img/` (F7.4; el nombre lo declara el agente al integrar).
+3. Contenido es/en definitivo de proyectos (descripción, objetivos, resultados) — se pedirá en F7.1.
+4. **Compresión de media pesada (F7):** lokihome2.png 796KB, mm.png 1.7MB, sig1/sig2 ~500KB (guía <300KB).
 
 ## Problemas conocidos
 
 - MiniCRM apuntaba al repo `flashcards` en el site anterior: verificar repo real en F7 (TODO en `mini-crm.ts`).
 - El contenido EN del site anterior tiene erratas ("develpment"); se reescribe desde cero, no se copia.
 - jsdom no implemente `Element.scrollTo`: stub no-op añadido a `src/test/setup.ts`.
-- Los ficheros de media de proyectos (`public/media/projects/<slug>/`) aún no existen (F7): ProjectCard muestra fallback controlado sin crash.
-- **`snake-cover.png` pendiente del propietario (decisión 2026-11-10):** captura REAL del juego en `https://rva-projects.github.io/snake/` → `public/media/projects/snake/snake-cover.png` (la media ya está declarada en `snake.ts`; ProjectCard/galería muestran fallback sin crash mientras tanto). Al añadir el fichero, extender `tests/projects.test.ts` con `existsSync` para media local.
+- Los ficheros de media de proyectos ya están integrados y verificados con existsSync (2026-11-12).
+- **Media pesada sin comprimir:** `lokihome2.png` 796KB, `mm.png` 1.7MB, `sig1/sig2.png` ~500KB — comprimir en F7 (guía <300KB).
+- Los PDFs de los 6 cursos OpenWebinars están en `public/docs/` y verificados con existsSync (2026-11-12). Falta el PDF de idiomas/CV (F6.7/F7.3).
 
 ## Últimos cambios
+
+- 2026-11-12: **Media + PDFs integrados** — 26 imágenes movidas a `public/media/projects/<slug>/` con renames a los nombres declarados (`dawdam.png`→`coding.png`, `fc.icon.png`→`fcicon.png`); Snake con 3 capturas reales (snake1 portada, alts verificados mirando las imágenes); MiniCRM con mcrm0 como portada (9 capturas); 3 PDFs renombrados a los slugs declarados (`react-fundamentals`, `javascript-fundamentals`, `spring-boot-spring-mvc-5`); tests `existsSync` para toda la media local y los PDFs (74 tests). Pendiente: foto personal, compresión de media pesada.
 
 - 2026-11-11: **F6.6** — EducationSection + DocumentViewerOverlay (D16): datos desde inventario §4 con enlaces reales, `issuer` opcional, PDFs locales pendientes de subida, visor embebido con error controlado (timeout 8s) y acciones abrir/descargar. Tests 53→72. Pendiente: subir los 6 PDFs a `public/docs/` (F7.3).
 
