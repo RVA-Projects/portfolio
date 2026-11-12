@@ -9,9 +9,23 @@
   transition:
     transform var(--dur-base) var(--ease),
     border-color var(--dur-base) var(--ease);
-  /* Uniformidad RF-06: ancho por breakpoint, nunca dependiente del contenido */
-  width: min(82vw, 320px);
+  /* Uniformidad RF-06 + Fase 2.1: ancho por breakpoint derivado del viewport
+     (nunca dependiente del contenido, nunca tarjeta cortada). Gap del carrusel
+     = var(--space-4). El paso de useCarousel mide el ancho real: no cambia. */
+  width: 100%;
   flex: none;
+}
+
+@media (min-width: 576px) {
+  .card {
+    width: calc((100% - var(--space-4)) / 2);
+  }
+}
+
+@media (min-width: 1024px) {
+  .card {
+    width: calc((100% - 2 * var(--space-4)) / 3);
+  }
 }
 
 .card:hover {
