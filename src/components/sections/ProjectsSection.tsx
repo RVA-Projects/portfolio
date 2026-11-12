@@ -1,18 +1,15 @@
 import { useCallback, useMemo, useState } from 'react'
 import { projects } from '../../data/projects'
-import { technologies } from '../../data/technologies'
+import { FILTER_CATEGORIES } from '../../data/technologies'
 import type { SectionId } from '../../data/site'
 import { useLanguage } from '../../i18n'
-import { collectFilterTechnologies, filterProjects } from '../../utils/filter'
+import { filterProjects } from '../../utils/filter'
 import { SectionHeading } from '../base/SectionHeading'
 import { ProjectOverlay } from '../overlays/ProjectOverlay'
 import { ProjectCarousel } from '../projects/ProjectCarousel'
-import type { TechnologyFilterValue } from '../projects/TechnologyFilter'
+import type { FilterCategoryValue } from '../projects/TechnologyFilter'
 import { TechnologyFilter } from '../projects/TechnologyFilter'
 import styles from './ProjectsSection.module.css'
-
-/** Índice del filtro estable: deriva del catálogo COMPLETO, no del filtrado. */
-const FILTER_TECHNOLOGIES = collectFilterTechnologies(projects, technologies)
 
 /**
  * Sección principal (RF-06/RF-07/RF-10): cabecera + índice de tecnologías +
@@ -24,11 +21,11 @@ const FILTER_TECHNOLOGIES = collectFilterTechnologies(projects, technologies)
  */
 export function ProjectsSection() {
   const { texts } = useLanguage()
-  const [activeTech, setActiveTech] = useState<TechnologyFilterValue>(null)
+  const [activeCategory, setActiveCategory] = useState<FilterCategoryValue>(null)
   /** Índice abierto dentro de filteredProjects; null ⇒ overlay cerrado. */
   const [openIndex, setOpenIndex] = useState<number | null>(null)
 
-  const filteredProjects = useMemo(() => filterProjects(projects, activeTech), [activeTech])
+  const filteredProjects = useMemo(() => filterProjects(projects, activeCategory), [activeCategory])
 
   const openProject = openIndex !== null ? (filteredProjects[openIndex] ?? null) : null
 
@@ -63,9 +60,9 @@ export function ProjectsSection() {
       <div className={styles.filterRow}>
         <SectionHeading kicker="02 — Projects" title={texts.sections.projects} />
         <TechnologyFilter
-          technologies={FILTER_TECHNOLOGIES}
-          activeId={activeTech}
-          onChange={setActiveTech}
+          categories={FILTER_CATEGORIES}
+          activeId={activeCategory}
+          onChange={setActiveCategory}
         />
       </div>
       <ProjectCarousel projects={filteredProjects} onSelect={onSelect} />

@@ -1,22 +1,25 @@
+import type { FilterCategoryId } from '../../data/technologies'
 import { useLanguage } from '../../i18n'
-import type { Technology } from '../../models/Technology'
 import styles from './TechnologyFilter.module.css'
 
-export type TechnologyFilterValue = string | null
+export type FilterCategoryValue = FilterCategoryId | null
 
 interface TechnologyFilterProps {
-  /** Índice derivado de los proyectos (utils/filter.ts), no del catálogo global. */
-  technologies: Technology[]
+  /** Las 5 categorías SIEMPRE (constante FILTER_CATEGORIES), con o sin proyectos. */
+  categories: readonly FilterCategoryId[]
   /** null ⇒ All. */
-  activeId: TechnologyFilterValue
-  onChange: (id: TechnologyFilterValue) => void
+  activeId: FilterCategoryValue
+  onChange: (id: FilterCategoryValue) => void
 }
 
 /**
- * Índice horizontal de tecnologías (RF-07). Botones con aria-pressed; el
- * estado activo usa el acento del sistema. "All" es null (nunca un id).
+ * Índice de categorías de filtrado (RF-07 simplificado, F2.2). Botones con
+ * aria-pressed; el estado activo usa el acento del sistema. "Todas" es null.
+ * Las etiquetas vienen de i18n (`filter.categories`); las categorías sin
+ * proyectos (python/java hoy) se muestran igualmente (decisión del
+ * propietario: las rellenará más adelante).
  */
-export function TechnologyFilter({ technologies, activeId, onChange }: TechnologyFilterProps) {
+export function TechnologyFilter({ categories, activeId, onChange }: TechnologyFilterProps) {
   const { texts } = useLanguage()
 
   const chipClass = (active: boolean) =>
@@ -32,17 +35,17 @@ export function TechnologyFilter({ technologies, activeId, onChange }: Technolog
       >
         {texts.filter.all}
       </button>
-      {technologies.map((technology) => {
-        const active = technology.id === activeId
+      {categories.map((category) => {
+        const active = category === activeId
         return (
           <button
-            key={technology.id}
+            key={category}
             type="button"
             className={chipClass(active)}
             aria-pressed={active}
-            onClick={() => onChange(technology.id)}
+            onClick={() => onChange(category)}
           >
-            {technology.name}
+            {texts.filter.categories[category]}
           </button>
         )
       })}

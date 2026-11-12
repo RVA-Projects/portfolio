@@ -15,16 +15,26 @@ describe('ProjectsSection (RF-06/RF-07/RF-08)', () => {
     expect(screen.getByRole('region', { name: 'Carrusel de proyectos' })).toBeInTheDocument()
   })
 
-  it('filtra por tecnología y actualiza el contador', () => {
+  it('filtra por categoría Android y actualiza el contador (F2.2)', () => {
     render(<App />)
-    fireEvent.click(screen.getByRole('button', { name: 'Kotlin' }))
+    fireEvent.click(screen.getByRole('button', { name: 'Android' }))
     expect(screen.getByText('2 proyectos')).toBeInTheDocument()
     expect(screen.getByText('1 / 2')).toBeInTheDocument()
   })
 
-  it('el botón All restaura la colección completa', () => {
+  it('las 5 categorías están SIEMPRE visibles, incluso Python/Java con 0 proyectos', () => {
     render(<App />)
-    fireEvent.click(screen.getByRole('button', { name: 'WordPress' }))
+    for (const label of ['Android', 'Web', 'C#', 'Python', 'Java']) {
+      expect(screen.getByRole('button', { name: label })).toBeInTheDocument()
+    }
+    fireEvent.click(screen.getByRole('button', { name: 'Python' }))
+    expect(screen.getByText('0 proyectos')).toBeInTheDocument()
+  })
+
+  it('el botón Todas restaura la colección completa', () => {
+    render(<App />)
+    fireEvent.click(screen.getByRole('button', { name: 'Web' }))
+    expect(screen.getByText('5 proyectos')).toBeInTheDocument()
     fireEvent.click(screen.getByRole('button', { name: 'Todas' }))
     expect(screen.getByText('9 proyectos')).toBeInTheDocument()
   })

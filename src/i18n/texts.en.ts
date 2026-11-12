@@ -35,7 +35,14 @@ export const en: Texts = {
   /** RF-07 project filter. */
   filter: {
     all: 'All',
-    label: 'Filter projects by technology',
+    label: 'Filter projects by technology category',
+    categories: {
+      android: 'Android',
+      web: 'Web',
+      csharp: 'C#',
+      python: 'Python',
+      java: 'Java',
+    },
     count: (n: number) => (n === 1 ? '1 project' : `${n} projects`),
     a11yCount: (n: number) => (n === 1 ? '1 result' : `${n} results`),
   },

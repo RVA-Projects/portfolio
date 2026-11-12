@@ -31,10 +31,17 @@ export const es = {
     madeBy: 'Hecho por',
     older: 'Portfolio anterior',
   },
-  /** Filtro del carrusel (RF-07). */
+  /** Filtro del carrusel (RF-07 simplificado: categorías generales, F2.2). */
   filter: {
     all: 'Todas',
-    label: 'Filtrar proyectos por tecnología',
+    label: 'Filtrar proyectos por categoría tecnológica',
+    categories: {
+      android: 'Android',
+      web: 'Web',
+      csharp: 'C#',
+      python: 'Python',
+      java: 'Java',
+    },
     count: (n: number) => (n === 1 ? '1 proyecto' : `${n} proyectos`),
     a11yCount: (n: number) => (n === 1 ? '1 resultado' : `${n} resultados`),
   },

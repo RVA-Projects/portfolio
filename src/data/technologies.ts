@@ -1,6 +1,40 @@
 import type { Technology } from '../models/Technology'
 
 /**
+ * Categorías del filtro (RF-07 simplificado, plan de actualización F2.2):
+ * categorías tecnológicas GENERALES, no herramientas individuales.
+ * SQLite y Room NO tienen categoría: nunca filtran solas (decisión del
+ * propietario), solo aparecen en las fichas de sus proyectos.
+ */
+export type FilterCategoryId = 'android' | 'web' | 'csharp' | 'python' | 'java'
+
+/** Orden estable del índice: las 5 categorías SIEMPRE visibles (con 0 proyectos si no hay). */
+export const FILTER_CATEGORIES: readonly FilterCategoryId[] = [
+  'android',
+  'web',
+  'csharp',
+  'python',
+  'java',
+]
+
+/**
+ * Mapeo technologyId → categoría de filtro. Las tecnologías sin entrada
+ * (git, sqlite, room, sql, react, typescript…) no participan del filtrado;
+ * el resto conservan su tecnología en las fichas (esto no toca datos).
+ */
+export const FILTER_CATEGORY_BY_TECH: Record<string, FilterCategoryId> = {
+  'android-studio': 'android',
+  kotlin: 'android',
+  html: 'web',
+  css: 'web',
+  javascript: 'web',
+  wordpress: 'web',
+  csharp: 'csharp',
+  python: 'python',
+  java: 'java',
+}
+
+/**
  * Catálogo de tecnologías (modelo `Technology`). Clasificación por niveles
  * (RF-03) confirmada con el propietario: core ⇒ stack principal (añade
  * Python, C#, Java) · project ⇒ usadas en proyectos · tool ⇒ complementarias.

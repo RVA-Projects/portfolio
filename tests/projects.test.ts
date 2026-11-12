@@ -2,8 +2,8 @@ import { existsSync } from 'node:fs'
 import { join } from 'node:path'
 import { describe, expect, it } from 'vitest'
 import { projects } from '../src/data/projects'
-import { technologies } from '../src/data/technologies'
-import { collectFilterTechnologies, filterProjects } from '../src/utils/filter'
+import { FILTER_CATEGORIES, FILTER_CATEGORY_BY_TECH, technologies } from '../src/data/technologies'
+import { filterProjects } from '../src/utils/filter'
 
 describe('audit:content — integridad de datos de proyectos (RF-09)', () => {
   it('no hay IDs duplicados en la colección de proyectos', () => {
@@ -121,26 +121,48 @@ describe('audit:content — integridad de datos de proyectos (RF-09)', () => {
   })
 })
 
-describe('utils/filter (RF-07)', () => {
+describe('utils/filter por categoría (RF-07 simplificado, F2.2)', () => {
   it('All (null) devuelve la colección intacta', () => {
     expect(filterProjects(projects, null)).toBe(projects)
   })
 
-  it('filtra por tecnología usada', () => {
-    const kotlin = filterProjects(projects, 'kotlin')
-    expect(kotlin.length).toBe(2)
-    expect(kotlin.every((p) => p.technologyIds.includes('kotlin'))).toBe(true)
+  it('Android agrupa kotlin/android-studio (2 proyectos, sqlite/room sin categoría propia)', () => {
+    const android = filterProjects(projects, 'android')
+    expect(android.map((p) => p.id).sort()).toEqual(['flashcards-app', 'mini-crm'])
   })
 
-  it('devuelve vacío con tecnologías sin uso en proyectos', () => {
-    expect(filterProjects(projects, 'docker')).toHaveLength(0)
+  it('Web agrupa html/css/javascript/wordpress (5 proyectos)', () => {
+    const web = filterProjects(projects, 'web')
+    expect(web.map((p) => p.id).sort()).toEqual([
+      'centro-medico-sector-v',
+      'dawdam-top',
+      'loki-home',
+      'signature-application',
+      'snake',
+    ])
   })
 
-  it('el índice del filtro solo contiene tecnologías usadas y está ordenado', () => {
-    const index = collectFilterTechnologies(projects, technologies)
-    const names = index.map((t) => t.name)
-    expect(names).toEqual([...names].sort((a, b) => a.localeCompare(b, 'es')))
-    expect(index.map((t) => t.id)).not.toContain('unity')
-    expect(index.length).toBeGreaterThan(0)
+  it('C# agrupa csharp; sqlite NO filtra sola pero sus proyectos entran por csharp (3)', () => {
+    const csharp = filterProjects(projects, 'csharp')
+    expect(csharp.map((p) => p.id).sort()).toEqual([
+      'gb-utility',
+      'signature-application',
+      'task-manager',
+    ])
+  })
+
+  it('Python y Java existen con 0 proyectos hoy (el propietario los rellenará)', () => {
+    expect(filterProjects(projects, 'python')).toHaveLength(0)
+    expect(filterProjects(projects, 'java')).toHaveLength(0)
+  })
+
+  it('git, sqlite y room NO mapean a ninguna categoría de filtro', () => {
+    expect(FILTER_CATEGORY_BY_TECH['git']).toBeUndefined()
+    expect(FILTER_CATEGORY_BY_TECH['sqlite']).toBeUndefined()
+    expect(FILTER_CATEGORY_BY_TECH['room']).toBeUndefined()
+  })
+
+  it('la constante FILTER_CATEGORIES contiene exactamente las 5 en orden estable', () => {
+    expect([...FILTER_CATEGORIES]).toEqual(['android', 'web', 'csharp', 'python', 'java'])
   })
 })
