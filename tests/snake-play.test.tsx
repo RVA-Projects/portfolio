@@ -23,6 +23,14 @@ describe('Modo juego embebido (RF-10/F7, playUrl de snake)', () => {
     expect(frame.getAttribute('src')).toBe('https://rva-projects.github.io/snake/')
   })
 
+  it('el iframe del juego delega fullscreen: allow="fullscreen" + allowFullScreen (F4.2)', () => {
+    const dialog = openSnake()
+    fireEvent.click(within(dialog).getByRole('button', { name: 'Jugar ahora' }))
+    const frame = within(dialog).getByTitle('Snake')
+    expect(frame.getAttribute('allow')).toContain('fullscreen')
+    expect(frame.hasAttribute('allowfullscreen')).toBe(true)
+  })
+
   it('en modo juego NO hay flechas flotantes de navegación entre proyectos', () => {
     const dialog = openSnake()
     expect(screen.getByRole('button', { name: 'Proyecto anterior' })).toBeInTheDocument()

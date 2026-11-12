@@ -1,6 +1,7 @@
 import { beforeEach, describe, expect, it } from 'vitest'
 import { cleanup, fireEvent, render, screen, within } from '@testing-library/react'
 import { App } from '../src/App'
+import styles from '../src/components/overlays/ProjectOverlay.module.css'
 
 beforeEach(() => {
   cleanup()
@@ -47,6 +48,27 @@ describe('ProjectOverlay (RF-10/RF-12/RF-13/RF-14)', () => {
     expect(prev).toBeEnabled()
     fireEvent.click(prev)
     expect(screen.getByRole('dialog', { name: 'dawdam.top' })).toBeInTheDocument()
+  })
+
+  it('las flechas conservan su posición lateral aunque estén deshabilitadas (F4.1)', () => {
+    render(<App />)
+    // Primer proyecto: prev deshabilitado PERO mantiene la clase de posición
+    openProject('Signature Application')
+    const prev = screen.getByRole('button', { name: 'Proyecto anterior' })
+    const next = screen.getByRole('button', { name: 'Proyecto siguiente' })
+    expect(prev).toBeDisabled()
+    expect(prev.className).toContain(styles.navPrev)
+    expect(prev.className).toContain(styles.navArrow)
+    expect(next.className).toContain(styles.navNext)
+
+    // Último proyecto: next deshabilitado PERO mantiene la clase de posición
+    openProject('Snake')
+    const lastNext = screen.getByRole('button', { name: 'Proyecto siguiente' })
+    expect(lastNext).toBeDisabled()
+    expect(lastNext.className).toContain(styles.navNext)
+    expect(screen.getByRole('button', { name: 'Proyecto anterior' }).className).toContain(
+      styles.navPrev,
+    )
   })
 
   it('cierra con Escape y con el botón de cerrar (restaura el foco al DOM)', () => {

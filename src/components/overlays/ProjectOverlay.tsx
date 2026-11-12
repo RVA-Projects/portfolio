@@ -119,7 +119,7 @@ export function ProjectOverlay({
             onClick={prevHandler ?? (() => {})}
             disabled={!hasPrev}
             icon={<IconChevronLeft />}
-            className={hasPrev ? `${styles.navArrow} ${styles.navPrev}` : styles.navArrow}
+            className={`${styles.navArrow} ${styles.navPrev}`}
           />
         )}
         {onNext !== undefined && (
@@ -128,7 +128,7 @@ export function ProjectOverlay({
             onClick={nextHandler ?? (() => {})}
             disabled={!hasNext}
             icon={<IconChevronRight />}
-            className={hasNext ? `${styles.navArrow} ${styles.navNext}` : styles.navArrow}
+            className={`${styles.navArrow} ${styles.navNext}`}
           />
         )}
       </>
@@ -173,6 +173,10 @@ export function ProjectOverlay({
               className={styles.playFrame}
               src={project.playUrl}
               title={project.name[language]}
+              /* F4.2: el juego (GitHub Pages) entra en fullscreen solo si el
+                 iframe lo delega: atributo legacy + allow modernos. */
+              allow="fullscreen"
+              allowFullScreen
             />
             <div className={styles.playBar}>
               <Button
