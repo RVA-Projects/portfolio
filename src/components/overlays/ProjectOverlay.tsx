@@ -8,6 +8,7 @@ import { IconChevronLeft, IconChevronRight, IconClose } from '../base/Icons'
 import { Modal } from '../base/Modal'
 import { Tag } from '../base/Tag'
 import { MediaGallery } from './MediaGallery'
+import { ImageZoomOverlay } from './ImageZoomOverlay'
 import styles from './ProjectOverlay.module.css'
 
 /**
@@ -67,9 +68,16 @@ export function ProjectOverlay({
   /** Modo juego (RF-10/F7): iframe del juego a todo el panel del overlay. */
   const [playing, setPlaying] = useState(false)
 
-  /* Al cambiar de proyecto o cerrar el overlay, sale del modo juego. */
+  /* Fase 3: el índice de la galería vive AQUÍ (galería controlada) para que
+     el visor ampliado lo comparta y el estado se conserve al cerrar la capa. */
+  const [galleryIndex, setGalleryIndex] = useState(0)
+  const [zoomOpen, setZoomOpen] = useState(false)
+
+  /* Al cambiar de proyecto o cerrar el overlay, sale del modo juego y del zoom. */
   useEffect(() => {
     setPlaying(false)
+    setGalleryIndex(0)
+    setZoomOpen(false)
   }, [project?.id])
 
   /* En modo juego: Escape cierra SOLO el juego (no el overlay); Modal es
@@ -85,8 +93,11 @@ export function ProjectOverlay({
     }
   }, [playing])
 
+  /* Fase 3: con la capa de zoom abierta, ←/→ a nivel documento NO deben
+     cambiar de PROYECTO (ImageZoomOverlay los consume en fase captura y los
+     cambia a imagen). Este listener se desactiva mientras el zoom está abierto. */
   useEffect(() => {
-    if (project === null || playing) return
+    if (project === null || playing || zoomOpen) return
     const onKey = (event: KeyboardEvent) => {
       /* F6.4 teclado: ←/→ cambian de proyecto salvo que la galería los
          consuma (ella hace stopPropagation, así que no llegan aquí). */
@@ -103,7 +114,7 @@ export function ProjectOverlay({
     return () => {
       document.removeEventListener('keydown', onKey)
     }
-  }, [project, hasPrev, hasNext, onPrev, onNext, playing])
+  }, [project, hasPrev, hasNext, onPrev, onNext, playing, zoomOpen])
 
   if (project === null) return null
 
@@ -134,13 +145,25 @@ export function ProjectOverlay({
       </>
     )
 
+  const zoomLayer =
+    zoomOpen && project !== null ? (
+      <ImageZoomOverlay
+        items={project.media}
+        index={galleryIndex}
+        onIndexChange={setGalleryIndex}
+        onClose={() => {
+          setZoomOpen(false)
+        }}
+      />
+    ) : undefined
+
   return (
     <Modal
       open
       onClose={onClose}
       labelledById={TITLE_ID}
       flush
-      aside={playing ? undefined : floatingNav}
+      aside={playing ? undefined : (zoomLayer ?? floatingNav)}
       dismissable={!playing}
     >
       <div className={styles.inner}>
@@ -191,8 +214,17 @@ export function ProjectOverlay({
         ) : (
           <div className={styles.body}>
             <div className={styles.mediaSide}>
-              {/* key: remonta la galería al cambiar de proyecto (F6.4) */}
-              <MediaGallery key={project.id} items={project.media} />
+              {/* key: remonta la galería al cambiar de proyecto (F6.4).
+                  Fase 3: galería CONTROLADA — el índice vive en el overlay. */}
+              <MediaGallery
+                key={project.id}
+                items={project.media}
+                index={galleryIndex}
+                onIndexChange={setGalleryIndex}
+                onOpenZoom={() => {
+                  setZoomOpen(true)
+                }}
+              />
               <div className={styles.tags}>
                 {project.technologyIds.map((technologyId) => (
                   <Tag key={technologyId} label={technologyNameById(technologyId)} />

@@ -119,6 +119,16 @@ export const en: Texts = {
     /** Embedded play mode (playable projects, snake). */
     play: 'Play now',
     playClose: 'Close game',
+    /** Enlarged image viewer (Phase 3). */
+    zoom: 'Enlarge image',
+  },
+  /** Zoom layer over the project overlay (Phase 3). */
+  zoomOverlay: {
+    close: 'Close enlarged viewer',
+    in: 'Zoom in',
+    out: 'Zoom out',
+    prev: 'Previous image',
+    next: 'Next image',
   },
   /** RF-11 media gallery inside the overlay. */
   gallery: {

@@ -118,6 +118,16 @@ export const es = {
     /** Modo juego embebido (proyectos jugables, snake). */
     play: 'Jugar ahora',
     playClose: 'Cerrar juego',
+    /** Visor ampliado de imágenes (Fase 3). */
+    zoom: 'Ampliar imagen',
+  },
+  /** Capa de zoom sobre el overlay de proyecto (Fase 3). */
+  zoomOverlay: {
+    close: 'Cerrar visor ampliado',
+    in: 'Acercar',
+    out: 'Alejar',
+    prev: 'Imagen anterior',
+    next: 'Imagen siguiente',
   },
   /** Galería de media dentro del overlay (RF-11). */
   gallery: {

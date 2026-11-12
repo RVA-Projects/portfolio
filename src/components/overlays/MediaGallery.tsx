@@ -3,12 +3,17 @@ import { useLanguage } from '../../i18n'
 import type { MediaItem } from '../../models/Project'
 import { extractYouTubeId } from '../../utils/media'
 import { IconButton } from '../base/IconButton'
-import { IconChevronLeft, IconChevronRight } from '../base/Icons'
+import { IconChevronLeft, IconChevronRight, IconZoom } from '../base/Icons'
 import styles from './MediaGallery.module.css'
 
 interface MediaGalleryProps {
   /** ≥1 item. El componente se remonta por proyecto (key en el padre). */
   items: MediaItem[]
+  /** Fase 3: índice CONTROLADO por ProjectOverlay (compartido con el zoom). */
+  index: number
+  onIndexChange: (index: number) => void
+  /** Abre el visor ampliado (solo ofrece el botón para image/gif). */
+  onOpenZoom: () => void
 }
 
 type ImageFailedState = Record<number, boolean>
@@ -16,23 +21,24 @@ type ImageFailedState = Record<number, boolean>
 /**
  * Galería de media (RF-11): media principal + miniaturas + prev/next +
  * indicador "1/N" (aria-live). Teclado ←/→. YouTube/iframes SOLO cargan al
- * activarlos (facade con botón de reproducción). Si la media es de video y
- * aún no existe (F7), muestra texto de no disponible, sin crash.
+ * activarlos (facade con botón de reproducción). Fase 3: el índice vive en
+ * ProjectOverlay (galería controlada) y las imágenes ofrecen botón de lupa
+ * para el visor ampliado (siempre visible: accesible sin hover, también táctil).
  */
-export function MediaGallery({ items }: MediaGalleryProps) {
+export function MediaGallery({ items, index, onIndexChange, onOpenZoom }: MediaGalleryProps) {
   const { language, texts } = useLanguage()
-  const [active, setActive] = useState(0)
   const [playing, setPlaying] = useState(false)
   const [imageFailed, setImageFailed] = useState<ImageFailedState>({})
 
   if (items.length === 0) return null
 
-  const current = items[Math.min(active, items.length - 1)]
+  const active = Math.min(index, items.length - 1)
+  const current = items[active]
 
-  const goTo = (index: number) => {
-    const clamped = Math.min(Math.max(0, index), items.length - 1)
+  const goTo = (next: number) => {
+    const clamped = Math.min(Math.max(0, next), items.length - 1)
     setPlaying(false)
-    setActive(clamped)
+    onIndexChange(clamped)
   }
 
   const onKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
@@ -49,8 +55,8 @@ export function MediaGallery({ items }: MediaGalleryProps) {
     }
   }
 
-  const onImageError = (index: number, event: SyntheticEvent<HTMLImageElement>) => {
-    setImageFailed((prev) => ({ ...prev, [index]: true }))
+  const onImageError = (failedIndex: number, event: SyntheticEvent<HTMLImageElement>) => {
+    setImageFailed((prev) => ({ ...prev, [failedIndex]: true }))
     event.currentTarget.style.display = 'none'
   }
 
@@ -113,6 +119,8 @@ export function MediaGallery({ items }: MediaGalleryProps) {
     }
   }
 
+  const zoomable = (current.kind === 'image' || current.kind === 'gif') && !imageFailed[active]
+
   return (
     <div
       className={styles.gallery}
@@ -121,7 +129,17 @@ export function MediaGallery({ items }: MediaGalleryProps) {
       tabIndex={0}
       onKeyDown={onKeyDown}
     >
-      <div className={styles.main}>{renderMain()}</div>
+      <div className={styles.main}>
+        {renderMain()}
+        {zoomable && (
+          <IconButton
+            ariaLabel={texts.projectOverlay.zoom}
+            onClick={onOpenZoom}
+            icon={<IconZoom size={20} />}
+            className={styles.zoomBtn}
+          />
+        )}
+      </div>
 
       {items.length > 1 && (
         <div className={styles.thumbsRow}>
@@ -140,18 +158,20 @@ export function MediaGallery({ items }: MediaGalleryProps) {
             />
           </div>
           <div className={styles.thumbs}>
-            {items.map((item, index) => {
+            {items.map((item, thumbIndex) => {
               const isImage = item.kind === 'image' || item.kind === 'gif'
               return (
                 <button
                   key={item.id}
                   type="button"
                   className={
-                    index === active ? `${styles.thumb} ${styles['thumb--active']}` : styles.thumb
+                    thumbIndex === active
+                      ? `${styles.thumb} ${styles['thumb--active']}`
+                      : styles.thumb
                   }
-                  onClick={() => goTo(index)}
-                  aria-label={`[${index + 1}] ${item.alt[language]}`}
-                  aria-current={index === active}
+                  onClick={() => goTo(thumbIndex)}
+                  aria-label={`[${thumbIndex + 1}] ${item.alt[language]}`}
+                  aria-current={thumbIndex === active}
                 >
                   {isImage && item.thumbnail !== undefined ? (
                     <img src={item.thumbnail} alt="" loading="lazy" />

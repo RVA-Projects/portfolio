@@ -55,6 +55,24 @@
   outline-offset: -2px;
 }
 
+/* Lupa del visor ampliado (Fase 3): SIEMPRE visible (táctil y teclado),
+   apariencia transparente que se acentúa al hover — nunca solo-hover. */
+.zoomBtn {
+  position: absolute;
+  top: var(--space-2);
+  right: var(--space-2);
+  z-index: 1;
+  background: transparent;
+  color: var(--color-focus);
+  opacity: 0.75;
+}
+
+.zoomBtn:hover,
+.zoomBtn:focus-visible {
+  opacity: 1;
+  background: rgba(0, 0, 0, 0.35);
+}
+
 .thumbsRow {
   display: flex;
   align-items: center;

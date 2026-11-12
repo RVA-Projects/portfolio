@@ -40,6 +40,42 @@ export function IconMoon({ size = 24 }: IconProps) {
   )
 }
 
+export function IconZoom({ size = 24 }: IconProps) {
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      aria-hidden="true"
+    >
+      <circle cx="11" cy="11" r="7" />
+      <path d="m21 21-4.3-4.3M8 11h6M11 8v6" />
+    </svg>
+  )
+}
+
+export function IconZoomOut({ size = 24 }: IconProps) {
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      aria-hidden="true"
+    >
+      <circle cx="11" cy="11" r="7" />
+      <path d="m21 21-4.3-4.3M8 11h6" />
+    </svg>
+  )
+}
+
 export function IconMenu({ size = 24 }: IconProps) {
   return (
     <svg
