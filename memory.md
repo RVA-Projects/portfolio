@@ -57,6 +57,8 @@ Ver detalle en `docs/decisions.md` (D01–D15). Resumen:
 
 ## Últimos cambios
 
+- 2026-11-12 (2): **Snake jugable en el overlay (D17)** — `Project.playUrl`; botón «Jugar ahora» en ProjectOverlay (solo snake) con iframe a todo el panel, «Cerrar juego» sin cerrar el overlay, Modal `dismissable` (clic fuera no cierra jugando), Escape cierra solo el juego, ←/→ deshabilitados en modo juego; i18n es/en; `tests/snake-play.test.tsx` (6 tests). Tests 74→80.
+
 - 2026-11-12: **Media + PDFs integrados** — 26 imágenes movidas a `public/media/projects/<slug>/` con renames a los nombres declarados (`dawdam.png`→`coding.png`, `fc.icon.png`→`fcicon.png`); Snake con 3 capturas reales (snake1 portada, alts verificados mirando las imágenes); MiniCRM con mcrm0 como portada (9 capturas); 3 PDFs renombrados a los slugs declarados (`react-fundamentals`, `javascript-fundamentals`, `spring-boot-spring-mvc-5`); tests `existsSync` para toda la media local y los PDFs (74 tests). Pendiente: foto personal, compresión de media pesada.
 
 - 2026-11-11: **F6.6** — EducationSection + DocumentViewerOverlay (D16): datos desde inventario §4 con enlaces reales, `issuer` opcional, PDFs locales pendientes de subida, visor embebido con error controlado (timeout 8s) y acciones abrir/descargar. Tests 53→72. Pendiente: subir los 6 PDFs a `public/docs/` (F7.3).
@@ -72,6 +74,6 @@ Ver detalle en `docs/decisions.md` (D01–D15). Resumen:
 
 ## Próxima tarea recomendada
 
-0. **snake-cover.png:** el propietario aporta captura real (pendiente 0 arriba). Al llegar: verificar que el fichero cae en `public/media/projects/snake/snake-cover.png` y extender `tests/projects.test.ts` con `existsSync` para media local declarada.
-1. **F6.7 LanguagesSection** reutilizando `DocumentViewerOverlay` (ya probado): datos de idiomas (Castellano nativo, Valenciano C1 cert, Rumano nativo, Inglés B2 cert, Alemán Starter), `LanguageCard` con botón de documento para los certificados.
+0. **Foto personal:** el propietario la pega en `public/assets/img/` y se integra en la Introduction (F7.4).
+1. **F6.7 LanguagesSection** reutilizando `DocumentViewerOverlay` (ya probado): datos de idiomas (Castellano nativo, Valenciano C1 cert, Rumano nativo, Inglés B2 cert, Alemán Starter), `LanguageCard` con botón de documento para los certificados (pendientes los PDFs de valenciano/inglés/CV).
 2. Después F6.8 Contact → F6.10 Canvas. La revisión móvil se hace post-despliegue.

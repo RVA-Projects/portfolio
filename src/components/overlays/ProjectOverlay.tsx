@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { technologyNameById } from '../../data/technologies'
 import { useLanguage } from '../../i18n'
 import type { EducationalTextItem, Project } from '../../models/Project'
@@ -64,8 +64,29 @@ export function ProjectOverlay({
 }: ProjectOverlayProps) {
   const { language, texts } = useLanguage()
 
+  /** Modo juego (RF-10/F7): iframe del juego a todo el panel del overlay. */
+  const [playing, setPlaying] = useState(false)
+
+  /* Al cambiar de proyecto o cerrar el overlay, sale del modo juego. */
   useEffect(() => {
-    if (project === null) return
+    setPlaying(false)
+  }, [project?.id])
+
+  /* En modo juego: Escape cierra SOLO el juego (no el overlay); Modal es
+     `dismissable: false`, así que ni backdrop ni Escape cierran el overlay. */
+  useEffect(() => {
+    if (!playing) return
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') setPlaying(false)
+    }
+    document.addEventListener('keydown', onKey)
+    return () => {
+      document.removeEventListener('keydown', onKey)
+    }
+  }, [playing])
+
+  useEffect(() => {
+    if (project === null || playing) return
     const onKey = (event: KeyboardEvent) => {
       /* F6.4 teclado: ←/→ cambian de proyecto salvo que la galería los
          consuma (ella hace stopPropagation, así que no llegan aquí). */
@@ -82,7 +103,7 @@ export function ProjectOverlay({
     return () => {
       document.removeEventListener('keydown', onKey)
     }
-  }, [project, hasPrev, hasNext, onPrev, onNext])
+  }, [project, hasPrev, hasNext, onPrev, onNext, playing])
 
   if (project === null) return null
 
@@ -114,7 +135,14 @@ export function ProjectOverlay({
     )
 
   return (
-    <Modal open onClose={onClose} labelledById={TITLE_ID} flush aside={floatingNav}>
+    <Modal
+      open
+      onClose={onClose}
+      labelledById={TITLE_ID}
+      flush
+      aside={playing ? undefined : floatingNav}
+      dismissable={!playing}
+    >
       <div className={styles.inner}>
         <header className={styles.header}>
           <div>
@@ -139,60 +167,88 @@ export function ProjectOverlay({
           </div>
         </header>
 
-        <div className={styles.body}>
-          <div className={styles.mediaSide}>
-            {/* key: remonta la galería al cambiar de proyecto (F6.4) */}
-            <MediaGallery key={project.id} items={project.media} />
-            <div className={styles.tags}>
-              {project.technologyIds.map((technologyId) => (
-                <Tag key={technologyId} label={technologyNameById(technologyId)} />
-              ))}
+        {playing ? (
+          <div className={styles.playArea}>
+            <iframe
+              className={styles.playFrame}
+              src={project.playUrl}
+              title={project.name[language]}
+            />
+            <div className={styles.playBar}>
+              <Button
+                label={texts.projectOverlay.playClose}
+                variant="primary"
+                onClick={() => {
+                  setPlaying(false)
+                }}
+              />
             </div>
-            {project.links.length > 0 && (
-              <div className={styles.links}>
-                {project.links.map((link) => (
-                  <Button
-                    key={link.id}
-                    label={texts.projectOverlay.links[link.id]}
-                    href={link.url}
-                    external
-                  />
+          </div>
+        ) : (
+          <div className={styles.body}>
+            <div className={styles.mediaSide}>
+              {/* key: remonta la galería al cambiar de proyecto (F6.4) */}
+              <MediaGallery key={project.id} items={project.media} />
+              <div className={styles.tags}>
+                {project.technologyIds.map((technologyId) => (
+                  <Tag key={technologyId} label={technologyNameById(technologyId)} />
                 ))}
               </div>
-            )}
-          </div>
+              {project.playUrl !== undefined && (
+                <Button
+                  label={texts.projectOverlay.play}
+                  variant="primary"
+                  onClick={() => {
+                    setPlaying(true)
+                  }}
+                />
+              )}
+              {project.links.length > 0 && (
+                <div className={styles.links}>
+                  {project.links.map((link) => (
+                    <Button
+                      key={link.id}
+                      label={texts.projectOverlay.links[link.id]}
+                      href={link.url}
+                      external
+                    />
+                  ))}
+                </div>
+              )}
+            </div>
 
-          <div className={styles.infoSide}>
-            <InfoBlock heading={texts.projectOverlay.labels.goal}>
-              <p>{project.goal[language]}</p>
-            </InfoBlock>
-            <InfoBlock heading={texts.projectOverlay.labels.problem}>
-              <p>{project.problem[language]}</p>
-            </InfoBlock>
-            <InfoBlock heading={texts.projectOverlay.labels.role}>
-              <p>{project.role[language]}</p>
-            </InfoBlock>
-            <InfoBlock heading={texts.projectOverlay.labels.architecture}>
-              <p>{project.architecture[language]}</p>
-            </InfoBlock>
-            {project.features.length > 0 && (
-              <InfoBlock heading={texts.projectOverlay.labels.features}>
-                <ItemsList items={project.features} />
+            <div className={styles.infoSide}>
+              <InfoBlock heading={texts.projectOverlay.labels.goal}>
+                <p>{project.goal[language]}</p>
               </InfoBlock>
-            )}
-            {project.technicalDecisions.length > 0 && (
-              <InfoBlock heading={texts.projectOverlay.labels.technicalDecisions}>
-                <ItemsList items={project.technicalDecisions} />
+              <InfoBlock heading={texts.projectOverlay.labels.problem}>
+                <p>{project.problem[language]}</p>
               </InfoBlock>
-            )}
-            <InfoBlock heading={texts.projectOverlay.labels.outcomes}>
-              <p>{project.outcomes[language]}</p>
-            </InfoBlock>
-            <InfoBlock heading={texts.projectOverlay.labels.learnings}>
-              <p>{project.learnings[language]}</p>
-            </InfoBlock>
+              <InfoBlock heading={texts.projectOverlay.labels.role}>
+                <p>{project.role[language]}</p>
+              </InfoBlock>
+              <InfoBlock heading={texts.projectOverlay.labels.architecture}>
+                <p>{project.architecture[language]}</p>
+              </InfoBlock>
+              {project.features.length > 0 && (
+                <InfoBlock heading={texts.projectOverlay.labels.features}>
+                  <ItemsList items={project.features} />
+                </InfoBlock>
+              )}
+              {project.technicalDecisions.length > 0 && (
+                <InfoBlock heading={texts.projectOverlay.labels.technicalDecisions}>
+                  <ItemsList items={project.technicalDecisions} />
+                </InfoBlock>
+              )}
+              <InfoBlock heading={texts.projectOverlay.labels.outcomes}>
+                <p>{project.outcomes[language]}</p>
+              </InfoBlock>
+              <InfoBlock heading={texts.projectOverlay.labels.learnings}>
+                <p>{project.learnings[language]}</p>
+              </InfoBlock>
+            </div>
           </div>
-        </div>
+        )}
       </div>
     </Modal>
   )

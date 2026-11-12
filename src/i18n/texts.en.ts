@@ -96,6 +96,9 @@ export const en: Texts = {
       web: 'Visit website',
       docs: 'Documentation',
     },
+    /** Embedded play mode (playable projects, snake). */
+    play: 'Play now',
+    playClose: 'Close game',
   },
   /** RF-11 media gallery inside the overlay. */
   gallery: {

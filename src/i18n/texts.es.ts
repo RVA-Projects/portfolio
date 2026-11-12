@@ -95,6 +95,9 @@ export const es = {
       web: 'Ver sitio web',
       docs: 'Documentación',
     },
+    /** Modo juego embebido (proyectos jugables, snake). */
+    play: 'Jugar ahora',
+    playClose: 'Cerrar juego',
   },
   /** Galería de media dentro del overlay (RF-11). */
   gallery: {

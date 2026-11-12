@@ -20,6 +20,13 @@ interface ModalProps {
    * focus-trap (el trap abarca todo el backdrop).
    */
   aside?: ReactNode
+  /**
+   * `false`: clic en el backdrop y Escape NO cierran (modo juego del
+   * ProjectOverlay: no se pierde la partida por clic accidental). El
+   * componente cliente conserva el cierre con su botón X del header y gestiona
+   * sus propias salidas de teclado (a11y 2.1.2: siempre hay escape por teclado).
+   */
+  dismissable?: boolean
   children: ReactNode
 }
 
@@ -30,12 +37,20 @@ interface ModalProps {
  * (useFocusTrap). El trap usa el BACKDROP completo, así que los nodos `aside`
  * quedan atrapados sin abandonar el overflow del panel.
  */
-export function Modal({ open, onClose, labelledById, flush = false, aside, children }: ModalProps) {
+export function Modal({
+  open,
+  onClose,
+  labelledById,
+  flush = false,
+  aside,
+  dismissable = true,
+  children,
+}: ModalProps) {
   const backdropRef = useRef<HTMLDivElement>(null)
   const panelRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
-    if (!open) return
+    if (!open || !dismissable) return
     const onKey = (e: KeyboardEvent) => {
       if (e.key === 'Escape') onClose()
     }
@@ -43,7 +58,7 @@ export function Modal({ open, onClose, labelledById, flush = false, aside, child
     return () => {
       document.removeEventListener('keydown', onKey)
     }
-  }, [open, onClose])
+  }, [open, onClose, dismissable])
 
   useBodyScrollLock(open)
   useFocusTrap(backdropRef, open)
@@ -55,7 +70,7 @@ export function Modal({ open, onClose, labelledById, flush = false, aside, child
       ref={backdropRef}
       className={styles.backdrop}
       onClick={(e) => {
-        if (e.target === e.currentTarget) onClose()
+        if (dismissable && e.target === e.currentTarget) onClose()
       }}
     >
       <div

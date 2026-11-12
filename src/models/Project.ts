@@ -39,6 +39,12 @@ export interface Project extends BaseEntity {
   media: MediaItem[]
   /** Solo los enlaces que existan. Prohibido inventar repos. */
   links: ProjectLink[]
+  /**
+   * URL jugable embebida: el ProjectOverlay ofrece un botón «Jugar» que
+   * carga este juego en un iframe a pantalla completa del overlay. Solo
+   * para proyectos realmente jugables en navegador (snake).
+   */
+  playUrl?: string
 
   /* Detalle del overlay (RF-12) */
   goal: LocalizedText

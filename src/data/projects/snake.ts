@@ -48,6 +48,8 @@ export const snake: Project = {
     { id: 'demo', url: 'https://rva-projects.github.io/snake/' },
     { id: 'github', url: 'https://github.com/RVA-Projects/snake' },
   ],
+  /** Juego embebido en el overlay (RF-10): mismo despliegue público. */
+  playUrl: 'https://rva-projects.github.io/snake/',
   goal: {
     es: 'Construir un juego completo para navegador como entorno de aprendizaje de desarrollo asistido por IA, con la misma disciplina metodológica que un proyecto de producción.',
     en: 'Build a complete browser game as a learning environment for AI-assisted development, with the same methodological discipline as a production project.',
