@@ -63,6 +63,14 @@ export const es = {
     },
     openDocument: 'Ver acreditación',
   },
+  /** Sección de idiomas (RF-19), niveles según D04. */
+  languages: {
+    levels: {
+      nativo: 'Nativo',
+      starter: 'Starter',
+    },
+    openCertificate: 'Ver certificado',
+  },
   /** Visor de documentos embebido (RF-18, compartido por formación e idiomas). */
   documentViewer: {
     close: 'Cerrar visor de documento',

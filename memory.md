@@ -1,12 +1,12 @@
 # memory.md — RVA Portfolio
 
 > Memoria operativa del agente. Actualizar tras cada cambio relevante.
-> Última actualización: 2026-11-12 (media+PDFs del propietario integrados y verificados con existsSync; snake 3 capturas reales).
+> Última actualización: 2026-11-12 (F6.7 LanguagesSection; 88 tests).
 
 ## Estado actual
 
-- **Fases:** 0 ✅ · 1 ✅ · 2 ✅ · 3 ✅ · 4 ✅ (deploy pendiente de remoto) · 5 ✅ (revisión móvil aplazada a post-despliegue, decisión del propietario) · **6 🔶 (F6.1–F6.6 hechas; sigue F6.7 LanguagesSection reutilizando DocumentViewerOverlay)**.
-- **Harness:** `npm run validate` en VERDE (72 tests pasando; 1 warning aceptable react-refresh en `src/i18n/index.tsx`).
+- **Fases:** 0 ✅ · 1 ✅ · 2 ✅ · 3 ✅ · 4 ✅ (deploy pendiente de remoto) · 5 ✅ (revisión móvil aplazada a post-despliegue, decisión del propietario) · **6 🔶 (F6.1–F6.7 hechas; sigue F6.8 ContactSection + Footer, luego F6.10 Canvas y F6.9 i18n full)**.
+- **Harness:** `npm run validate` en VERDE (88 tests pasando; 1 warning aceptable react-refresh en `src/i18n/index.tsx`).
 - **Build:** JS 332.47KB (105.93KB gzip) / CSS 18.60KB; base `/portfolio/` verificada; cero dependencias de runtime (iconos como assets).
 
 ## Decisiones cerradas con el propietario (2026-11-10)
@@ -37,6 +37,7 @@ Ver detalle en `docs/decisions.md` (D01–D15). Resumen:
   - **Flechas flotantes (D15):** prev/next del overlay fuera del panel (slot `aside` nuevo en Modal, focus-trap sobre todo el backdrop; IconButton acepta `className`); ocultas <768px; ←/→ a nivel documento. Cerrar único botón del header.
   - **Chore:** `@types/node` dev-dep (tests con node:fs); `vite/client` en tsconfig types; `oldPortfolio/` fuera de ESLint/Vitest/gitignore; HTML/CSS del catálogo mapeados (`html.svg`/`css.svg` desde html5/css3 de devicon).
 - **F6.6 (2026-11-11, D16):** `src/data/education.ts` (11 entradas del inventario §4 con enlaces REALES extraídos de `oldPortfolio/index.html`: 2 Credly, 1 CertView, 6 PDFs OpenWebinars → rutas locales `/portfolio/docs/<slug>.pdf`); `issuer` opcional en `Education` (DAM sin organismo, no se inventa); Java Foundations sin documento; sin fechas/duraciones. `EducationCard` + `EducationSection` (patrón Experience, kicker «04 — Education», grupos official→certification→course, grupos vacíos ocultos) integrada en App tras Experiencia. **DocumentViewerOverlay** sobre `Modal`: iframe embebido, Drive→`/preview` (`googleDriveEmbedUrl` en `utils/media.ts`), timeout 8s/onError ⇒ error controlado con «Abrir en pestaña nueva» + «Descargar» (`Button.download` nuevo). i18n `education.*` + `documentViewer.*` es/en. Tests: `education.test.ts` (integridad+Drive), `education-section.test.tsx`, `document-viewer.test.tsx` (timeout con fake timers + act).
+- **F6.7 (2026-11-12):** `src/data/languages.ts` (5 idiomas D04: castellano nativo, valenciano C1, rumano nativo, inglés B2, alemán starter; sin desglose conversación/escrito — decisión del propietario, nivel único); `LanguageCard` + `LanguagesSection` (grid, kicker «05 — Languages») integrada en App tras Educación; reutiliza `DocumentViewerOverlay` sin cambios. Sin documentos declarados (PDFs valenciano/inglés pendientes F7.3: al subirlos, añadir `document` a los 2 idiomas + existsSync). i18n `languages.*` es/en. Tests 80→88.
 
 ## Pendientes del propietario (para Fase 7 y despliegue)
 
@@ -53,9 +54,11 @@ Ver detalle en `docs/decisions.md` (D01–D15). Resumen:
 - jsdom no implemente `Element.scrollTo`: stub no-op añadido a `src/test/setup.ts`.
 - Los ficheros de media de proyectos ya están integrados y verificados con existsSync (2026-11-12).
 - **Media pesada sin comprimir:** `lokihome2.png` 796KB, `mm.png` 1.7MB, `sig1/sig2.png` ~500KB — comprimir en F7 (guía <300KB).
-- Los PDFs de los 6 cursos OpenWebinars están en `public/docs/` y verificados con existsSync (2026-11-12). Falta el PDF de idiomas/CV (F6.7/F7.3).
+- Los PDFs de los 6 cursos OpenWebinars están en `public/docs/` y verificados con existsSync (2026-11-12). Faltan los certificados de idiomas (valenciano C1, inglés B2) y el CV (F7.3): nombres propuestos `valenciano-c1.pdf` / `english-b2.pdf`.
 
 ## Últimos cambios
+
+- 2026-11-12 (3): **F6.7 LanguagesSection** — 5 idiomas D04 (niveles únicos, sin desglose), LanguageCard/LanguagesSection reutilizando DocumentViewerOverlay (kicker «05»); sin documentos declarados hasta que el propietario suba los PDFs de Valenciano C1 e Inglés B2 (entonces: `document` + existsSync). Tests 74→88.
 
 - 2026-11-12 (2): **Snake jugable en el overlay (D17)** — `Project.playUrl`; botón «Jugar ahora» en ProjectOverlay (solo snake) con iframe a todo el panel, «Cerrar juego» sin cerrar el overlay, Modal `dismissable` (clic fuera no cierra jugando), Escape cierra solo el juego, ←/→ deshabilitados en modo juego; i18n es/en; `tests/snake-play.test.tsx` (6 tests). Tests 74→80.
 

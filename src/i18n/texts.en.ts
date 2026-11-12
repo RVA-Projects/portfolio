@@ -64,6 +64,14 @@ export const en: Texts = {
     },
     openDocument: 'View accreditation',
   },
+  /** RF-19 languages section, levels per D04. */
+  languages: {
+    levels: {
+      nativo: 'Native',
+      starter: 'Starter',
+    },
+    openCertificate: 'View certificate',
+  },
   /** Embedded document viewer (RF-18, shared by education and languages). */
   documentViewer: {
     close: 'Close document viewer',
