@@ -12,6 +12,11 @@
   --color-focus: #ffffff;
   /* Backdrop de overlays (Modal); token para que ambos temas lo ajusten. */
   --color-backdrop: rgba(10, 10, 11, 0.85);
+  /* D30 — punto lupa (CursorSpot): acento translúcido que contrasta con el
+     texto de cada tema (núcleo, pulso al presionar y glow del neón). */
+  --color-spot: rgba(226, 55, 68, 0.13);
+  --color-spot-press: rgba(226, 55, 68, 0.26);
+  --color-spot-glow: rgba(226, 55, 68, 0.4);
   /* Stage de reproductor/galería: oscuro en ambos temas (identidad de visor). */
   --color-media-stage: #0a0a0b;
   --shadow-overlay: 0 12px 32px rgba(0, 0, 0, 0.45);
@@ -75,6 +80,10 @@
   --color-accent: #0a66c2;
   --color-focus: #1d2733;
   --color-backdrop: rgba(228, 233, 238, 0.88);
+  /* D30 — punto lupa: azul translúcido (contraste con texto pizarra). */
+  --color-spot: rgba(10, 102, 194, 0.12);
+  --color-spot-press: rgba(10, 102, 194, 0.24);
+  --color-spot-glow: rgba(10, 102, 194, 0.4);
   /* Sombra suave sobre fondo claro (misma geometría). */
   --shadow-overlay: 0 12px 32px rgba(29, 39, 51, 0.16);
 }

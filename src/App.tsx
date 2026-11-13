@@ -9,6 +9,7 @@ import { useTheme } from './hooks/useTheme'
 import { NavigationMenu } from './components/layout/NavigationMenu'
 import { TopBar } from './components/layout/TopBar'
 import { BackgroundCanvas } from './components/layout/BackgroundCanvas'
+import { CursorSpot } from './components/layout/CursorSpot'
 import { Introduction } from './components/sections/Introduction'
 import { ProjectsSection } from './components/sections/ProjectsSection'
 import { TechStackSection } from './components/sections/TechStackSection'
@@ -70,6 +71,9 @@ function AppRoutes() {
         <LanguagesSection />
       </main>
       <Footer />
+      {/* D30 — punto lupa: tras el <main> en el DOM para pintar ENCIMA del
+          canvas/scrim (ambos z -1) y DEBAJO de todo el texto (z auto). */}
+      <CursorSpot />
     </>
   )
 }

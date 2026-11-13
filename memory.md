@@ -66,6 +66,8 @@ Ver detalle en `docs/decisions.md` (D01–D15). Resumen:
 
 ## Últimos cambios
 
+- 2026-11-13 (8): **Ronda 2 · pulido visual** — scrollbar moderna global (fina, thumb flotante, hover acento) y punto lupa (D30): halo translúcido del acento que sigue al cursor con inercia, glow neón al pulsar, DETRÁS del texto; oculto en táctil/reduced-motion; tokens --color-spot*; 136 unitarios + 15 e2e.
+
 - 2026-11-13 (7): **Ronda 2 · F5** — nueva paleta del modo claro (D29): neutros fríos + acento azul #0a66c2, overlays sin tinte cálido, partículas pizarra rgb(63,78,92); modo oscuro intacto; verificado con screenshots ambos temas y overlay.
 - 2026-11-13 (6): **Ronda 2 · F4** — iconos de marca adaptables (D28): github/unity/wordpress/mysql como silueta `mask+currentColor`; eclipse/visual-studio/sqlite/csharp aclarados solo en oscuro; verificado en screenshots de ambos temas.
 - 2026-11-13 (5): **Ronda 2 · F2+F3** — contacto: EmailReveal (slider + copia, email codificado XOR, sin plaintext ni mailto en bundle) y clicker circular con diana; stack: TechStackSection centrada tras Proyectos (tiers core/explored, TypeScript fuera, Kotlin en core), kickers renumerados; 133 unitarios + 15 e2e verdes.

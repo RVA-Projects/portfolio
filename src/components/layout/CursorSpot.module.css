@@ -1,0 +1,44 @@
+/* D30 — Punto lupa: halo translúcido bajo el texto.
+   Orden de pintado (root stacking context): canvas (-1) → scrim de la intro
+   (-1, antes en DOM) → ESTE punto (-1, después en DOM) → todo el contenido
+   (z auto, inline text). Resultado: el círculo queda ENCIMA del fondo animado
+   y DEBAJO de la prosa — el texto se lee sobre el halo (contraste), y sobre
+   superficies opacas (tarjetas, overlays) el punto desaparece sin molestar. */
+.spot {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 38px; /* mayor que el cursor (~17px) */
+  height: 38px;
+  border-radius: 50%;
+  background: var(--color-spot);
+  opacity: 0;
+  pointer-events: none;
+  z-index: -1;
+  transition:
+    opacity 200ms ease,
+    background 240ms ease,
+    box-shadow 240ms ease;
+  will-change: transform;
+}
+
+/* Neón al pulsar (D30): núcleo más presente + doble halo con el acento.
+   Sutil: alfas bajos, nunca tapa el texto (va detrás). */
+.spot[data-press='true'] {
+  background: var(--color-spot-press);
+  box-shadow:
+    0 0 10px 2px var(--color-spot-glow),
+    0 0 28px 6px var(--color-spot-glow);
+}
+
+/* Decoración animada: oculto (igual que el canvas D23). */
+@media (prefers-reduced-motion: reduce) {
+  .spot {
+    display: none;
+  }
+}
+
+/* Puntero no fino (táctil): el hook ya no lo activa; doble seguridad. */
+.spotOff {
+  display: none;
+}
