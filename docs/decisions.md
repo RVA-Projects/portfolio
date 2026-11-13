@@ -152,5 +152,14 @@ Tres ajustes de acabado pedidos por el propietario tras ver D23 en producción:
 - **Tiers:** `TechnologyTier` = `'core' | 'explored'` (antes `core | project | tool`). `explored` = «Tecnologías con las que he experimentado» — NO exige aparecer en fichas de proyectos (experimentos cuentan). Sin duplicados (catálogo único). `FILTER_CATEGORY_BY_TECH` intacto (el filtro no usa tiers).
 - **Catálogo:** TypeScript ELIMINADO del catálogo completo (nunca usado — decisión del propietario); Kotlin sube a `core`. Core final: JavaScript, React, HTML, CSS, SQL, Git, Java, Python, C#, Kotlin.
 - **i18n:** `intro.mainStack/projectStack/tools` eliminados; `sections.stack` + `stack.mainTitle/exploredTitle` nuevos. Tests: `intro-tech.test.tsx` → `tech-stack.test.tsx`; `technologies.test.ts` con tiers nuevos + guard de ausencia de TypeScript; e2e smoke con ancla `stack`.
+
+## D28 — Iconos de marca adaptables por tema — ✅ Aprobada (2026-11-13)
+
+- **Decisión (ronda 2, F4):** dos mecanismos en `TechIcon`, elegidos por medición de contraste del fill más oscuro de cada logo contra `#0b0b0c` (oscuro) y `#f7f7f8` (claro):
+  - **`adapt: 'mono'`** (silueta `mask-image` + `background: currentColor`): github (1.09:1), unity PNG (1.07:1), wordpress (2.19:1), mysql (2.88:1) — logotipos monocromos: la silueta hereda el color del texto del tema, forma intacta, un solo asset, sin fondos que desvirtúen la marca.
+  - **`adapt: 'dim'`** (multicolor con masa oscura): eclipse (1.37:1), visual-studio (1.82:1), sqlite (1.61:1), csharp (1.96:1) — `filter: brightness(1.55) saturate(0.85)` SOLO en modo oscuro (`html:not([data-theme='light'])`); en claro quedan intactas.
+  - El resto pasa (color dominante ≥3:1 o vivo: javascript amarillo, docker, kotlin, android-studio, room, postgresql, vscode…).
+- **Modelo:** `Technology.adapt?: 'mono' | 'dim'` (contratos §2); los dos puntos de llamada (`TechStackSection`, `ExperienceCard`) pasan `tech.adapt`.
+- **Verificación:** screenshots de la sección Stack en ambos temas (siluetas blancas en oscuro, oscuras en claro; dim intactas en claro). 133 unitarios ✓.
 - **RNF:** pausa con `visibilitychange`; `prefers-reduced-motion` ⇒ grid estático tenue sin interacción (reacciona al cambio en vivo); `devicePixelRatio` + resize con debounce 150ms; densidad reducida (spacing ×1.4) con `navigator.deviceMemory ≤ 2`; sin listeners huérfanos (cleanup verificado en tests); canvas `aria-hidden` + `pointer-events:none` (nunca captura interacciones). Si `getContext` no existe, la capa queda vacía sin crashear.
 - **Motivo:** petición del propietario (post plan 2026-11): fondo vivo y vistoso con identidad de tema, sin sacrificar legibilidad ni rendimiento.

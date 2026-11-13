@@ -58,23 +58,24 @@ export const technologies: Technology[] = [
   { id: 'kotlin', name: 'Kotlin', tier: 'core' },
 
   // ——— Tecnologías con las que he experimentado (D27: unificado)
-  { id: 'wordpress', name: 'WordPress', tier: 'explored' },
+  /* D28: adapt flags — mono = silueta con color del tema; dim = aclara solo en oscuro. */
+  { id: 'wordpress', name: 'WordPress', tier: 'explored', adapt: 'mono' },
   { id: 'room', name: 'Room', tier: 'explored' },
-  { id: 'sqlite', name: 'SQLite', tier: 'explored' },
+  { id: 'sqlite', name: 'SQLite', tier: 'explored', adapt: 'dim' },
   { id: 'android-studio', name: 'Android Studio', tier: 'explored' },
   { id: 'nodejs', name: 'Node.js', tier: 'explored' },
-  { id: 'mysql', name: 'MySQL', tier: 'explored' },
+  { id: 'mysql', name: 'MySQL', tier: 'explored', adapt: 'mono' },
   { id: 'postgresql', name: 'PostgreSQL', tier: 'explored' },
   { id: 'docker', name: 'Docker', tier: 'explored' },
   { id: 'firebase', name: 'Firebase', tier: 'explored' },
-  { id: 'unity', name: 'Unity', tier: 'explored', icon: 'unity' },
+  { id: 'unity', name: 'Unity', tier: 'explored', icon: 'unity', adapt: 'mono' },
   { id: 'xampp', name: 'XAMPP', tier: 'explored', icon: 'xampp' },
-  { id: 'eclipse', name: 'Eclipse', tier: 'explored' },
+  { id: 'eclipse', name: 'Eclipse', tier: 'explored', adapt: 'dim' },
   { id: 'netbeans', name: 'NetBeans', tier: 'explored' },
   { id: 'postman', name: 'Postman', tier: 'explored' },
-  { id: 'visual-studio', name: 'Visual Studio', tier: 'explored' },
+  { id: 'visual-studio', name: 'Visual Studio', tier: 'explored', adapt: 'dim' },
   { id: 'vscode', name: 'VS Code', tier: 'explored' },
-  { id: 'github', name: 'GitHub', tier: 'explored' },
+  { id: 'github', name: 'GitHub', tier: 'explored', adapt: 'mono' },
 ]
 
 export function technologiesByTier(tier: Technology['tier']): Technology[] {

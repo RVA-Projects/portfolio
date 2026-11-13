@@ -40,7 +40,7 @@ function TechGrid({ technologies }: TechGridProps) {
     <ul className={styles.techGrid}>
       {technologies.map((tech) => (
         <li key={tech.id} className={styles.techItem}>
-          <TechIcon technologyId={tech.id} icon={tech.icon} />
+          <TechIcon technologyId={tech.id} icon={tech.icon} adapt={tech.adapt} />
           <span>{tech.name}</span>
         </li>
       ))}

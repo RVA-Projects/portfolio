@@ -66,6 +66,7 @@ Ver detalle en `docs/decisions.md` (D01–D15). Resumen:
 
 ## Últimos cambios
 
+- 2026-11-13 (6): **Ronda 2 · F4** — iconos de marca adaptables (D28): github/unity/wordpress/mysql como silueta `mask+currentColor`; eclipse/visual-studio/sqlite/csharp aclarados solo en oscuro; verificado en screenshots de ambos temas.
 - 2026-11-13 (5): **Ronda 2 · F2+F3** — contacto: EmailReveal (slider + copia, email codificado XOR, sin plaintext ni mailto en bundle) y clicker circular con diana; stack: TechStackSection centrada tras Proyectos (tiers core/explored, TypeScript fuera, Kotlin en core), kickers renumerados; 133 unitarios + 15 e2e verdes.
 - 2026-11-13 (4): **Ronda 2 · F1 — presentación y jerarquía**: padding superior de la intro reducido (nombre sube: y≈90px en 1440, 70px en 375); título profesional «Desarrollador de software» + línea secundaria mono «Perfil junior» (fuera del título y de la descripción, D25); description sin «junior».
 

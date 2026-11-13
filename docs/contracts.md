@@ -39,6 +39,7 @@ export interface Technology extends BaseEntity {
   name: string
   tier: TechnologyTier // core = Stack principal · explored = «Tecnologías con las que he experimentado»
   icon?: 'python' | 'unity' | 'xampp' | 'odoo' // PNG custom en /assets/img/icons/; resto ⇒ SVG inline (TechIcon)
+  adapt?: 'mono' | 'dim' // D28: mono = silueta mask+currentColor · dim = aclara solo en oscuro
 } // nombre canónico sin traducir; icon opcional (PNG custom) o SVG inline resuelto por TechIcon
 ```
 

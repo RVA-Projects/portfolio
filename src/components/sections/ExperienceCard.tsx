@@ -43,7 +43,12 @@ export function ExperienceCard({ item, onOpen }: ExperienceCardProps) {
           {item.technologyIds.map((technologyId) => {
             const technology = technologyById(technologyId)
             return (
-              <TechIcon key={technologyId} technologyId={technologyId} icon={technology?.icon} />
+              <TechIcon
+                key={technologyId}
+                technologyId={technologyId}
+                icon={technology?.icon}
+                adapt={technology?.adapt}
+              />
             )
           })}
         </div>

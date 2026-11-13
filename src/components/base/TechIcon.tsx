@@ -16,6 +16,8 @@ import styles from './TechIcon.module.css'
 interface TechIconProps {
   technologyId: string
   icon?: 'python' | 'unity' | 'xampp' | 'odoo'
+  /** D28 — adaptación de marca (mono: silueta del tema · dim: aclara en oscuro). */
+  adapt?: 'mono' | 'dim'
 }
 
 const svgUrls: Record<string, string> = import.meta.glob('./icons/*.svg', {
@@ -24,7 +26,7 @@ const svgUrls: Record<string, string> = import.meta.glob('./icons/*.svg', {
   import: 'default',
 })
 
-export function TechIcon({ technologyId, icon }: TechIconProps) {
+export function TechIcon({ technologyId, icon, adapt }: TechIconProps) {
   const src =
     icon !== undefined
       ? `/portfolio/assets/img/icons/${icon}.png`
@@ -32,9 +34,26 @@ export function TechIcon({ technologyId, icon }: TechIconProps) {
 
   if (src === undefined) return null
 
+  /* D28 — marca monocroma: silueta con currentColor (el logo se adapta al
+     tema sin fondos que desvirtúen su forma; el asset es la máscara). */
+  if (adapt === 'mono') {
+    return (
+      <span
+        className={styles.mono}
+        style={{
+          maskImage: `url("${src}")`,
+          WebkitMaskImage: `url("${src}")`,
+        }}
+        aria-hidden="true"
+      />
+    )
+  }
+
   return (
     <img
-      className={styles.techIcon}
+      className={
+        adapt === 'dim' ? `${styles.techIcon} ${styles['techIcon--dim']}` : styles.techIcon
+      }
       src={src}
       alt=""
       aria-hidden="true"

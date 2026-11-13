@@ -37,8 +37,16 @@ describe('Sección Stack (D27)', () => {
       expect(within(grid).getAllByRole('listitem')).toHaveLength(tier.length)
       for (const tech of tier) {
         const item = within(grid).getByText(tech.name).closest('li') as HTMLElement
-        /* Icono decorativo SIEMPRE presente junto al nombre */
-        expect(item.querySelectorAll('img, svg')).toHaveLength(1)
+        /* Icono decorativo SIEMPRE presente: <img>, <svg> o silueta mono D28
+           (<span> con mask-image + currentColor, aria-hidden). */
+        const icon = item.firstElementChild as HTMLElement
+        expect(icon.getAttribute('aria-hidden')).toBe('true')
+        expect(icon.tagName === 'IMG' || icon.tagName === 'svg' || icon.tagName === 'SPAN').toBe(
+          true,
+        )
+        if (icon.tagName === 'SPAN') {
+          expect(icon.style.maskImage).toContain('url(')
+        }
       }
     }
   })

@@ -9,7 +9,33 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .techIcon {
+  .techIcon,
+  .mono {
     transition: none;
   }
+}
+
+/* D28 — marcas monocromas: la silueta hereda el color del texto del tema
+   (mask-image = asset de marca + background currentColor). Sin fondos ni
+   contenedores: la forma del logotipo queda intacta. */
+.mono {
+  display: block;
+  width: var(--tech-icon-size, 24px);
+  height: var(--tech-icon-size, 24px);
+  flex-shrink: 0;
+  background: currentColor;
+  mask-repeat: no-repeat;
+  mask-position: center;
+  mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  -webkit-mask-size: contain;
+  transition: transform 150ms ease;
+}
+
+/* D28 — marcas multicolor con masa oscura (csharp/eclipse/sqlite/visual-studio):
+   SOLO en modo oscuro (estado base: sin [data-theme='light']) se aclaran;
+   en claro quedan intactas con su identidad original. */
+:global(html:not([data-theme='light'])) .techIcon--dim {
+  filter: brightness(1.55) saturate(0.85);
 }

@@ -13,4 +13,13 @@ export interface Technology extends BaseEntity {
    * inline por `id` (sin CDN externo).
    */
   icon?: 'python' | 'unity' | 'xampp' | 'odoo'
+  /**
+   * D28 — adaptación visual de la marca (ronda 2, F4): 'mono' ⇒ silueta que
+   * hereda el color del texto del tema (mask + currentColor; logotipos
+   * monocromos oscuros: github, unity, wordpress, mysql); 'dim' ⇒ marca
+   * multicolor con masa oscura: se aclara SOLO en modo oscuro (eclipse,
+   * visual-studio, sqlite, csharp). Ausente ⇒ el logo funciona en ambos
+   * temas tal cual.
+   */
+  adapt?: 'mono' | 'dim'
 }
