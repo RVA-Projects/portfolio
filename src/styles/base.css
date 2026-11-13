@@ -80,6 +80,42 @@ button {
   color: #ffffff;
 }
 
+/* ============ Scrollbar moderna (D30) ============
+   Fina, redondeada y con aire (thumb «flotante»): pista transparente, thumb
+   gris que pasa al acento al hover. Firefox vía scrollbar-*, WebKit vía
+   ::-webkit-scrollbar (se aplica a TODOS los contenedores: html y overlays). */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-line-strong) transparent;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-line-strong);
+  background-clip: padding-box;
+  border: 2px solid transparent;
+  border-radius: 999px;
+}
+
+::-webkit-scrollbar-thumb:hover,
+::-webkit-scrollbar-thumb:focus {
+  background: var(--color-accent);
+  background-clip: padding-box;
+  border: 2px solid transparent;
+}
+
+::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
 /* RESPETO global por prefers-reduced-motion (RNF-02) */
 @media (prefers-reduced-motion: reduce) {
   html {
