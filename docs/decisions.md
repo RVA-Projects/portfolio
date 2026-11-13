@@ -185,3 +185,10 @@ Tres ajustes de acabado pedidos por el propietario tras ver D23 en producción:
 - **Fix:** `onPointerDown` ignora los eventos nacidos sobre `button`/`a` (`closest('button, a')` ⇒ return): no se captura el puntero, el click llega al botón y navega. Drag/pinch/swipe sobre la imagen intactos; Escape/X/clic-fuera intactos.
 - **Lupa (F1.2):** fondo sólido `--color-surface` + borde `--color-line-strong` e icono `--color-text` (antes transparente con opacity .75); hover → `--color-surface-2` + `--color-focus`. Siempre visible (táctil OK).
 - **Pruebas:** test de regresión (pointerdown+click sobre flecha navega sin cerrar) — 138 unitarios ✓; verificado con click real Playwright (1↔2 sin cerrar) y screenshots de la lupa en ambos temas.
+
+## D33 — Contacto de la Hero rediseñado (ronda 3 F2) — ✅ Aprobada (2026-11-13)
+
+- **EmailReveal:** caja ÚNICA de tamaño estable (min-width 300px) en ambos estados: bloqueado «Desliza para ver el email», desbloqueado email + copiar DENTRO pegado al borde derecho (flex:1). Slider FUERA, debajo, alineado; al completar se sustituye por indicador verde de finalización (check + «Email visible», `role=status` aria-live). El range nativo se conserva (a11y teclado/táctil sin reimplementar).
+- **Token nuevo:** `--color-ok` (verde confirmación): oscuro `#3fb950`, claro `#1a7f37` (AA sobre #eef1f4). Icono `IconCheck` añadido a base/Icons.
+- **GitHub/LinkedIn:** dejan `variant="ghost"` (transparente) → piel por defecto de Button (superficie + borde), contenedor SIEMPRE visible; hover/active intactos; enlaces intactos.
+- **Pruebas:** 138 unitarios ✓ (tests D26 intactos: sin plaintext, copiar, transient); screenshots en ambos estados × 2 temas × 375px móvil sin desbordes.

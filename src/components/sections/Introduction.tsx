@@ -38,11 +38,12 @@ export function Introduction() {
         <p className={styles.quickLabel}>{texts.intro.available}</p>
 
         <EmailReveal />
+        {/* F2.3: contenedor SIEMPRE visible (piel por defecto de Button =
+            superficie + borde), equivalente a la caja del email desbloqueada. */}
         <Button
           label="GitHub"
           href={site.github}
           external
-          variant="ghost"
           icon={<IconGitHub />}
           ariaLabel="GitHub: RVA-Projects"
         />
@@ -50,7 +51,6 @@ export function Introduction() {
           label="LinkedIn"
           href={site.linkedin}
           external
-          variant="ghost"
           icon={<IconLinkedIn />}
           ariaLabel="LinkedIn: rva-developer"
         />

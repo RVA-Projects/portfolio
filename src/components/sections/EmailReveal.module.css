@@ -1,44 +1,62 @@
-/* D26 — EmailReveal: caja equivalente al botón de email anterior. */
-.box {
+/* D26 + ronda 3 F2 — EmailReveal: caja ÚNICA de tamaño estable + slider
+   fuera, debajo. Ambos estados comparten min-width/height: sin saltos. */
+.block {
   display: inline-flex;
   flex-direction: column;
+  align-items: stretch;
   gap: var(--space-2);
-  padding: var(--space-2) var(--space-4);
+  min-width: 300px;
+  vertical-align: top;
+}
+
+.box {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: 44px;
+  padding: 0 var(--space-2) 0 var(--space-4);
   border: 1px solid var(--color-line-strong);
   border-radius: var(--radius-sm);
   background: var(--color-surface);
 }
 
-.label {
+/* Estado bloqueado: el texto ocupa el ancho y deja el hueco del botón. */
+.hint {
+  flex: 1;
   font-family: var(--font-mono);
   font-size: var(--fs-small);
   color: var(--color-text-muted);
   white-space: nowrap;
 }
 
+/* Estado revelado: email a la izquierda, copiar pegado al borde derecho. */
+.email {
+  flex: 1;
+  font-family: var(--font-mono);
+  font-size: var(--fs-small);
+  color: var(--color-text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 /* accent-color tiñe pista + pulgar con el acento del tema, sin CSS custom
    frágil por navegador; el control nativo garantiza teclado y táctil. */
 .slider {
-  width: 220px;
+  width: 100%;
   min-height: 44px;
   accent-color: var(--color-accent);
   cursor: ew-resize;
 }
 
-/* ——— Estado revelado ——— */
-.revealed {
+/* ——— Indicador verde de finalización (sustituye al slider) ——— */
+.done {
   display: inline-flex;
   align-items: center;
   gap: var(--space-2);
   min-height: 44px;
-  padding: 0 var(--space-4);
-  border: 1px solid var(--color-line-strong);
-  border-radius: var(--radius-sm);
-  background: var(--color-surface);
-}
-
-.email {
+  padding-inline: var(--space-1);
   font-family: var(--font-mono);
   font-size: var(--fs-small);
-  color: var(--color-text);
+  color: var(--color-ok);
 }

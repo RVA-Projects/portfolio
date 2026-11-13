@@ -10,6 +10,8 @@
   --color-text-muted: #9a9aa0;
   --color-accent: #e23744;
   --color-focus: #ffffff;
+  /* Verde de confirmación (estado completado, EmailReveal F2). */
+  --color-ok: #3fb950;
   /* Backdrop de overlays (Modal); token para que ambos temas lo ajusten. */
   --color-backdrop: rgba(10, 10, 11, 0.85);
   /* D30 — punto lupa (CursorSpot): acento translúcido que contrasta con el
@@ -79,6 +81,8 @@
   --color-text-muted: #566775;
   --color-accent: #0a66c2;
   --color-focus: #1d2733;
+  /* Verde de confirmación (estado completado, EmailReveal F2): AA sobre #eef1f4. */
+  --color-ok: #1a7f37;
   --color-backdrop: rgba(228, 233, 238, 0.88);
   /* D30 — punto lupa: azul translúcido (contraste con texto pizarra). */
   --color-spot: rgba(10, 102, 194, 0.12);

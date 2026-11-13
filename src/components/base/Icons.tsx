@@ -175,6 +175,25 @@ export function IconCopy({ size = 18 }: IconProps) {
   )
 }
 
+/** Check para el indicador de completado (EmailReveal F2, ronda 3). */
+export function IconCheck({ size = 16 }: IconProps) {
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+    >
+      <path d="M4 12.5 9.5 18 20 6.5" />
+    </svg>
+  )
+}
+
 /** Diana para el Clicker (D24): círculos concéntricos + punto central. */
 export function IconTarget({ size = 20 }: IconProps) {
   return (

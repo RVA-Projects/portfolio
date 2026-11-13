@@ -66,6 +66,8 @@ Ver detalle en `docs/decisions.md` (D01–D15). Resumen:
 
 ## Últimos cambios
 
+- 2026-11-13 (12): **F2 contacto Hero rediseñado** — EmailReveal con caja única de tamaño estable en ambos estados (email + copiar dentro, al borde derecho), slider debajo como elemento independiente, indicador verde de completado (nuevo token `--color-ok` + `IconCheck`); GitHub/LinkedIn con contenedor siempre visible (adiós al ghost). 138 unitarios; verificado en ambos temas y móvil.
+
 - 2026-11-13 (11): **F1 visor de imágenes** — fix de las flechas del visor ampliado: el `pointerdown` sobre controles (flechas/lupa/X) burbujeaba a la capa, que capturaba el puntero y el `click` resultante se retargetizaba al contenedor → se interpretaba como «clic fuera» y cerraba (D32); ahora los controles se excluyen de la captura y navegan. Lupa con fondo sólido (`--color-surface` + borde) visible en ambos temas. Test de regresión añadido (138 unitarios); verificado con click real en Playwright (navega 1↔2 sin cerrar) en ambos temas.
 
 - 2026-11-13 (10): **Certificados + compresión + foto retirada** — PDFs de valenciano C1 e inglés B2 (`public/docs/`, subidos por el propietario) conectados a LanguagesSection (`DocumentRef { src, name: {es,en} }`, D03); media comprimida (4 PNG grandes → WebP q82 con ffmpeg, 5.0→1.9MB, refs a `.webp`); D10 cancelada (sin foto personal) y docs sync. Fix de crash: los datos de idiomas declaraban `title`/`id` en vez de la forma del modelo `DocumentRef` (`name`) → TypeError en blanco al abrir el visor; añadido test de apertura para no volver a pasar inadvertido. Tests: 137 unitarios + 15 e2e.
