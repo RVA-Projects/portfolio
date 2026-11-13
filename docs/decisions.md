@@ -54,9 +54,10 @@ Registro de decisiones (ADR ligero). Pueden añadirse con cualquier estado: `pro
 - **Decisión:** unitarias/hook/props en Vitest; validación de contenido (`audit:content`) también en Vitest; carga e2e y responsive con Playwright solo al final.
 - **Motivo:** coste justo a la altura. Playwright necesita más setup y se justifica en fase de validación integral, no en build tempranas.
 
-## D10 — Foto personal en el portfolio — ✅ Aprobada (2026-11-10)
+## D10 — Foto personal en el portfolio — ❌ Cancelada (2026-11-13)
 
-- **Decisión:** se incluye foto personal; el propietario la colocará en `public/assets/img/`. En Fase 5 se define la composición exacta (proporción, recorte) en `design-system.md`.
+- **Decisión original:** se incluye foto personal; el propietario la colocará en `public/assets/img/`.
+- **Cancelación (petición explícita del propietario):** NO habrá foto personal en el portfolio — el requisito queda eliminado (RF-02 retirada, F7.4 descartada). La presentación es solo tipográfica (D25).
 
 ## D11 — Texto de especialización estático — ✅ Aprobada (2026-11-10)
 

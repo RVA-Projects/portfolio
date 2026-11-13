@@ -16,13 +16,13 @@ export const signatureApplication: Project = {
     {
       id: 'sig-1',
       kind: 'image',
-      src: '/portfolio/media/projects/signature-application/sig1.png',
+      src: '/portfolio/media/projects/signature-application/sig1.webp',
       alt: { es: 'Vista de la aplicación de firma', en: 'Signature application view' },
     },
     {
       id: 'sig-2',
       kind: 'image',
-      src: '/portfolio/media/projects/signature-application/sig2.png',
+      src: '/portfolio/media/projects/signature-application/sig2.webp',
       alt: { es: 'Flujo de firma electrónica', en: 'Electronic signing flow' },
     },
     {

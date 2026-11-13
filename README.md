@@ -19,7 +19,7 @@ Portfolio profesional SPA de **Andrei Ronai** — React + TypeScript + Vite + CS
 - Las reglas permanentes están en `AGENTS.md`; cualquier agente debe leerlo antes de tocar código.
 - Ante cambios: actualizar la documentación de `docs/` afectada y `memory.md`.
 - El despliegue lo hace `.github/workflows/deploy.yml`: valida, construye y publica en Pages (fuentes de Pages = GitHub Actions).
-- Los assets estáticos (media, PDFs, foto) viven en `public/`.
+- Los assets estáticos (media, PDFs) viven en `public/`.
 
 ## Estado
 

@@ -19,7 +19,7 @@ Ver detalle en `docs/decisions.md` (D01–D15). Resumen:
 - Idiomas: Castellano (nativo), Valenciano (C1, cert), Rumano (nativo), Inglés (B2, cert), **Alemán (Starter)** — etiqueta decidida por el propietario.
 - Inventario validado por el propietario. contracts.md y architecture.md **revisados y aprobados por el propietario**.
 - Español por defecto con detección de navegador; elección manual en localStorage.
-- Foto personal: sí (el propietario la pondrá en `public/assets/img/`).
+- ~~Foto personal~~ — RETIRADA (2026-11-13): D10 cancelada, sin foto en el portfolio.
 - Especialización: texto estático único y directo (sin rotador).
 - Mandato: "apruebo todo, si tienes dudas decide tú, lo puliremos una vez esté completo".
 
@@ -51,9 +51,9 @@ Ver detalle en `docs/decisions.md` (D01–D15). Resumen:
 
 0. ~~Captura de Snake~~ ✅ RESUELTO (2026-11-12): 3 capturas reales en `public/media/projects/snake/`.
 1. Acceso/URL del repo remoto `RVA-Projects/portfolio` (clonar o conectar en F4.1).
-2. **Foto personal:** pegarla en `public/assets/img/` (F7.4; el nombre lo declara el agente al integrar).
+2. ~~Foto personal~~ — RETIRADA (2026-11-13, D10 cancelada).
 3. Contenido es/en definitivo de proyectos (descripción, objetivos, resultados) — se pedirá en F7.1.
-4. **Compresión de media pesada (F7):** lokihome2.png 796KB, mm.png 1.7MB, sig1/sig2 ~500KB (guía <300KB).
+4. ~~Compresión de media pesada~~ ✅ RESUELTO (2026-11-13): los 4 PNG grandes convertidos a WebP q82 con ffmpeg (mm 1728→97KB, lokihome2 796→57KB, sig1 484→101KB, sig2 524→119KB; media total 5.0MB→1.9MB) y referencias actualizadas.
 
 ## Problemas conocidos
 
@@ -65,6 +65,8 @@ Ver detalle en `docs/decisions.md` (D01–D15). Resumen:
 - Los PDFs de los 6 cursos OpenWebinars están en `public/docs/` y verificados con existsSync (2026-11-12). Faltan los certificados de idiomas (valenciano C1, inglés B2) y el CV (F7.3): nombres propuestos `valenciano-c1.pdf` / `english-b2.pdf`.
 
 ## Últimos cambios
+
+- 2026-11-13 (10): **Certificados + compresión + foto retirada** — PDFs de valenciano C1 e inglés B2 (`public/docs/`, subidos por el propietario) conectados a LanguagesSection (`DocumentRef { src, name: {es,en} }`, D03); media comprimida (4 PNG grandes → WebP q82 con ffmpeg, 5.0→1.9MB, refs a `.webp`); D10 cancelada (sin foto personal) y docs sync. Fix de crash: los datos de idiomas declaraban `title`/`id` en vez de la forma del modelo `DocumentRef` (`name`) → TypeError en blanco al abrir el visor; añadido test de apertura para no volver a pasar inadvertido. Tests: 137 unitarios + 15 e2e.
 
 - 2026-11-13 (9): **Ronda 2 · D31** — puntos del fondo animado redondos (arc en vez de fillRect, animado y estático, batching conservado); tests de canvas actualizados; 136 unitarios + 15 e2e.
 
@@ -111,6 +113,6 @@ Ver detalle en `docs/decisions.md` (D01–D15). Resumen:
 
 ## Próxima tarea recomendada
 
-0. **Foto personal:** el propietario la pega en `public/assets/img/` y se integra en la Introduction (F7.4).
-1. **F6.7 LanguagesSection** reutilizando `DocumentViewerOverlay` (ya probado): datos de idiomas (Castellano nativo, Valenciano C1 cert, Rumano nativo, Inglés B2 cert, Alemán Starter), `LanguageCard` con botón de documento para los certificados (pendientes los PDFs de valenciano/inglés/CV).
-2. Después F6.8 Contact → F6.10 Canvas. La revisión móvil se hace post-despliegue.
+0. **F6.8 ContactSection real** (sigue `return null`): CTA final + email + enlaces; la intro ya cubre el contacto rápido.
+1. Contenido es/en definitivo de proyectos (F7.1) y CV (PDF pendiente del propietario).
+2. La revisión móvil se hace post-despliegue.

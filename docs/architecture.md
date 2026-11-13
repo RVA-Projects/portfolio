@@ -19,7 +19,7 @@ Flujo de datos unidireccional: `data/` → (selección en UI) → props → rend
 NewPortfolio/
 ├ AGENTS.md · memory.md · docs/ · .github/workflows/deploy.yml · vite.config.ts
 ├ public/
-│   ├ assets/img/          — foto personal e imágenes de identidad
+│   ├ assets/img/          — imágenes de identidad (sin foto: D10 cancelada)
 │   ├ media/projects/<slug>/ — media de cada proyecto
 │   ├ docs/                — CV y PDFs de acreditaciones (locales)
 │   └ old/                 — copia del portfolio anterior (versiones)

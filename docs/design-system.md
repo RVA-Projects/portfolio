@@ -63,7 +63,6 @@ Modo claro no previsto (identidad por tema oscuro); si se pide, requeriría toke
 - `ProjectCard` — imagen 16:10, nombre, resumen, tags de tecnologías (máx. visibles) y badge de categoría; uniforme por breakpoint.
 - `MediaGallery` — principal + tiras de miniaturas + navegación + "1/N" (también accesible/con ind. de posición).
 
-## 8. Foto personal
+## 8. Foto personal — RETIRADA
 
-- Ubicación de fichero: `public/assets/img/` (el propietario la coloca).
-- Composición propuesta: busto con recorte, tratamiento duotono/gris con acento rojo sutil (a validar en móvil). Si no se copia la imagen, fallará la validación de datos (`audit:content`).
+- ~~Ubicación de fichero: `public/assets/img/`~~ — D10 CANCELADA (2026-11-13, petición del propietario): NO habrá foto personal; la presentación es solo tipográfica (D25). Este apartado se conserva vacío como registro.

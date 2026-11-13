@@ -55,7 +55,7 @@ Pendiente (opcional, post-deploy): viewports 320/414 + landscape, targets ≥44p
 ## 6. Rendimiento
 
 - Build analizado en cada fase relevante (`vite build` + nota de chunk).
-- Presupuestos orientativos: JS ≤ 180KB gzip; CSS ≤ 30KB; imagen de tarjeta ≤ 300KB; foto personal ≤ 200KB.
+- Presupuestos orientativos: JS ≤ 180KB gzip; CSS ≤ 30KB; imagen de tarjeta ≤ 300KB.
 - Lighthouse Core Web Vitals en producción (URL real de Pages) al terminar Fase 8.
 
 ## 7. Comando maestro

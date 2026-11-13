@@ -15,7 +15,7 @@ Requisitos funcionales y no funcionales, numerados y trazables. Derivan del brie
 ### 2.1 Presentación (intro)
 
 - RF-01: La página arranca directamente con nombre, especialización (texto estático único, sencillo y directo), ubicación, descripción profesional, enlaces de contacto, acceso al CV y tecnologías principales, con jerarquía visual clara y aparición progresiva animada. Sin hero clásico, sin imagen de portada, sin loaders de bienvenida.
-- RF-02: Foto personal visible (asset en `public/assets/img/`), tamaño/ubicación a definir en design-system.
+- RF-02: ~~Foto personal visible~~ — **RETIRADA (2026-11-13, D10 cancelada por el propietario): sin foto en el portfolio; presentación solo tipográfica.** (La numeración se conserva para no romper referencias.)
 - RF-03: Las tecnologías se presentan en tres niveles de jerarquía: principales → usadas en proyectos → herramientas/complementarias.
 
 ### 2.2 Navegación
@@ -86,7 +86,7 @@ Requisitos funcionales y no funcionales, numerados y trazables. Derivan del brie
 4. Idiomas listados en RF-20.
 5. Inventario validado (`docs/content-inventory.md`).
 6. Español por defecto con detección de navegador.
-7. Foto personal sí (en `assets/img`).
+7. ~~Foto personal sí~~ — retirada (D10 cancelada).
 8. Especialización como texto estático único.
 
 ## 5. Criterios a validar (aceptación por fase)

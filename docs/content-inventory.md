@@ -111,7 +111,7 @@
 - `assets/img/portfolio/mm.png` — GB-Utility
 - `assets/img/portfolio/fcicon.png`, `fc1–fc4.jpeg` — Flashcards App
 - `assets/img/portfolio/mcrm0–mcrm8.jpeg` — MiniCRM
-- `assets/img/myself2.png`, `assets/img/mainimg.jpg` — foto/hero (revisar si se desea mantener)
+- ~~`assets/img/myself2.png`, `assets/img/mainimg.jpg` — foto/hero~~ — DESCARTADOS (D10 cancelada: sin foto en el portfolio).
 - ⚠ **No se han detectado vídeos ni GIFs en el portfolio anterior.** El nuevo portfolio contempla esos formatos: el propietario deberá aportar grabaciones/demo si las quiere.
 - ⚠ Todos los recursos están en el repositorio del portfolio anterior; habrá que copiar los que se reutilicen al nuevo repo.
 

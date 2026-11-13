@@ -15,7 +15,7 @@ export const lokiHome: Project = {
     {
       id: 'loki-1',
       kind: 'image',
-      src: '/portfolio/media/projects/loki-home/lokihome2.png',
+      src: '/portfolio/media/projects/loki-home/lokihome2.webp',
       alt: { es: 'Vista de la web de Loki Home', en: 'Loki Home website view' },
     },
   ],

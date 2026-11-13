@@ -15,7 +15,7 @@ export const gbUtility: Project = {
     {
       id: 'gb-1',
       kind: 'image',
-      src: '/portfolio/media/projects/gb-utility/mm.png',
+      src: '/portfolio/media/projects/gb-utility/mm.webp',
       alt: { es: 'Vista de la utilidad de juego de mesa', en: 'Board game utility view' },
     },
   ],

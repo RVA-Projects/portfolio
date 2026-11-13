@@ -38,7 +38,7 @@ src/
   hooks/        — useCarousel, useOverlay, useScrollSpy, usePrefersReducedMotion…
   utils/  validators/
 public/
-  assets/img/   — foto personal e imágenes de identidad
+  assets/img/   — imágenes de identidad (sin foto personal: D10 cancelada)
   media/projects/<slug>/ — media de proyectos
   docs/         — PDFs (certificados, CV) y del portfolio anterior /old/
 ```

@@ -14,7 +14,8 @@ import styles from './Introduction.module.css'
  * ubicación, descripción, contacto rápido y clicker (D24/D26).
  *
  * D27: los grids de tecnologías viven en TechStackSection (sección propia
- * tras proyectos). TODO(F7): CV (pendiente de PDF del propietario) y foto.
+ * tras proyectos). TODO(F7): CV (pendiente de PDF del propietario). Sin foto
+ * (D10 cancelada): presentación solo tipográfica.
  */
 export function Introduction() {
   const { language, texts } = useLanguage()

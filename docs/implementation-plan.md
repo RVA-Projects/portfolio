@@ -69,9 +69,9 @@ Orden por dependencia (cada bloque tiene su CA propia en `testing.md`):
 ## Fase 7 — Integración de contenido — pendiente (bloqueada por los PDFs del propietario)
 
 - F7.1 Substituir contenido es/en de proyectos por el definitivo (con revisión del propietario)
-- F7.2 Copiar media al repo (`public/media/projects/<slug>/`) ✅ (2026-11-12: 26 imágenes integradas y verificadas con existsSync; pendiente compresión de las pesadas)
-- F7.3 PDFs a `public/docs/` 🔶 (cursos OpenWebinars ✅ verificados; falta CV + valenciano C1 + inglés B2 para F6.7)
-- F7.4 Foto personal en `public/assets/img/`
+- F7.2 Copiar media al repo (`public/media/projects/<slug>/`) ✅ (2026-11-12: 26 imágenes integradas y verificadas con existsSync) + **compresión ✅ (2026-11-13: 4 PNG grandes → WebP q82 con ffmpeg, −89% en esos ficheros)**
+- F7.3 PDFs a `public/docs/` 🔶 (cursos OpenWebinars ✅ + valenciano C1 e inglés B2 ✅ integrados en LanguagesSection el 2026-11-13; falta CV)
+- ~~F7.4 Foto personal~~ — RETIRADA (D10 cancelada, 2026-11-13)
 - F7.5 Revisión del contenido en ambos idiomas por el propietario
 - CA: `audit:content` verde; cero referencias/URLs/assets rotos; sin textos vacíos es/en.
 

@@ -6,10 +6,8 @@ import type { LanguageProfile } from '../models/LanguageProfile'
  * elegida por el propietario para el alemán). `spoken`/`written` no se usan:
  * no hay desglose confirmado y NO se inventa.
  *
- * Certificados: Valenciano C1 e Inglés B2 están certificados, pero los PDFs
- * aún no están en `public/docs/` (pendiente F7.3): sin `document`, la tarjeta
- * no ofrece el visor. Al subirlos, se añade `document` con ruta
- * /portfolio/docs/<slug>.pdf (D03) y existsSync en tests.
+ * Certificados: Valenciano C1 e Inglés B2 con PDF en `public/docs/`
+ * (subidos por el propietario el 2026-11-13) — D03, id estable.
  */
 export const languages: LanguageProfile[] = [
   {
@@ -23,6 +21,13 @@ export const languages: LanguageProfile[] = [
     code: 'ca',
     name: { es: 'Valenciano', en: 'Valencian' },
     cefr: 'C1',
+    document: {
+      src: '/portfolio/docs/valenciano.pdf',
+      name: {
+        es: 'Certificado — Valenciano C1',
+        en: 'Certificate — Valencian C1',
+      },
+    },
   },
   {
     id: 'rumano',
@@ -35,6 +40,13 @@ export const languages: LanguageProfile[] = [
     code: 'en',
     name: { es: 'Inglés', en: 'English' },
     cefr: 'B2',
+    document: {
+      src: '/portfolio/docs/ingles.pdf',
+      name: {
+        es: 'Certificado — Inglés B2',
+        en: 'Certificate — English B2',
+      },
+    },
   },
   {
     id: 'aleman',
