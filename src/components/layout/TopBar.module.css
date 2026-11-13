@@ -27,3 +27,35 @@
     transition: none;
   }
 }
+
+/* F5 — selector ES/EN: mismo contenedor que los IconButtons (44px, borde),
+   etiqueta mono del idioma activo. Coherente con el alternador de tema. */
+.langBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 44px;
+  min-height: 44px;
+  padding: 0 var(--space-2);
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-sm);
+  background: var(--color-surface);
+  font-family: var(--font-mono);
+  font-size: var(--fs-small);
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  color: var(--color-text);
+  transition:
+    background var(--dur-fast) var(--ease),
+    border-color var(--dur-fast) var(--ease);
+}
+
+.langBtn:hover {
+  background: var(--color-surface-2);
+  border-color: var(--color-text-muted);
+}
+
+.langBtn:focus-visible {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 2px;
+}

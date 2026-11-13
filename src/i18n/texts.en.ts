@@ -10,6 +10,8 @@ export const en: Texts = {
     label: 'Main navigation',
     toLight: 'Switch to light mode',
     toDark: 'Switch to dark mode',
+    toEnglish: 'Switch to English',
+    toSpanish: 'Switch to Spanish',
   },
   sections: {
     intro: 'Intro',

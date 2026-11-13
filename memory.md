@@ -66,6 +66,8 @@ Ver detalle en `docs/decisions.md` (D01–D15). Resumen:
 
 ## Últimos cambios
 
+- 2026-11-13 (15): **F5 selector ES/EN** — botón junto al de tema (etiqueta del idioma activo, alterna y persiste); la infraestructura i18n ya existía (D12), sin traducir nada. 140 unitarios (2 nuevos).
+
 - 2026-11-13 (14): **F4 numeración y encabezados** — Hero = sección 0 sin número; kickers renumerados (Proyectos 01, Stack 02, Experiencia 03, Formación 04, Idiomas 05) y SOLO número (adiós al nombre hardcodeado en inglés duplicado bajo el título español). `SectionHeading` con prop `index`.
 
 - 2026-11-13 (13): **F3 Hero como tarjeta** — la intro es una superficie translúcida uniforme (token `--color-hero`) en vez del scrim radial irregular; la descripción usa el ancho completo. 138 unitarios; verificado en ambos temas y móvil.

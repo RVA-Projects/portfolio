@@ -21,12 +21,14 @@ interface TopBarProps {
 
 /**
  * Fase 5.3/F7.1: barra superior minimalista. Disparador del menú +
- * alternador de tema (D18). Contenido permanente cero: el nombre vive en la
- * intro. Al deslizar hacia abajo se reduce (topbar--compact) en lugar de
- * ocultarse: el menú es accesible desde cualquier punto de la página.
+ * alternador de tema (D18) + selector ES/EN (ronda 3 F5: muestra el idioma
+ * ACTIVO; el click alterna — el contexto i18n persiste y no recarga).
+ * Contenido permanente cero: el nombre vive en la intro. Al deslizar hacia
+ * abajo se reduce (topbar--compact) en lugar de ocultarse: el menú es
+ * accesible desde cualquier punto de la página.
  */
 export function TopBar({ menuOpen, onToggleMenu, visible, theme, onToggleTheme }: TopBarProps) {
-  const { texts } = useLanguage()
+  const { language, texts, setLanguage } = useLanguage()
   const className =
     visible || menuOpen ? styles.topbar : `${styles.topbar} ${styles['topbar--compact']}`
 
@@ -37,6 +39,17 @@ export function TopBar({ menuOpen, onToggleMenu, visible, theme, onToggleTheme }
         onClick={onToggleTheme}
         icon={theme === 'dark' ? <IconSun /> : <IconMoon />}
       />
+      {/* F5: selector de idioma — etiqueta del idioma ACTIVO (sin banderas). */}
+      <button
+        type="button"
+        className={styles.langBtn}
+        aria-label={language === 'es' ? texts.nav.toEnglish : texts.nav.toSpanish}
+        onClick={() => {
+          setLanguage(language === 'es' ? 'en' : 'es')
+        }}
+      >
+        {language.toUpperCase()}
+      </button>
       <IconButton
         ariaLabel={menuOpen ? texts.nav.close : texts.nav.open}
         onClick={onToggleMenu}

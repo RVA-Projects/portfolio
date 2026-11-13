@@ -9,6 +9,8 @@ export const es = {
     label: 'Navegación principal',
     toLight: 'Cambiar a modo claro',
     toDark: 'Cambiar a modo oscuro',
+    toEnglish: 'Cambiar a inglés',
+    toSpanish: 'Cambiar a español',
   },
   sections: {
     intro: 'Presentación',

@@ -203,3 +203,9 @@ Tres ajustes de acabado pedidos por el propietario tras ver D23 en producción:
 
 - **4.1:** Proyectos 01, Stack 02, Experiencia 03, Formación 04, Idiomas 05 (Contact 06 cuando exista). La Hero no usa `SectionHeading`: no muestra número. Ids técnicos (`#projects`…) y `SECTIONS` intactos.
 - **4.2:** el kicker deja de llevar el nombre hardcodeado en inglés (`"02 — Projects"`) que duplicaba el título español de debajo: `SectionHeading` recibe `index: number` y muestra SOLO el número (`String(index).padStart(2, '0')`). El título sigue viniendo de `texts.sections.*` (multiidioma ya preparado).
+
+## D36 — Selector ES/EN en el TopBar (ronda 3 F5) — ✅ Aprobada (2026-11-13)
+
+- **Descubrimiento clave:** la infraestructura i18n YA estaba completa (D12: provider + detección + `localStorage` + `texts.es/en` de UI completos + entidades con `{es,en}`); la F5 se reduce al acceso por UI. NO se ha traducido nada (petición del propietario): el EN de entidades ya existía de fases anteriores y no se ha reescrito.
+- **UI:** botón junto al de tema, etiqueta mono del idioma ACTIVO («ES»/«EN», sin banderas); el click alterna vía `setLanguage` (persiste + `<html lang>` + sin recarga). aria-label del idioma activo («Cambiar a inglés» / «Switch to English»). Mismo contenedor 44px que los IconButtons; compact mode OK.
+- **Pruebas:** 2 tests nuevos (`language-toggle.test.tsx`: activo visible, alterna, persiste, sin recarga) — 140 unitarios ✓; verificado en Playwright ES↔EN ida y vuelta.
