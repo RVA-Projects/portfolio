@@ -66,6 +66,8 @@ Ver detalle en `docs/decisions.md` (D01–D15). Resumen:
 
 ## Últimos cambios
 
+- 2026-11-13 (2): **D23 — bloque de ajustes unificado**: todas las constantes de la animación (tamaño de punto, boost, alfas, radios, malla, resorte, drift, anillo) agrupadas y comentadas al inicio de `useParticleGrid.ts`; números mágicos inline extraídos a constantes nombradas. Sin cambio de comportamiento.
+
 - 2026-11-13 (1): **D23 fix** — canvas reemplazado no se estiraba con `inset:0` (300×150 top-left, grid recortado): `width/height:100%` en `.layer`; visibilidad +30% (0.55, atenuada 0.26); verificado con Playwright (canvas = viewport exacto en 1440 y 375, screenshots).
 
 - 2026-11-12 (12): **D23 — fondo animado de puntos**: `BackgroundCanvas` + `useParticleGrid` (src/canvas/): grid con resorte al home, gravedad de cursor (sutil, puntero fino), colapso al clic (ambos botones) con retorno elástico; malla elástica, micro-drift, eco de anillo, color por tema con transición; scrim de legibilidad en la intro y atenuación con overlay abierto; reduced-motion/pausa/DPR/cleanup; tests 114→123.

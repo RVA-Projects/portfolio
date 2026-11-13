@@ -2,30 +2,103 @@ import { useEffect, useRef, type RefObject } from 'react'
 import type { ThemeId } from '../hooks/useTheme'
 import { lerpRgb, resolveThemeRgb, rgbaString, type Rgb } from './particleColors'
 
-/* ——— Parámetros de simulación (unidades px / segundos) ——— */
+/* ============================================================================
+   AJUSTES DE LA ANIMACIÓN (D23) — todos los knobs unificados en este bloque.
+   Unidades: px y segundos. Cambia un valor aquí y recarga: no hay que tocar
+   nada más (los números que quedan repartidos por el fichero son ecuaciones,
+   no ajustes). Consejo: cambia UN parámetro cada vez para aislar el efecto.
+   ========================================================================== */
+
+/* ——— PUNTOS: tamaño y brillo (lo más visual) ——— */
+/** Tamaño base del punto EN REPOSO, en px (lado del cuadrado dibujado).
+    Subir a 1.5–2 = puntos claramente visibles; bajar a 0.8 = casi polvo. */
+const POINT_SIZE_BASE = 1.2
+/** px EXTRA de tamaño en el punto de máxima actividad (muy desplazado).
+    Tamaño real = POINT_SIZE_BASE + POINT_SIZE_BOOST × boost (0…1).
+    Es lo que hace que los puntos "crezcan" al pasar el cursor o al hacer clic. */
+const POINT_SIZE_BOOST = 1.3
+/** Tamaño del punto en modo ESTÁTICO (prefers-reduced-motion, sin animación). */
+const POINT_SIZE_STATIC = 1.2
+/** Opacidad de cada punto según su nivel de actividad (4 niveles, de reposo
+    a máxima). Es el knob de "brillo" por punto; la opacidad global de la capa
+    vive en BackgroundCanvas.module.css (.layer). */
+const ALPHA_BUCKETS = [0.38, 0.55, 0.7, 0.85]
+/** Opacidad del grid en modo estático (reduced-motion). */
+const STATIC_ALPHA = 0.3
+
+/* ——— DENSIDAD DE LA REJILLA ——— */
+/** Separación entre puntos (px): los límites del clamp automático.
+    Menor spacing = más puntos y más denso (cuidado con el rendimiento). */
 const SPACING_MIN = 36
 const SPACING_MAX = 56
+/** Spacing objetivo como fracción del ancho del viewport (5% ≈ 72px en
+    1440, recortado al clamp de arriba). Súbelo si quieres rejilla más rala. */
+const SPACING_VIEWPORT = 0.05
+/** Multiplicador de spacing en dispositivos con poca memoria (≤2 GB):
+    más separación ⇒ menos puntos (AGENTS.md §9). */
+const MEMORY_SPACING_FACTOR = 1.4
+
+/* ——— CURSOR: atracción sutil (solo puntero fino, no táctil) ——— */
+/** Radio de influencia del cursor (px): qué puntos se sienten atraídos. */
 const CURSOR_RADIUS = 180
-/** Equilibrio con SPRING_K=90 ⇒ arrastre máximo del cursor ≈ 40px (sutil). */
+/** Fuerza de atracción. Con SPRING_K=90 el equilibrio es un arrastre
+    máximo de ≈40px: sutil. Más valor = vórtice más agresivo. */
 const CURSOR_PULL = 3600
+
+/* ——— CLIC: colapso + eco de anillo (ambos botones por igual) ——— */
+/** Radio del colapso al pulsar (px): puntos que se ven afectados. */
 const CLICK_RADIUS = 480
-/** Impulso de colapso (cualquier botón, D23): fuerte al centro, falloff². */
+/** Impulso hacia el punto del clic: fuerte en el centro, decae con falloff².
+    Más valor = succión más dramática. */
 const CLICK_SPEED = 1100
+/** Velocidad máxima de cualquier punto (px/s): freno de seguridad. */
 const MAX_SPEED = 1500
-const SPRING_K = 90
-const SPRING_DAMP = 12
-/** Desplazamiento máximo desde el home (el grid nunca se disgrega). */
+/** Desplazamiento máximo desde su posición home (px): el grid nunca se
+    disgrega, siempre se reconoce como rejilla. */
 const MAX_OFFSET = 140
-const DRIFT_AMP = 1.2
-/** Umbral de "compresión" para dibujar la malla elástica (fracción del spacing). */
-const LINK_FACTOR = 0.5
-/** Constante temporal del lerp de color (~300ms de transición percibida). */
-const COLOR_EASE = 0.08
+/* Anillo expansivo que aparece en el punto del clic: */
+/** Duración de vida del anillo (s). */
 const RING_DURATION = 0.45
+/** Radio inicial del anillo (px). */
+const RING_RADIUS_START = 20
+/** Radio final del anillo (px). */
+const RING_RADIUS_MAX = 240
+/** Opacidad inicial del anillo (se desvanece linealmente hasta 0). */
+const RING_ALPHA = 0.3
+/** Grosor de la línea del anillo (px). */
+const RING_WIDTH = 1.5
+
+/* ——— MALLA ELÁSTICA: líneas entre vecinos cuando se comprimen ——— */
+/** Umbral de compresión para dibujar línea (fracción del spacing):
+    se dibuja cuando dos vecinos están a MENOS de spacing × LINK_FACTOR. */
+const LINK_FACTOR = 0.5
+/** Opacidad máxima de la malla (a máxima compresión). 0 = desactivada. */
+const LINK_ALPHA = 0.16
+
+/* ——— FÍSICA DEL RETORNO (resorte hacia el home) ——— */
+/** Rigidez del resorte: mayor = vuelve más rápido y tieso. */
+const SPRING_K = 90
+/** Amortiguación: con K=90, ζ≈0.63 ⇒ rebote controlado sin oscilar eternamente. */
+const SPRING_DAMP = 12
+
+/* ——— RESPIRACIÓN: micro-drift sutil en reposo ——— */
+/** Amplitud del drift en px (movimiento orgánico de ~1px). 0 = estático. */
+const DRIFT_AMP = 1.2
+/** Velocidad del drift vertical respecto al horizontal (0.9 = cae más lento). */
+const DRIFT_ASPECT = 0.9
+
+/* ——— ACTIVIDAD: cómo se mide y clasifica el "boost" de cada punto ——— */
+/** Distancia desde el home (px) a la que un punto alcanza boost = 1.0.
+    Es el divisor de la actividad: menos px = los puntos reaccionan antes. */
+const ACTIVITY_RANGE = 120
+/** Umbrales de boost que separan los 4 niveles de opacidad (ALPHA_BUCKETS). */
+const ACTIVITY_BUCKETS = [0.15, 0.4, 0.75]
+
+/* ——— COLOR Y MANTENIMIENTO ——— */
+/** Constante temporal del lerp de color entre temas (~300ms percibidos). */
+const COLOR_EASE = 0.08
+/** Debounce del resize (ms): espera tras dejar de redimensionar. */
 const RESIZE_DEBOUNCE = 150
-/** Alfa por nivel de actividad (buckets para agrupar el fill del canvas). */
-const ALPHA_BUCKETS = [0.38, 0.55, 0.7, 0.85]
-const STATIC_ALPHA = 0.3
 
 interface Particle {
   /** Posición home del grid. */
@@ -114,10 +187,10 @@ export function useParticleGrid(theme: ThemeId): RefObject<HTMLCanvasElement | n
       canvas.height = Math.round(height * dpr)
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0)
 
-      let base = Math.min(SPACING_MAX, Math.max(SPACING_MIN, width * 0.05))
+      let base = Math.min(SPACING_MAX, Math.max(SPACING_MIN, width * SPACING_VIEWPORT))
       /* Dispositivos con poca memoria: menos puntos (AGENTS.md §9). */
       const memory = (navigator as Navigator & { deviceMemory?: number }).deviceMemory
-      if (memory !== undefined && memory <= 2) base *= 1.4
+      if (memory !== undefined && memory <= 2) base *= MEMORY_SPACING_FACTOR
       spacing = base
 
       const cols = Math.ceil(width / spacing) + 1
@@ -223,7 +296,7 @@ export function useParticleGrid(theme: ThemeId): RefObject<HTMLCanvasElement | n
           if (q === undefined) continue
           const d = Math.hypot(p.x - q.x, p.y - q.y)
           if (d >= linkDist) continue
-          const alpha = (1 - d / linkDist) * 0.16
+          const alpha = (1 - d / linkDist) * LINK_ALPHA
           ctx.strokeStyle = rgbaString(rgb, alpha)
           ctx.lineWidth = 1
           ctx.beginPath()
@@ -237,13 +310,20 @@ export function useParticleGrid(theme: ThemeId): RefObject<HTMLCanvasElement | n
       const buckets: { x: number; y: number; s: number }[][] = [[], [], [], []]
       for (const p of particles) {
         const driftX = Math.sin(now * p.drift + p.phase) * DRIFT_AMP
-        const driftY = Math.cos(now * p.drift * 0.9 + p.phase) * DRIFT_AMP
-        const boost = Math.min(1, Math.hypot(p.x - p.hx, p.y - p.hy) / 120)
-        const bucket = boost < 0.15 ? 0 : boost < 0.4 ? 1 : boost < 0.75 ? 2 : 3
+        const driftY = Math.cos(now * p.drift * DRIFT_ASPECT + p.phase) * DRIFT_AMP
+        const boost = Math.min(1, Math.hypot(p.x - p.hx, p.y - p.hy) / ACTIVITY_RANGE)
+        const bucket =
+          boost < ACTIVITY_BUCKETS[0]
+            ? 0
+            : boost < ACTIVITY_BUCKETS[1]
+              ? 1
+              : boost < ACTIVITY_BUCKETS[2]
+                ? 2
+                : 3
         buckets[bucket].push({
           x: p.x + driftX,
           y: p.y + driftY,
-          s: 1.2 + 1.3 * boost,
+          s: POINT_SIZE_BASE + POINT_SIZE_BOOST * boost,
         })
       }
       for (let b = 0; b < buckets.length; b += 1) {
@@ -266,10 +346,10 @@ export function useParticleGrid(theme: ThemeId): RefObject<HTMLCanvasElement | n
           continue
         }
         const eased = T * (2 - T)
-        ctx.strokeStyle = rgbaString(rgb, (1 - T) * 0.3)
-        ctx.lineWidth = 1.5
+        ctx.strokeStyle = rgbaString(rgb, (1 - T) * RING_ALPHA)
+        ctx.lineWidth = RING_WIDTH
         ctx.beginPath()
-        ctx.arc(ring.x, ring.y, 20 + eased * 240, 0, Math.PI * 2)
+        ctx.arc(ring.x, ring.y, RING_RADIUS_START + eased * RING_RADIUS_MAX, 0, Math.PI * 2)
         ctx.stroke()
       }
     }
@@ -281,7 +361,12 @@ export function useParticleGrid(theme: ThemeId): RefObject<HTMLCanvasElement | n
       ctx.fillStyle = rgbaString(rgb, STATIC_ALPHA)
       ctx.beginPath()
       for (const p of particles) {
-        ctx.fillRect(p.hx - 0.6, p.hy - 0.6, 1.2, 1.2)
+        ctx.fillRect(
+          p.hx - POINT_SIZE_STATIC / 2,
+          p.hy - POINT_SIZE_STATIC / 2,
+          POINT_SIZE_STATIC,
+          POINT_SIZE_STATIC,
+        )
       }
       ctx.fill()
     }
