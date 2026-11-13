@@ -31,6 +31,8 @@ export function Introduction() {
 
       <p className={styles.role}>{site.role[language]}</p>
 
+      <p className={styles.roleNote}>{site.roleNote[language]}</p>
+
       <p className={styles.location}>
         {texts.intro.basedIn} {site.location[language]}
       </p>

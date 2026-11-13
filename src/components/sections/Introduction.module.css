@@ -2,7 +2,9 @@
   position: relative;
   max-width: var(--container-max);
   margin-inline: auto;
-  padding-block: clamp(96px, 18vh, 160px) var(--space-9);
+  /* D25: menos aire superior — el nombre sube y la composición equilibra
+     con el resto sin perder el respiro del scrim (verificado 375–1440). */
+  padding-block: clamp(56px, 10vh, 112px) var(--space-9);
   padding-inline: var(--container-pad);
 }
 
@@ -43,6 +45,18 @@
   border-radius: 50%;
   background: var(--color-accent);
   vertical-align: middle;
+}
+
+/* D25 — nota de nivel (junior): línea complementaria, mono y secundaria;
+   deliberadamente pequeña para no restar protagonismo al título principal. */
+.roleNote {
+  margin-top: var(--space-1);
+  font-family: var(--font-mono);
+  font-size: var(--fs-small);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--color-text-muted);
+  animation: riseIn var(--dur-slow) var(--ease) 90ms both;
 }
 
 .location {

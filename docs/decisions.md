@@ -133,5 +133,10 @@ Tres ajustes de acabado pedidos por el propietario tras ver D23 en producción:
 - **Tags sólidos:** `Tag` (tech/category/accent) con `background: var(--color-surface)` SIEMPRE — el badge de categoría del proyecto se superpone a la imagen y con fondo transparente el texto no se leía. Un cambio en el componente base corrige los 8 usos (ProjectCard, ProjectOverlay, ExperienceOverlay, EducationCard, LanguageCard). Los chips del filtro ya eran sólidos.
 
 - **Verificación:** Playwright contra el build real (contador=5 tras 5 clicks, tooltip visible con contenido correcto, badge `rgb(20,20,22)` oscuro / `#ffffff` claro, overflow-x=0, screenshot del tooltip sin recorte); unitarios 124/124 (nuevo test del clicker); e2e 15/15; validate verde.
+
+## D25 — Presentación profesional de la intro — ✅ Aprobada (2026-11-13)
+
+- **Decisión (ronda 2, F1):** padding superior de la intro reducido a `clamp(56px, 10vh, 112px)` (el nombre sube; verificado y≈90px/1440 e y≈70px/375 con screenshots). Título principal «Desarrollador de software» / «Software developer»; el nivel («Perfil junior» / «Junior profile») pasa a una línea secundaria mono uppercase (`roleNote`, nueva prop en `SiteData`) bajo el título — información complementaria, nunca parte del título ni de la descripción (petición explícita del propietario). La descripción pierde «junior».
+- **Motivo:** primera impresión más profesional; el propietario pidió que «junior» aparezca pero sin protagonismo.
 - **RNF:** pausa con `visibilitychange`; `prefers-reduced-motion` ⇒ grid estático tenue sin interacción (reacciona al cambio en vivo); `devicePixelRatio` + resize con debounce 150ms; densidad reducida (spacing ×1.4) con `navigator.deviceMemory ≤ 2`; sin listeners huérfanos (cleanup verificado en tests); canvas `aria-hidden` + `pointer-events:none` (nunca captura interacciones). Si `getContext` no existe, la capa queda vacía sin crashear.
 - **Motivo:** petición del propietario (post plan 2026-11): fondo vivo y vistoso con identidad de tema, sin sacrificar legibilidad ni rendimiento.

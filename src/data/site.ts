@@ -15,6 +15,8 @@ export const SECTIONS: SectionId[] = [
 export interface SiteData {
   name: string
   role: LocalizedText
+  /** Línea secundaria bajo el rol (D25): complementaria, sin protagonismo. */
+  roleNote: LocalizedText
   location: LocalizedText
   /** Texto estático único (D11). Borrador a pulir con el propietario en F7. */
   description: LocalizedText
@@ -28,13 +30,17 @@ export interface SiteData {
 export const site: SiteData = {
   name: 'Andrei Ronai',
   role: {
-    es: 'Desarrollador junior especializado en desarrollo de software',
-    en: 'Junior developer specialized in software development',
+    es: 'Desarrollador de software',
+    en: 'Software developer',
+  },
+  roleNote: {
+    es: 'Perfil junior',
+    en: 'Junior profile',
   },
   location: { es: 'Elche, España', en: 'Elche, Spain' },
   description: {
-    es: 'Desarrollador junior con proyectos reales en web, escritorio y Android. Foco en frontend, código limpio y experiencia de usuario.',
-    en: 'Junior developer with real projects in web, desktop and Android. Focused on frontend, clean code and user experience.',
+    es: 'Desarrollador con proyectos reales en web, escritorio y Android. Foco en frontend, código limpio y experiencia de usuario.',
+    en: 'Developer with real projects in web, desktop and Android. Focused on frontend, clean code and user experience.',
   },
   // TODO(F7): confirmar definitivamente con el propietario antes de publicar.
   email: 'andrei.v.ronai@gmail.com',
