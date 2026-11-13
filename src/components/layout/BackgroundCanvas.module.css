@@ -1,11 +1,15 @@
 .layer {
   position: fixed;
   inset: 0;
+  /* Canvas = elemento reemplazado: inset:0 NO lo estira (quedaría en su
+     tamaño intrínseco 300x150, top-left). El tamaño explícito es obligatorio. */
+  width: 100%;
+  height: 100%;
   /* Decorativa: detrás de TODO el contenido, delante del fondo del body. */
   z-index: -1;
   pointer-events: none;
-  /* Baja la presencia de los puntos: se sienten, no se leen (D23). */
-  opacity: 0.42;
+  /* Presencia de los puntos (D23, +30% tras ajuste visual): se sienten, no se leen. */
+  opacity: 0.55;
   transition: opacity var(--dur-base) var(--ease);
 }
 
@@ -14,5 +18,5 @@
    no se atenúa, pero los paneles son sólidos de todos modos. */
 body:has([role='dialog']) .layer,
 body:has([data-testid='menu-backdrop']) .layer {
-  opacity: 0.2;
+  opacity: 0.26;
 }

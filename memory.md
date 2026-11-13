@@ -66,6 +66,8 @@ Ver detalle en `docs/decisions.md` (D01–D15). Resumen:
 
 ## Últimos cambios
 
+- 2026-11-13 (1): **D23 fix** — canvas reemplazado no se estiraba con `inset:0` (300×150 top-left, grid recortado): `width/height:100%` en `.layer`; visibilidad +30% (0.55, atenuada 0.26); verificado con Playwright (canvas = viewport exacto en 1440 y 375, screenshots).
+
 - 2026-11-12 (12): **D23 — fondo animado de puntos**: `BackgroundCanvas` + `useParticleGrid` (src/canvas/): grid con resorte al home, gravedad de cursor (sutil, puntero fino), colapso al clic (ambos botones) con retorno elástico; malla elástica, micro-drift, eco de anillo, color por tema con transición; scrim de legibilidad en la intro y atenuación con overlay abierto; reduced-motion/pausa/DPR/cleanup; tests 114→123.
 - 2026-11-12 (11): **Fase 8** — Playwright e2e implementado: `@playwright/test` + Chromium, build+preview en :4173, 15 tests (humo/responsive 375-1440 sin scroll horizontal, overlays con jerarquía Escape del zoom D21, experiencia D20, temas D18 con persistencia, filtros con «0 proyectos», navegación D22); hallazgo: ContactSection sigue TODO F6.8 (sin #contact). `npm run test:e2e`.
 
