@@ -66,6 +66,8 @@ Ver detalle en `docs/decisions.md` (D01–D15). Resumen:
 
 ## Últimos cambios
 
+- 2026-11-13 (16): **F6 RVA Portfolio desde el footer** — ficha especial del propio portfolio (fuera del catálogo): metodología IA, atribución honesta, captura real como media; footer pulsable con subrayado punteado reutilizando ProjectOverlay sin prev/next. 145 unitarios + 15 e2e.
+
 - 2026-11-13 (15): **F5 selector ES/EN** — botón junto al de tema (etiqueta del idioma activo, alterna y persiste); la infraestructura i18n ya existía (D12), sin traducir nada. 140 unitarios (2 nuevos).
 
 - 2026-11-13 (14): **F4 numeración y encabezados** — Hero = sección 0 sin número; kickers renumerados (Proyectos 01, Stack 02, Experiencia 03, Formación 04, Idiomas 05) y SOLO número (adiós al nombre hardcodeado en inglés duplicado bajo el título español). `SectionHeading` con prop `index`.
@@ -123,6 +125,7 @@ Ver detalle en `docs/decisions.md` (D01–D15). Resumen:
 
 ## Próxima tarea recomendada
 
-0. **F6.8 ContactSection real** (sigue `return null`): CTA final + email + enlaces; la intro ya cubre el contacto rápido.
-1. Contenido es/en definitivo de proyectos (F7.1) y CV (PDF pendiente del propietario).
-2. La revisión móvil se hace post-despliegue.
+0. **Contenido es/en definitivo de proyectos y entidades (F7.1)** — ahora que el selector ES/EN es visible, el propietario debe revisar los textos ingleses existentes (provisionales de fases anteriores) y los de la ficha RVA Portfolio.
+1. **F6.8 ContactSection real** (sigue `return null`).
+2. CV (PDF pendiente del propietario) y repo remoto.
+3. La revisión móvil se hace post-despliegue.

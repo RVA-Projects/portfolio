@@ -40,6 +40,8 @@ export const en: Texts = {
   footer: {
     madeBy: 'Made by',
     older: 'Older portfolio',
+    /** F6: hint accesible del texto pulsable (abre la ficha del portfolio). */
+    projectHint: 'Open the project card (RVA Portfolio)',
   },
   /** RF-07 project filter. */
   filter: {

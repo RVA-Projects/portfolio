@@ -39,6 +39,8 @@ export const es = {
   footer: {
     madeBy: 'Hecho por',
     older: 'Portfolio anterior',
+    /** F6: hint accesible del texto pulsable (abre la ficha del portfolio). */
+    projectHint: 'Abrir la ficha del proyecto (RVA Portfolio)',
   },
   /** Filtro del carrusel (RF-07 simplificado: categorías generales, F2.2). */
   filter: {

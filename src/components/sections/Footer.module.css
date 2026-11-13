@@ -22,3 +22,29 @@
 .olderLink:hover {
   color: var(--color-text);
 }
+
+/* F6 — línea de copyright PULSABLE: piel de footer (hereda), indicador
+   discreto de subrayado punteado + hover hacia texto pleno/acento. */
+.projectLink {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--color-text-muted);
+  font: inherit;
+  cursor: pointer;
+  text-decoration: underline dotted var(--color-line-strong);
+  text-underline-offset: 4px;
+  transition:
+    color var(--dur-fast) var(--ease),
+    text-decoration-color var(--dur-fast) var(--ease);
+}
+
+.projectLink:hover {
+  color: var(--color-text);
+  text-decoration-color: var(--color-accent);
+}
+
+.projectLink:focus-visible {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 2px;
+}

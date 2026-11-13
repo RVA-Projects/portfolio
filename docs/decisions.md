@@ -209,3 +209,10 @@ Tres ajustes de acabado pedidos por el propietario tras ver D23 en producción:
 - **Descubrimiento clave:** la infraestructura i18n YA estaba completa (D12: provider + detección + `localStorage` + `texts.es/en` de UI completos + entidades con `{es,en}`); la F5 se reduce al acceso por UI. NO se ha traducido nada (petición del propietario): el EN de entidades ya existía de fases anteriores y no se ha reescrito.
 - **UI:** botón junto al de tema, etiqueta mono del idioma ACTIVO («ES»/«EN», sin banderas); el click alterna vía `setLanguage` (persiste + `<html lang>` + sin recarga). aria-label del idioma activo («Cambiar a inglés» / «Switch to English»). Mismo contenedor 44px que los IconButtons; compact mode OK.
 - **Pruebas:** 2 tests nuevos (`language-toggle.test.tsx`: activo visible, alterna, persiste, sin recarga) — 140 unitarios ✓; verificado en Playwright ES↔EN ida y vuelta.
+
+## D37 — RVA Portfolio como proyecto desde el footer (ronda 3 F6) — ✅ Aprobada (2026-11-13)
+
+- **Datos:** `src/data/projects/rva-portfolio.ts` — ficha `Project` INDEPENDIENTE fuera del catálogo `projects` (sin tocar filtros ni carrusel). Categoría `ai-assisted` («Con IA»), tech ids reales (react, css, git, vscode, github), `links: []` (repo remoto pendiente, nada inventado). Media = captura REAL de la home (1440px → `home.webp` 27KB con ffmpeg). Textos ES con EN = fallback ES (D-E).
+- **Atribución honesta (petición del propietario):** arquitectura/diseño/decisiones del propietario; código desarrollado con asistencia de IA (OpenCode) bajo su dirección y supervisión — ni IA autónoma ni escritura manual atribuida. Metodología (AGENTS.md, memory.md, docs/, Plan Mode, fases, validación, separación de responsabilidades) en FUNCIONALIDADES.
+- **Footer:** la línea de copyright es un `<button>` con piel de footer (subrayado punteado discreto + hover), hint sr-only (`footer.projectHint`), abre el `ProjectOverlay` existente SIN prev/next (ficha única). Escape/X/clic-fuera nativos.
+- **Pruebas:** 5 tests nuevos (`rva-portfolio.test.tsx`: datos válidos + media existsSync + apertura/cierre) — 145 unitarios + 15 e2e ✓; verificado visualmente.
