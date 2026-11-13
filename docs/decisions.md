@@ -188,9 +188,10 @@ Tres ajustes de acabado pedidos por el propietario tras ver D23 en producción:
 
 ## D33 — Contacto de la Hero rediseñado (ronda 3 F2) — ✅ Aprobada (2026-11-13)
 
-- **EmailReveal:** caja ÚNICA de tamaño estable (min-width 300px) en ambos estados: bloqueado «Desliza para ver el email», desbloqueado email + copiar DENTRO pegado al borde derecho (flex:1). Slider FUERA, debajo, alineado; al completar se sustituye por indicador verde de finalización (check + «Email visible», `role=status` aria-live). El range nativo se conserva (a11y teclado/táctil sin reimplementar).
+- **EmailReveal:** caja ÚNICA de tamaño estable (min-width 300px) en ambos estados: bloqueado «Desliza para ver el email», desbloqueado email + copiar DENTRO pegado al borde derecho (flex:1). Slider FUERA, debajo, alineado; al completar se sustituye por indicador verde de finalización (check + «Pareces humano...», `role=status` aria-live). El range nativo se conserva (a11y teclado/táctil sin reimplementar).
 - **Token nuevo:** `--color-ok` (verde confirmación): oscuro `#3fb950`, claro `#1a7f37` (AA sobre #eef1f4). Icono `IconCheck` añadido a base/Icons.
 - **GitHub/LinkedIn:** dejan `variant="ghost"` (transparente) → piel por defecto de Button (superficie + borde), contenedor SIEMPRE visible; hover/active intactos; enlaces intactos.
+- **Post-fix (petición del propietario):** `.quickLinks` `align-items: center` → `flex-start` (los botones quedaban centrados verticalmente respecto al bloque caja+slider; ahora alineados con la FILA de la caja) y cursor del slider `ew-resize` → `grab`/`grabbing` (mano abierta, más moderno y coherente con «deslizar»).
 - **Pruebas:** 138 unitarios ✓ (tests D26 intactos: sin plaintext, copiar, transient); screenshots en ambos estados × 2 temas × 375px móvil sin desbordes.
 
 ## D34 — Hero como tarjeta translúcida unificada (ronda 3 F3) — ✅ Aprobada (2026-11-13)

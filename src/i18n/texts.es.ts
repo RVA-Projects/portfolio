@@ -25,7 +25,7 @@ export const es = {
     basedIn: 'En',
     available: 'Contacto rápido',
     slideToReveal: 'Desliza para ver el email',
-    emailRevealed: 'Email visible',
+    emailRevealed: 'Pareces humano...',
     copyEmail: 'Copiar email',
     emailCopied: 'Email copiado',
     /** D24: juguete de clicks junto al contacto rápido (la animación de fondo reacciona). */

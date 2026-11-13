@@ -72,7 +72,10 @@
 .quickLinks {
   display: flex;
   flex-wrap: wrap;
-  align-items: center;
+  /* Post-F2/D33: el bloque EmailReveal es el más alto de la fila (caja +
+     slider). Los botones (GitHub/LinkedIn/Clicker) se alinean con la FILA
+     de la caja del email (flex-start), no centrados verticalmente. */
+  align-items: flex-start;
   gap: var(--space-3);
   margin-top: var(--space-6);
   animation: riseIn var(--dur-slow) var(--ease) 240ms both;

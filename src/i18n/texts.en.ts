@@ -26,7 +26,7 @@ export const en: Texts = {
     basedIn: 'In',
     available: 'Quick contact',
     slideToReveal: 'Slide to reveal the email',
-    emailRevealed: 'Email visible',
+    emailRevealed: 'You seem human...',
     copyEmail: 'Copy email',
     emailCopied: 'Email copied',
     /** D24: click toy next to the quick contact (the background animation reacts). */

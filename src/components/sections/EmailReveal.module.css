@@ -41,12 +41,18 @@
 }
 
 /* accent-color tiñe pista + pulgar con el acento del tema, sin CSS custom
-   frágil por navegador; el control nativo garantiza teclado y táctil. */
+   frágil por navegador; el control nativo garantiza teclado y táctil.
+   Cursor: mano abierta al arrastrar (grab/grabbing) — más moderno que la
+   flecha bidireccional (ew-resize) y coherente con la metáfora de deslizar. */
 .slider {
   width: 100%;
   min-height: 44px;
   accent-color: var(--color-accent);
-  cursor: ew-resize;
+  cursor: grab;
+}
+
+.slider:active {
+  cursor: grabbing;
 }
 
 /* ——— Indicador verde de finalización (sustituye al slider) ——— */
