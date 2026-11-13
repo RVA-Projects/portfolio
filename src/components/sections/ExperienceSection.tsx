@@ -51,7 +51,7 @@ export function ExperienceSection() {
       className={styles.section}
       aria-label={texts.sections.experience}
     >
-      <SectionHeading kicker="03 — Experience" title={texts.sections.experience} />
+      <SectionHeading kicker="04 — Experience" title={texts.sections.experience} />
       <div className={styles.cards}>
         {experience.map((item) => (
           <ExperienceCard key={item.id} item={item} onOpen={openExperience} />

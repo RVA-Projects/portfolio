@@ -14,6 +14,7 @@ export const en: Texts = {
   sections: {
     intro: 'Intro',
     projects: 'Projects',
+    stack: 'Stack',
     experience: 'Experience',
     education: 'Education',
     languages: 'Languages',
@@ -22,14 +23,17 @@ export const en: Texts = {
   intro: {
     basedIn: 'In',
     available: 'Quick contact',
+    slideToReveal: 'Slide to reveal the email',
+    emailRevealed: 'Email visible',
     copyEmail: 'Copy email',
     emailCopied: 'Email copied',
-    mainStack: 'Main stack',
-    projectStack: 'Technologies used in projects',
-    tools: 'Tools and extras',
     /** D24: click toy next to the quick contact (the background animation reacts). */
-    clicker: 'Clicker',
-    clickerAria: 'Clicker: click counter, press it as many times as you like',
+    clickerAria: 'Clicker: add a click',
+  },
+  /** D27 — two stack levels, own centered section after projects. */
+  stack: {
+    mainTitle: 'Main stack',
+    exploredTitle: 'Technologies I have explored',
   },
   footer: {
     madeBy: 'Made by',

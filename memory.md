@@ -66,6 +66,7 @@ Ver detalle en `docs/decisions.md` (D01–D15). Resumen:
 
 ## Últimos cambios
 
+- 2026-11-13 (5): **Ronda 2 · F2+F3** — contacto: EmailReveal (slider + copia, email codificado XOR, sin plaintext ni mailto en bundle) y clicker circular con diana; stack: TechStackSection centrada tras Proyectos (tiers core/explored, TypeScript fuera, Kotlin en core), kickers renumerados; 133 unitarios + 15 e2e verdes.
 - 2026-11-13 (4): **Ronda 2 · F1 — presentación y jerarquía**: padding superior de la intro reducido (nombre sube: y≈90px en 1440, 70px en 375); título profesional «Desarrollador de software» + línea secundaria mono «Perfil junior» (fuera del título y de la descripción, D25); description sin «junior».
 
 - 2026-11-13 (3): **D24 — clicker + tooltips + tags sólidos**: botón «Clicker» con contador al extremo derecho del contacto rápido (el fondo D23 reacciona a cada pulsación); tooltips CSS en TODOS los IconButton (::after de data-tip=ariaLabel, hover+focus, ancla derecha con variante left) + `overflow-x: clip` en body; `Tag` con fondo sólido `--color-surface` (badge de categoría sobre imagen legible; 8 usos). Verificado con Playwright contra el build real; tests 123→124.

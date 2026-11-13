@@ -93,82 +93,38 @@
   color: var(--color-text-muted);
 }
 
-/* ——— Clicker (D24): juguete de clicks al extremo derecho del contacto ——— */
+/* ——— Clicker (D24/D26): botón circular + contador en su caja ——— */
 .clicker {
   display: inline-flex;
   align-items: center;
-  gap: var(--space-3);
+  gap: var(--space-2);
   /* Empuja el juguete al extremo derecho de la fila de contacto rápido;
      si envuelve a su propia línea (móvil), queda igualmente a la derecha. */
   margin-inline-start: auto;
   user-select: none;
 }
 
-/* Contador: número monoespaciado, ancho estable mientras cuenta (sin jitter).
-   No es target táctil: sin min-height 44. Sin aria-live: clicks rápidos no
-   deben spamear al lector de pantalla (navegable en modo exploración). */
+/* IconButton vuelve perfectamente circular (el tooltip de D24 sigue). */
+.clickerBtn {
+  border-radius: 50%;
+}
+
+/* Contador en caja propia (unidad visual con el botón): mono, ancho estable
+   (tabular-nums, sin jitter). Sin aria-live: clicks rápidos no deben
+   spamear al lector de pantalla (navegable en modo exploración). */
 .clickerCount {
-  min-width: 3ch;
-  text-align: right;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 3.5ch;
+  height: 44px;
+  padding: 0 var(--space-3);
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-sm);
   font-family: var(--font-mono);
   font-size: var(--fs-small);
   font-variant-numeric: tabular-nums;
   color: var(--color-text);
-}
-
-/* ——— Tecnologías en tres niveles (RF-03) ——— */
-.tech {
-  margin-top: var(--space-8);
-  display: grid;
-  gap: var(--space-5);
-  animation: riseIn var(--dur-slow) var(--ease) 300ms both;
-}
-
-.techTitle {
-  font-family: var(--font-mono);
-  font-size: var(--fs-small);
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: var(--color-text-muted);
-  margin-bottom: var(--space-3);
-}
-
-/* Grid icono + nombre, uniforme en los tres niveles. Fase 7.2: más grande
-   (columnas e iconos mayores) y jerárquico (texto pleno, no secundario). */
-.techGrid {
-  margin: 0;
-  padding: 0;
-  list-style: none;
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-  gap: var(--space-3) var(--space-4);
-}
-
-.techItem {
-  display: flex;
-  align-items: center;
-  gap: var(--space-2);
-  font-size: var(--fs-body);
-  color: var(--color-text);
-  min-height: 32px;
-  --tech-icon-size: 28px;
-}
-
-@media (min-width: 768px) {
-  .techGrid {
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: var(--space-4) var(--space-5);
-  }
-
-  .techItem {
-    --tech-icon-size: 32px;
-    min-height: 36px;
-  }
-}
-
-/* Zoom suave del icono al pasar por la fila (decorativo; el texto ya es pleno) */
-.techItem:hover img {
-  transform: scale(1.15);
 }
 
 @keyframes riseIn {
@@ -185,10 +141,10 @@
 @media (prefers-reduced-motion: reduce) {
   .name,
   .role,
+  .roleNote,
   .location,
   .description,
-  .quickLinks,
-  .tech {
+  .quickLinks {
     animation: none;
   }
 }

@@ -19,7 +19,7 @@ export const FILTER_CATEGORIES: readonly FilterCategoryId[] = [
 
 /**
  * Mapeo technologyId → categoría de filtro. Las tecnologías sin entrada
- * (git, sqlite, room, sql, react, typescript…) no participan del filtrado;
+ * (git, sqlite, room, sql, react…) no participan del filtrado;
  * el resto conservan su tecnología en las fichas (esto no toca datos).
  */
 export const FILTER_CATEGORY_BY_TECH: Record<string, FilterCategoryId> = {
@@ -36,9 +36,10 @@ export const FILTER_CATEGORY_BY_TECH: Record<string, FilterCategoryId> = {
 
 /**
  * Catálogo de tecnologías (modelo `Technology`). Clasificación por niveles
- * (RF-03) confirmada con el propietario: core ⇒ stack principal (añade
- * Python, C#, Java) · project ⇒ usadas en proyectos · tool ⇒ complementarias.
- * Los iconos PNG custom (python, unity, xampp) viven en
+ * (RF-03, D27): core ⇒ stack principal (Kotlin entra, TypeScript fuera —
+ * nunca usado) · explored ⇒ «Tecnologías con las que he experimentado»
+ * (proyectos publicados Y experimentos: estar aquí no exige aparecer en
+ * una ficha). Los iconos PNG custom (python, unity, xampp) viven en
  * `public/assets/img/icons/`; el resto los resuelve TechIcon con SVG inline.
  *
  * NUNCA inventar tecnologías fuera de este catálogo.
@@ -46,7 +47,6 @@ export const FILTER_CATEGORY_BY_TECH: Record<string, FilterCategoryId> = {
 export const technologies: Technology[] = [
   // ——— Stack principal
   { id: 'javascript', name: 'JavaScript', tier: 'core' },
-  { id: 'typescript', name: 'TypeScript', tier: 'core' },
   { id: 'react', name: 'React', tier: 'core' },
   { id: 'html', name: 'HTML', tier: 'core' },
   { id: 'css', name: 'CSS', tier: 'core' },
@@ -55,28 +55,26 @@ export const technologies: Technology[] = [
   { id: 'java', name: 'Java', tier: 'core' },
   { id: 'python', name: 'Python', tier: 'core', icon: 'python' },
   { id: 'csharp', name: 'C#', tier: 'core' },
+  { id: 'kotlin', name: 'Kotlin', tier: 'core' },
 
-  // ——— Usadas en proyectos
-  { id: 'wordpress', name: 'WordPress', tier: 'project' },
-  { id: 'kotlin', name: 'Kotlin', tier: 'project' },
-  { id: 'room', name: 'Room', tier: 'project' },
-  { id: 'sqlite', name: 'SQLite', tier: 'project' },
-  { id: 'android-studio', name: 'Android Studio', tier: 'project' },
-
-  // ——— Herramientas y complementarios (grid del portfolio original)
-  { id: 'nodejs', name: 'Node.js', tier: 'tool' },
-  { id: 'mysql', name: 'MySQL', tier: 'tool' },
-  { id: 'postgresql', name: 'PostgreSQL', tier: 'tool' },
-  { id: 'docker', name: 'Docker', tier: 'tool' },
-  { id: 'firebase', name: 'Firebase', tier: 'tool' },
-  { id: 'unity', name: 'Unity', tier: 'tool', icon: 'unity' },
-  { id: 'xampp', name: 'XAMPP', tier: 'tool', icon: 'xampp' },
-  { id: 'eclipse', name: 'Eclipse', tier: 'tool' },
-  { id: 'netbeans', name: 'NetBeans', tier: 'tool' },
-  { id: 'postman', name: 'Postman', tier: 'tool' },
-  { id: 'visual-studio', name: 'Visual Studio', tier: 'tool' },
-  { id: 'vscode', name: 'VS Code', tier: 'tool' },
-  { id: 'github', name: 'GitHub', tier: 'tool' },
+  // ——— Tecnologías con las que he experimentado (D27: unificado)
+  { id: 'wordpress', name: 'WordPress', tier: 'explored' },
+  { id: 'room', name: 'Room', tier: 'explored' },
+  { id: 'sqlite', name: 'SQLite', tier: 'explored' },
+  { id: 'android-studio', name: 'Android Studio', tier: 'explored' },
+  { id: 'nodejs', name: 'Node.js', tier: 'explored' },
+  { id: 'mysql', name: 'MySQL', tier: 'explored' },
+  { id: 'postgresql', name: 'PostgreSQL', tier: 'explored' },
+  { id: 'docker', name: 'Docker', tier: 'explored' },
+  { id: 'firebase', name: 'Firebase', tier: 'explored' },
+  { id: 'unity', name: 'Unity', tier: 'explored', icon: 'unity' },
+  { id: 'xampp', name: 'XAMPP', tier: 'explored', icon: 'xampp' },
+  { id: 'eclipse', name: 'Eclipse', tier: 'explored' },
+  { id: 'netbeans', name: 'NetBeans', tier: 'explored' },
+  { id: 'postman', name: 'Postman', tier: 'explored' },
+  { id: 'visual-studio', name: 'Visual Studio', tier: 'explored' },
+  { id: 'vscode', name: 'VS Code', tier: 'explored' },
+  { id: 'github', name: 'GitHub', tier: 'explored' },
 ]
 
 export function technologiesByTier(tier: Technology['tier']): Technology[] {

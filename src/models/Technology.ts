@@ -1,11 +1,11 @@
 import type { BaseEntity } from './common'
 
-export type TechnologyTier = 'core' | 'project' | 'tool'
+export type TechnologyTier = 'core' | 'explored'
 
 export interface Technology extends BaseEntity {
   /** Nombre canónico, igual en ambos idiomas. */
   name: string
-  /** Nivel: principal | usada en proyectos | herramienta complementaria. */
+  /** Nivel: stack principal | explorado (proyectos y experimentos, D27). */
   tier: TechnologyTier
   /**
    * Icono: ruta/slug custom en /assets/img/icons/<x>.png (logotipos sin

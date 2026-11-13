@@ -11,6 +11,7 @@ import { TopBar } from './components/layout/TopBar'
 import { BackgroundCanvas } from './components/layout/BackgroundCanvas'
 import { Introduction } from './components/sections/Introduction'
 import { ProjectsSection } from './components/sections/ProjectsSection'
+import { TechStackSection } from './components/sections/TechStackSection'
 import { ExperienceSection } from './components/sections/ExperienceSection'
 import { EducationSection } from './components/sections/EducationSection'
 import { LanguagesSection } from './components/sections/LanguagesSection'
@@ -23,8 +24,8 @@ function smoothBehavior(): ScrollBehavior {
 }
 
 /**
- * Orquestación de la SPA. Orden de secciones por anclas:
- * intro → projects → experience → education → languages → contact.
+ * Orquestación de la SPA. Orden de secciones por anclas (D27):
+ * intro → projects → stack → experience → education → languages → contact.
  * Las secciones de F6 se añaden al main conforme se implementen.
  */
 function AppRoutes() {
@@ -63,6 +64,7 @@ function AppRoutes() {
       <main>
         <Introduction />
         <ProjectsSection />
+        <TechStackSection />
         <ExperienceSection />
         <EducationSection />
         <LanguagesSection />

@@ -33,17 +33,18 @@ export interface BaseEntity {
 
 ```ts
 // models/Technology.ts
-export type TechnologyTier = 'core' | 'project' | 'tool'
+export type TechnologyTier = 'core' | 'explored' // D27: solo dos niveles
 
 export interface Technology extends BaseEntity {
   name: string
-  tier: TechnologyTier // core | project | tool
+  tier: TechnologyTier // core = Stack principal · explored = «Tecnologías con las que he experimentado»
   icon?: 'python' | 'unity' | 'xampp' | 'odoo' // PNG custom en /assets/img/icons/; resto ⇒ SVG inline (TechIcon)
 } // nombre canónico sin traducir; icon opcional (PNG custom) o SVG inline resuelto por TechIcon
 ```
 
 - Los proyectos referencian tecnologías por `technologyIds: string[]`, nunca copian el nombre.
 - `All` es estado del filtro (`null`), no una tecnología.
+- D27: `explored` NO exige aparecer en fichas de proyectos (experimentos cuentan); TypeScript eliminado del catálogo (nunca usado).
 
 ## 3. Proyectos
 
@@ -184,6 +185,10 @@ Todos los componentes reciben datos por props; ninguno importa entidades concret
 | `TopBar`                | `menuOpen: boolean; onToggleMenu(); visible: boolean; theme: ThemeId ('dark' \| 'light'); onToggleTheme()` — menú + toggle de tema (D18). F7.1 (D22): SIEMPRE accesible — al deslizar abajo pasa a `topbar--compact` (pastilla translúcida flotante, mismo tamaño de targets); con menú abierto nunca se compacta                                                                                                                                                                                                                                                                    |
 
 | `BackgroundCanvas` | `theme: ThemeId` (desde App: única instancia de useTheme) — capa decorativa fija a pantalla completa (D23): `aria-hidden`, `pointer-events: none`, z-index negativo; grid de puntos con atracción de cursor + colapso al clic (ambos botones); color blanco/casi-negro por tema con transición ~300ms; se atenúa (opacity 0.2) con `[role=dialog]` o menú abierto; estático bajo reduced-motion |
+
+| `Introduction` | Sin props (usa `useLanguage()` + `site`): nombre, `site.role` + `site.roleNote` (D25), location, description y `quickLinks` — `EmailReveal` + GitHub/LinkedIn (`Button` ghost, externos) + `ClickerButton` interno (`IconButton` circular `.clickerBtn` + `IconTarget`, contador en caja, D24/D26). Los grids de tecnologías NO viven aquí (D27: `TechStackSection`). aria-label = `texts.sections.intro` |
+| `EmailReveal` | Sin props (D26): slider `input[type=range]` 0–100 con label `intro.slideToReveal`; al llegar a 100 revela `decodeEmail()` (XOR en `data/site.ts`, NUNCA plaintext en bundle/DOM) + `IconButton` copiar (`IconCopy`, tooltip = `intro.copyEmail`) con confirmación transient `role=status` (`intro.emailCopied`, 2s). Anti-scraping pasivo: mitigación, no seguridad fuerte |
+| `TechStackSection` | Sin props (D27, `id="stack"` tras proyectos): `SectionHeading` + 2 grupos centrados (texto-centrado + flex-wrap `justify-content: center`) con títulos `stack.mainTitle` / `stack.exploredTitle` y listas icono+nombre por `technologiesByTier('core' \| 'explored')`. aria-label = `texts.sections.stack` |
 
 **Temas (D18):** hook `useTheme()` en `src/hooks/useTheme.ts` — inicial = `localStorage('rva-portfolio-theme')` ?? `prefers-color-scheme` (fallback oscuro); solo la elección manual persiste. Aplica `data-theme='light'` en `<html>` (oscuro = `:root` base, sin atributo). Tokens nuevos: `--color-backdrop`, `--color-media-stage` (oscuro en ambos temas) y `--shadow-overlay`.
 

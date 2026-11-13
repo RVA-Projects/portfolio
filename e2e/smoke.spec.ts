@@ -33,7 +33,7 @@ for (const width of [375, 768, 1024, 1440]) {
     await expect(menuButton).toBeEnabled()
 
     /* Secciones principales presentes (contact pendiente de F6.8: aún null) */
-    for (const id of ['projects', 'experience', 'education', 'languages']) {
+    for (const id of ['projects', 'stack', 'experience', 'education', 'languages']) {
       await expect(page.locator(`#${id}`)).toBeAttached()
     }
   })

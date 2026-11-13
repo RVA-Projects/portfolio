@@ -13,8 +13,8 @@ describe('audit:content — catálogo de tecnologías (RF-03)', () => {
     expect(new Set(ids).size).toBe(ids.length)
   })
 
-  it('los tiers son válidos y los tres niveles tienen entradas', () => {
-    const valid: TechnologyTier[] = ['core', 'project', 'tool']
+  it('los tiers son válidos y los dos niveles tienen entradas', () => {
+    const valid: TechnologyTier[] = ['core', 'explored']
     for (const tech of technologies) {
       expect(valid).toContain(tech.tier)
     }
@@ -39,12 +39,12 @@ describe('audit:content — catálogo de tecnologías (RF-03)', () => {
     }
   })
 
-  it('el stack principal (core) contiene las tecnologías validadas con el propietario', () => {
+  it('el stack principal (core) contiene las tecnologías del D27 (TypeScript fuera, Kotlin dentro)', () => {
     const core = technologies.filter((tech) => tech.tier === 'core').map((tech) => tech.id)
     expect(core).toEqual(
       expect.arrayContaining([
         'javascript',
-        'typescript',
+        'kotlin',
         'react',
         'html',
         'css',
@@ -55,10 +55,16 @@ describe('audit:content — catálogo de tecnologías (RF-03)', () => {
         'csharp',
       ]),
     )
+    expect(core).not.toContain('typescript')
   })
 
-  it('mini-crm declara Room y el catálogo la incluye como tecnología de proyecto', () => {
+  it('TypeScript NO existe en el catálogo (decisión del propietario: nunca usado)', () => {
+    expect(technologies.find((tech) => tech.id === 'typescript')).toBeUndefined()
+    expect(technologies.find((tech) => tech.name === 'TypeScript')).toBeUndefined()
+  })
+
+  it('mini-crm declara Room y el catálogo la incluye como explorada (D27)', () => {
     const room = technologies.find((tech) => tech.id === 'room')
-    expect(room?.tier).toBe('project')
+    expect(room?.tier).toBe('explored')
   })
 })

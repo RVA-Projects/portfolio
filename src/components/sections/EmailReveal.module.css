@@ -1,0 +1,44 @@
+/* D26 — EmailReveal: caja equivalente al botón de email anterior. */
+.box {
+  display: inline-flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-4);
+  border: 1px solid var(--color-line-strong);
+  border-radius: var(--radius-sm);
+  background: var(--color-surface);
+}
+
+.label {
+  font-family: var(--font-mono);
+  font-size: var(--fs-small);
+  color: var(--color-text-muted);
+  white-space: nowrap;
+}
+
+/* accent-color tiñe pista + pulgar con el acento del tema, sin CSS custom
+   frágil por navegador; el control nativo garantiza teclado y táctil. */
+.slider {
+  width: 220px;
+  min-height: 44px;
+  accent-color: var(--color-accent);
+  cursor: ew-resize;
+}
+
+/* ——— Estado revelado ——— */
+.revealed {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: 44px;
+  padding: 0 var(--space-4);
+  border: 1px solid var(--color-line-strong);
+  border-radius: var(--radius-sm);
+  background: var(--color-surface);
+}
+
+.email {
+  font-family: var(--font-mono);
+  font-size: var(--fs-small);
+  color: var(--color-text);
+}

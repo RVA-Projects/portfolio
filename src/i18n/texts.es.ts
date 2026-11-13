@@ -13,6 +13,7 @@ export const es = {
   sections: {
     intro: 'Presentación',
     projects: 'Proyectos',
+    stack: 'Stack',
     experience: 'Experiencia',
     education: 'Formación',
     languages: 'Idiomas',
@@ -21,14 +22,17 @@ export const es = {
   intro: {
     basedIn: 'En',
     available: 'Contacto rápido',
+    slideToReveal: 'Desliza para ver el email',
+    emailRevealed: 'Email visible',
     copyEmail: 'Copiar email',
     emailCopied: 'Email copiado',
-    mainStack: 'Stack principal',
-    projectStack: 'Tecnologías usadas en proyectos',
-    tools: 'Herramientas y complementos',
     /** D24: juguete de clicks junto al contacto rápido (la animación de fondo reacciona). */
-    clicker: 'Clicker',
-    clickerAria: 'Clicker: contador de clics, pulsa todas las veces que quieras',
+    clickerAria: 'Clicker: añade un clic',
+  },
+  /** D27 — dos niveles del stack, sección propia centrada tras proyectos. */
+  stack: {
+    mainTitle: 'Stack principal',
+    exploredTitle: 'Tecnologías con las que he experimentado',
   },
   footer: {
     madeBy: 'Hecho por',

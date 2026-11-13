@@ -1,0 +1,54 @@
+/* D27 — Sección Stack: composición centrada (petición del propietario). */
+.section {
+  max-width: var(--container-max);
+  margin-inline: auto;
+  padding-inline: var(--container-pad);
+  padding-block: var(--space-8);
+  text-align: center;
+}
+
+.group {
+  margin-top: var(--space-7);
+}
+
+.groupTitle {
+  font-family: var(--font-mono);
+  font-size: var(--fs-small);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-4);
+}
+
+/* Flex-wrap centrado: filas agrupadas alrededor del eje con separación
+   uniforme (evita el estiramiento irregular de auto-fill al centrar). */
+.techGrid {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-3) var(--space-5);
+}
+
+.techItem {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--fs-body);
+  color: var(--color-text);
+  min-height: 36px;
+  --tech-icon-size: 28px;
+}
+
+@media (min-width: 768px) {
+  .techItem {
+    --tech-icon-size: 32px;
+  }
+}
+
+/* Zoom suave del icono al pasar por la fila (decorativo) */
+.techItem:hover img {
+  transform: scale(1.15);
+}
