@@ -14,6 +14,9 @@
   --color-ok: #3fb950;
   /* Backdrop de overlays (Modal); token para que ambos temas lo ajusten. */
   --color-backdrop: rgba(10, 10, 11, 0.85);
+  /* F3.2 — tarjeta de la Hero: superficie translúcida uniforme (la animación
+     de fondo se percibe sutilmente a través de TODA la tarjeta). */
+  --color-hero: rgba(20, 20, 22, 0.62);
   /* D30 — punto lupa (CursorSpot): acento translúcido que contrasta con el
      texto de cada tema (núcleo, pulso al presionar y glow del neón). */
   --color-spot: rgba(226, 55, 68, 0.13);
@@ -84,6 +87,8 @@
   /* Verde de confirmación (estado completado, EmailReveal F2): AA sobre #eef1f4. */
   --color-ok: #1a7f37;
   --color-backdrop: rgba(228, 233, 238, 0.88);
+  /* F3.2 — tarjeta de la Hero en claro: blanco translúcido sobre #eef1f4. */
+  --color-hero: rgba(255, 255, 255, 0.62);
   /* D30 — punto lupa: azul translúcido (contraste con texto pizarra). */
   --color-spot: rgba(10, 102, 194, 0.12);
   --color-spot-press: rgba(10, 102, 194, 0.24);

@@ -1,24 +1,18 @@
 .intro {
   position: relative;
-  max-width: var(--container-max);
+  /* F3.2 — la Hero es UNA tarjeta translúcida uniforme: la animación de
+     fondo se percibe sutilmente a través de toda la superficie (adiós al
+     scrim radial irregular de D23, que cubría zonas a mancha). El ancho
+     deja hueco lateral (= container-pad) y su borde IZQUIERDO queda alineado
+     con el contenido del resto de secciones en pantallas anchas. */
+  width: min(var(--container-max), 100% - 2 * var(--container-pad));
+  margin-block: var(--space-6) 0;
   margin-inline: auto;
-  /* D25: menos aire superior — el nombre sube y la composición equilibra
-     con el resto sin perder el respiro del scrim (verificado 375–1440). */
-  padding-block: clamp(56px, 10vh, 112px) var(--space-9);
-  padding-inline: var(--container-pad);
-}
-
-/* Scrim de legibilidad (D23): degradado radial del color de fondo tras el
-   bloque de texto; atenúa los puntos SOLO donde hay prosa larga. Sangrado
-   SOLO vertical: horizontal provocaría overflow-x en viewports estrechos. */
-.intro::before {
-  content: '';
-  position: absolute;
-  inset: -48px 0;
-  z-index: -1;
-  pointer-events: none;
-  background: radial-gradient(ellipse 58% 50% at 30% 22%, var(--color-bg) 35%, transparent 100%);
-  opacity: 0.85;
+  padding-block: clamp(40px, 7vh, 88px) var(--space-8);
+  padding-inline: clamp(16px, 3vw, 48px);
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-lg);
+  background: var(--color-hero);
 }
 
 /* ——— Nombre protagonista ——— */
@@ -69,7 +63,7 @@
 
 .description {
   margin-top: var(--space-5);
-  max-width: 62ch;
+  /* F3.1: sin tope artificial de ancho — usa el ancho de la tarjeta. */
   color: var(--color-text-muted);
   animation: riseIn var(--dur-slow) var(--ease) 180ms both;
 }

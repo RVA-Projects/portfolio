@@ -192,3 +192,9 @@ Tres ajustes de acabado pedidos por el propietario tras ver D23 en producción:
 - **Token nuevo:** `--color-ok` (verde confirmación): oscuro `#3fb950`, claro `#1a7f37` (AA sobre #eef1f4). Icono `IconCheck` añadido a base/Icons.
 - **GitHub/LinkedIn:** dejan `variant="ghost"` (transparente) → piel por defecto de Button (superficie + borde), contenedor SIEMPRE visible; hover/active intactos; enlaces intactos.
 - **Pruebas:** 138 unitarios ✓ (tests D26 intactos: sin plaintext, copiar, transient); screenshots en ambos estados × 2 temas × 375px móvil sin desbordes.
+
+## D34 — Hero como tarjeta translúcida unificada (ronda 3 F3) — ✅ Aprobada (2026-11-13)
+
+- **F3.2:** `.intro` se convierte en UNA tarjeta (token nuevo `--color-hero`: oscuro `rgba(20,20,22,.62)`, claro `rgba(255,255,255,.62)` + borde `--color-line` + `radius-lg`); se elimina el scrim radial irregular de D23 (`::before`) que dejaba zonas cubiertas a mancha. La animación de fondo se percibe sutilmente a través de toda la tarjeta. Ancho `min(--container-max, 100% - 2·pad)` centrado: el borde izquierdo alinea con el contenido del resto de secciones.
+- **F3.1:** la descripción pierde el tope `max-width: 62ch` — usa el ancho completo de la tarjeta (petición explícita; líneas largas aceptadas en pantallas anchas).
+- **Pruebas:** 138 unitarios ✓; screenshots 1440 claro/oscuro + 375px móvil sin desbordes.
