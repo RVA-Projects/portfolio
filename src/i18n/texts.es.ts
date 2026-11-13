@@ -30,6 +30,7 @@ export const es = {
     emailCopied: 'Email copiado',
     /** D24: juguete de clicks junto al contacto rápido (la animación de fondo reacciona). */
     clickerAria: 'Clicker: añade un clic',
+    clickerTotal: 'Recuento de clicks',
   },
   /** D27 — dos niveles del stack, sección propia centrada tras proyectos. */
   stack: {

@@ -66,6 +66,8 @@ Ver detalle en `docs/decisions.md` (D01–D15). Resumen:
 
 ## Últimos cambios
 
+- 2026-11-13 (18): **D38 Clicker global** — el contador acumula los clicks de TODAS las visitas vía Abacus (sin clave/registro): lectura del total al montar, click optimista + hit fire-and-forget, persistente entre deploys (clave `rva-portfolio/clicker` vive en el servicio); tooltip «Recuento de clicks» (nativo + sr-only); degradación elegante sin servicio. 149 unitarios (4 nuevos) + guard de red en setup; verificado e2e contra el servicio real (carga → click → recarga persiste). Admin key del contador entregada al propietario (fuera del repo).
+
 - 2026-11-13 (17): **Fix alineación + cursor** — GitHub/LinkedIn/Clicker alineados con la fila de la caja del email (`.quickLinks` flex-start, antes centrados respecto al bloque caja+slider); cursor del slider `grab`/`grabbing` (adiós a la flecha bidireccional). Verificado con screenshots (1440 + 375px, sin overflow) y `getComputedStyle` = grab.
 
 - 2026-11-13 (16): **F6 RVA Portfolio desde el footer** — ficha especial del propio portfolio (fuera del catálogo): metodología IA, atribución honesta, captura real como media; footer pulsable con subrayado punteado reutilizando ProjectOverlay sin prev/next. 145 unitarios + 15 e2e.

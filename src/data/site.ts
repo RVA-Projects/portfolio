@@ -43,6 +43,20 @@ export function decodeEmail(): string {
   return EMAIL_ENCODED.map((code) => String.fromCharCode(code ^ EMAIL_XOR_KEY)).join('')
 }
 
+/**
+ * D38 — contador GLOBAL del Clicker (Abacus: https://abacus.jasoncameron.dev,
+ * servicio público sin clave, CORS abierto). La clave es estable y vive
+ * FUERA del bundle: el total de todas las visitas sobrevive a cualquier
+ * deploy. GET /get/:ns/:key lee, GET /hit/:ns/:key incrementa y devuelve
+ * el nuevo total (formato { value: number }, verificado en 2026-11-13).
+ * Solo un número agregado viaja por la red: cero datos personales.
+ */
+export const clickerCounter = {
+  baseUrl: 'https://abacus.jasoncameron.dev',
+  namespace: 'rva-portfolio',
+  key: 'clicker',
+} as const
+
 export const site: SiteData = {
   name: 'Andrei Ronai',
   role: {

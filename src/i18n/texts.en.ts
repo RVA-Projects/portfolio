@@ -31,6 +31,8 @@ export const en: Texts = {
     emailCopied: 'Email copied',
     /** D24: click toy next to the quick contact (the background animation reacts). */
     clickerAria: 'Clicker: add a click',
+    /** D38: tooltip of the global counter (loaded from the external service). */
+    clickerTotal: 'Click count',
   },
   /** D27 — two stack levels, own centered section after projects. */
   stack: {
