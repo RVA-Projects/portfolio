@@ -66,6 +66,8 @@ Ver detalle en `docs/decisions.md` (D01–D15). Resumen:
 
 ## Últimos cambios
 
+- 2026-11-13 (9): **Ronda 2 · D31** — puntos del fondo animado redondos (arc en vez de fillRect, animado y estático, batching conservado); tests de canvas actualizados; 136 unitarios + 15 e2e.
+
 - 2026-11-13 (8): **Ronda 2 · pulido visual** — scrollbar moderna global (fina, thumb flotante, hover acento) y punto lupa (D30): halo translúcido del acento que sigue al cursor con inercia, glow neón al pulsar, DETRÁS del texto; oculto en táctil/reduced-motion; tokens --color-spot*; 136 unitarios + 15 e2e.
 
 - 2026-11-13 (7): **Ronda 2 · F5** — nueva paleta del modo claro (D29): neutros fríos + acento azul #0a66c2, overlays sin tinte cálido, partículas pizarra rgb(63,78,92); modo oscuro intacto; verificado con screenshots ambos temas y overlay.

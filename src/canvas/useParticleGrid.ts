@@ -12,13 +12,13 @@ import { lerpRgb, resolveThemeRgb, rgbaString, type Rgb } from './particleColors
 /* ——— PUNTOS: tamaño y brillo (lo más visual) ——— */
 /** Tamaño base del punto EN REPOSO, en px (lado del cuadrado dibujado).
     Subir a 1.5–2 = puntos claramente visibles; bajar a 0.8 = casi polvo. */
-const POINT_SIZE_BASE = 2
+const POINT_SIZE_BASE = 5
 /** px EXTRA de tamaño en el punto de máxima actividad (muy desplazado).
     Tamaño real = POINT_SIZE_BASE + POINT_SIZE_BOOST × boost (0…1).
     Es lo que hace que los puntos "crezcan" al pasar el cursor o al hacer clic. */
-const POINT_SIZE_BOOST = 2.3
+const POINT_SIZE_BOOST = 5.3
 /** Tamaño del punto en modo ESTÁTICO (prefers-reduced-motion, sin animación). */
-const POINT_SIZE_STATIC = 1.8
+const POINT_SIZE_STATIC = 3.8
 /** Opacidad de cada punto según su nivel de actividad (4 niveles, de reposo
     a máxima). Es el knob de "brillo" por punto; la opacidad global de la capa
     vive en BackgroundCanvas.module.css (.layer). */
@@ -62,9 +62,9 @@ const RING_DURATION = 0.45
 /** Radio inicial del anillo (px). */
 const RING_RADIUS_START = 20
 /** Radio final del anillo (px). */
-const RING_RADIUS_MAX = 240
+const RING_RADIUS_MAX = 140
 /** Opacidad inicial del anillo (se desvanece linealmente hasta 0). */
-const RING_ALPHA = 0.3
+const RING_ALPHA = 2
 /** Grosor de la línea del anillo (px). */
 const RING_WIDTH = 1.5
 
@@ -330,8 +330,13 @@ export function useParticleGrid(theme: ThemeId): RefObject<HTMLCanvasElement | n
         if (buckets[b].length === 0) continue
         ctx.fillStyle = rgbaString(rgb, ALPHA_BUCKETS[b])
         ctx.beginPath()
-        for (const rect of buckets[b]) {
-          ctx.fillRect(rect.x - rect.s / 2, rect.y - rect.s / 2, rect.s, rect.s)
+        for (const dot of buckets[b]) {
+          /* D31 — puntos REDONDOS: arc por punto dentro del mismo path
+             (moveTo evita el segmento de unión entre subpaths); se conserva
+             el batching por cubeta de alfa (un solo fill por cubeta). */
+          const r = dot.s / 2
+          ctx.moveTo(dot.x + r, dot.y)
+          ctx.arc(dot.x, dot.y, r, 0, Math.PI * 2)
         }
         ctx.fill()
       }
@@ -360,13 +365,10 @@ export function useParticleGrid(theme: ThemeId): RefObject<HTMLCanvasElement | n
       const rgb = colorRef.current
       ctx.fillStyle = rgbaString(rgb, STATIC_ALPHA)
       ctx.beginPath()
+      const r = POINT_SIZE_STATIC / 2
       for (const p of particles) {
-        ctx.fillRect(
-          p.hx - POINT_SIZE_STATIC / 2,
-          p.hy - POINT_SIZE_STATIC / 2,
-          POINT_SIZE_STATIC,
-          POINT_SIZE_STATIC,
-        )
+        ctx.moveTo(p.hx + r, p.hy)
+        ctx.arc(p.hx, p.hy, r, 0, Math.PI * 2)
       }
       ctx.fill()
     }

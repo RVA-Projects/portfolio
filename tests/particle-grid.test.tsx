@@ -174,7 +174,7 @@ describe('BackgroundCanvas / useParticleGrid (D23)', () => {
     expect(rafQueue.size).toBe(1) // el tick está vivo
 
     stepFrames(3)
-    expect(ctx.fillRect).toHaveBeenCalled()
+    expect(ctx.arc).toHaveBeenCalled() // puntos redondos (D31)
     expect(ctx.setTransform).toHaveBeenCalled() // DPR aplicado
 
     unmount()
@@ -194,14 +194,14 @@ describe('BackgroundCanvas / useParticleGrid (D23)', () => {
 
     window.dispatchEvent(pointerEvent('pointermove', 500, 400))
     stepFrames(10)
-    const fillCallsBefore = ctx.fillRect.mock.calls.length
-    expect(fillCallsBefore).toBeGreaterThan(0)
+    const arcCallsBefore = ctx.arc.mock.calls.length
+    expect(arcCallsBefore).toBeGreaterThan(0)
 
     window.dispatchEvent(pointerEvent('pointerdown', 500, 400))
     stepFrames(2)
-    /* Eco del clic dibujado (arc) + la simulación sigue activa */
+    /* Eco del clic dibujado (arc del anillo) + la simulación sigue activa */
     expect(ctx.arc).toHaveBeenCalledWith(500, 400, expect.any(Number), 0, Math.PI * 2)
-    expect(ctx.fillRect.mock.calls.length).toBeGreaterThan(fillCallsBefore)
+    expect(ctx.arc.mock.calls.length).toBeGreaterThan(arcCallsBefore)
   })
 
   it('prefers-reduced-motion: grid estático sin loop; al desactivarlo arranca', () => {
@@ -210,7 +210,7 @@ describe('BackgroundCanvas / useParticleGrid (D23)', () => {
     const canvas = container.querySelector('canvas')
     expect(canvas).not.toBeNull()
     expect(rafQueue.size).toBe(0) // sin rAF
-    expect(ctx.fillRect).toHaveBeenCalled() // grid estático dibujado una vez
+    expect(ctx.arc).toHaveBeenCalled() // grid estático dibujado una vez (puntos redondos)
 
     stepFrames(2)
     expect(rafQueue.size).toBe(0) // sigue sin animar
