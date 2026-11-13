@@ -1,9 +1,10 @@
 import type { ThemeId } from '../hooks/useTheme'
 
 /**
- * Colores del fondo animado (D23), puro y testeable. Blanco en oscuro,
- * casi-negro en claro (identidad `--color-bg` invertida). El canvas no lee
- * CSS vars por frame: la interpolación entre temas se hace aquí con RGB.
+ * Colores del fondo animado (D23/D29), puro y testeable. Blanco en oscuro;
+ * en claro, pizarra frío rgb(63,78,92) — visible (7.5:1) y discreto sobre el
+ * nuevo fondo #eef1f4. El canvas no lee CSS vars por frame: la interpolación
+ * entre temas se hace aquí con RGB.
  */
 export interface Rgb {
   r: number
@@ -12,7 +13,7 @@ export interface Rgb {
 }
 
 export function resolveThemeRgb(theme: ThemeId): Rgb {
-  return theme === 'light' ? { r: 10, g: 10, b: 11 } : { r: 255, g: 255, b: 255 }
+  return theme === 'light' ? { r: 63, g: 78, b: 92 } : { r: 255, g: 255, b: 255 }
 }
 
 /** Interpolación lineal acotada (t fuera de [0,1] se satura). Flotantes:

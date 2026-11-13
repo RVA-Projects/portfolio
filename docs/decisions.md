@@ -161,5 +161,12 @@ Tres ajustes de acabado pedidos por el propietario tras ver D23 en producción:
   - El resto pasa (color dominante ≥3:1 o vivo: javascript amarillo, docker, kotlin, android-studio, room, postgresql, vscode…).
 - **Modelo:** `Technology.adapt?: 'mono' | 'dim'` (contratos §2); los dos puntos de llamada (`TechStackSection`, `ExperienceCard`) pasan `tech.adapt`.
 - **Verificación:** screenshots de la sección Stack en ambos temas (siluetas blancas en oscuro, oscuras en claro; dim intactas en claro). 133 unitarios ✓.
+
+## D29 — Nueva paleta del modo claro — ✅ Aprobada (2026-11-13)
+
+- **Decisión (ronda 2, F5):** paleta clara re-diseñada (aprobada por el propietario tras propuesta con medición): neutros fríos con sesgo azul-pizarra (H≈210, armonía por analogía con el acento) + acento azul eléctrico **#0a66c2** (elegido sobre #0b57d0 y #1a73e8 por mejor balance contraste/viveza). Fondo anti-deslumbramiento `#eef1f4` (adiós al blanco puro), texto pizarra `#1d2733` (no negro puro), muted `#566775`, superficies `#ffffff`/`#e4e8ec`, líneas `#d2d9df`/`#aeb8c0`, backdrop `rgba(228,233,238,0.88)` (adiós al tinte cálido de overlays), sombra `rgba(29,39,51,0.16)`.
+- **Contraste (calculado, WCAG 2.2):** texto/fondo 13.3:1 · secundario/fondo 5.2:1 · blanco/acento 5.7:1 · acento/fondo 5.0:1 (UI 3:1 ✓) — todo PASS. Los estados nunca dependen solo de color (fondo + texto cambian juntos).
+- **Modo oscuro INTACTO** (requisito del propietario): solo se reescribe el bloque `[data-theme='light']` de `tokens.css`.
+- **Puntos del fondo (D23/D29):** partículas en claro → `rgb(63,78,92)` (7.5:1 sobre el nuevo fondo, visible y discreto); test de lerp actualizado (midpoint 159/166.5/173.5).
 - **RNF:** pausa con `visibilitychange`; `prefers-reduced-motion` ⇒ grid estático tenue sin interacción (reacciona al cambio en vivo); `devicePixelRatio` + resize con debounce 150ms; densidad reducida (spacing ×1.4) con `navigator.deviceMemory ≤ 2`; sin listeners huérfanos (cleanup verificado en tests); canvas `aria-hidden` + `pointer-events:none` (nunca captura interacciones). Si `getContext` no existe, la capa queda vacía sin crashear.
 - **Motivo:** petición del propietario (post plan 2026-11): fondo vivo y vistoso con identidad de tema, sin sacrificar legibilidad ni rendimiento.

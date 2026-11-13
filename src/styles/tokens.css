@@ -58,21 +58,23 @@
   --z-modal: 100;
 }
 
-/* ============ Tema claro (D18) ============
-   Misma identidad: blanco como fondo principal, casi negro para texto,
-   grises para superficies/líneas y el rojo de acento ligeramente oscurecido
-   para mantener contraste AA sobre fondo claro. SOLO se reescriben colores. */
+/* ============ Tema claro (D18/D29) ============
+   D29 (ronda 2, F5): paleta re-diseñada — neutros fríos con sesgo azul-pizarra
+   (H≈210, armonía por analogía con el acento) + acento azul eléctrico #0a66c2.
+   Fondo anti-deslumbramiento (#eef1f4), texto pizarra (no negro puro).
+   Contraste verificado (WCAG 2.2): texto/fondo 13.3:1 · secundario 5.2:1 ·
+   blanco/acento 5.7:1 · acento/fondo 5.0:1. Modo oscuro INTACTO. */
 :root[data-theme='light'] {
-  --color-bg: #f7f7f8;
+  --color-bg: #eef1f4;
   --color-surface: #ffffff;
-  --color-surface-2: #ececee;
-  --color-line: #d8d8dd;
-  --color-line-strong: #b4b4bc;
-  --color-text: #17171a;
-  --color-text-muted: #5a5a63;
-  --color-accent: #c0212c;
-  --color-focus: #17171a;
-  --color-backdrop: rgba(247, 247, 248, 0.9);
+  --color-surface-2: #e4e8ec;
+  --color-line: #d2d9df;
+  --color-line-strong: #aeb8c0;
+  --color-text: #1d2733;
+  --color-text-muted: #566775;
+  --color-accent: #0a66c2;
+  --color-focus: #1d2733;
+  --color-backdrop: rgba(228, 233, 238, 0.88);
   /* Sombra suave sobre fondo claro (misma geometría). */
-  --shadow-overlay: 0 12px 32px rgba(23, 23, 26, 0.18);
+  --shadow-overlay: 0 12px 32px rgba(29, 39, 51, 0.16);
 }
