@@ -98,4 +98,18 @@ describe('Visor ampliado de imágenes (Fase 3)', () => {
       within(layer as HTMLElement).getByRole('button', { name: 'Imagen siguiente' }),
     ).toBeInTheDocument()
   })
+
+  it('F1.1: pointerdown+click sobre las flechas NAVEGA y no cierra (sin capturar el puntero)', () => {
+    const dialog = openProject('Signature Application')
+    fireEvent.click(within(dialog).getByRole('button', { name: 'Ampliar imagen' }))
+    const layer = screen.getByRole('button', { name: 'Cerrar visor ampliado' }).closest('div')!
+    const next = within(layer as HTMLElement).getByRole('button', { name: 'Imagen siguiente' })
+
+    // El pointerdown sobre el botón burbujea a la capa: NO debe capturarlo
+    // (con captura, el click se retargetiza a la capa = «clic fuera» = cierre)
+    fireEvent.pointerDown(next, { pointerId: 1, bubbles: true })
+    fireEvent.click(next)
+    expect(within(layer as HTMLElement).getByText(/^2 \//)).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: 'Cerrar visor ampliado' })).toBeInTheDocument()
+  })
 })

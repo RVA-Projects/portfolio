@@ -178,3 +178,10 @@ Tres ajustes de acabado pedidos por el propietario tras ver D23 en producción:
 - **D31 (petición del propietario, 2026-11-13):** los puntos del fondo animado pasan de cuadrados (`fillRect`) a REDONDOS (`moveTo` + `arc` por punto dentro del mismo path), animado y estático; se conserva el batching por cubeta de alfa (un solo `fill` por cubeta). Tests de partículas actualizados (`arc` en lugar de `fillRect`); verificado visualmente.
 - **RNF:** pausa con `visibilitychange`; `prefers-reduced-motion` ⇒ grid estático tenue sin interacción (reacciona al cambio en vivo); `devicePixelRatio` + resize con debounce 150ms; densidad reducida (spacing ×1.4) con `navigator.deviceMemory ≤ 2`; sin listeners huérfanos (cleanup verificado en tests); canvas `aria-hidden` + `pointer-events:none` (nunca captura interacciones). Si `getContext` no existe, la capa queda vacía sin crashear.
 - **Motivo:** petición del propietario (post plan 2026-11): fondo vivo y vistoso con identidad de tema, sin sacrificar legibilidad ni rendimiento.
+
+## D32 — Fijo: flechas del visor ampliado cerraban la capa — ✅ (2026-11-13, ronda 3 F1)
+
+- **Causa:** el `pointerdown` sobre cualquier hijo (flechas, lupa, X) burbujeaba al contenedor de `ImageZoomOverlay`, que hacía `setPointerCapture`; con la captura activa el `click` posterior se retargetiza al CONTENEDOR, y el cierre por «clic fuera» (`target === currentTarget`) se disparaba. Teclado OK porque los `keydown` van en fase captura con `stopPropagation`.
+- **Fix:** `onPointerDown` ignora los eventos nacidos sobre `button`/`a` (`closest('button, a')` ⇒ return): no se captura el puntero, el click llega al botón y navega. Drag/pinch/swipe sobre la imagen intactos; Escape/X/clic-fuera intactos.
+- **Lupa (F1.2):** fondo sólido `--color-surface` + borde `--color-line-strong` e icono `--color-text` (antes transparente con opacity .75); hover → `--color-surface-2` + `--color-focus`. Siempre visible (táctil OK).
+- **Pruebas:** test de regresión (pointerdown+click sobre flecha navega sin cerrar) — 138 unitarios ✓; verificado con click real Playwright (1↔2 sin cerrar) y screenshots de la lupa en ambos temas.

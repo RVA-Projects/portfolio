@@ -127,6 +127,10 @@ export function ImageZoomOverlay({ items, index, onIndexChange, onClose }: Image
   }
 
   const onPointerDown = (event: ReactPointerEvent<HTMLDivElement>) => {
+    /* F1.1: los controles (flechas, zoom, X) gestionan su propio click. Si la
+       capa capturara el puntero aquí, el click posterior se retargetizaría al
+       contenedor y se interpretaría como «clic fuera» cerrando la capa. */
+    if ((event.target as HTMLElement).closest('button, a') !== null) return
     pointers.current.set(event.pointerId, { x: event.clientX, y: event.clientY })
     event.currentTarget.setPointerCapture(event.pointerId)
     if (pointers.current.size === 1) {
