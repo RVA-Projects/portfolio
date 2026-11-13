@@ -58,7 +58,7 @@ export function ProjectsSection() {
       aria-label={texts.sections.projects}
     >
       <div className={styles.filterRow}>
-        <SectionHeading kicker="02 — Projects" title={texts.sections.projects} />
+        <SectionHeading index={1} title={texts.sections.projects} />
         <TechnologyFilter
           categories={FILTER_CATEGORIES}
           activeId={activeCategory}

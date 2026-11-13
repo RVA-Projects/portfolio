@@ -47,7 +47,7 @@ describe('LanguagesSection (F6.7, RF-19)', () => {
     expect(dialog.querySelector('iframe')).not.toBeNull()
   })
 
-  it('la sección se sitúa tras formación (orden del documento: 05 — Languages)', () => {
+  it('la sección se sitúa tras formación (orden del documento: 04 — Formación)', () => {
     render(<App />)
     const education = document.getElementById('education')
     const languagesSection = document.getElementById('languages')

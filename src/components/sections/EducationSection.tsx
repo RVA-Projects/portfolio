@@ -39,7 +39,7 @@ export function EducationSection() {
       className={styles.section}
       aria-label={texts.sections.education}
     >
-      <SectionHeading kicker="05 — Education" title={texts.sections.education} />
+      <SectionHeading index={4} title={texts.sections.education} />
       {GROUP_ORDER.map((kind) => {
         const items = groups[kind]
         if (items === undefined || items.length === 0) return null

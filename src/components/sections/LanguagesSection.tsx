@@ -24,7 +24,7 @@ export function LanguagesSection() {
       className={styles.section}
       aria-label={texts.sections.languages}
     >
-      <SectionHeading kicker="06 — Languages" title={texts.sections.languages} />
+      <SectionHeading index={5} title={texts.sections.languages} />
       <div className={styles.cards}>
         {languages.map((item) => (
           <LanguageCard key={item.id} item={item} onOpenDocument={setActiveDocument} />

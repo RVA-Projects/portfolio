@@ -15,7 +15,7 @@ export function TechStackSection() {
 
   return (
     <section id="stack" className={styles.section} aria-label={texts.sections.stack}>
-      <SectionHeading kicker="03 — Stack" title={texts.sections.stack} />
+      <SectionHeading index={2} title={texts.sections.stack} />
 
       <div className={styles.group}>
         <h3 className={styles.groupTitle}>{texts.stack.mainTitle}</h3>
