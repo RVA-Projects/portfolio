@@ -131,6 +131,7 @@ export function ProjectOverlay({
             disabled={!hasPrev}
             icon={<IconChevronLeft />}
             className={`${styles.navArrow} ${styles.navPrev}`}
+            tooltipAlign="left"
           />
         )}
         {onNext !== undefined && (

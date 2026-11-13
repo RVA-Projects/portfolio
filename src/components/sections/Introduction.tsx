@@ -1,5 +1,6 @@
 import { useCallback, useState } from 'react'
 import { useLanguage } from '../../i18n'
+import type { LanguageId } from '../../models/common'
 import { technologiesByTier } from '../../data/technologies'
 import type { Technology } from '../../models/Technology'
 import { site } from '../../data/site'
@@ -61,6 +62,11 @@ export function Introduction() {
           label={texts.intro.copyEmail}
           copiedLabel={texts.intro.emailCopied}
         />
+        <ClickerButton
+          label={texts.intro.clicker}
+          ariaLabel={texts.intro.clickerAria}
+          language={language}
+        />
       </div>
 
       <div className={styles.tech}>
@@ -101,9 +107,7 @@ interface CopyEmailButtonProps {
   email: string
   label: string
   copiedLabel: string
-}
-
-/** Botón discreto "copiar email" con feedback accesible vía aria-live (D02). */
+} /** Botón discreto "copiar email" con feedback accesible vía aria-live (D02). */
 function CopyEmailButton({ email, label, copiedLabel }: CopyEmailButtonProps) {
   const [copied, setCopied] = useState(false)
 
@@ -125,5 +129,34 @@ function CopyEmailButton({ email, label, copiedLabel }: CopyEmailButtonProps) {
         {copied ? copiedLabel : ''}
       </span>
     </>
+  )
+}
+
+interface ClickerButtonProps {
+  label: string
+  ariaLabel: string
+  language: LanguageId
+}
+
+/**
+ * D24 — Clicker: botón juguetón para pulsar sin parar; el contador queda
+ * al lado. La diversión la pone el fondo animado (D23 reacciona a CADA
+ * pulsación: colapso + anillo). Estado local, sin persistencia: es un
+ * juguete de sesión. El contador es texto plano navegable (sin aria-live
+ * para no spamear al lector de pantalla en clicks rápidos).
+ */
+function ClickerButton({ label, ariaLabel, language }: ClickerButtonProps) {
+  const [count, setCount] = useState(0)
+
+  return (
+    <div className={styles.clicker}>
+      <Button
+        label={label}
+        variant="ghost"
+        onClick={() => setCount((current) => current + 1)}
+        ariaLabel={ariaLabel}
+      />
+      <span className={styles.clickerCount}>{count.toLocaleString(language)}</span>
+    </div>
   )
 }

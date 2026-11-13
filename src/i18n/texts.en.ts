@@ -27,6 +27,9 @@ export const en: Texts = {
     mainStack: 'Main stack',
     projectStack: 'Technologies used in projects',
     tools: 'Tools and extras',
+    /** D24: click toy next to the quick contact (the background animation reacts). */
+    clicker: 'Clicker',
+    clickerAria: 'Clicker: click counter, press it as many times as you like',
   },
   footer: {
     madeBy: 'Made by',

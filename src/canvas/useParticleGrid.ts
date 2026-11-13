@@ -12,13 +12,13 @@ import { lerpRgb, resolveThemeRgb, rgbaString, type Rgb } from './particleColors
 /* ——— PUNTOS: tamaño y brillo (lo más visual) ——— */
 /** Tamaño base del punto EN REPOSO, en px (lado del cuadrado dibujado).
     Subir a 1.5–2 = puntos claramente visibles; bajar a 0.8 = casi polvo. */
-const POINT_SIZE_BASE = 1.2
+const POINT_SIZE_BASE = 2
 /** px EXTRA de tamaño en el punto de máxima actividad (muy desplazado).
     Tamaño real = POINT_SIZE_BASE + POINT_SIZE_BOOST × boost (0…1).
     Es lo que hace que los puntos "crezcan" al pasar el cursor o al hacer clic. */
-const POINT_SIZE_BOOST = 1.3
+const POINT_SIZE_BOOST = 2.3
 /** Tamaño del punto en modo ESTÁTICO (prefers-reduced-motion, sin animación). */
-const POINT_SIZE_STATIC = 1.2
+const POINT_SIZE_STATIC = 1.8
 /** Opacidad de cada punto según su nivel de actividad (4 niveles, de reposo
     a máxima). Es el knob de "brillo" por punto; la opacidad global de la capa
     vive en BackgroundCanvas.module.css (.layer). */

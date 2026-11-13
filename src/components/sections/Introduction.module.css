@@ -79,6 +79,29 @@
   color: var(--color-text-muted);
 }
 
+/* ——— Clicker (D24): juguete de clicks al extremo derecho del contacto ——— */
+.clicker {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-3);
+  /* Empuja el juguete al extremo derecho de la fila de contacto rápido;
+     si envuelve a su propia línea (móvil), queda igualmente a la derecha. */
+  margin-inline-start: auto;
+  user-select: none;
+}
+
+/* Contador: número monoespaciado, ancho estable mientras cuenta (sin jitter).
+   No es target táctil: sin min-height 44. Sin aria-live: clicks rápidos no
+   deben spamear al lector de pantalla (navegable en modo exploración). */
+.clickerCount {
+  min-width: 3ch;
+  text-align: right;
+  font-family: var(--font-mono);
+  font-size: var(--fs-small);
+  font-variant-numeric: tabular-nums;
+  color: var(--color-text);
+}
+
 /* ——— Tecnologías en tres niveles (RF-03) ——— */
 .tech {
   margin-top: var(--space-8);

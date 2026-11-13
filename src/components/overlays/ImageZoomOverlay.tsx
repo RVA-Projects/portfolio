@@ -241,6 +241,7 @@ export function ImageZoomOverlay({ items, index, onIndexChange, onClose }: Image
           onClick={() => onIndexChange(index - 1)}
           icon={<IconChevronLeft size={24} />}
           className={styles.navPrev}
+          tooltipAlign="left"
         />
       )}
       {index < items.length - 1 && (

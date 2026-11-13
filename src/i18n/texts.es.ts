@@ -26,6 +26,9 @@ export const es = {
     mainStack: 'Stack principal',
     projectStack: 'Tecnologías usadas en proyectos',
     tools: 'Herramientas y complementos',
+    /** D24: juguete de clicks junto al contacto rápido (la animación de fondo reacciona). */
+    clicker: 'Clicker',
+    clickerAria: 'Clicker: contador de clics, pulsa todas las veces que quieras',
   },
   footer: {
     madeBy: 'Hecho por',

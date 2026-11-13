@@ -4,6 +4,9 @@
   justify-content: center;
   width: 44px;
   height: 44px;
+  /* Ancla del tooltip (::after). Sin efecto sobre el flujo: los usos con
+     className posicionado (zoom, carrusel) siguen funcionando. */
+  position: relative;
   border: 1px solid var(--color-line);
   border-radius: var(--radius-sm);
   color: var(--color-text);
@@ -16,4 +19,53 @@
 .iconBtn:hover {
   background: var(--color-surface-2);
   border-color: var(--color-text-muted);
+}
+
+/* ——— Tooltip (D24): el ariaLabel hecho visible ———
+   Sale de data-tip (= ariaLabel): un solo texto, cero duplicación.
+   Ancla por defecto al borde DERECHO del botón (extiende hacia la izquierda):
+   casi todos los icon-buttons viven en esquinas derechas y centrado se
+   recortaba con el overflow-x: clip del body. Los botones del borde
+   izquierdo (nav "anterior") usan data-tip-align='left'. Hover Y
+   focus-visible (nunca solo hover, RNF a11y); retardo 380ms al aparecer
+   para que no parpadee al recorrer la barra, ocultado al instante. */
+.iconBtn::after {
+  content: attr(data-tip);
+  position: absolute;
+  top: calc(100% + 6px);
+  right: 0;
+  max-width: 240px;
+  padding: var(--space-1) var(--space-3);
+  border: 1px solid var(--color-line-strong);
+  border-radius: var(--radius-sm);
+  background: var(--color-surface-2);
+  color: var(--color-text);
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  font-weight: 400;
+  line-height: 1.4;
+  text-align: center;
+  white-space: nowrap;
+  box-shadow: var(--shadow-overlay);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--dur-fast) var(--ease);
+}
+
+.iconBtn[data-tip-align='left']::after {
+  right: auto;
+  left: 0;
+}
+
+.iconBtn:hover::after,
+.iconBtn:focus-visible::after {
+  opacity: 1;
+  transition-delay: 380ms;
+}
+
+/* En táctil no hay hover sostenido ni cursor: el tooltip no aporta nada. */
+@media (hover: none) {
+  .iconBtn::after {
+    display: none;
+  }
 }

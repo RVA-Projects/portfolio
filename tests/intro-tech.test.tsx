@@ -1,5 +1,5 @@
 import { beforeEach, describe, expect, it } from 'vitest'
-import { cleanup, render, screen, within } from '@testing-library/react'
+import { cleanup, fireEvent, render, screen, within } from '@testing-library/react'
 import { App } from '../src/App'
 import { technologiesByTier } from '../src/data/technologies'
 
@@ -44,5 +44,26 @@ describe('Grid de tecnologías de la intro (Fase 7.2)', () => {
         expect(item.querySelectorAll('img')).toHaveLength(1)
       }
     }
+  })
+})
+
+/**
+ * D24 — Clicker: botón juguete al extremo del contacto rápido, con contador.
+ * El fondo (D23) reacciona a cada pulsación; aquí se blinda contador y a11y.
+ */
+describe('Clicker (D24)', () => {
+  it('empieza a 0 y cuenta cada click; el aria-label es estable', () => {
+    render(<App />)
+    const button = screen.getByRole('button', {
+      name: 'Clicker: contador de clics, pulsa todas las veces que quieras',
+    })
+
+    const counter = button.nextElementSibling as HTMLElement
+    expect(counter).toHaveTextContent('0')
+
+    fireEvent.click(button)
+    fireEvent.click(button)
+    fireEvent.click(button)
+    expect(counter).toHaveTextContent('3')
   })
 })

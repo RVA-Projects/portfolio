@@ -149,6 +149,7 @@ export function MediaGallery({ items, index, onIndexChange, onOpenZoom }: MediaG
               onClick={() => goTo(active - 1)}
               disabled={active === 0}
               icon={<IconChevronLeft size={20} />}
+              tooltipAlign="left"
             />
             <IconButton
               ariaLabel={texts.gallery.next}

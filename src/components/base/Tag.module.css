@@ -3,6 +3,9 @@
   align-items: center;
   padding: var(--space-1) var(--space-3);
   border: 1px solid var(--color-line);
+  /* D24: fondo SIEMPRE sólido — la categoría del proyecto se superpone a la
+     imagen de la tarjeta y con fondo transparente el texto no se leía. */
+  background: var(--color-surface);
   border-radius: var(--radius-sm);
   font-family: var(--font-mono);
   font-size: var(--fs-small);

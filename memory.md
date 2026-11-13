@@ -5,7 +5,7 @@
 
 ## Estado actual
 
-- **Fases:** 0 ✅ · 1 ✅ · 2 ✅ · 3 ✅ · 4 ✅ (deploy pendiente de remoto) · 5 ✅ (revisión móvil aplazada a post-despliegue, decisión del propietario) · 6 🔶 (F6.1–F6.7 hechas) · **PLAN DE ACTUALIZACIÓN 2026-11 en curso: Fase 1 (temas, D18) ✅ · Fase 2.1 (carrusel) ✅ · Fase 2.2 (filtros) ✅ · Fase 4 (flechas+fullscreen) ✅ · Fase 6 (integración experiencia) ✅ · Fase 5 (rediseño experiencia) ✅ · Fase 3 (visor ampliado/zoom, D21) ✅ · Fase 7 (menú compacto + grid tecnologías, D22) ✅ · Fase 8 (e2e Playwright) ✅ · **D23 (fondo animado de puntos) ✅**.
+- **Fases:** 0 ✅ · 1 ✅ · 2 ✅ · 3 ✅ · 4 ✅ (deploy pendiente de remoto) · 5 ✅ (revisión móvil aplazada a post-despliegue, decisión del propietario) · 6 🔶 (F6.1–F6.7 hechas) · **PLAN DE ACTUALIZACIÓN 2026-11 en curso: Fase 1 (temas, D18) ✅ · Fase 2.1 (carrusel) ✅ · Fase 2.2 (filtros) ✅ · Fase 4 (flechas+fullscreen) ✅ · Fase 6 (integración experiencia) ✅ · Fase 5 (rediseño experiencia) ✅ · Fase 3 (visor ampliado/zoom, D21) ✅ · Fase 7 (menú compacto + grid tecnologías, D22) ✅ · Fase 8 (e2e Playwright) ✅ · D23 (fondo animado de puntos) ✅ · **D24 (clicker + tooltips + tags sólidos) ✅**.
 - **Harness:** `npm run validate` en VERDE (92 tests pasando; 1 warning aceptable react-refresh en `src/i18n/index.tsx`).
 - **Build:** JS 332.47KB (105.93KB gzip) / CSS 18.60KB; base `/portfolio/` verificada; cero dependencias de runtime (iconos como assets).
 
@@ -65,6 +65,8 @@ Ver detalle en `docs/decisions.md` (D01–D15). Resumen:
 - Los PDFs de los 6 cursos OpenWebinars están en `public/docs/` y verificados con existsSync (2026-11-12). Faltan los certificados de idiomas (valenciano C1, inglés B2) y el CV (F7.3): nombres propuestos `valenciano-c1.pdf` / `english-b2.pdf`.
 
 ## Últimos cambios
+
+- 2026-11-13 (3): **D24 — clicker + tooltips + tags sólidos**: botón «Clicker» con contador al extremo derecho del contacto rápido (el fondo D23 reacciona a cada pulsación); tooltips CSS en TODOS los IconButton (::after de data-tip=ariaLabel, hover+focus, ancla derecha con variante left) + `overflow-x: clip` en body; `Tag` con fondo sólido `--color-surface` (badge de categoría sobre imagen legible; 8 usos). Verificado con Playwright contra el build real; tests 123→124.
 
 - 2026-11-13 (2): **D23 — bloque de ajustes unificado**: todas las constantes de la animación (tamaño de punto, boost, alfas, radios, malla, resorte, drift, anillo) agrupadas y comentadas al inicio de `useParticleGrid.ts`; números mágicos inline extraídos a constantes nombradas. Sin cambio de comportamiento.
 

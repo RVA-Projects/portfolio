@@ -21,6 +21,11 @@ body {
   font-size: var(--fs-body);
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
+  /* D24: los tooltips ocultos de los IconButton son cajas absolutas y aún
+     así cuentan como overflow scrollable; `clip` los neutraliza (no crea
+     scroll container y no afecta al scroll vertical ni a position:fixed).
+     Refuerza la regla móvil: cero scroll horizontal accidental. */
+  overflow-x: clip;
 }
 
 h1,

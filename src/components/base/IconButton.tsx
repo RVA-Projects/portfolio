@@ -8,6 +8,12 @@ interface IconButtonProps {
   disabled?: boolean
   /** Clase extra (CSS module) para variantes visuales (p. ej. flechas flotantes). */
   className?: string
+  /**
+   * D24 — ancla del tooltip: 'right' (defecto) extiende hacia la izquierda
+   * (botones en esquina derecha); 'left' extiende a la derecha (flechas
+   * «anterior» en el borde izquierdo de los overlays).
+   */
+  tooltipAlign?: 'left' | 'right'
 }
 
 /**
@@ -16,7 +22,7 @@ interface IconButtonProps {
  * Fase 3) puedan mover el foco a su botón de cierre al montarse.
  */
 export const IconButton = forwardRef<HTMLButtonElement, IconButtonProps>(function IconButton(
-  { ariaLabel, onClick, icon, disabled, className },
+  { ariaLabel, onClick, icon, disabled, className, tooltipAlign = 'right' },
   ref,
 ) {
   return (
@@ -25,6 +31,8 @@ export const IconButton = forwardRef<HTMLButtonElement, IconButtonProps>(functio
       type="button"
       className={className !== undefined ? `${styles.iconBtn} ${className}` : styles.iconBtn}
       aria-label={ariaLabel}
+      data-tip={ariaLabel}
+      data-tip-align={tooltipAlign}
       onClick={onClick}
       disabled={disabled}
     >
