@@ -152,18 +152,7 @@ export interface LanguageProfile extends BaseEntity {
 }
 ```
 
-## 7. Contacto
-
-```ts
-// models/ContactLink.ts
-export interface ContactLink extends BaseEntity {
-  id: 'github' | 'linkedin' | 'email' | 'cv'
-  url: string // email → mailto:…
-  ariaLabel: LocalizedText
-}
-```
-
-## 8. Contratos de componentes (props, resumidos)
+## 7. Contratos de componentes (props, resumidos)
 
 Todos los componentes reciben datos por props; ninguno importa entidades concretas de `data/` (la inyección es del árbol de secciones).
 
@@ -199,7 +188,7 @@ Todos los componentes reciben datos por props; ninguno importa entidades concret
 
 `FilterCategoryValue = 'android' | 'web' | 'csharp' | 'python' | 'java' | null` (`null` = Todas). `FilterCategoryId` vive en `data/technologies.ts` junto al mapa `FILTER_CATEGORY_BY_TECH` (SQLite y Room SIN categoría: nunca filtran solas, decisión del propietario).
 
-## 9. Filtro (lógica pura, testeable)
+## 8. Filtro (lógica pura, testeable)
 
 ```ts
 // utils/filter.ts — RF-07 simplificado (F2.2): filtrado por CATEGORÍA
@@ -211,7 +200,7 @@ export function filterProjects(projects: Project[], category: FilterCategoryId |
 export function googleDriveEmbedUrl(src: string): string | null // Drive /view → /preview para embeber (DocumentViewerOverlay)
 ```
 
-## 10. Reglas de validación de datos (`audit:content` en Vitest)
+## 9. Reglas de validación de datos (`audit:content` en Vitest)
 
 1. IDs de `technologyIds` existen en el catálogo de tecnologías.
 2. No hay IDs duplicados en ninguna colección.

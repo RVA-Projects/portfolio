@@ -25,13 +25,13 @@ NewPortfolio/
 │   └ old/                 — copia del portfolio anterior (versiones)
 ├ src/
 │   ├ main.tsx · App.tsx
-│   ├ models/    Project.ts · Technology.ts · Education.ts · Experience.ts · LanguageProfile.ts · ContactLink.ts · common.ts (LocalizedText, LanguageId…)
-│   ├ data/      site.ts · technologies.ts · projects/<slug>.ts · education.ts · experience.ts · languages.ts · contact.ts
+│   ├ models/    Project.ts · Technology.ts · Education.ts · Experience.ts · LanguageProfile.ts · common.ts (LocalizedText, LanguageId…)
+│   ├ data/      site.ts · technologies.ts · projects/<slug>.ts · education.ts · experience.ts · languages.ts
 │   ├ i18n/      index.tsx (proveedor+hook) · es.ts · en.ts · keys.ts (tipo de claves)
 │   ├ components/
 │   │   ├ base/      Button · IconButton · Tag · SectionHeading · Modal(OverlayBase)
-│   │   ├ layout/    TopBar · NavigationMenu
-│   │   ├ sections/  Introduction · ExperienceSection · EducationSection · LanguagesSection · ContactSection · Footer
+│   │   ├ layout/    TopBar (ronda 5 F2: nav horizontal permanente, sin menú desplegable)
+│   │   ├ sections/  Introduction · ExperienceSection · EducationSection · LanguagesSection · Footer
 │   │   ├ projects/  ProjectCarousel · ProjectCard · TechnologyFilter
 │   │   ├ overlays/  ProjectOverlay · MediaGallery · DocumentViewerOverlay
 │   │   └ canvas/    ParticlesCanvas

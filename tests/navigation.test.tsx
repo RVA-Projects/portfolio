@@ -27,7 +27,7 @@ describe('Navegación horizontal permanente (ronda 5 F2)', () => {
     const nav = screen.getByRole('navigation', { name: NAV_LABEL })
     const labels = Array.from(nav.querySelectorAll('a')).map((a) => a.textContent)
     expect(labels).toEqual([
-      'Presentación',
+      'Sobre mí',
       'Proyectos',
       'Stack',
       'Experiencia',
@@ -89,7 +89,7 @@ describe('i18n (RF-25/D12)', () => {
     window.localStorage.clear()
     render(<App />)
     expect(screen.getByRole('button', { name: 'Switch to Spanish' })).toBeInTheDocument()
-    expect(screen.getAllByRole('link', { name: 'Intro' })[0]).toBeInTheDocument()
+    expect(screen.getAllByRole('link', { name: 'About me' })[0]).toBeInTheDocument()
   })
 
   it('hace fallback a español cuando el navegador no es es/en y no hay elección persistida', () => {

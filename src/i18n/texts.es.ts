@@ -11,13 +11,12 @@ export const es = {
     toSpanish: 'Cambiar a español',
   },
   sections: {
-    intro: 'Presentación',
+    intro: 'Sobre mí',
     projects: 'Proyectos',
     stack: 'Stack',
     experience: 'Experiencia',
     education: 'Formación',
     languages: 'Idiomas',
-    contact: 'Contacto',
   },
   intro: {
     basedIn: 'En',

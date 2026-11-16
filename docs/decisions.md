@@ -289,3 +289,10 @@ Tres ajustes aprobados por el propietario:
 - **(D-D) geometría:** token `--topbar-h: 64px`; `main { padding-top: calc(--topbar-h + space-4) }` y `section[id] { scroll-margin-top: calc(--topbar-h + space-3) }` en `base.css` → los encabezados jamás quedan bajo la barra (verificado por diag: `heading.y >= bar.y + bar.h - 2`).
 - **Ajuste en F2:** `'contact'` sale de `SECTIONS` (la sección era stub `null` desde F6.8 y la nav no muestra anclas muertas); su eliminación completa (modelo, sección, i18n) queda para F3.
 - **Pruebas:** 153 unitarios ✓ (7 en navigation reescritos, −2 del menú antiguo; jsdom requiere stub de `matchMedia` al pulsar anclas — el antiguo test pasaba porque `#contact` no existía y nunca invocaba `scrollIntoView`); diag e2e temporal (borrado): 1440 top + education sin tapar, 768/375 sin overflow; smoke/overlays e2e adaptados a nav permanente.
+
+## D46 — Fuera la sección Contacto; «Sobre mí» (ronda 5 F3) — ✅ Aprobada (2026-11-16)
+
+- **Petición:** eliminar la sección Contacto independiente (stub `return null` desde F6.8) sin tocar email/GitHub/LinkedIn de la Hero; renombrar la sección 1 a es «Sobre mí» / en «About me» (nav + cualquier visualización); id interno `'intro'` intacto.
+- **Solución:** borrado limpio de `ContactSection.tsx` (ni siquiera estaba importado en App) y `models/ContactLink.ts` (sin datos ni consumidores); `'contact'` fuera de `SectionId` (ya había salido de `SECTIONS` en F2/D45); key i18n `sections.contact` borrada es/en; renombrado `sections.intro` («Sobre mí» / «About me») — la Hero la usa como `aria-label` de región y la nav como enlace, todo con una sola key. `SectionId` reformateado a unión multilínea.
+- **Docs:** contracts −sección «Contacto» (renumerado 7-9), `ContactLink` fuera; architecture.md −`ContactLink.ts`/`ContactSection`/`contact.ts` (nunca existió en `data/`), layout = TopBar con nav permanente.
+- **Pruebas:** 153 unitarios ✓ (navigation: labels «Sobre mí»; i18n test «About me»); diag e2e temporal (borrado): nav sin «Contacto»/`#contact` ausente del DOM, contactos de la Hero visibles, «About me» en EN; validate ✓.

@@ -1,13 +1,13 @@
 import type { LocalizedText } from '../models/common'
 
-/** Secciones navegables de la SPA (orden = orden del documento y del menú). */
-export type SectionId =
-  'intro' | 'projects' | 'stack' | 'experience' | 'education' | 'languages' | 'contact'
+/** Secciones navegables de la SPA (orden = orden del documento). */
+export type SectionId = 'intro' | 'projects' | 'stack' | 'experience' | 'education' | 'languages'
 
 /**
  * Secciones navegables de la SPA (orden = orden del documento y de la
- * navegación horizontal de TopBar). Ronda 5: fuera 'contact' (F6.8 nunca se
- * implementó y la sección stub era null) — la nav no muestra anclas muertas.
+ * navegación horizontal de TopBar). Ronda 5 F3: fuera 'contact' — la
+ * sección independiente se elimina (los datos de contacto viven en la
+ * Hero) y la nav no muestra anclas muertas.
  */
 export const SECTIONS: SectionId[] = [
   'intro',

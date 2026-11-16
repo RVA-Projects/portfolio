@@ -12,13 +12,12 @@ export const en: Texts = {
     toSpanish: 'Switch to Spanish',
   },
   sections: {
-    intro: 'Intro',
+    intro: 'About me',
     projects: 'Projects',
     stack: 'Stack',
     experience: 'Experience',
     education: 'Education',
     languages: 'Languages',
-    contact: 'Contact',
   },
   intro: {
     basedIn: 'In',
