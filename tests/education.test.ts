@@ -45,6 +45,27 @@ describe('data/education — integridad (F6.6, RF-16)', () => {
     expect(java?.document).toBeUndefined()
   })
 
+  it('los documentos declaran kind por RECURSO (D-E): badges external, PDFs locales pdf', () => {
+    for (const item of education) {
+      if (item.document === undefined) continue
+      expect(['pdf', 'external']).toContain(item.document.kind)
+      if (item.document.src.startsWith('/portfolio/docs/')) {
+        expect(item.document.kind, `${item.id} con PDF local debe ser kind 'pdf'`).toBe('pdf')
+      } else {
+        expect(item.document.kind, `${item.id} con URL externa debe ser kind 'external'`).toBe(
+          'external',
+        )
+      }
+    }
+    // Las 3 acreditaciones externas reales (Credly ×2 + CertView Oracle)
+    const externals = education.filter((item) => item.document?.kind === 'external')
+    expect(externals.map((item) => item.id)).toEqual([
+      'ccst-cybersecurity',
+      'it-specialist-databases-pearson',
+      'oracle-fusion-ai-agent-studio',
+    ])
+  })
+
   it('los documentos solo usan dominios verificados o rutas locales /docs/ (D03)', () => {
     for (const item of education) {
       const src = item.document?.src

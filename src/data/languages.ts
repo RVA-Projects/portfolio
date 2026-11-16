@@ -22,6 +22,7 @@ export const languages: LanguageProfile[] = [
     name: { es: 'Valenciano', en: 'Valencian' },
     cefr: 'C1',
     document: {
+      kind: 'pdf',
       src: '/portfolio/docs/valenciano.pdf',
       name: {
         es: 'Certificado — Valenciano C1',
@@ -41,6 +42,7 @@ export const languages: LanguageProfile[] = [
     name: { es: 'Inglés', en: 'English' },
     cefr: 'B2',
     document: {
+      kind: 'pdf',
       src: '/portfolio/docs/ingles.pdf',
       name: {
         es: 'Certificado — Inglés B2',

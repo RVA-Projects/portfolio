@@ -32,6 +32,14 @@ export interface BaseEntity {
 export interface DocumentRef {
   /** Ruta local (/docs/…) o URL externa validada. */
   src: string
+  /**
+   * Tipo de recurso (ronda 4 F4, D-E) OBLIGATORIO — nada de detectarlo por
+   * nombre o categoría: 'pdf' se abre en el visor overlay (iframe con error
+   * controlado); 'external' se abre en PESTAÑA NUEVA (target=_blank +
+   * rel noopener noreferrer) porque proveedores como Credly/CertView
+   * rechazan el iframe (X-Frame-Options).
+   */
+  kind: 'pdf' | 'external'
   /** Nombre del documento en el visor. */
   name: LocalizedText
 }

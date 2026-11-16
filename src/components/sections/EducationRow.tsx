@@ -19,6 +19,11 @@ interface EducationRowProps {
  * leen como acreditaciones profesionales (Cisco/Pearson/Oracle), no como
  * cursos informales. Puramente representativa: el emisor solo si existe en
  * la fuente (no se inventa).
+ *
+ * Apertura POR TIPO DE RECURSO (ronda 4 F4/D-E): `kind: 'pdf'` abre el
+ * DocumentViewerOverlay (comportamiento intacto); `kind: 'external'`
+ * (Credly/CertView, que rechazan el iframe) abre la URL en PESTAÑA NUEVA
+ * vía `Button href` + `external` (target=_blank + rel noopener noreferrer).
  */
 export function EducationRow({ item, onOpenDocument }: EducationRowProps) {
   const { language, texts } = useLanguage()
@@ -40,12 +45,16 @@ export function EducationRow({ item, onOpenDocument }: EducationRowProps) {
 
       {document !== undefined && (
         <div className={styles.actions}>
-          <Button
-            label={texts.education.openDocument}
-            onClick={() => {
-              onOpenDocument(document)
-            }}
-          />
+          {document.kind === 'external' ? (
+            <Button label={texts.education.openDocument} href={document.src} external />
+          ) : (
+            <Button
+              label={texts.education.openDocument}
+              onClick={() => {
+                onOpenDocument(document)
+              }}
+            />
+          )}
         </div>
       )}
     </article>

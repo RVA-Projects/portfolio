@@ -14,7 +14,7 @@ interface LanguageCardProps {
 /**
  * Tarjeta de idioma (RF-19): puramente representativa. Muestra el idioma y su
  * nivel único (MCER o etiqueta del propietario; D04). Con certificado en
- * `document`, botón que abre el visor genérico.
+ * `document`, botón: PDF → visor genérico; external → pestaña nueva (D-E).
  */
 export function LanguageCard({ item, onOpenDocument }: LanguageCardProps) {
   const { language, texts } = useLanguage()
@@ -37,16 +37,22 @@ export function LanguageCard({ item, onOpenDocument }: LanguageCardProps) {
         {levelLabel !== null && <Tag label={levelLabel} variant="category" />}
       </p>
 
-      {document !== undefined && (
-        <div className={styles.actions}>
-          <Button
-            label={texts.languages.openCertificate}
-            onClick={() => {
-              onOpenDocument(document)
-            }}
-          />
-        </div>
-      )}
+      {document !== undefined &&
+        (document.kind === 'external' ? (
+          /* Ronda 4 F4/D-E: recurso externo ⇒ pestaña nueva, nunca iframe. */
+          <div className={styles.actions}>
+            <Button label={texts.languages.openCertificate} href={document.src} external />
+          </div>
+        ) : (
+          <div className={styles.actions}>
+            <Button
+              label={texts.languages.openCertificate}
+              onClick={() => {
+                onOpenDocument(document)
+              }}
+            />
+          </div>
+        ))}
     </article>
   )
 }

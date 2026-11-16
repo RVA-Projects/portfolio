@@ -12,6 +12,8 @@ function openFirstDocument() {
   render(<App />)
   const section = document.getElementById('education')
   expect(section).not.toBeNull()
+  // Solo los kind 'pdf' son botones: el primero es React fundamentals
+  // (los badges Credly/CertView son kind 'external' ⇒ enlace, pestaña nueva)
   fireEvent.click(
     within(section as HTMLElement).getAllByRole('button', { name: 'Ver acreditación' })[0],
   )
@@ -22,7 +24,9 @@ describe('DocumentViewerOverlay (F6.6, RF-18)', () => {
   it('embebe el documento dentro del overlay (NUNCA pestaña nueva como visor)', () => {
     const dialog = openFirstDocument()
     expect(
-      within(dialog).getByRole('heading', { name: 'Insignia Credly — CCST Cybersecurity' }),
+      within(dialog).getByRole('heading', {
+        name: 'Certificado — React fundamentals (OpenWebinars)',
+      }),
     ).toBeInTheDocument()
     // Sin enlaces de navegación en modo carga/éxito: el embebido es el visor
     expect(within(dialog).queryByRole('link')).not.toBeInTheDocument()
@@ -30,10 +34,8 @@ describe('DocumentViewerOverlay (F6.6, RF-18)', () => {
 
   it('usa la URL tal cual para documentos locales y externos no-Drive', () => {
     const dialog = openFirstDocument()
-    const frame = within(dialog).getByTitle('Insignia Credly — CCST Cybersecurity')
-    expect(frame.getAttribute('src')).toBe(
-      'https://www.credly.com/badges/83f4c08a-bdf0-43af-8d63-1a8c2238b37e/linked_in?t=thjv1f',
-    )
+    const frame = within(dialog).getByTitle('Certificado — React fundamentals (OpenWebinars)')
+    expect(frame.getAttribute('src')).toBe('/portfolio/docs/react-fundamentals.pdf')
   })
 
   it('muestra el error controlado con acciones si el embebido no carga (timeout)', () => {
@@ -47,10 +49,7 @@ describe('DocumentViewerOverlay (F6.6, RF-18)', () => {
       expect(within(dialog).getByText('Documento no disponible')).toBeInTheDocument()
       const openTab = within(dialog).getByRole('link', { name: 'Abrir en una pestaña nueva' })
       expect(openTab).toHaveAttribute('target', '_blank')
-      expect(openTab).toHaveAttribute(
-        'href',
-        'https://www.credly.com/badges/83f4c08a-bdf0-43af-8d63-1a8c2238b37e/linked_in?t=thjv1f',
-      )
+      expect(openTab).toHaveAttribute('href', '/portfolio/docs/react-fundamentals.pdf')
       const download = within(dialog).getByRole('link', { name: 'Descargar documento' })
       expect(download).toHaveAttribute('download')
     } finally {

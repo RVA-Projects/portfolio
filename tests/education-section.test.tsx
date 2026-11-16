@@ -50,41 +50,64 @@ describe('EducationSection (F6.6, RF-16)', () => {
     ).toBeInTheDocument()
   })
 
-  it('Java Foundations (sin acreditación) no ofrece documento; el resto sí', () => {
+  it('Java Foundations (sin acreditación) no ofrece documento; el resto sí (6 overlay + 3 external)', () => {
     render(<App />)
     const section = document.getElementById('education')
-    const javaCard = within(section as HTMLElement)
+    const javaRow = within(section as HTMLElement)
       .getByRole('heading', { name: 'Oracle Java Foundations', level: 3 })
       .closest('article')
-    expect(within(javaCard as HTMLElement).queryByRole('button')).not.toBeInTheDocument()
+    expect(within(javaRow as HTMLElement).queryByRole('button')).not.toBeInTheDocument()
+    expect(within(javaRow as HTMLElement).queryByRole('link')).not.toBeInTheDocument()
 
-    const buttons = within(section as HTMLElement).getAllByRole('button', {
-      name: 'Ver acreditación',
-    })
-    // 9 entradas con documento (3 certificaciones acreditadas + 6 cursos)
-    expect(buttons).toHaveLength(9)
+    const sectionEl = section as HTMLElement
+    // kind 'pdf' ⇒ botón que abre el overlay (6 cursos OpenWebinars)
+    const buttons = within(sectionEl).getAllByRole('button', { name: 'Ver acreditación' })
+    expect(buttons).toHaveLength(6)
+    // kind 'external' ⇒ enlace a pestaña nueva (Credly ×2 + CertView)
+    const links = within(sectionEl).getAllByRole('link', { name: 'Ver acreditación' })
+    expect(links).toHaveLength(3)
+    for (const link of links) {
+      expect(link).toHaveAttribute('target', '_blank')
+      expect(link.getAttribute('rel')).toContain('noopener')
+      expect(link.getAttribute('rel')).toContain('noreferrer')
+    }
   })
 
-  it('abre DocumentViewerOverlay con el documento del ítem pulsado', () => {
+  it('los badges externos NO abren el overlay (kind external ⇒ pestaña nueva)', () => {
     render(<App />)
     const section = document.getElementById('education')
-    const ccstCard = within(section as HTMLElement)
+    const ccstRow = within(section as HTMLElement)
       .getByRole('heading', {
         name: 'Cisco Certified Support Technician Cybersecurity (CCST Cybersecurity)',
         level: 3,
       })
       .closest('article')
+    const link = within(ccstRow as HTMLElement).getByRole('link', { name: 'Ver acreditación' })
+    expect(link).toHaveAttribute('href', expect.stringContaining('credly.com'))
+    fireEvent.click(link)
+    expect(screen.queryByRole('dialog')).not.toBeInTheDocument()
+  })
+
+  it('abre DocumentViewerOverlay con el documento del ítem pulsado (kind pdf)', () => {
+    render(<App />)
+    const section = document.getElementById('education')
+    const reactRow = within(section as HTMLElement)
+      .getByRole('heading', { name: 'React fundamentals', level: 3 })
+      .closest('article')
     fireEvent.click(
-      within(ccstCard as HTMLElement).getByRole('button', { name: 'Ver acreditación' }),
+      within(reactRow as HTMLElement).getByRole('button', { name: 'Ver acreditación' }),
     )
-    const dialog = screen.getByRole('dialog', { name: 'Insignia Credly — CCST Cybersecurity' })
-    const frame = within(dialog).getByTitle('Insignia Credly — CCST Cybersecurity')
-    expect(frame.getAttribute('src')).toContain('credly.com')
+    const dialog = screen.getByRole('dialog', {
+      name: 'Certificado — React fundamentals (OpenWebinars)',
+    })
+    const frame = within(dialog).getByTitle('Certificado — React fundamentals (OpenWebinars)')
+    expect(frame.getAttribute('src')).toContain('react-fundamentals.pdf')
   })
 
   it('cierra el visor con Escape', () => {
     render(<App />)
     const section = document.getElementById('education')
+    // Solo los kind 'pdf' son botones: el primero es el primer curso
     fireEvent.click(
       within(section as HTMLElement).getAllByRole('button', { name: 'Ver acreditación' })[0],
     )
@@ -98,8 +121,7 @@ describe('EducationSection (F6.6, RF-16)', () => {
     try {
       render(<App />)
       const section = document.getElementById('education')
-      // Primer curso (PDF local pendiente de subida, D03):
-      // 0-2 = certificaciones (Credly/CertView), 3+ = cursos con PDF local
+      // Los botones (kind pdf) son los 6 cursos: índice 3 = Python
       fireEvent.click(
         within(section as HTMLElement).getAllByRole('button', { name: 'Ver acreditación' })[3],
       )

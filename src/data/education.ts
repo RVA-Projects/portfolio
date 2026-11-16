@@ -40,6 +40,7 @@ export const education: Education[] = [
     },
     issuer: 'Cisco',
     document: {
+      kind: 'external',
       src: 'https://www.credly.com/badges/83f4c08a-bdf0-43af-8d63-1a8c2238b37e/linked_in?t=thjv1f',
       name: {
         es: 'Insignia Credly — CCST Cybersecurity',
@@ -56,6 +57,7 @@ export const education: Education[] = [
     },
     issuer: 'Pearson',
     document: {
+      kind: 'external',
       src: 'https://www.credly.com/badges/37b6bca7-3df8-4bd1-900a-45edf614da90/linked_in?t=thjv4d',
       name: {
         es: 'Insignia Credly — IT Specialist Databases',
@@ -72,6 +74,7 @@ export const education: Education[] = [
     },
     issuer: 'Oracle',
     document: {
+      kind: 'external',
       src: 'https://catalog-education.oracle.com/ords/certview/sharebadge?id=C96076205E85C88779E26A41B059BA08A1B84628D981867E412723843702182C',
       name: {
         es: 'Insignia Oracle CertView',
@@ -100,6 +103,7 @@ export const education: Education[] = [
     },
     issuer: 'OpenWebinars',
     document: {
+      kind: 'pdf',
       src: '/portfolio/docs/react-fundamentals.pdf',
       name: {
         es: 'Certificado — React fundamentals (OpenWebinars)',
@@ -116,6 +120,7 @@ export const education: Education[] = [
     },
     issuer: 'OpenWebinars',
     document: {
+      kind: 'pdf',
       src: '/portfolio/docs/javascript-fundamentals.pdf',
       name: {
         es: 'Certificado — JavaScript fundamentals (OpenWebinars)',
@@ -132,6 +137,7 @@ export const education: Education[] = [
     },
     issuer: 'OpenWebinars',
     document: {
+      kind: 'pdf',
       src: '/portfolio/docs/spring-boot-spring-mvc-5.pdf',
       name: {
         es: 'Certificado — Spring Boot and Spring MVC 5 (OpenWebinars)',
@@ -148,6 +154,7 @@ export const education: Education[] = [
     },
     issuer: 'OpenWebinars',
     document: {
+      kind: 'pdf',
       src: '/portfolio/docs/python.pdf',
       name: {
         es: 'Certificado — Python (OpenWebinars)',
@@ -164,6 +171,7 @@ export const education: Education[] = [
     },
     issuer: 'OpenWebinars',
     document: {
+      kind: 'pdf',
       src: '/portfolio/docs/kotlin.pdf',
       name: {
         es: 'Certificado — Kotlin (OpenWebinars)',
@@ -180,6 +188,7 @@ export const education: Education[] = [
     },
     issuer: 'OpenWebinars',
     document: {
+      kind: 'pdf',
       src: '/portfolio/docs/git.pdf',
       name: {
         es: 'Certificado — Git (OpenWebinars)',

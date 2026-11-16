@@ -259,3 +259,11 @@ Tres ajustes aprobados por el propietario:
 - **Certificaciones profesionales (3.2):** emisor en mono VERSALITAS (`Cisco`/`Pearson`/`Oracle`) — firma de acreditación, no etiqueta de curso informal. Sin fechas (no hay en la fuente, no se inventan). Java Foundations sigue sin acción (sin acreditación verificable).
 - **Cursos (3.3):** mismas filas, emisor `OpenWebinars`, PDFs locales intactos.
 - **Pruebas:** 153 unitarios ✓ (16 de education, sin cambios estructurales: las filas conservan `article`/`h3`/botón); diag e2e temporal (borrado): 1440 claro/oscuro + 375 sin overflow. `AGENTS.md`/`contracts.md` actualizados al renombre.
+
+## D42 — Acreditaciones externas en pestaña nueva (ronda 4 F4) — ✅ Aprobada (2026-11-16)
+
+- **Problema:** los badges Credly ×2 y Oracle CertView se abrían en el iframe del visor y los proveedores los bloquean (X-Frame-Options) ⇒ error controlado tras 8s, acreditación invisible.
+- **Modelo (D-E):** `DocumentRef.kind: 'pdf' | 'external'` **obligatorio** — la decisión de apertura depende del TIPO DE RECURSO, nunca del nombre ni de la categoría. `kind: 'pdf'` → visor overlay (comportamiento y componente intactos); `kind: 'external'` → URL en PESTAÑA NUEVA vía `Button href` + `external` (`target="_blank"` + `rel="noreferrer noopener"`, ya correctos en el Button base). Prohibido incrustar externos con iframe.
+- **Datos:** 3 badges (Credly ×2, CertView) → `external`; 6 PDFs OpenWebinars + 2 certificados de idiomas (valenciano, inglés) → `pdf`.
+- **Componentes:** `EducationRow` y `LanguageCard` eligen por `document.kind` (mismo branching en ambos; idiomas hoy son todos pdf, pero la lógica es genérica). `DocumentViewerOverlay` sin cambios.
+- **Pruebas:** 155 unitarios ✓ (+2: kind por recurso en datos + badges external no abren overlay con target/rel correctos); `document-viewer.test.tsx` re-focalizado a fixture PDF (React fundamentals) porque el CCST ya no es overlay; `education-section.test.tsx` ahora cuenta 6 botones (overlay) + 3 enlaces con target/rel. Diag e2e real (borrado): clic en el badge Credly abre POPUP con la URL real y el overlay permanece cerrado.
