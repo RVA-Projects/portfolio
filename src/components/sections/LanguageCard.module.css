@@ -1,9 +1,11 @@
+/* Tarjeta de idioma compacta (ronda 4 F5): menos superficie vacía — el
+   certificado NO determina el tamaño de la tarjeta, solo aporta su acceso. */
 .card {
   position: relative;
   display: flex;
   flex-direction: column;
-  gap: var(--space-3);
-  padding: var(--space-4);
+  gap: var(--space-2);
+  padding: var(--space-3);
   background: var(--color-surface);
   border: 1px solid var(--color-line);
   border-radius: var(--radius-md);
@@ -14,8 +16,9 @@
 }
 
 .title {
-  font-size: var(--fs-h3);
-  line-height: 1.25;
+  font-size: var(--fs-body);
+  font-weight: 600;
+  line-height: 1.3;
 }
 
 .meta {
@@ -23,14 +26,15 @@
   flex-wrap: wrap;
   align-items: center;
   gap: var(--space-2);
-  margin-top: var(--space-1);
+  margin-top: 0;
   color: var(--color-text-muted);
   font-size: var(--fs-small);
 }
 
+/* El acceso al certificado se ancla abajo SIN estirar la tarjeta más allá
+   de la altura natural de la fila (grid): compacto también. */
 .actions {
   display: flex;
   gap: var(--space-2);
   margin-top: auto;
-  padding-top: var(--space-1);
 }

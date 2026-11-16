@@ -66,6 +66,8 @@ Ver detalle en `docs/decisions.md` (D01–D15). Resumen:
 
 ## Últimos cambios
 
+- 2026-11-16 (6): **D43 idiomas en fila compacta (ronda 4 F5)** — grid de LanguagesSection: 5 columnas en escritorio (una línea, homogéneas), 2 en móvil/tablet; LanguageCard compacto (padding/título reducidos, certificado anclado abajo sin determinar el tamaño). Capturas 1440 claro/oscuro + 768 + 375 sin overflow; 155 unitarios + validate ✓.
+
 - 2026-11-16 (5): **D42 acreditaciones externas en pestaña nueva (ronda 4 F4)** — `DocumentRef.kind: 'pdf' \| 'external'` OBLIGATORIO (decisión por tipo de recurso, no por categoría): badges Credly ×2 + Oracle CertView → `external` (Button `href`+`external`, pestaña nueva con `rel=noopener noreferrer`; ya no fallan en el iframe); 6 PDFs OpenWebinars + 2 de idiomas → `pdf` (visor overlay intacto). EducationRow/LanguageCard eligen por kind. 155 unitarios (re-focalizado fixture del visor a PDF); diag e2e real: badge abre popup y overlay queda cerrado.
 
 - 2026-11-16 (4): **D41 formación en lista vertical (ronda 4 F3)** — `EducationCard` → `EducationRow`: filas a ancho completo con separadores (acción a la derecha, emisor en mono versalitas); grid 1/2/3 columnas fuera. DAM destacado con `issuer: 'ILERNA'` (dato aportado por el propietario, test actualizado) y título mayor. Certificaciones Cisco/Pearson/Oracle con firma profesional; cursos OpenWebinars intactos. Capturas 1440 claro/oscuro + 375 ✓; 153 unitarios + validate ✓.

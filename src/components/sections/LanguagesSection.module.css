@@ -5,20 +5,16 @@
   padding-block: var(--space-8);
 }
 
+/* Ronda 4 F5 — idiomas compactos: los 5 en UNA línea en escritorio
+   (columnas homogéneas); móvil y tablet a 2 columnas. */
 .cards {
   display: grid;
-  gap: var(--space-4);
-  grid-template-columns: 1fr;
-}
-
-@media (min-width: 768px) {
-  .cards {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
+  gap: var(--space-3);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
 @media (min-width: 1024px) {
   .cards {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(5, minmax(0, 1fr));
   }
 }

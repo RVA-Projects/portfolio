@@ -267,3 +267,10 @@ Tres ajustes aprobados por el propietario:
 - **Datos:** 3 badges (Credly ×2, CertView) → `external`; 6 PDFs OpenWebinars + 2 certificados de idiomas (valenciano, inglés) → `pdf`.
 - **Componentes:** `EducationRow` y `LanguageCard` eligen por `document.kind` (mismo branching en ambos; idiomas hoy son todos pdf, pero la lógica es genérica). `DocumentViewerOverlay` sin cambios.
 - **Pruebas:** 155 unitarios ✓ (+2: kind por recurso en datos + badges external no abren overlay con target/rel correctos); `document-viewer.test.tsx` re-focalizado a fixture PDF (React fundamentals) porque el CCST ya no es overlay; `education-section.test.tsx` ahora cuenta 6 botones (overlay) + 3 enlaces con target/rel. Diag e2e real (borrado): clic en el badge Credly abre POPUP con la URL real y el overlay permanece cerrado.
+
+## D43 — Idiomas en fila compacta (ronda 4 F5) — ✅ Aprobada (2026-11-16)
+
+- **Petición:** 5 tarjetas grandes para poca información ⇒ grid `1fr → 2 → 3` sustituido por **`repeat(2, 1fr)` en móvil/tablet y `repeat(5, 1fr)` en escritorio (≥1024px)** — los cinco idiomas en UNA línea con columnas y alturas homogéneas (verificado por diag: alturas idénticas, sin desborde en 1440/768/375).
+- **`LanguageCard` compacto:** padding `--space-4` → `--space-3`, título `--fs-h3` → `--fs-body` (600), gap reducido y meta sin margen extra. El acceso al certificado queda anclado abajo (`margin-top: auto`) sin determinar el tamaño: los dos con PDF (valenciano C1, inglés B2) no engordan a los otros.
+- **Intacto:** niveles (D04), certificados PDF y su visor (abren por `kind`, D42); en móvil la etiqueta del botón parte en dos líneas dentro de la tarjeta sin desbordes.
+- **Pruebas:** 155 unitarios ✓ (languages-section no depende del layout); diag e2e temporal (borrado): 1440 claro/oscuro + 768 + 375, sin overflow.
