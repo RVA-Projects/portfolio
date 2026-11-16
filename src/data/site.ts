@@ -69,8 +69,8 @@ export const site: SiteData = {
   },
   location: { es: 'Elche, España', en: 'Elche, Spain' },
   description: {
-    es: 'Desarrollador con proyectos reales en web, escritorio y Android. Foco en frontend, código limpio y experiencia de usuario.',
-    en: 'Developer with real projects in web, desktop and Android. Focused on frontend, clean code and user experience.',
+    es: 'Desarrollador con proyectos reales en web, escritorio y Android. Enfoque Full Stack: diseño y desarrollo de interfaces y experiencia de usuario, además de la lógica y los sistemas que las hacen funcionar.',
+    en: 'Developer with real projects in web, desktop and Android. Full Stack focus: designing and building interfaces and user experience, plus the logic and systems that make them work.',
   },
   // TODO(F7): confirmar definitivamente con el propietario antes de publicar.
   github: 'https://github.com/RVA-Projects',
