@@ -33,6 +33,8 @@ export const en: Texts = {
     clickerAria: 'Clicker: add a click',
     /** D38: tooltip of the global counter (loaded from the external service). */
     clickerTotal: 'Click count',
+    /** D38.1: transient tooltip when the live stream reports other visitors. */
+    clickerOthers: 'Other visitors are racking up clicks!',
   },
   /** D27 — two stack levels, own centered section after projects. */
   stack: {

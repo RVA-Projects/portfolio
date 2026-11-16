@@ -57,6 +57,7 @@ export function Introduction() {
         <ClickerButton
           ariaLabel={texts.intro.clickerAria}
           totalLabel={texts.intro.clickerTotal}
+          othersLabel={texts.intro.clickerOthers}
           language={language}
         />
       </div>
@@ -68,6 +69,8 @@ interface ClickerButtonProps {
   ariaLabel: string
   /** D38: texto del tooltip del número (clave i18n intro.clickerTotal). */
   totalLabel: string
+  /** D38.1: pista transient cuando otros visitantes suman clicks. */
+  othersLabel: string
   language: LanguageId
 }
 
@@ -79,17 +82,19 @@ interface ClickerButtonProps {
  * NÚMERO es nativo (title) + hint accesible sr-only (D38: «Recuento de
  * clicks»).
  *
- * D38 — contador GLOBAL (ronda 3, petición del propietario): la cifra es
- * el total de clicks de TODAS las visitas desde la publicación, leído del
- * servicio externo al montar (useGlobalCounter) y persistente entre
- * deploys. Cada click suma al instante (optimista) y dispara el
- * incremento fire-and-forget. Sin aria-live (no spamea al lector de
- * pantalla en clicks rápidos).
+ * D38/D38.1 — contador GLOBAL en vivo: la cifra es el total de clicks de
+ * TODAS las visitas desde la publicación; se lee al montar y el stream
+ * SSE empuja las actualizaciones (incluidos los clicks de otros
+ * visitantes, señalados ~4s con pulso + tooltip «Otros visitantes están
+ * acumulando clicks!», D38.1). Cada click propio suma al instante
+ * (optimista) y dispara el incremento. Sin aria-live (no spamea al lector
+ * de pantalla en clicks rápidos).
  */
-function ClickerButton({ ariaLabel, totalLabel, language }: ClickerButtonProps) {
-  const { count, increment } = useGlobalCounter(
+function ClickerButton({ ariaLabel, totalLabel, othersLabel, language }: ClickerButtonProps) {
+  const { count, increment, othersActive } = useGlobalCounter(
     `${clickerCounter.baseUrl}/get/${clickerCounter.namespace}/${clickerCounter.key}`,
     `${clickerCounter.baseUrl}/hit/${clickerCounter.namespace}/${clickerCounter.key}`,
+    `${clickerCounter.baseUrl}/stream/${clickerCounter.namespace}/${clickerCounter.key}`,
   )
 
   return (
@@ -100,7 +105,12 @@ function ClickerButton({ ariaLabel, totalLabel, language }: ClickerButtonProps) 
         icon={<IconTarget />}
         className={styles.clickerBtn}
       />
-      <span className={styles.clickerCount} title={totalLabel}>
+      <span
+        className={
+          othersActive ? `${styles.clickerCount} ${styles.countPulse}` : styles.clickerCount
+        }
+        title={othersActive ? othersLabel : totalLabel}
+      >
         {count.toLocaleString(language)}
         <span className="visually-hidden">{totalLabel}</span>
       </span>

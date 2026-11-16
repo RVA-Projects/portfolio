@@ -135,13 +135,33 @@
   }
 }
 
+/* D38.1 — pulso cuando otros visitantes acumulan clicks (ventana ~4s):
+   dos latidos sutiles, borde verde de confirmación. Discreto, sin layout
+   shift (solo transform). reduced-motion lo apaga (bloque de abajo). */
+.countPulse {
+  animation: countPulse 600ms var(--ease) 2;
+}
+
+@keyframes countPulse {
+  0%,
+  100% {
+    border-color: var(--color-line);
+    transform: scale(1);
+  }
+  50% {
+    border-color: var(--color-ok);
+    transform: scale(1.08);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .name,
   .role,
   .roleNote,
   .location,
   .description,
-  .quickLinks {
+  .quickLinks,
+  .countPulse {
     animation: none;
   }
 }
