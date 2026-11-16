@@ -51,12 +51,10 @@ describe('Sección Stack (D27)', () => {
     }
   })
 
-  it('la entrada del menú "Stack" está presente en la navegación', () => {
+  it('la entrada "Stack" está presente en la navegación permanente (ronda 5 F2)', () => {
     render(<App />)
-    /* El menú devuelve null cerrado: abrimos vía el IconButton del TopBar. */
-    fireEvent.click(screen.getByRole('button', { name: 'Abrir menú de navegación' }))
     const nav = screen.getByRole('navigation')
-    expect(within(nav).getByText('Stack')).toBeInTheDocument()
+    expect(within(nav).getByRole('link', { name: 'Stack' })).toBeInTheDocument()
   })
 })
 

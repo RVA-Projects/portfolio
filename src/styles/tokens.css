@@ -25,6 +25,10 @@
   /* Stage de reproductor/galería: oscuro en ambos temas (identidad de visor). */
   --color-media-stage: #0a0a0b;
   --shadow-overlay: 0 12px 32px rgba(0, 0, 0, 0.45);
+  /* Ronda 5 F2 — altura de la barra superior fija (nav permanente). La usan
+     la propia barra (min-height), el scroll-margin de las secciones y el
+     padding superior del main para que nada quede bajo la barra. */
+  --topbar-h: 64px;
 
   /* Tipografía (design-system §3) */
   --font-display: 'Space Grotesk', system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;

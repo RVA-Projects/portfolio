@@ -4,6 +4,11 @@ import type { LocalizedText } from '../models/common'
 export type SectionId =
   'intro' | 'projects' | 'stack' | 'experience' | 'education' | 'languages' | 'contact'
 
+/**
+ * Secciones navegables de la SPA (orden = orden del documento y de la
+ * navegación horizontal de TopBar). Ronda 5: fuera 'contact' (F6.8 nunca se
+ * implementó y la sección stub era null) — la nav no muestra anclas muertas.
+ */
 export const SECTIONS: SectionId[] = [
   'intro',
   'projects',
@@ -11,7 +16,6 @@ export const SECTIONS: SectionId[] = [
   'experience',
   'education',
   'languages',
-  'contact',
 ]
 
 export interface SiteData {

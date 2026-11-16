@@ -71,23 +71,22 @@ test.describe('Experiencia', () => {
   })
 })
 
-test.describe('Navegación por anclas (RF-04/D22)', () => {
-  test('el menú abre, navega a Proyectos y se cierra', async ({ page }) => {
-    await page.getByRole('button', { name: 'Abrir menú de navegación' }).click()
-    await expect(page.getByTestId('navigation-menu')).toBeVisible()
+test.describe('Navegación por anclas (RF-04 + ronda 5 F2)', () => {
+  test('la nav permanente navega a Proyectos por ancla', async ({ page }) => {
+    const nav = page.getByRole('navigation', { name: 'Navegación principal' })
+    await expect(nav).toBeVisible()
 
-    await page.getByRole('link', { name: 'Proyectos' }).first().click()
-    await expect(page.getByTestId('navigation-menu')).toBeHidden()
+    await nav.getByRole('link', { name: 'Proyectos' }).click()
 
     const projects = page.locator('#projects')
     await expect(projects).toBeInViewport()
   })
 
-  test('la barra pasa a compacta al deslizar abajo y sigue accesible (D22)', async ({ page }) => {
+  test('la barra fija SIEMPRE es visible al final del scroll (D-B)', async ({ page }) => {
     await page.keyboard.press('End')
     await page.waitForTimeout(600)
-    const menuButton = page.getByRole('button', { name: 'Abrir menú de navegación' })
-    await expect(menuButton).toBeVisible()
-    await expect(menuButton).toBeEnabled()
+    const nav = page.getByRole('navigation', { name: 'Navegación principal' })
+    await expect(nav).toBeVisible()
+    await expect(nav.getByRole('link', { name: 'Idiomas' })).toBeEnabled()
   })
 })

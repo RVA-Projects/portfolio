@@ -4,8 +4,6 @@
  */
 export const es = {
   nav: {
-    open: 'Abrir menú de navegación',
-    close: 'Cerrar menú de navegación',
     label: 'Navegación principal',
     toLight: 'Cambiar a modo claro',
     toDark: 'Cambiar a modo oscuro',

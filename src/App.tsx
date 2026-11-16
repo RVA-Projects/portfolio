@@ -2,11 +2,8 @@ import { useCallback } from 'react'
 import type { SectionId } from './data/site'
 import { SECTIONS } from './data/site'
 import { LanguageProvider } from './i18n'
-import { useMenuVisibility } from './hooks/useMenuVisibility'
 import { useScrollSpy } from './hooks/useScrollSpy'
-import { useDisclosure } from './hooks/useDisclosure'
 import { useTheme } from './hooks/useTheme'
-import { NavigationMenu } from './components/layout/NavigationMenu'
 import { TopBar } from './components/layout/TopBar'
 import { BackgroundCanvas } from './components/layout/BackgroundCanvas'
 import { CursorSpot } from './components/layout/CursorSpot'
@@ -26,41 +23,30 @@ function smoothBehavior(): ScrollBehavior {
 
 /**
  * Orquestación de la SPA. Orden de secciones por anclas (D27):
- * intro → projects → stack → experience → education → languages → contact.
- * Las secciones de F6 se añaden al main conforme se implementen.
+ * intro → projects → stack → experience → education → languages.
+ * Ronda 5 F2 (D-B): navegación horizontal permanente en TopBar — fuera el
+ * menú desplegable (NavigationMenu, hamburguesa, useDisclosure) y el estado
+ * compacto (useMenuVisibility): la barra es fija y SIEMPRE visible.
  */
 function AppRoutes() {
-  const menu = useDisclosure(false)
-  const menuVisible = useMenuVisibility()
   const activeSection = useScrollSpy(SECTIONS)
   const { theme, toggleTheme } = useTheme()
 
   /** Ancla nativa con desplazamiento suave (institucional, no mecánico) */
-  const onSelect = useCallback(
-    (id: SectionId) => {
-      menu.onClose()
-      const target = document.getElementById(id)
-      target?.scrollIntoView({ behavior: smoothBehavior(), block: 'start' })
-      window.history.replaceState(null, '', `#${id}`)
-    },
-    [menu],
-  )
+  const onNavigate = useCallback((id: SectionId) => {
+    const target = document.getElementById(id)
+    target?.scrollIntoView({ behavior: smoothBehavior(), block: 'start' })
+    window.history.replaceState(null, '', `#${id}`)
+  }, [])
 
   return (
     <>
       <BackgroundCanvas theme={theme} />
       <TopBar
-        menuOpen={menu.open}
-        onToggleMenu={menu.onToggle}
-        visible={menuVisible}
+        activeId={activeSection}
+        onNavigate={onNavigate}
         theme={theme}
         onToggleTheme={toggleTheme}
-      />
-      <NavigationMenu
-        open={menu.open}
-        activeId={activeSection}
-        onClose={menu.onClose}
-        onSelect={onSelect}
       />
       <main>
         <Introduction />

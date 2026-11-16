@@ -9,10 +9,10 @@ test.beforeEach(async ({ page }) => {
 
 /**
  * Humo + responsive (Fase 8): 375/768/1024/1440 — sin scroll horizontal
- * accidental y con el disparador del menú SIEMPRE accesible (D22).
+ * accidental y con la navegación horizontal SIEMPRE visible (ronda 5 F2).
  */
 for (const width of [375, 768, 1024, 1440]) {
-  test(`viewport ${width}px: carga sin scroll horizontal y menú accesible`, async ({ page }) => {
+  test(`viewport ${width}px: carga sin scroll horizontal y nav accesible`, async ({ page }) => {
     await page.setViewportSize({ width, height: 900 })
     await page.goto('/')
 
@@ -25,14 +25,14 @@ for (const width of [375, 768, 1024, 1440]) {
     )
     expect(overflow).toBeLessThanOrEqual(0)
 
-    /* Menú y toggle de tema accesibles en cualquier punto de la página */
+    /* Navegación permanente visible y clicable en cualquier punto de la página */
     await page.keyboard.press('End')
     await page.waitForTimeout(300)
-    const menuButton = page.getByRole('button', { name: 'Abrir menú de navegación' })
-    await expect(menuButton).toBeVisible()
-    await expect(menuButton).toBeEnabled()
+    const nav = page.getByRole('navigation', { name: 'Navegación principal' })
+    await expect(nav).toBeVisible()
+    await expect(nav.getByRole('link', { name: 'Formación' })).toBeEnabled()
 
-    /* Secciones principales presentes (contact pendiente de F6.8: aún null) */
+    /* Secciones principales presentes */
     for (const id of ['projects', 'stack', 'experience', 'education', 'languages']) {
       await expect(page.locator(`#${id}`)).toBeAttached()
     }

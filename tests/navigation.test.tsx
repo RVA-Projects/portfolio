@@ -1,8 +1,6 @@
-import { beforeEach, describe, expect, it } from 'vitest'
+import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { cleanup, fireEvent, render, screen } from '@testing-library/react'
 import { App } from '../src/App'
-
-const MENU_OPEN_LABEL = 'Abrir menú de navegación'
 
 beforeEach(() => {
   cleanup()
@@ -11,86 +9,78 @@ beforeEach(() => {
   window.localStorage.setItem('rva-portfolio-language', 'es')
 })
 
-function openMenu() {
-  fireEvent.click(screen.getByRole('button', { name: MENU_OPEN_LABEL }))
-}
+afterEach(() => {
+  vi.unstubAllGlobals()
+})
 
-describe('NavigationMenu (RF-04)', () => {
-  it('abre con el botón superior y muestra las anclas de sección', () => {
+const NAV_LABEL = 'Navegación principal'
+
+/**
+ * Ronda 5 F2 — navegación horizontal PERMANENTE (D-B/D-C): fuera el menú
+ * desplegable y su hamburguesa; las secciones viven SIEMPRE en la barra
+ * superior (fija, translúcida), enlaces directos por ancla + indicador
+ * activo (useScrollSpy). Controles de tema e idioma intactos a la derecha.
+ */
+describe('Navegación horizontal permanente (ronda 5 F2)', () => {
+  it('muestra TODAS las secciones en la barra sin pulsar nada', () => {
     render(<App />)
-    openMenu()
-    const menu = screen.getByTestId('navigation-menu')
-    expect(menu).toBeInTheDocument()
-    expect(withinMenu(menu).length).toBeGreaterThan(0)
+    const nav = screen.getByRole('navigation', { name: NAV_LABEL })
+    const labels = Array.from(nav.querySelectorAll('a')).map((a) => a.textContent)
+    expect(labels).toEqual([
+      'Presentación',
+      'Proyectos',
+      'Stack',
+      'Experiencia',
+      'Formación',
+      'Idiomas',
+    ])
   })
 
-  it('cierra con Escape', () => {
+  it('no existe ningún botón hamburguesa ni menú desplegable antiguo', () => {
     render(<App />)
-    openMenu()
-    fireEvent.keyDown(document, { key: 'Escape' })
+    expect(screen.queryByRole('button', { name: /menú de navegación/i })).not.toBeInTheDocument()
     expect(screen.queryByTestId('navigation-menu')).not.toBeInTheDocument()
+    expect(screen.queryByTestId('menu-backdrop')).not.toBeInTheDocument()
   })
 
-  it('cierra al pulsar fuera del panel', () => {
+  it('cada enlace navega por ancla a su sección (hash + scrollIntoView)', () => {
+    /* jsdom no trae matchMedia (smoothBehavior) NI scrollIntoView: declarar
+       un no-op y espiarlo (mock.instances guarda el `this` de cada llamada). */
+    vi.stubGlobal('matchMedia', vi.fn().mockReturnValue({ matches: false }))
     render(<App />)
-    openMenu()
-    fireEvent.click(screen.getByTestId('menu-backdrop'))
-    expect(screen.queryByTestId('navigation-menu')).not.toBeInTheDocument()
+    window.HTMLElement.prototype.scrollIntoView = () => {}
+    const scrollSpy = vi
+      .spyOn(window.HTMLElement.prototype, 'scrollIntoView')
+      .mockName('scrollIntoView')
+
+    const nav = screen.getByRole('navigation', { name: NAV_LABEL })
+    fireEvent.click(nav.querySelector('a[href="#education"]') as HTMLElement)
+
+    expect(window.location.hash).toBe('#education')
+    expect((scrollSpy.mock.instances[0] as unknown as HTMLElement | undefined)?.id).toBe(
+      'education',
+    )
+    scrollSpy.mockRestore()
+    Reflect.deleteProperty(window.HTMLElement.prototype, 'scrollIntoView')
   })
 
-  it('cierra al seleccionar una sección (navegación por ancla)', () => {
+  it('el enlace activo lleva aria-current (indicador de sección activa)', () => {
     render(<App />)
-    openMenu()
-    fireEvent.click(screen.getAllByRole('link', { name: 'Contacto' })[0])
-    expect(screen.queryByTestId('navigation-menu')).not.toBeInTheDocument()
+    /* Con IntersectionObserver ausente (jsdom) el spy queda en null: ningún
+       enlace marcado, pero el atributo se gestiona sin errores. */
+    const nav = screen.getByRole('navigation', { name: NAV_LABEL })
+    expect(nav.querySelectorAll('[aria-current="true"]')).toHaveLength(0)
   })
 })
 
-function withinMenu(menu: HTMLElement) {
-  return Array.from(menu.querySelectorAll('a')).map((a) => a.textContent)
-}
-
-describe('TopBar compacta (Fase 7.1 — RF-04)', () => {
-  async function scrollDown(pixels: number) {
-    Object.defineProperty(window, 'scrollY', { value: pixels, configurable: true })
-    fireEvent.scroll(window)
-    /* El hook encarga el cálculo a requestAnimationFrame */
-    await new Promise((resolve) => setTimeout(resolve, 50))
-  }
-
-  it('al deslizar hacia abajo la barra se reduce a compacta, SIN desaparecer', async () => {
+describe('TopBar fija (ronda 5 F2, D-B)', () => {
+  it('la barra SIEMPRE está visible: nunca se oculta ni cambia de forma', () => {
     render(<App />)
-    const menuButton = screen.getByRole('button', { name: MENU_OPEN_LABEL })
-    const bar = menuButton.closest('header') as HTMLElement
-    expect(bar.className).not.toContain('compact')
-
-    await scrollDown(500)
-    expect(bar.className).toContain('compact')
-    expect(bar.className).not.toContain('hidden')
-    /* El disparador del menú sigue interactuable en cualquier scroll */
-    expect(screen.getByRole('button', { name: MENU_OPEN_LABEL })).toBeEnabled()
-    Object.defineProperty(window, 'scrollY', { value: 0, configurable: true })
-  })
-
-  it('al volver cerca del inicio la barra recupera su tamaño normal', async () => {
-    render(<App />)
-    await scrollDown(500)
-    const menuButton = screen.getByRole('button', { name: MENU_OPEN_LABEL })
-    const bar = menuButton.closest('header') as HTMLElement
-    expect(bar.className).toContain('compact')
-
-    await scrollDown(0)
-    expect(bar.className).not.toContain('compact')
-  })
-
-  it('con el menú abierto nunca adopta la forma compacta', async () => {
-    render(<App />)
-    await scrollDown(500)
-    openMenu()
-    const menuButton = screen.getByRole('button', { name: 'Cerrar menú de navegación' })
-    const bar = menuButton.closest('header') as HTMLElement
-    expect(bar.className).not.toContain('compact')
-    Object.defineProperty(window, 'scrollY', { value: 0, configurable: true })
+    const bar = screen.getByRole('navigation', { name: NAV_LABEL }).closest('header')
+    expect(bar).not.toBeNull()
+    const classes = (bar as HTMLElement).className
+    expect(classes).not.toContain('compact')
+    expect(classes).not.toContain('hidden')
   })
 })
 
@@ -98,7 +88,8 @@ describe('i18n (RF-25/D12)', () => {
   it('usa inglés cuando el navegador es en-US y no hay elección persistida', () => {
     window.localStorage.clear()
     render(<App />)
-    expect(screen.getByRole('button', { name: 'Open navigation menu' })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: 'Switch to Spanish' })).toBeInTheDocument()
+    expect(screen.getAllByRole('link', { name: 'Intro' })[0]).toBeInTheDocument()
   })
 
   it('hace fallback a español cuando el navegador no es es/en y no hay elección persistida', () => {
@@ -108,7 +99,7 @@ describe('i18n (RF-25/D12)', () => {
       configurable: true,
     })
     render(<App />)
-    expect(screen.getByRole('button', { name: MENU_OPEN_LABEL })).toBeInTheDocument()
+    expect(screen.getByRole('navigation', { name: NAV_LABEL })).toBeInTheDocument()
     Object.defineProperty(window.navigator, 'languages', { value: ['en-US'], configurable: true })
   })
 })

@@ -80,6 +80,17 @@ button {
   color: #ffffff;
 }
 
+/* Ronda 5 F2 (D-D) — barra superior FIJA: las anclas deben dejar el
+   encabezado de la sección visible bajo la barra (scroll-margin) y la
+   Hero arranca debajo de la barra (padding del main). */
+main {
+  padding-top: calc(var(--topbar-h) + var(--space-4));
+}
+
+section[id] {
+  scroll-margin-top: calc(var(--topbar-h) + var(--space-3));
+}
+
 /* ============ Scrollbar moderna (D30) ============
    Fina, redondeada y con aire (thumb «flotante»): pista transparente, thumb
    gris que pasa al acento al hover. Firefox vía scrollbar-*, WebKit vía

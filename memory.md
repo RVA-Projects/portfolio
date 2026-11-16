@@ -66,6 +66,7 @@ Ver detalle en `docs/decisions.md` (D01–D15). Resumen:
 
 ## Últimos cambios
 
+- 2026-11-16 (8): **D45 Navegación horizontal permanente (ronda 5 F2)** — fuera hamburguesa, `NavigationMenu`, `useMenuVisibility`, `useDisclosure` y keys `nav.open/close`; `TopBar` fija siempre visible con nav `SECTIONS` a la izquierda (anclas + aria-current) y tema/idioma a la derecha; móvil con scroll interno auto-alineado; token `--topbar-h` + `scroll-margin-top`/`main` padding en base.css; `'contact'` fuera de `SECTIONS` (eliminación completa en F3); 153 unitarios + validate ✓.
 - 2026-11-16 (7): **D44 Formación en tarjeta translúcida (ronda 5 F1)** — `EducationSection` adopta EXACTAMENTE el tratamiento de Hero/Stack (D-A: `--color-hero` + `--color-line` + `radius-lg`, mismo ancho; sin blur, como ellas). Filas/listas/enlaces intactos; capturas 1440 claro/oscuro + 375 sin overflow; 155 unitarios + validate ✓.
 
 - 2026-11-16 (6): **D43 idiomas en fila compacta (ronda 4 F5)** — grid de LanguagesSection: 5 columnas en escritorio (una línea, homogéneas), 2 en móvil/tablet; LanguageCard compacto (padding/título reducidos, certificado anclado abajo sin determinar el tamaño). Capturas 1440 claro/oscuro + 768 + 375 sin overflow; 155 unitarios + validate ✓.

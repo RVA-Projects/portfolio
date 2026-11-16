@@ -1,31 +1,79 @@
+/* Ronda 5 F2 — barra superior: navegación horizontal PERMANENTE (secciones
+   a la izquierda, controles a la derecha). Fija y SIEMPRE visible (el
+   estado «compacta» de la antigua barra flotante desaparece con el menú
+   desplegable): fondo translúcido con blur, mismo lenguaje de la pastilla. */
 .topbar {
   position: fixed;
-  top: var(--space-4);
-  right: var(--space-4);
+  inset: 0 0 auto 0;
   z-index: var(--z-nav);
-  display: flex;
-  gap: var(--space-2);
-  transition:
-    transform var(--dur-base) var(--ease),
-    opacity var(--dur-base) var(--ease);
-}
-
-/* RF-04 / Fase 7.1: el botón de menú SIEMPRE accesible. Al deslizar hacia
-   abajo la barra se reduce a pastilla compacta flotante translúcida
-   (antes se ocultaba: el menú quedaba inalcanzable en scroll largo). */
-.topbar--compact {
-  padding: var(--space-1);
-  border-radius: var(--radius-full, 999px);
   background: var(--color-backdrop);
-  box-shadow: var(--shadow-overlay, 0 8px 24px rgba(0, 0, 0, 0.35));
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--color-line);
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .topbar {
-    transition: none;
-  }
+.inner {
+  max-width: var(--container-max);
+  margin-inline: auto;
+  padding-inline: var(--container-pad);
+  min-height: var(--topbar-h);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+
+/* Nav horizontal: TODAS las secciones siempre visibles y clicable. En
+   pantallas estrechas hace scroll horizontal interno (swipe) con scrollbar
+   oculta (thin global de D30 apagado solo aquí). */
+.nav {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  min-width: 0;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.nav::-webkit-scrollbar {
+  display: none;
+}
+
+.navLink {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 var(--space-3);
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+  font-size: var(--fs-small);
+  font-weight: 500;
+  white-space: nowrap;
+  color: var(--color-text-muted);
+  transition:
+    color var(--dur-fast) var(--ease),
+    background var(--dur-fast) var(--ease);
+}
+
+.navLink:hover {
+  color: var(--color-text);
+  background: var(--color-surface);
+}
+
+/* Sección activa: pastilla con acento de fondo (hereda del antiguo
+   itemLink--active del menú desplegable). */
+.navLink--active {
+  color: var(--color-text);
+  background: var(--color-surface);
+  border-color: var(--color-line);
+}
+
+.controls {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  flex: none;
 }
 
 /* F5 — selector ES/EN: mismo contenedor que los IconButtons (44px, borde),

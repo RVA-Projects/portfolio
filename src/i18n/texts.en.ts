@@ -5,8 +5,6 @@ import type { Texts } from './texts.es'
  */
 export const en: Texts = {
   nav: {
-    open: 'Open navigation menu',
-    close: 'Close navigation menu',
     label: 'Main navigation',
     toLight: 'Switch to light mode',
     toDark: 'Switch to dark mode',
