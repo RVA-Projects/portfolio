@@ -1,10 +1,3 @@
-.section {
-  max-width: var(--container-max);
-  margin-inline: auto;
-  padding-inline: var(--container-pad);
-  padding-block: var(--space-8);
-}
-
 .groupTitle {
   font-size: var(--fs-h3);
   font-family: var(--font-mono);
@@ -23,4 +16,19 @@
 .list {
   display: flex;
   flex-direction: column;
+}
+
+/* Ronda 5 F1 (D-A) — la sección entera adopta EXACTAMENTE el tratamiento
+   de la Hero y de Stack: tarjeta translúcida --color-hero + borde
+   --color-line + radius-lg, mismo ancho (el borde izquierdo queda alineado
+   con el contenido del resto de secciones y la animación de fondo se ve a
+   través; sin blur: Hero y Stack tampoco lo usan). Filas y listas intactas. */
+.section {
+  width: min(var(--container-max), 100% - 2 * var(--container-pad));
+  margin-inline: auto;
+  padding-block: clamp(24px, 5vh, 48px) var(--space-8);
+  padding-inline: clamp(16px, 3vw, 48px);
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-lg);
+  background: var(--color-hero);
 }

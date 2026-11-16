@@ -274,3 +274,9 @@ Tres ajustes aprobados por el propietario:
 - **`LanguageCard` compacto:** padding `--space-4` → `--space-3`, título `--fs-h3` → `--fs-body` (600), gap reducido y meta sin margen extra. El acceso al certificado queda anclado abajo (`margin-top: auto`) sin determinar el tamaño: los dos con PDF (valenciano C1, inglés B2) no engordan a los otros.
 - **Intacto:** niveles (D04), certificados PDF y su visor (abren por `kind`, D42); en móvil la etiqueta del botón parte en dos líneas dentro de la tarjeta sin desbordes.
 - **Pruebas:** 155 unitarios ✓ (languages-section no depende del layout); diag e2e temporal (borrado): 1440 claro/oscuro + 768 + 375, sin overflow.
+
+## D44 — Formación en tarjeta translúcida (ronda 5 F1) — ✅ Aprobada (2026-11-16)
+
+- **Petición:** coherencia visual Hero/Stack/Formación SIN tocar la estructura de Formación (filas, listas, enlaces y comportamientos de la ronda 4 quedan intactos).
+- **Solución (D-A):** `EducationSection` adopta el MISMO tratamiento directo con tokens que Hero y Stack (sin wrapper nuevo): fondo `--color-hero` + borde `--color-line` + `radius-lg` + ancho `min(var(--container-max), 100% - 2*var(--container-pad))` + `padding-inline: clamp(16px, 3vw, 48px)` + `padding-block: clamp(24px, 5vh, 48px) var(--space-8)`. Sin blur: Hero y Stack tampoco lo usan — la animación de fondo se percibe por transparencia.
+- **Pruebas:** 155 unitarios ✓ (education 18, sin cambios); diag e2e temporal (borrado): 1440 claro/oscuro + 375, sin overflow y estructura intacta.
