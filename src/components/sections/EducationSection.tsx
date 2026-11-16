@@ -6,7 +6,7 @@ import type { DocumentRef } from '../../models/common'
 import type { Education, EducationKind } from '../../models/Education'
 import { SectionHeading } from '../base/SectionHeading'
 import { DocumentViewerOverlay } from '../overlays/DocumentViewerOverlay'
-import { EducationCard } from './EducationCard'
+import { EducationRow } from './EducationRow'
 import styles from './EducationSection.module.css'
 
 /** Orden estable y semántico de grupos: jerarquía RF-16 (oficial arriba). */
@@ -23,10 +23,13 @@ function groupByKind(items: Education[]): Partial<Record<EducationKind, Educatio
 }
 
 /**
- * Sección de formación (RF-16): agrupa por jerarquía (oficial, certificaciones,
- * cursos) y renderiza EducationCard por datos. Los ítems con documento abren
- * el DocumentViewerOverlay genérico (RF-18), cuyo estado vive aquí. Grupos
- * vacíos no se renderizan. Sin lógica de presentación más allá del agrupado.
+ * Sección de formación (RF-16 + ronda 4 F3): agrupa por jerarquía (oficial,
+ * certificaciones, cursos) y renderiza EducationRow por datos — lista
+ * vertical a ancho completo con separadores, misma fila para todas las
+ * categorías (solo cambia el tamaño del título en la oficial). Los ítems con
+ * documento abren el DocumentViewerOverlay genérico (RF-18), cuyo estado
+ * vive aquí. Grupos vacíos no se renderizan. Sin lógica de presentación más
+ * allá del agrupado.
  */
 export function EducationSection() {
   const { texts } = useLanguage()
@@ -46,9 +49,9 @@ export function EducationSection() {
         return (
           <div key={kind} className={styles.group}>
             <h3 className={styles.groupTitle}>{texts.education.groups[kind]}</h3>
-            <div className={styles.cards}>
+            <div className={styles.list}>
               {items.map((item) => (
-                <EducationCard key={item.id} item={item} onOpenDocument={setActiveDocument} />
+                <EducationRow key={item.id} item={item} onOpenDocument={setActiveDocument} />
               ))}
             </div>
           </div>

@@ -1,0 +1,64 @@
+/* Fila de formación (ronda 4 F3): ancho completo con separador inferior en
+   lugar de tarjeta (el grupo pinta la lista, la fila no lleva caja). */
+.row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  padding-block: var(--space-3);
+  border-bottom: 1px solid var(--color-line);
+}
+
+.row:last-child {
+  border-bottom: none;
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  min-width: 0; /* el título puede recortar con ellipsis antes que desbordar */
+}
+
+.title {
+  font-size: var(--fs-body);
+  font-weight: 600;
+  line-height: 1.35;
+}
+
+/* Formación oficial (DAM): protagonismo tipográfico, mismo sistema de fila. */
+.official .title {
+  font-size: var(--fs-h3);
+}
+
+.meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--space-2);
+  color: var(--color-text-muted);
+  font-size: var(--fs-small);
+}
+
+/* Emisor en mono versalitas: firma de acreditación profesional (visible y
+   compacta), no etiqueta de curso informal. */
+.issuer {
+  font-family: var(--font-mono);
+  font-size: var(--fs-small);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--color-text);
+}
+
+.actions {
+  flex-shrink: 0;
+}
+
+/* Móvil: la acción pasa debajo del texto (targets intactos, sin apretujar). */
+@media (max-width: 575px) {
+  .row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-2);
+  }
+}

@@ -9,6 +9,7 @@ import type { Education } from '../models/Education'
  * (pendiente del propietario); los 6 cursos de OpenWebinars son `course`.
  *
  * Sin fechas ni duraciones: la fuente no las publica y NO se inventan.
+ * Emisor (D-D, ronda 4 F3): el propietario aportó el centro del DAM (ILERNA).
  * Documentos (D03): los PDFs de OpenWebinars se sirven localmente bajo
  * /docs/ (pendientes de subida ⇒ el visor muestra un error controlado);
  * los badges Credly/CertView conservan su URL externa real.
@@ -22,6 +23,7 @@ export const education: Education[] = [
       es: 'Técnico Superior en Desarrollo de Aplicaciones Multiplataforma (DAM)',
       en: 'Higher Technician in Multiplatform Application Development (DAM)',
     },
+    issuer: 'ILERNA',
     description: {
       es: 'Programa oficial de Grado Superior, en curso.',
       en: 'Official higher-technician programme, currently enrolled.',

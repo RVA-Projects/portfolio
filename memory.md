@@ -66,6 +66,8 @@ Ver detalle en `docs/decisions.md` (D01–D15). Resumen:
 
 ## Últimos cambios
 
+- 2026-11-16 (4): **D41 formación en lista vertical (ronda 4 F3)** — `EducationCard` → `EducationRow`: filas a ancho completo con separadores (acción a la derecha, emisor en mono versalitas); grid 1/2/3 columnas fuera. DAM destacado con `issuer: 'ILERNA'` (dato aportado por el propietario, test actualizado) y título mayor. Certificaciones Cisco/Pearson/Oracle con firma profesional; cursos OpenWebinars intactos. Capturas 1440 claro/oscuro + 375 ✓; 153 unitarios + validate ✓.
+
 - 2026-11-16 (3): **D40 visuales Hero/Stack (ronda 4 F2)** — 2.1: caja del email `fit-content` (email+botón próximos, botón pegado al borde derecho, hint bloqueado reserva el mismo ancho en `ch`: sin huecos ni saltos); 2.2: título Stack y de grupos a la IZQUIERDA (grids siguen centrados); 2.3: Stack envuelto en tarjeta translúcida idéntica a la Hero (`--color-hero`+`--color-line`+`radius-lg`, tokens directos). Capturas verificadas 1440/375 en claro y oscuro; 153 unitarios + validate ✓.
 
 - 2026-11-16 (2): **D39 orientación Full Stack** — `site.description` deja de decir «Foco en frontend»: ahora transmite enfoque Full Stack (interfaces + UX y también lógica/sistemas). Título y roleNote intactos; sin atribuirte tecnologías no respaldadas.

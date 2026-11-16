@@ -29,11 +29,12 @@ describe('data/education — integridad (F6.6, RF-16)', () => {
     }
   })
 
-  it('el DAM es formación oficial sin organismo ni documento (no se inventa)', () => {
+  it('el DAM es formación oficial con centro ILERNA (D-D, aportado por el propietario) y sin documento', () => {
     const dam = education.find((item) => item.id === 'dam-multiplatform')
     expect(dam).toBeDefined()
     expect(dam?.kind).toBe('official')
-    expect(dam?.issuer).toBeUndefined()
+    expect(dam?.issuer).toBe('ILERNA')
+    expect(dam?.description?.es).toContain('Programa oficial de Grado Superior')
     expect(dam?.document).toBeUndefined()
   })
 

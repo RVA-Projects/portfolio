@@ -46,7 +46,7 @@ public/
 Reglas:
 
 - **Datos ≠ presentación ≠ lógica ≠ infraestructura.** Un componente nunca contiene contenido de una entidad: lo recibe por props desde `data/`.
-- Las entidades repetibles se modelan con componentes reutilizables y props tipadas (ProjectCard, EducationCard, ExperienceCard, LanguageCard, MediaGallery, Carousel, Modal, DocumentViewerOverlay…).
+- Las entidades repetibles se modelan con componentes reutilizables y props tipadas (ProjectCard, EducationRow, ExperienceCard, LanguageCard, MediaGallery, Carousel, Modal, DocumentViewerOverlay…).
 - No hay páginas independientes: SPA de una sola página con anclas + overlays para contenido detallado.
 - Evita componentes gigantes y abstracciones innecesarias. "Suficientemente simple" gana.
 
