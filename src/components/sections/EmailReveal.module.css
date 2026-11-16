@@ -1,11 +1,15 @@
-/* D26 + ronda 3 F2 — EmailReveal: caja ÚNICA de tamaño estable + slider
-   fuera, debajo. Ambos estados comparten min-width/height: sin saltos. */
+/* D26 + ronda 4 F2 — EmailReveal: caja ÚNICA que se ajusta al contenido
+   (fit-content, D-A): email y botón de copiar quedan próximos y el botón
+   pegado al borde derecho, sin hueco sobrante. El estado bloqueado reserva
+   EXACTAMENTE el ancho del estado revelado (email de 24 caracteres mono +
+   botón de 44px + separación), así no hay salto de tamaño al deslizar. */
 .block {
   display: inline-flex;
   flex-direction: column;
   align-items: stretch;
   gap: var(--space-2);
-  min-width: 300px;
+  width: fit-content;
+  max-width: 100%; /* anti-desborde en pantallas estrechas */
   vertical-align: top;
 }
 
@@ -14,24 +18,31 @@
   align-items: center;
   gap: var(--space-2);
   min-height: 44px;
-  padding: 0 var(--space-2) 0 var(--space-4);
+  /* Sin padding derecho: el botón de copiar queda pegado al borde. */
+  padding: 0 0 0 var(--space-4);
   border: 1px solid var(--color-line-strong);
   border-radius: var(--radius-sm);
   background: var(--color-surface);
 }
 
-/* Estado bloqueado: el texto ocupa el ancho y deja el hueco del botón. */
+/* Estado bloqueado: reserva el hueco del estado revelado — email de 24
+   caracteres mono (24ch, dato de data/site.ts D26: si cambia el email,
+   actualizar) + separación (--space-2) + botón 44px — y su padding-right
+   aporta el aire que antes daba el padding de la caja. */
 .hint {
   flex: 1;
+  min-width: calc(24ch + var(--space-2) + 44px);
   font-family: var(--font-mono);
   font-size: var(--fs-small);
   color: var(--color-text-muted);
   white-space: nowrap;
+  padding-right: var(--space-2);
 }
 
-/* Estado revelado: email a la izquierda, copiar pegado al borde derecho. */
+/* Estado revelado: email al ancho natural (SIN estirar — el flex:1 antiguo
+   era el hueco entre texto y botón), copiar pegado al borde derecho. */
 .email {
-  flex: 1;
+  flex: 0 1 auto;
   font-family: var(--font-mono);
   font-size: var(--fs-small);
   color: var(--color-text);

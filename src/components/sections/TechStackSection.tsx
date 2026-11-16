@@ -5,10 +5,11 @@ import { TechIcon } from '../base/TechIcon'
 import styles from './TechStackSection.module.css'
 
 /**
- * D27 — Sección propia del stack (tras Proyectos), con TODO centrado:
- * cabecera, títulos de grupo y las dos listas (core / explored). Los grids
- * salen de la Introduction (F2 los quitó) y viven aquí como única fuente.
- * Cada entrada es icono decorativo + nombre canónico, igual que antes.
+ * D27 — Sección propia del stack (tras Proyectos): única fuente de los
+ * grids (salieron de la Introduction en la F2 de ronda 3); cada entrada es
+ * icono decorativo + nombre canónico. Ronda 4 F2: TODO el contenido vive
+ * en una tarjeta translúcida como la Hero; el título y los títulos de
+ * grupo van a la izquierda y los grids siguen centrados.
  */
 export function TechStackSection() {
   const { texts } = useLanguage()

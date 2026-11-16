@@ -66,6 +66,8 @@ Ver detalle en `docs/decisions.md` (D01–D15). Resumen:
 
 ## Últimos cambios
 
+- 2026-11-16 (3): **D40 visuales Hero/Stack (ronda 4 F2)** — 2.1: caja del email `fit-content` (email+botón próximos, botón pegado al borde derecho, hint bloqueado reserva el mismo ancho en `ch`: sin huecos ni saltos); 2.2: título Stack y de grupos a la IZQUIERDA (grids siguen centrados); 2.3: Stack envuelto en tarjeta translúcida idéntica a la Hero (`--color-hero`+`--color-line`+`radius-lg`, tokens directos). Capturas verificadas 1440/375 en claro y oscuro; 153 unitarios + validate ✓.
+
 - 2026-11-16 (2): **D39 orientación Full Stack** — `site.description` deja de decir «Foco en frontend»: ahora transmite enfoque Full Stack (interfaces + UX y también lógica/sistemas). Título y roleNote intactos; sin atribuirte tecnologías no respaldadas.
 
 - 2026-11-16 (1): **D38.1 fix carrera + stream en vivo** — el bug del contador («se resetea al cambiar de tema y refrescar, luego se recupera acumulado») era una carrera: el GET inicial desfasado tapaba los clicks optimistas hechos durante la carga. Fix: reconciliación por máximo + `cache: no-store` + `keepalive` en hits. ADEMÁS: stream SSE en vivo — los clicks de otros visitantes aparecen al instante con pista de ~4s («¡Otros visitantes están acumulando clicks!» + pulso). 153 unitarios (8 del contador); verificado e2e real (hit externo → página sube en vivo). Contador reseteado a 0 para la publicación.

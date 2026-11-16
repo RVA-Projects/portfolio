@@ -14,10 +14,11 @@ import styles from './EmailReveal.module.css'
  * no depende del ratón). Al revelar: email + botón copiar (tooltip del
  * sistema, IconButton) con confirmación transient aria-live.
  *
- * Ronda 3 (F2): la caja es ÚNICA y de tamaño estable en ambos estados
- * (locked: «Desliza para ver el email»; unlocked: email + copiar pegado al
- * borde derecho). El slider vive FUERA, debajo, alineado con la caja; al
- * completar se sustituye por el indicador verde de finalización (check).
+ * Ronda 4 (F2): la caja es ÚNICA y se ajusta al contenido (fit-content):
+ * email + copiar próximos y el botón pegado al borde derecho; el estado
+ * bloqueado reserva el mismo ancho (min-width en ch), sin saltos. El
+ * slider vive FUERA, debajo, alineado con la caja; al completar se
+ * sustituye por el indicador verde de finalización (check).
  *
  * Límite documentado (decisions.md D26): es mitigación contra recolección
  * pasiva, NO seguridad fuerte — un scraper que ejecute el JS podría

@@ -1,10 +1,17 @@
-/* D27 — Sección Stack: composición centrada (petición del propietario). */
+/* D27 + ronda 4 F2 — Sección Stack: el contenido completo vive en UNA
+   tarjeta translúcida con el mismo lenguaje visual que la Hero (D-B:
+   tokens directos, sin componente nuevo): --color-hero + borde --color-line
+   + radius-lg, y el mismo ancho (la animación de fondo se percibe a través).
+   2.2: título y títulos de grupo a la IZQUIERDA (misma referencia que el
+   resto de secciones); los grids de tecnologías siguen centrados. */
 .section {
-  max-width: var(--container-max);
+  width: min(var(--container-max), 100% - 2 * var(--container-pad));
   margin-inline: auto;
-  padding-inline: var(--container-pad);
-  padding-block: var(--space-8);
-  text-align: center;
+  padding-block: clamp(24px, 5vh, 48px) var(--space-8);
+  padding-inline: clamp(16px, 3vw, 48px);
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-lg);
+  background: var(--color-hero);
 }
 
 .group {
