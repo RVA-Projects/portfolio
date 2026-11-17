@@ -61,20 +61,26 @@ export const es = {
     next: 'Desplazar a proyectos siguientes',
     viewport: 'Carrusel de proyectos',
   },
-  /** Sección de experiencia (RF-15, lista plana desde Fase 6). */
+  /** Sección de experiencia (RF-15, carrusel desde ronda 6 F1). */
   experience: {
     current: 'Actualidad',
     responsibilities: 'Funciones',
     outcomes: 'Logros',
     upwork: 'Perfil de Upwork',
     open: 'Abrir experiencia:',
+    count: (n: number) => `${n} ${n === 1 ? 'experiencia' : 'experiencias'}`,
+    prev: 'Desplazar a experiencias anteriores',
+    next: 'Desplazar a experiencias siguientes',
+    viewport: 'Carrusel de experiencia',
   },
-  /** Overlay de experiencia (Fase 5 del plan de actualización). */
+  /** Overlay de experiencia (Fase 5 del plan de actualización; prev/next ronda 6 F1). */
   experienceOverlay: {
     close: 'Cerrar detalles de la experiencia',
     description: 'Descripción',
     associatedProjects: 'Proyectos asociados',
     viewProject: 'Ver proyecto',
+    prev: 'Experiencia anterior',
+    next: 'Experiencia siguiente',
   },
   /** Sección de formación (RF-16), agrupada por jerarquía. */
   education: {

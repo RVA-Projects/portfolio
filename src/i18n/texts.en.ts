@@ -64,20 +64,26 @@ export const en: Texts = {
     next: 'Scroll to next projects',
     viewport: 'Projects carousel',
   },
-  /** RF-15 experience section, flat list since Phase 6. */
+  /** RF-15 experience section, carousel since update round 6 F1. */
   experience: {
     current: 'Present',
     responsibilities: 'Duties',
     outcomes: 'Outcomes',
     upwork: 'Upwork profile',
     open: 'Open experience:',
+    count: (n: number) => `${n} ${n === 1 ? 'experience' : 'experiences'}`,
+    prev: 'Scroll to previous experiences',
+    next: 'Scroll to next experiences',
+    viewport: 'Experience carousel',
   },
-  /** Experience overlay (Phase 5 of the update plan). */
+  /** Experience overlay (Phase 5 of the update plan; prev/next since round 6 F1). */
   experienceOverlay: {
     close: 'Close experience details',
     description: 'Description',
     associatedProjects: 'Associated projects',
     viewProject: 'View project',
+    prev: 'Previous experience',
+    next: 'Next experience',
   },
   /** RF-16 education section, grouped by hierarchy. */
   education: {

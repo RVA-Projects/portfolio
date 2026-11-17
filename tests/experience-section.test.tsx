@@ -127,3 +127,54 @@ describe('ExperienceSection (Fase 5/6 — tarjetas minimalistas + overlay)', () 
     ).not.toBeInTheDocument()
   })
 })
+
+describe('Carrusel de experiencia (ronda 6 F1 — misma arquitectura que Proyectos)', () => {
+  it('el carrusel muestra contador, indicador 1/N y las 7 tarjetas', () => {
+    render(<App />)
+    const section = document.getElementById('experience') as HTMLElement
+    expect(within(section).getAllByText('7 experiencias')).toHaveLength(2)
+    expect(within(section).getByText('1 / 7')).toBeInTheDocument()
+    expect(within(section).getAllByRole('button', { name: /^Abrir experiencia:/ })).toHaveLength(7)
+    expect(
+      within(section).getByRole('region', { name: 'Carrusel de experiencia' }),
+    ).toBeInTheDocument()
+  })
+
+  it('las flechas del carrusel deshabilitan extremos y navegan por teclado', () => {
+    render(<App />)
+    const section = document.getElementById('experience') as HTMLElement
+    const prev = within(section).getByRole('button', {
+      name: 'Desplazar a experiencias anteriores',
+    })
+    const next = within(section).getByRole('button', {
+      name: 'Desplazar a experiencias siguientes',
+    })
+    expect(prev).toBeDisabled()
+    expect(next).toBeEnabled()
+  })
+
+  it('el overlay navega entre experiencias SIN cerrarse (flechas del header)', () => {
+    const dialog = openExperience('Centro Médico Sector V — web')
+    /* Primera experiencia: prev deshabilitado, next activo */
+    const prev = within(dialog).getByRole('button', { name: 'Experiencia anterior' })
+    const next = within(dialog).getByRole('button', { name: 'Experiencia siguiente' })
+    expect(prev).toBeDisabled()
+    expect(next).toBeEnabled()
+    fireEvent.click(next)
+    /* El MISMO dialog sigue abierto con el contenido de la 2ª experiencia */
+    expect(
+      screen.getByRole('dialog', { name: 'Centro Médico Sector V — redes sociales' }),
+    ).toBeInTheDocument()
+  })
+
+  it('←/→ a nivel documento cambian de experiencia sin cerrar', () => {
+    openExperience('Loki Home')
+    fireEvent.keyDown(document, { key: 'ArrowRight' })
+    expect(screen.getByRole('dialog', { name: 'Smarti DATA — vía Upwork' })).toBeInTheDocument()
+    fireEvent.keyDown(document, { key: 'ArrowLeft' })
+    expect(screen.getByRole('dialog', { name: 'Loki Home' })).toBeInTheDocument()
+    /* Escape sigue cerrando */
+    fireEvent.keyDown(document, { key: 'Escape' })
+    expect(screen.queryByRole('dialog')).not.toBeInTheDocument()
+  })
+})

@@ -1,8 +1,9 @@
 import type { EducationalTextItem, Project } from '../../models/Project'
 import { useLanguage } from '../../i18n'
 import type { Experience } from '../../models/Experience'
+import { useEffect } from 'react'
 import { IconButton } from '../base/IconButton'
-import { IconClose } from '../base/Icons'
+import { IconChevronLeft, IconChevronRight, IconClose } from '../base/Icons'
 import { Button } from '../base/Button'
 import { Modal } from '../base/Modal'
 import { Tag } from '../base/Tag'
@@ -44,21 +45,54 @@ interface ExperienceOverlayProps {
   onOpenProject: (projectId: string) => void
   /** Catálogo de proyectos (resuelto por la sección; sin imports de datos). */
   projects: Project[]
+  /** Ronda 6 F1 — navegación entre experiencias SIN cerrar el overlay: ←/→
+      a nivel documento + flechas SIEMPRE visibles en el header (en móvil no
+      hay swipe de fondo que las sustituya, a diferencia del ProjectOverlay,
+      cuyo swipe de galería cubre <768px). null/undefined ⇒ ocultas. */
+  onPrev?: () => void
+  onNext?: () => void
+  hasPrev: boolean
+  hasNext: boolean
 }
 
 /**
  * Overlay de experiencia (Fase 5): compone sobre Modal (focus-trap, Escape,
  * clic-fuera, scroll-lock, restauración de foco) con los mismos patrones
- * visuales del ProjectOverlay (header + bloques de info). Sin galería ni
- * prev/next: contenido en una columna con scroll del panel.
+ * visuales del ProjectOverlay (header + bloques de info). Sin galería;
+ * contenido en una columna con scroll del panel. Ronda 6 F1: prev/next
+ * mantiene el overlay abierto y actualiza el contenido.
  */
 export function ExperienceOverlay({
   experience,
   onClose,
   onOpenProject,
   projects,
+  onPrev,
+  onNext,
+  hasPrev,
+  hasNext,
 }: ExperienceOverlayProps) {
   const { language, texts } = useLanguage()
+
+  /* ←/→ a nivel documento cambian de experiencia mientras el overlay está
+     abierto (sin galería que consuma teclas: listener directo). */
+  useEffect(() => {
+    if (experience === null) return
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key === 'ArrowLeft' && hasPrev && onPrev !== undefined) {
+        event.preventDefault()
+        onPrev()
+      }
+      if (event.key === 'ArrowRight' && hasNext && onNext !== undefined) {
+        event.preventDefault()
+        onNext()
+      }
+    }
+    document.addEventListener('keydown', onKey)
+    return () => {
+      document.removeEventListener('keydown', onKey)
+    }
+  }, [experience, hasPrev, hasNext, onPrev, onNext])
 
   if (experience === null) return null
 
@@ -85,6 +119,23 @@ export function ExperienceOverlay({
             </p>
           </div>
           <div className={styles.navRow}>
+            {onPrev !== undefined && (
+              <IconButton
+                ariaLabel={texts.experienceOverlay.prev}
+                onClick={hasPrev ? onPrev : () => {}}
+                disabled={!hasPrev}
+                icon={<IconChevronLeft />}
+                tooltipAlign="left"
+              />
+            )}
+            {onNext !== undefined && (
+              <IconButton
+                ariaLabel={texts.experienceOverlay.next}
+                onClick={hasNext ? onNext : () => {}}
+                disabled={!hasNext}
+                icon={<IconChevronRight />}
+              />
+            )}
             <IconButton
               ariaLabel={texts.experienceOverlay.close}
               onClick={onClose}
