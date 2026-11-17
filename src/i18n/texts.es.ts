@@ -33,6 +33,18 @@ export const es = {
     clickerTotal: 'Recuento de clicks',
     clickerOthers: '¡Otros visitantes están acumulando clicks!',
   },
+  /** Ronda 6 F3 — CAPTCHA puzzle del CV (Alternativa A: barrera disuasoria
+      SIN backend; NO protege el archivo frente a acceso directo a su URL). */
+  captcha: {
+    title: 'Verificación humana',
+    instruction: 'Desliza la pieza hasta encajarla en su hueco',
+    sliderAria: 'Deslizador de la pieza del puzzle',
+    success: '¡Encajado! Verificación superada',
+    failed: 'La pieza no está en su hueco',
+    retry: 'Intentar de nuevo',
+    download: 'Descargar CV',
+    close: 'Cerrar verificación',
+  },
   /** D27 — dos niveles del stack, sección propia centrada tras proyectos. */
   stack: {
     mainTitle: 'Stack principal',

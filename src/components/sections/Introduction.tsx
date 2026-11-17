@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { useLanguage } from '../../i18n'
 import type { LanguageId } from '../../models/common'
 import { site, clickerCounter } from '../../data/site'
@@ -6,6 +7,7 @@ import { Button } from '../base/Button'
 import { IconButton } from '../base/IconButton'
 import { IconGitHub, IconLinkedIn, IconTarget } from '../base/Icons'
 import { EmailReveal } from './EmailReveal'
+import { CaptchaPuzzleOverlay } from '../overlays/CaptchaPuzzleOverlay'
 import styles from './Introduction.module.css'
 
 /**
@@ -20,7 +22,8 @@ import styles from './Introduction.module.css'
 export function Introduction() {
   const { language, texts } = useLanguage()
 
-  /* Ronda 6 F2 — el botón CV abre el overlay del CAPTCHA (estado en F3). */
+  /* Ronda 6 F2/F3 — el botón CV abre el overlay del CAPTCHA puzzle. */
+  const [cvOpen, setCvOpen] = useState(false)
 
   return (
     <section id="intro" className={styles.intro} aria-label={texts.sections.intro}>
@@ -46,7 +49,7 @@ export function Introduction() {
         <IconButton
           ariaLabel={texts.intro.cvTooltip}
           onClick={() => {
-            /* F3: aquí abre el overlay del CAPTCHA. */
+            setCvOpen(true)
           }}
           icon={<span className={styles.cvLabel}>{texts.intro.cv}</span>}
         />
@@ -73,6 +76,9 @@ export function Introduction() {
           language={language}
         />
       </div>
+
+      {/* Ronda 6 F3 — CAPTCHA puzzle delante de la descarga del CV. */}
+      <CaptchaPuzzleOverlay open={cvOpen} onClose={() => setCvOpen(false)} />
     </section>
   )
 }

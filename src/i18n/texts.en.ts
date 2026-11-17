@@ -36,7 +36,19 @@ export const en: Texts = {
     /** D38.1: transient tooltip when the live stream reports other visitors. */
     clickerOthers: 'Other visitors are racking up clicks!',
   },
-  /** D27 — two stack levels, own centered section after projects. */
+  /** Round 6 F3 — CV puzzle CAPTCHA (Alternative A: deterrent barrier
+      WITHOUT backend; it does NOT protect the file from direct URL access). */
+  captcha: {
+    title: 'Human verification',
+    instruction: 'Slide the piece until it fits into its slot',
+    sliderAria: 'Puzzle piece slider',
+    success: 'It fits! Verification passed',
+    failed: 'The piece is not in its slot',
+    retry: 'Try again',
+    download: 'Download CV',
+    close: 'Close verification',
+  },
+  /** D27 - two stack levels, own centered section after projects. */
   stack: {
     mainTitle: 'Main stack',
     exploredTitle: 'Technologies I have explored',

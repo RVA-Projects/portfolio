@@ -27,6 +27,8 @@ interface ModalProps {
    * sus propias salidas de teclado (a11y 2.1.2: siempre hay escape por teclado).
    */
   dismissable?: boolean
+  /** Ronda 6 F3: clase extra para el PANEL (p. ej. overlay compacto del CAPTCHA). */
+  className?: string
   children: ReactNode
 }
 
@@ -44,6 +46,7 @@ export function Modal({
   flush = false,
   aside,
   dismissable = true,
+  className,
   children,
 }: ModalProps) {
   const backdropRef = useRef<HTMLDivElement>(null)
@@ -78,7 +81,11 @@ export function Modal({
         role="dialog"
         aria-modal="true"
         aria-labelledby={labelledById}
-        className={flush ? `${styles.panel} ${styles.panelFlush}` : styles.panel}
+        className={
+          flush
+            ? `${styles.panel} ${styles.panelFlush}${className ? ` ${className}` : ''}`
+            : `${styles.panel}${className ? ` ${className}` : ''}`
+        }
         tabIndex={-1}
       >
         {children}

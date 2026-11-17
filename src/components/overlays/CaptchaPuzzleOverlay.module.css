@@ -1,0 +1,157 @@
+/* Ronda 6 F3 — CAPTCHA puzzle (Alternativa A): panel compacto sobre Modal.
+   Toda la piel (superficie, bordes, acento) sale de tokens ⇒ sigue ambos
+   temas sin reglas duplicadas. */
+
+/* Ronda 6 F3: el PANEL del Modal (className) ajusta su ancho al overlay
+   compacto en vez del default min(960px, 100%). */
+.modalPanel {
+  width: min(420px, 100%);
+}
+
+.panel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  padding: var(--space-4);
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+
+.title {
+  font-size: var(--fs-h3);
+}
+
+.instruction {
+  font-size: var(--fs-small);
+  color: var(--color-text-muted);
+}
+
+/* Tablero: canvas de fondo a ancho completo (320px lógicos escalados por
+   devicePixelRatio) con la pieza flotando encima en posición absoluta. */
+.board {
+  position: relative;
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  background: var(--color-surface-2);
+}
+
+.bg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.piece {
+  position: absolute;
+  display: block;
+  /* 56/320 = 17.5% ancho · 68/180 = 37.78% alto (pieza + pestaña en
+     fracción del tablero lógico): escala con el canvas sin desalinear. */
+  width: 17.5%;
+  height: 37.78%;
+  pointer-events: none;
+  /* Caída de sombra sutil: separa la pieza del tablero */
+  filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.4));
+}
+
+/* Éxito: la pieza viaja a su hueco con una transición breve y fluida. */
+.pieceSnap {
+  transition:
+    left var(--dur-base) var(--ease),
+    filter var(--dur-base) var(--ease);
+  filter: drop-shadow(0 0 6px var(--color-ok));
+}
+
+/* Fallo: sacudida horizontal breve (respetada por reduced-motion vía base). */
+.boardShake {
+  animation: captchaShake 0.3s var(--ease);
+}
+
+@keyframes captchaShake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-6px);
+  }
+  75% {
+    transform: translateX(6px);
+  }
+}
+
+/* Slider: el thumb nativo se oculta (la pieza ES el indicador visual);
+   queda una pista fina con relleno de progreso vía accent-color nativo. */
+.slider {
+  width: 100%;
+  height: 44px; /* target táctil ≥44px (RNF-01) */
+  margin: 0;
+  appearance: none;
+  background: transparent;
+  cursor: pointer;
+}
+
+.slider::-webkit-slider-runnable-track {
+  height: 4px;
+  border-radius: 2px;
+  background: var(--color-line-strong);
+}
+
+.slider::-webkit-slider-thumb {
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  margin-top: -8px;
+  border-radius: 50%;
+  border: 2px solid var(--color-text);
+  background: var(--color-accent);
+}
+
+.slider::-moz-range-track {
+  height: 4px;
+  border-radius: 2px;
+  background: var(--color-line-strong);
+}
+
+.slider::-moz-range-thumb {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 2px solid var(--color-text);
+  background: var(--color-accent);
+}
+
+.slider:focus-visible {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 2px;
+}
+
+.slider:disabled {
+  cursor: default;
+  opacity: 0.5;
+}
+
+.status {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  align-items: flex-start;
+  min-height: 44px; /* evita saltos de layout al aparecer confirmación/retry */
+}
+
+.success {
+  font-family: var(--font-mono);
+  font-size: var(--fs-small);
+  color: var(--color-ok);
+}
+
+.failed {
+  font-family: var(--font-mono);
+  font-size: var(--fs-small);
+  color: var(--color-accent);
+}

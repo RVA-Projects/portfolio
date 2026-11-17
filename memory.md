@@ -1,7 +1,7 @@
 # memory.md — RVA Portfolio
 
 > Memoria operativa del agente. Actualizar tras cada cambio relevante.
-> Última actualización: 2026-11-12 (Fase 1 del plan de actualización: temas claro/oscuro, D18; 92 tests).
+> Última actualización: 2026-11-17 (ronda 6: F1 carrusel experiencia D47, F2 botón CV D48, F3 captcha CV D49; 174 tests).
 
 ## Estado actual
 
@@ -66,6 +66,7 @@ Ver detalle en `docs/decisions.md` (D01–D15). Resumen:
 
 ## Últimos cambios
 
+- 2026-11-17 (3): **D49 CAPTCHA puzzle del CV (ronda 6 F3)** — lógica pura `utils/captcha.ts` (mulberry32, hueco ∈ [15%,85%], tolerancia ±10px) + `CaptchaPuzzleOverlay` sobre `Modal` (Canvas 2D 320×180, patrón determinista, pieza en % alineada a cualquier escala, slider ratón+táctil+teclado, éxito⇒snap+glow+descarga, fallo⇒shake+retry); `Modal` gana prop `className` (panel 420px); i18n `captcha.*`; 174 unitarios + validate ✓; diag e2e (borrado) verificó fallo/retry/éxito/tema claro/móvil. **Limitación D49 (aprobada, Alternativa A): validación local, NO protege el PDF de acceso directo a `/portfolio/docs/cv.pdf`.**
 - 2026-11-17 (2): **D48 Botón CV en la Hero (ronda 6 F2)** — pill 44px con `IconButton` reutilizado (etiqueta «CV» mono como el selector ES/EN de la TopBar, tooltip D24 `intro.cvTooltip` «Descargar CV»); orden email → CV → GitHub → LinkedIn; NO descarga directo: placeholder de click para el CAPTCHA (F3); 3 tests nuevos (cv-button: presencia, orden, no-enlace); 160 unitarios + validate ✓.
 - 2026-11-17 (1): **D47 Experiencia en carrusel (ronda 6 F1)** — `ExperienceCarousel` reutiliza `useCarousel` + `ProjectCarousel.module.css` (import, sin duplicar CSS); `ExperienceCard` con anchos por breakpoint de `ProjectCard` (1/2/3 visibles); `ExperienceOverlay` con prev/next sin cerrar (flechas SIEMPRE visibles en header — en móvil no hay swipe de galería que las sustituya — + ←/→ a nivel documento); grid `.cards` eliminado; 157 unitarios + validate ✓.
 - 2026-11-16 (10): **Ronda 5 completa — F4 validación final** — 18/18 e2e (15 suite + 3 de verificación F4, spec temporal borrado): nav por las 5 anclas con encabezados nunca bajo la barra (boundingBox verificado), sin hamburguesa ni `#contact`, contactos de la Hero con href correctos, tema persiste tras recarga e idioma persiste en localStorage; capturas 1440 claro/oscuro + 768 + 375 sin overflow y controles nunca cortados; 153 unitarios + validate ✓. Estado: ronda 5 cerrada (D44-D46).
