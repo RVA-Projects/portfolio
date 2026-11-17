@@ -14,11 +14,13 @@ import styles from './Introduction.module.css'
  * ubicación, descripción, contacto rápido y clicker (D24/D26).
  *
  * D27: los grids de tecnologías viven en TechStackSection (sección propia
- * tras proyectos). TODO(F7): CV (pendiente de PDF del propietario). Sin foto
- * (D10 cancelada): presentación solo tipográfica.
+ * tras proyectos). Ronda 6 F2/F3: botón CV → CAPTCHA puzzle → descarga del
+ * PDF. Sin foto (D10 cancelada): presentación solo tipográfica.
  */
 export function Introduction() {
   const { language, texts } = useLanguage()
+
+  /* Ronda 6 F2 — el botón CV abre el overlay del CAPTCHA (estado en F3). */
 
   return (
     <section id="intro" className={styles.intro} aria-label={texts.sections.intro}>
@@ -38,6 +40,16 @@ export function Introduction() {
         <p className={styles.quickLabel}>{texts.intro.available}</p>
 
         <EmailReveal />
+        {/* Ronda 6 F2 — botón CV: pill 44px idéntica a los controles de la
+            TopBar (IconButton + tooltip D24 «Descargar CV»); NO descarga
+            directamente: abre el CAPTCHA (F3). Entre el email y GitHub. */}
+        <IconButton
+          ariaLabel={texts.intro.cvTooltip}
+          onClick={() => {
+            /* F3: aquí abre el overlay del CAPTCHA. */
+          }}
+          icon={<span className={styles.cvLabel}>{texts.intro.cv}</span>}
+        />
         {/* F2.3: contenedor SIEMPRE visible (piel por defecto de Button =
             superficie + borde), equivalente a la caja del email desbloqueada. */}
         <Button

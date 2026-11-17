@@ -303,3 +303,9 @@ Tres ajustes aprobados por el propietario:
 - **Solución:** nuevo `ExperienceCarousel` que reutiliza SIN CAMBIOS el hook `useCarousel` y **importa** `ProjectCarousel.module.css` (cero CSS duplicado, cero riesgo para Proyectos); `ExperienceCard` gana los mismos anchos por breakpoint que `ProjectCard` (1/2/3 visibles según 576/1024). Contador «N experiencias» + indicador 1/N + flechas `IconButton` + teclado ←/→ + swipe nativo. Sin autoplay.
 - **Overlay:** `ExperienceOverlay` añade `onPrev/onNext/hasPrev/hasNext` (patrón del ProjectOverlay): cambia de experiencia SIN cerrar. Diferencia deliberada: las flechas van en el `.navRow` del header SIEMPRE visibles (incl. móvil) porque aquí no existe el swipe de galería que en Proyectos cubre <768px (allí las flotantes se ocultan); ←/→ a nivel documento se mantienen. «Ver proyecto» y Escape intactos.
 - **Pruebas:** 157 unitarios ✓ (experience-section 12: carrusel, extremos, prev/next sin cerrar, ←/→, Escape); diag e2e temporal (borrado): 1440 (3 visibles, indicador 2/7 tras next) + 375 (1 visible, sin overflow); validate ✓.
+
+## D48 — Botón CV en la Hero (ronda 6 F2) — ✅ Aprobada (2026-11-17)
+
+- **Petición:** botón pequeño «CV» en la zona de contacto de la Hero (entre email y GitHub), tooltip «Descargar CV» al hover, identificable en táctil, sin competir visualmente; al pulsar NO descarga: abre overlay con CAPTCHA propio.
+- **Solución:** reutilización pura — `IconButton` (pill 44px, tooltip D24 con retardo y oculto en táctil) con etiqueta textual mono «CV» dentro (`cvLabel`, misma voz que el selector ES/EN de la TopBar). Keys i18n `intro.cv` / `intro.cvTooltip` («Descargar CV» / «Download CV»). Click placeholder que en F3 abrirá el CAPTCHA.
+- **Pruebas:** 160 unitarios ✓ (nuevo tests/cv-button.test.tsx: presencia + aria/data-tip, orden email→CV→GitHub→LinkedIn, es button no enlace); diag e2e temporal (borrado): 1440 tooltip «Descargar CV» visible al hover + 375 sin overflow ni corte; validate ✓.

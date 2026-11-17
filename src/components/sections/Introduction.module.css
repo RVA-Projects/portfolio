@@ -90,6 +90,15 @@
   color: var(--color-text-muted);
 }
 
+/* Ronda 6 F2 — etiqueta textual del botón CV dentro del IconButton (44px):
+   mono y versalita, misma voz que el selector ES/EN de la TopBar. */
+.cvLabel {
+  font-family: var(--font-mono);
+  font-size: var(--fs-small);
+  font-weight: 600;
+  letter-spacing: 0.05em;
+}
+
 /* ——— Clicker (D24/D26): botón circular + contador en su caja ——— */
 .clicker {
   display: inline-flex;

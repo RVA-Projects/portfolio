@@ -22,6 +22,9 @@ export const en: Texts = {
   intro: {
     basedIn: 'In',
     available: 'Quick contact',
+    /* Round 6 F2 — CV button: visible label + D24 tooltip. */
+    cv: 'CV',
+    cvTooltip: 'Download CV',
     slideToReveal: 'Slide to reveal the email',
     emailRevealed: 'You seem human...',
     copyEmail: 'Copy email',

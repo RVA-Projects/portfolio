@@ -21,6 +21,9 @@ export const es = {
   intro: {
     basedIn: 'En',
     available: 'Contacto rápido',
+    /* Ronda 6 F2 — botón CV: etiqueta visible + tooltip D24. */
+    cv: 'CV',
+    cvTooltip: 'Descargar CV',
     slideToReveal: 'Desliza para ver el email',
     emailRevealed: 'Pareces humano...',
     copyEmail: 'Copiar email',
