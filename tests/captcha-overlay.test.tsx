@@ -1,5 +1,5 @@
-import { beforeEach, describe, expect, it } from 'vitest'
-import { cleanup, fireEvent, render, screen } from '@testing-library/react'
+import { beforeEach, describe, expect, it, vi } from 'vitest'
+import { cleanup, fireEvent, render, screen, within } from '@testing-library/react'
 import { App } from '../src/App'
 import { LanguageProvider } from '../src/i18n'
 import { CaptchaPuzzleOverlay } from '../src/components/overlays/CaptchaPuzzleOverlay'
@@ -12,34 +12,40 @@ beforeEach(() => {
 })
 
 /** Render del overlay EN AISLAMIENTO con desafío determinista (pruebas). */
-function renderOverlay(challengeSeed: number) {
-  return render(
+function renderOverlay(challengeSeed: number, onOpenCv = vi.fn()) {
+  render(
     <LanguageProvider>
-      <CaptchaPuzzleOverlay open onClose={() => {}} challenge={generateChallenge(challengeSeed)} />
+      <CaptchaPuzzleOverlay
+        open
+        onClose={() => {}}
+        onOpenCv={onOpenCv}
+        challenge={generateChallenge(challengeSeed)}
+      />
     </LanguageProvider>,
   )
+  return onOpenCv
 }
 
 /**
- * Ronda 6 F3 — overlay del CAPTCHA puzzle: slider valida con tolerancia;
- * éxito habilita la descarga (Alternativa A: PDF público por diseño, la
- * validación es local); fallo permite reintentar; Escape cierra. Canvas no
- * existe en jsdom (getContext ⇒ null): el componente degrada sin crash y
- * las aserciones cubren UI y lógica de estado. La integración (botón CV →
- * overlay → Escape) se prueba vía App.
+ * Ronda 6 F3 + ronda 7 D50 — overlay del CAPTCHA puzzle: slider valida con
+ * tolerancia; el éxito NO descarga: «Ver CV» delega en onOpenCv (el cliente
+ * cierra el captcha y abre el visor de documentos); fallo permite reintentar;
+ * Escape cierra. Canvas no existe en jsdom (getContext ⇒ null): el
+ * componente degrada sin crash. La integración completa (éxito ⇒ captcha
+ * cerrado + visor abierto) se prueba vía App con Math.random stubbed.
  */
-describe('CaptchaPuzzleOverlay (ronda 6 F3)', () => {
-  it('muestra instrucción y slider etiquetado; sin descarga antes de resolver', () => {
+describe('CaptchaPuzzleOverlay (ronda 6 F3 + ronda 7 D50)', () => {
+  it('muestra instrucción y slider etiquetado; sin botón «Ver CV» antes de resolver', () => {
     renderOverlay(1234)
     expect(screen.getByRole('dialog', { name: 'Verificación humana' })).toBeInTheDocument()
     expect(screen.getByText('Desliza la pieza hasta encajarla en su hueco')).toBeInTheDocument()
     expect(screen.getByLabelText('Deslizador de la pieza del puzzle')).toBeInTheDocument()
-    expect(screen.queryByRole('link', { name: 'Descargar CV' })).not.toBeInTheDocument()
+    expect(screen.queryByRole('button', { name: 'Ver CV' })).not.toBeInTheDocument()
   })
 
-  it('posición correcta ⇒ éxito + enlace de descarga del PDF', () => {
+  it('posición correcta ⇒ éxito + «Ver CV» que llama a onOpenCv (sin href/download)', () => {
     const challenge = generateChallenge(1234)
-    renderOverlay(1234)
+    const onOpenCv = renderOverlay(1234)
     const travel = CAPTCHA_WIDTH - CAPTCHA_PIECE
     const sliderValue = Math.round((challenge.targetLeft / travel) * 100)
     const slider = screen.getByLabelText('Deslizador de la pieza del puzzle') as HTMLInputElement
@@ -47,9 +53,12 @@ describe('CaptchaPuzzleOverlay (ronda 6 F3)', () => {
     fireEvent.mouseUp(slider)
 
     expect(screen.getByText('¡Encajado! Verificación superada')).toBeInTheDocument()
-    const download = screen.getByRole('link', { name: 'Descargar CV' })
-    expect(download).toHaveAttribute('href', '/portfolio/docs/cv.pdf')
-    expect(download).toHaveAttribute('download')
+    const open = screen.getByRole('button', { name: 'Ver CV' })
+    expect(open.tagName).toBe('BUTTON')
+    expect(open.closest('a')).toBeNull()
+    expect(onOpenCv).not.toHaveBeenCalled()
+    fireEvent.click(open)
+    expect(onOpenCv).toHaveBeenCalledTimes(1)
   })
 
   it('posición incorrecta ⇒ fallo + reintento que resetea el intento', () => {
@@ -62,7 +71,7 @@ describe('CaptchaPuzzleOverlay (ronda 6 F3)', () => {
     fireEvent.mouseUp(slider)
 
     expect(screen.getByText('La pieza no está en su hueco')).toBeInTheDocument()
-    expect(screen.queryByRole('link', { name: 'Descargar CV' })).not.toBeInTheDocument()
+    expect(screen.queryByRole('button', { name: 'Ver CV' })).not.toBeInTheDocument()
 
     fireEvent.click(screen.getByRole('button', { name: 'Intentar de nuevo' }))
     expect(screen.queryByText('La pieza no está en su hueco')).not.toBeInTheDocument()
@@ -97,10 +106,37 @@ describe('CaptchaPuzzleOverlay (ronda 6 F3)', () => {
 
   it('integración: el botón CV de la Hero abre el dialog y Escape lo cierra', () => {
     render(<App />)
-    fireEvent.click(screen.getByRole('button', { name: 'Descargar CV' }))
+    fireEvent.click(screen.getByRole('button', { name: 'Ver CV' }))
     expect(screen.getByRole('dialog', { name: 'Verificación humana' })).toBeInTheDocument()
     fireEvent.keyDown(document, { key: 'Escape' })
     expect(screen.queryByRole('dialog')).not.toBeInTheDocument()
+  })
+
+  it('integración D50: éxito ⇒ captcha cerrado + visor del CV abierto', () => {
+    /* Math.random constante ⇒ nextSeed() determinista ⇒ replicamos el reto. */
+    const random = Math.random
+    Math.random = () => 0.42
+    try {
+      render(<App />)
+      fireEvent.click(screen.getByRole('button', { name: 'Ver CV' }))
+      const captcha = screen.getByRole('dialog', { name: 'Verificación humana' })
+
+      const challenge = generateChallenge(Math.floor(0.42 * 2 ** 31))
+      const travel = CAPTCHA_WIDTH - CAPTCHA_PIECE
+      const sliderValue = Math.round((challenge.targetLeft / travel) * 100)
+      const slider = within(captcha).getByLabelText(
+        'Deslizador de la pieza del puzzle',
+      ) as HTMLInputElement
+      fireEvent.change(slider, { target: { value: String(sliderValue) } })
+      fireEvent.mouseUp(slider)
+
+      /* «Ver CV» del éxito: cierra el captcha y abre el visor con el CV. */
+      fireEvent.click(within(captcha).getByRole('button', { name: 'Ver CV' }))
+      expect(screen.queryByRole('dialog', { name: 'Verificación humana' })).not.toBeInTheDocument()
+      expect(screen.getByRole('dialog', { name: 'CV — Andrei Ronai' })).toBeInTheDocument()
+    } finally {
+      Math.random = random
+    }
   })
 })
 

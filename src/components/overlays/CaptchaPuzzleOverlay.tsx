@@ -18,8 +18,6 @@ import {
 import styles from './CaptchaPuzzleOverlay.module.css'
 
 const TITLE_ID = 'captcha-overlay-title'
-/** PDF servido desde public/docs (Alternativa A: URL pública por diseño). */
-const CV_URL = '/portfolio/docs/cv.pdf'
 
 type CaptchaStatus = 'idle' | 'solved' | 'failed'
 
@@ -28,6 +26,12 @@ interface CaptchaPuzzleOverlayProps {
   onClose: () => void
   /** Inyectable SOLO para pruebas/determinismo; ausente ⇒ nextSeed(). */
   challenge?: CaptchaChallenge
+  /**
+   * Ronda 7 D50 — al superar el puzzle, el componente NO descarga NI conoce
+   * la URL del CV: el cliente (Introduction) cierra ESTE overlay y abre el
+   * DocumentViewerOverlay con `site.cvDocument`.
+   */
+  onOpenCv: () => void
 }
 
 /** Configura un canvas a tamaño lógico con devicePixelRatio; null si jsdom. */
@@ -134,10 +138,11 @@ function drawPattern(ctx: CanvasRenderingContext2D, seed: number, colors: Captch
 
 /**
  * Ronda 6 F3 — CAPTCHA puzzle (Alternativa A, SIN backend): barrera de
- * interacción delante de la descarga del CV. Patrón abstracto generado en
+ * interacción delante de la visualización del CV. Patrón abstracto generado en
  * Canvas 2D con rng determinista; hueco en posición aleatoria; la pieza se
  * recorta del MISMO patrón; slider (input range: ratón + táctil + teclado).
- * Comprueba tolerancia; éxito ⇒ snap + confirmación + descarga habilitada;
+ * Comprueba tolerancia; éxito ⇒ snap + confirmación + «Ver CV» (D50: el
+ * cliente abre el visor de documentos);
  * fallo ⇒ feedback + reintento con desafío nuevo. LIMITACIÓN explícita
  * (D49): la validación es local; el PDF sigue siendo accesible por URL.
  */
@@ -145,6 +150,7 @@ export function CaptchaPuzzleOverlay({
   open,
   onClose,
   challenge: injected,
+  onOpenCv,
 }: CaptchaPuzzleOverlayProps) {
   const { texts } = useLanguage()
   const bgRef = useRef<HTMLCanvasElement>(null)
@@ -218,7 +224,7 @@ export function CaptchaPuzzleOverlay({
     setStatus('idle')
   }, [])
 
-  /** Al soltar el slider: tolerancia; éxito ⇒ snap + descarga; fallo ⇒ retry. */
+  /** Al soltar el slider: tolerancia; éxito ⇒ snap + «Ver CV»; fallo ⇒ retry. */
   const release = useCallback(() => {
     if (status !== 'idle') return
     const pieceLeft = pieceLeftFromSlider(slider)
@@ -285,7 +291,9 @@ export function CaptchaPuzzleOverlay({
           {status === 'solved' && (
             <>
               <p className={styles.success}>{texts.captcha.success}</p>
-              <Button label={texts.captcha.download} href={CV_URL} download variant="primary" />
+              {/* Ronda 7 D50 — abre el VISOR del CV (no descarga); el cliente
+                  cierra este overlay y monta el DocumentViewerOverlay. */}
+              <Button label={texts.captcha.openCv} onClick={onOpenCv} variant="primary" />
             </>
           )}
           {status === 'failed' && (

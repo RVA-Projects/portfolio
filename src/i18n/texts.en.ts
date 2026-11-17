@@ -24,7 +24,8 @@ export const en: Texts = {
     available: 'Quick contact',
     /* Round 6 F2 — CV button: visible label + D24 tooltip. */
     cv: 'CV',
-    cvTooltip: 'Download CV',
+    /* Round 7 D50: the action is VIEWING the CV (download lives in the viewer). */
+    cvTooltip: 'View CV',
     slideToReveal: 'Slide to reveal the email',
     emailRevealed: 'You seem human...',
     copyEmail: 'Copy email',
@@ -45,7 +46,8 @@ export const en: Texts = {
     success: 'It fits! Verification passed',
     failed: 'The piece is not in its slot',
     retry: 'Try again',
-    download: 'Download CV',
+    /* Round 7 D50: opens the CV VIEWER (no download). */
+    openCv: 'View CV',
     close: 'Close verification',
   },
   /** D27 - two stack levels, own centered section after projects. */

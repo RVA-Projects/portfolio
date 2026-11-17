@@ -1,4 +1,4 @@
-import type { LocalizedText } from '../models/common'
+import type { DocumentRef, LocalizedText } from '../models/common'
 
 /** Secciones navegables de la SPA (orden = orden del documento). */
 export type SectionId = 'intro' | 'projects' | 'stack' | 'experience' | 'education' | 'languages'
@@ -28,6 +28,10 @@ export interface SiteData {
   description: LocalizedText
   github: string
   linkedin: string
+  /** Ronda 7: perfil de Upwork (botón junto a LinkedIn en la Hero). */
+  upwork: string
+  /** Ronda 7 D50 — el CV se visualiza en DocumentViewerOverlay (kind 'pdf'). */
+  cvDocument: DocumentRef
   /** D01: el portfolio anterior se servirá desde /old/ dentro del repo. */
   olderPortfolioUrl: string
 }
@@ -79,5 +83,18 @@ export const site: SiteData = {
   // TODO(F7): confirmar definitivamente con el propietario antes de publicar.
   github: 'https://github.com/RVA-Projects',
   linkedin: 'https://www.linkedin.com/in/rva-developer/',
+  /** Ronda 7: perfil real de Upwork (botón junto a LinkedIn). */
+  upwork: 'https://www.upwork.com/freelancers/~011b7fd9b75d981e3c',
   olderPortfolioUrl: '/portfolio/old/',
+  /**
+   * Ronda 7 D50 — el CV ya NO se descarga: se VISUALIZA en el
+   * DocumentViewerOverlay (mismo patrón que certificaciones e idiomas).
+   * kind 'pdf': recurso local bajo /docs/ servido por el propio portfolio.
+   * La descarga sigue disponible desde el propio visor (documentViewer.ui).
+   */
+  cvDocument: {
+    src: '/portfolio/docs/cv.pdf',
+    kind: 'pdf',
+    name: { es: 'CV — Andrei Ronai', en: 'CV — Andrei Ronai' },
+  },
 }

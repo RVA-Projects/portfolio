@@ -1,13 +1,14 @@
 import { useState } from 'react'
 import { useLanguage } from '../../i18n'
-import type { LanguageId } from '../../models/common'
+import type { DocumentRef, LanguageId } from '../../models/common'
 import { site, clickerCounter } from '../../data/site'
 import { useGlobalCounter } from '../../hooks/useGlobalCounter'
 import { Button } from '../base/Button'
 import { IconButton } from '../base/IconButton'
-import { IconGitHub, IconLinkedIn, IconTarget } from '../base/Icons'
+import { IconGitHub, IconLinkedIn, IconTarget, IconUpwork } from '../base/Icons'
 import { EmailReveal } from './EmailReveal'
 import { CaptchaPuzzleOverlay } from '../overlays/CaptchaPuzzleOverlay'
+import { DocumentViewerOverlay } from '../overlays/DocumentViewerOverlay'
 import styles from './Introduction.module.css'
 
 /**
@@ -16,14 +17,24 @@ import styles from './Introduction.module.css'
  * ubicación, descripción, contacto rápido y clicker (D24/D26).
  *
  * D27: los grids de tecnologías viven en TechStackSection (sección propia
- * tras proyectos). Ronda 6 F2/F3: botón CV → CAPTCHA puzzle → descarga del
- * PDF. Sin foto (D10 cancelada): presentación solo tipográfica.
+ * tras proyectos). Ronda 6 F2/F3 + ronda 7 D50: botón CV → CAPTCHA puzzle →
+ * VISUALIZACIÓN del PDF en DocumentViewerOverlay (la descarga vive en el
+ * visor). Sin foto (D10 cancelada): presentación solo tipográfica.
  */
 export function Introduction() {
   const { language, texts } = useLanguage()
 
   /* Ronda 6 F2/F3 — el botón CV abre el overlay del CAPTCHA puzzle. */
   const [cvOpen, setCvOpen] = useState(false)
+  /* Ronda 7 D50 — el CV (y solo él, aquí) se visualiza en DocumentViewerOverlay;
+     mismo patrón que EducationSection/LanguagesSection (estado local de sección). */
+  const [activeDocument, setActiveDocument] = useState<DocumentRef | null>(null)
+
+  /** Éxito del CAPTCHA: cierra el CAPTCHA y abre el visor con el CV (D50). */
+  const openCvViewer = () => {
+    setCvOpen(false)
+    setActiveDocument(site.cvDocument)
+  }
 
   return (
     <section id="intro" className={styles.intro} aria-label={texts.sections.intro}>
@@ -69,6 +80,14 @@ export function Introduction() {
           icon={<IconLinkedIn />}
           ariaLabel="LinkedIn: rva-developer"
         />
+        {/* Ronda 7 D50 — Upwork: tercer enlace externo, junto a LinkedIn. */}
+        <Button
+          label="Upwork"
+          href={site.upwork}
+          external
+          icon={<IconUpwork />}
+          ariaLabel="Upwork: perfil de Andrei Ronai"
+        />
         <ClickerButton
           ariaLabel={texts.intro.clickerAria}
           totalLabel={texts.intro.clickerTotal}
@@ -77,8 +96,21 @@ export function Introduction() {
         />
       </div>
 
-      {/* Ronda 6 F3 — CAPTCHA puzzle delante de la descarga del CV. */}
-      <CaptchaPuzzleOverlay open={cvOpen} onClose={() => setCvOpen(false)} />
+      {/* Ronda 6 F3 — CAPTCHA puzzle delante del CV; ronda 7 D50: el éxito
+          NO descarga, cierra este overlay y abre el visor de documentos. */}
+      <CaptchaPuzzleOverlay
+        open={cvOpen}
+        onClose={() => setCvOpen(false)}
+        onOpenCv={openCvViewer}
+      />
+      {/* Ronda 7 D50 — visor del CV (mismo componente de certificaciones/idiomas). */}
+      <DocumentViewerOverlay
+        document={activeDocument}
+        onClose={() => {
+          setActiveDocument(null)
+        }}
+        ui={texts.documentViewer}
+      />
     </section>
   )
 }

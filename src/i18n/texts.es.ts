@@ -21,9 +21,10 @@ export const es = {
   intro: {
     basedIn: 'En',
     available: 'Contacto rápido',
-    /* Ronda 6 F2 — botón CV: etiqueta visible + tooltip D24. */
+    /* Ronda 6 F2 — botón CV: etiqueta visible + tooltip D24. Ronda 7 D50:
+       la acción es VER el CV en el visor (la descarga vive en el visor). */
     cv: 'CV',
-    cvTooltip: 'Descargar CV',
+    cvTooltip: 'Ver CV',
     slideToReveal: 'Desliza para ver el email',
     emailRevealed: 'Pareces humano...',
     copyEmail: 'Copiar email',
@@ -42,7 +43,8 @@ export const es = {
     success: '¡Encajado! Verificación superada',
     failed: 'La pieza no está en su hueco',
     retry: 'Intentar de nuevo',
-    download: 'Descargar CV',
+    /** Ronda 7 D50: abre el VISOR del CV (no descarga). */
+    openCv: 'Ver CV',
     close: 'Cerrar verificación',
   },
   /** D27 — dos niveles del stack, sección propia centrada tras proyectos. */
