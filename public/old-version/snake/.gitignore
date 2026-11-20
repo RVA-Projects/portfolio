@@ -1,0 +1,10 @@
+# Dependencias locales (el runtime no tiene ninguna, por si acaso)
+node_modules/
+
+# Artefactos de SO
+Thumbs.db
+.DS_Store
+
+# Ficheros temporales de editores
+*.tmp
+*.swp

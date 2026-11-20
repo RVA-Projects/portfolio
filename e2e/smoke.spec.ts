@@ -25,6 +25,17 @@ for (const width of [375, 768, 1024, 1440]) {
     )
     expect(overflow).toBeLessThanOrEqual(0)
 
+    /* Los títulos descriptivos de Experiencia pueden ocupar varias líneas,
+       pero deben quedar dentro del ancho de cada tarjeta en cada viewport. */
+    const overflowingExperienceTitles = await page
+      .locator('#experience article h3')
+      .evaluateAll((titles) =>
+        titles
+          .filter((title) => title.scrollWidth > title.clientWidth)
+          .map((title) => title.textContent),
+      )
+    expect(overflowingExperienceTitles).toEqual([])
+
     /* Navegación permanente visible y clicable en cualquier punto de la página */
     await page.keyboard.press('End')
     await page.waitForTimeout(300)

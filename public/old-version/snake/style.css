@@ -1,0 +1,263 @@
+/* style.css — Presentación solamente (R29/R30). Sin lógica; los textos
+   visibles llegan de i18n, no del CSS. Colores de page, no del juego en
+   canvas (los del tablero están en config.js). */
+
+:root { color-scheme: dark; }
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  font-family: system-ui, -apple-system, sans-serif;
+  background: #020617;
+  color: #e2e8f0;
+}
+
+/* #stage (enmienda F7, R34): contiene TODO el contenido. En fullscreen el
+   escalado de zoom lo aplica main.js vía transform; aquí solo el layout. */
+#stage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  transform-origin: center center;
+  will-change: transform;
+}
+
+/* Fullscreen activo: sin scrollbar nunca (R34 enmendada) y el #stage
+   anclado al CENTRO del viewport (F7-fix): el escalado de main.js gira
+   en torno al propio centro del contenido, así nunca se corta. */
+body.fullscreen {
+  overflow: hidden;
+  min-height: 100vh;
+}
+
+body.fullscreen #stage {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+}
+
+header.top {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  margin-top: 12px;
+}
+
+#game-title {
+  margin: 0;
+  font-size: 4.25rem; /* título principal más visible (F6, decisión del desarrollador) */
+  letter-spacing: 0.08em;
+}
+
+#game-subtitle {
+  margin: -10px 0 0 0; /* Ajusta este valor negativo si quieres acercarlo o alejarlo más */
+  font-size: 1.25rem;
+  color: #94a3b8;
+  font-style: italic;
+  letter-spacing: 0.25em; /* Espaciado de letras amplio */
+  margin-bottom: 12px; /* Espacio inferior para separar del resto del contenido */
+}
+
+.player-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  line-height: 1.25;
+}
+
+.player-info .label {
+  font-size: 1rem;
+  color: #94a3b8;
+  text-transform: uppercase;
+  letter-spacing: 0.3em;
+}
+
+.player-info .name-label {
+  font-size: 1.5rem;
+  color: #94a3b8;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.player-info strong { font-size: 1.05rem; }
+
+.toolbar {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.toolbar button {
+  padding: 6px 14px;
+  border: 1px solid #334155;
+  border-radius: 8px;
+  background: #1e293b;
+  color: #e2e8f0;
+  cursor: pointer;
+  font: inherit;
+}
+
+.toolbar button:hover { background: #334155; }
+
+.board-area {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 14px; /* F7: separa ligeramente el canvas de los botones */
+  margin-bottom: 24px;
+}
+
+#game-canvas {
+  display: block;
+  border: 1px solid #334155;
+  border-radius: 4px;
+  /* Responsive (R40): el canvas nunca desborda en pantallas estrechas */
+  max-width: 100%;
+  height: auto;
+}
+
+/* ── D-pad táctil (R40, enmienda F7) ──
+   En escritorio NO existe (display:none); en táctil (pointer:coarse) aparece
+   bajo el canvas, dentro del flujo: nunca tapa el área de juego. */
+.dpad {
+  display: none;
+}
+
+@media (hover: none) and (pointer: coarse) {
+  .dpad {
+    display: grid;
+    grid-template-columns: repeat(3, 60px);
+    grid-template-rows: repeat(2, 60px);
+    grid-template-areas:
+      '. up .'
+      'left down right';
+    gap: 10px;
+    margin-top: 16px;
+    touch-action: none;
+    user-select: none;
+  }
+
+  .dpad button {
+    border: 1px solid #334155;
+    border-radius: 12px;
+    background: #1e293b;
+    color: #e2e8f0;
+    font-size: 1.4rem;
+    touch-action: none;
+  }
+
+  .dpad button:active { background: #334155; }
+  #dpad-up { grid-area: up; }
+  #dpad-down { grid-area: down; }
+  #dpad-left { grid-area: left; }
+  #dpad-right { grid-area: right; }
+}
+
+/* Overlay inicial sobre el canvas (R19) */
+.overlay-start {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(2, 6, 23, 0.55);
+}
+
+.overlay-start.hidden { display: none; }
+
+.overlay-start p {
+  font-size: 1.2rem;
+  font-weight: 600;
+  text-align: center;
+  padding: 0 24px;
+}
+
+/* Overlays de pantalla (nombre y ranking) (R30/R35) */
+.screen-overlay {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(2, 6, 23, 0.7);
+  z-index: 10;
+}
+
+.screen-overlay.hidden { display: none; }
+
+.overlay-card {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-width: 280px;
+  max-width: 420px;
+  max-height: 70vh; /* F7.1: el card no crece más allá del 70% del alto */
+  padding: 16px;
+  background: #0f172a;
+  border: 1px solid #334155;
+  border-radius: 12px;
+}
+
+.overlay-card h2 { margin: 0; font-size: 1.1rem; }
+
+.overlay-card input {
+  padding: 8px 10px;
+  border: 1px solid #334155;
+  border-radius: 8px;
+  background: #020617;
+  color: inherit;
+  font: inherit;
+}
+
+.overlay-card ol {
+  margin: 0;
+  padding-left: 20px;
+  flex: 1 1 auto;
+  min-height: 0; /* clave del flex: permite que la lista scrolle (F7.1) */
+  overflow-y: auto;
+}
+
+.overlay-card ol li { padding: 2px 0; }
+
+#rank-empty { margin: 0; color: #94a3b8; }
+#rank-empty.hidden { display: none; }
+
+.overlay-actions {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+}
+
+.overlay-actions button,
+.overlay-card > button {
+  padding: 6px 14px;
+  border: 1px solid #334155;
+  border-radius: 8px;
+  background: #1e293b;
+  color: inherit;
+  cursor: pointer;
+  font: inherit;
+}
+
+.overlay-actions button:hover,
+.overlay-card > button:hover { background: #334155; }
+
+/* ── Responsive (R40): ventanas y móviles estrechos ── */
+@media (max-width: 640px) {
+  #game-title { font-size: 2.5rem; }
+  #game-subtitle { font-size: 1rem; margin-top: -6px; }
+  .player-info .label { font-size: 0.85rem; letter-spacing: 0.2em; }
+  .toolbar { gap: 6px; padding: 0 10px; }
+  .toolbar button { padding: 6px 10px; font-size: 0.85rem; }
+  .board-area { margin-top: 8px; }
+}

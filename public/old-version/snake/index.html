@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Snake</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- #stage (enmienda F7, R34): TODO el contenido escalable en fullscreen -->
+  <div id="stage">
+    <header class="top">
+      <h1 id="game-title">Snake</h1><h2 id="game-subtitle">Classic</h2>
+
+      <div class="player-info">
+        <span id="player-name-label" class="label">Nombre del jugador</span>
+        <strong id="player-name" class ="name-label">Jugador</strong>
+      </div>
+    </header>
+
+    <!-- Fila de botones entre nombre y canvas (R29/R30) -->
+    <nav class="toolbar" id="toolbar">
+      <button id="btn-name" type="button">Introducir nombre</button>
+      <button id="btn-ranking" type="button">Ver ranking</button>
+      <button id="btn-fullscreen" type="button">Pantalla completa</button>
+      <button id="btn-language" type="button">Cambiar idioma</button>
+      <button id="btn-music" type="button">Música</button>
+      <button id="btn-sfx" type="button">Efectos</button>
+      <button id="btn-playpause" type="button">Play / Pausa</button>
+    </nav>
+
+    <main class="board-area">
+      <canvas id="game-canvas" width="800" height="480"></canvas>
+      <!-- Overlay inicial (R19): visible con partida en 'ready'; se cierra con la primera dirección -->
+      <div id="overlay-start" class="overlay-start">
+        <p id="overlay-start-text">Pulsa una dirección (WASD) para empezar</p>
+      </div>
+      <!-- D-pad táctil (R40, enmienda F7): SOLO visible en dispositivos
+           táctiles (CSS pointer:coarse); bajo el canvas, nunca lo tapa. -->
+      <div id="dpad" class="dpad">
+        <button id="dpad-up" type="button">▲</button>
+        <button id="dpad-left" type="button">◀</button>
+        <button id="dpad-down" type="button">▼</button>
+        <button id="dpad-right" type="button">▶</button>
+      </div>
+    </main>
+  </div>
+
+  <!-- Overlay: nombre del jugador (R30). Mientras el textbox tiene foco, WASD/espacio no afectan al juego (AC-7) -->
+  <div id="overlay-name" class="screen-overlay hidden">
+    <div class="overlay-card">
+      <label id="player-name-input-label" for="player-name-input">Nombre del jugador</label>
+      <input id="player-name-input" type="text" maxlength="20" autocomplete="off" />
+      <div class="overlay-actions">
+        <button id="btn-save-name" type="button">Guardar</button>
+        <button id="btn-close-name" type="button">Cerrar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Overlay: ranking (R30/R33). Lista completa, ordenada por puntuación desc. -->
+  <div id="overlay-ranking" class="screen-overlay hidden">
+    <div class="overlay-card">
+      <h2 id="rank-title">Ranking</h2>
+      <ol id="ranking-list"></ol>
+      <p id="rank-empty" class="hidden">Sin partidas registradas todavía.</p>
+      <button id="btn-close-ranking" type="button">Cerrar</button>
+    </div>
+  </div>
+
+  <script type="module" src="main.js"></script>
+</body>
+</html>

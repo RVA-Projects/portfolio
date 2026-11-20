@@ -7,7 +7,7 @@ import type { EducationalTextItem } from './Project'
  * Proyectos (fichas), no aquí — `kind` ya no existe.
  */
 export interface Experience extends BaseEntity {
-  /** Nombre de la organización o del contexto profesional. */
+  /** Empresa, cliente, plataforma o entidad donde se realizó el trabajo. */
   organization: LocalizedText
   /**
    * Periodo con fecha real verificada por el propietario. `start`/`end`
@@ -15,7 +15,8 @@ export interface Experience extends BaseEntity {
    * Opcional: las entradas sin fecha confirmada NO la declaran.
    */
   period?: { start: string; end?: string }
-  role?: LocalizedText
+  /** Trabajo realizado; título principal de la experiencia en tarjeta y overlay. */
+  role: LocalizedText
   responsibilities: EducationalTextItem[]
   description?: LocalizedText
   /** Referencias a Technology por id. */

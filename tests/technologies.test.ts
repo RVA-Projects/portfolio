@@ -58,6 +58,48 @@ describe('audit:content — catálogo de tecnologías (RF-03)', () => {
     expect(core).not.toContain('typescript')
   })
 
+  it('ordena alfabéticamente ambos niveles y asigna Codex/OpenCoDEX donde corresponde', () => {
+    expect(technologies.filter((tech) => tech.tier === 'core').map((tech) => tech.name)).toEqual([
+      'C#',
+      'CSS',
+      'Git',
+      'HTML',
+      'Java',
+      'JavaScript',
+      'Kotlin',
+      'OpenCoDEX',
+      'Python',
+      'React',
+      'SQL',
+    ])
+    expect(
+      technologies.filter((tech) => tech.tier === 'explored').map((tech) => tech.name),
+    ).toEqual([
+      'Android Studio',
+      'Codex',
+      'Docker',
+      'Eclipse',
+      'Firebase',
+      'GitHub',
+      'Google Gemini',
+      'Meta Business Suite',
+      'MySQL',
+      'NetBeans',
+      'Node.js',
+      'PostgreSQL',
+      'Postman',
+      'Room',
+      'SQLite',
+      'Unity',
+      'Visual Studio',
+      'VS Code',
+      'WordPress',
+      'XAMPP',
+    ])
+    expect(technologies.find((tech) => tech.id === 'codex')?.icon).toBe('codex')
+    expect(technologies.find((tech) => tech.id === 'opencodex')?.tier).toBe('core')
+  })
+
   it('TypeScript NO existe en el catálogo (decisión del propietario: nunca usado)', () => {
     expect(technologies.find((tech) => tech.id === 'typescript')).toBeUndefined()
     expect(technologies.find((tech) => tech.name === 'TypeScript')).toBeUndefined()

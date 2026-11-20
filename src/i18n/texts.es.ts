@@ -80,7 +80,6 @@ export const es = {
   },
   /** Sección de experiencia (RF-15, carrusel desde ronda 6 F1). */
   experience: {
-    current: 'Actualidad',
     responsibilities: 'Funciones',
     outcomes: 'Logros',
     upwork: 'Perfil de Upwork',

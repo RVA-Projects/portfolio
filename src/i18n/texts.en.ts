@@ -83,7 +83,6 @@ export const en: Texts = {
   },
   /** RF-15 experience section, carousel since update round 6 F1. */
   experience: {
-    current: 'Present',
     responsibilities: 'Duties',
     outcomes: 'Outcomes',
     upwork: 'Upwork profile',

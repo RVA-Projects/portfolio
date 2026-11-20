@@ -12,7 +12,7 @@ export interface Technology extends BaseEntity {
    * SVG disponible) o ausente ⇒ el componente TechIcon resuelve su SVG
    * inline por `id` (sin CDN externo).
    */
-  icon?: 'python' | 'unity' | 'xampp' | 'odoo'
+  icon?: 'python' | 'unity' | 'xampp' | 'odoo' | 'codex'
   /**
    * D28 — adaptación visual de la marca (ronda 2, F4): 'mono' ⇒ silueta que
    * hereda el color del texto del tema (mask + currentColor; logotipos

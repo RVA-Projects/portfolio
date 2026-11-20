@@ -15,7 +15,7 @@ import styles from './TechIcon.module.css'
 
 interface TechIconProps {
   technologyId: string
-  icon?: 'python' | 'unity' | 'xampp' | 'odoo'
+  icon?: 'python' | 'unity' | 'xampp' | 'odoo' | 'codex'
   /** D28 — adaptación de marca (mono: silueta del tema · dim: aclara en oscuro). */
   adapt?: 'mono' | 'dim'
 }
@@ -44,6 +44,7 @@ export function TechIcon({ technologyId, icon, adapt }: TechIconProps) {
           maskImage: `url("${src}")`,
           WebkitMaskImage: `url("${src}")`,
         }}
+        data-tech-icon
         aria-hidden="true"
       />
     )
@@ -55,6 +56,7 @@ export function TechIcon({ technologyId, icon, adapt }: TechIconProps) {
         adapt === 'dim' ? `${styles.techIcon} ${styles['techIcon--dim']}` : styles.techIcon
       }
       src={src}
+      data-tech-icon
       alt=""
       aria-hidden="true"
       loading="lazy"

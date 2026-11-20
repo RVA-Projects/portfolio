@@ -32,7 +32,7 @@ export interface SiteData {
   upwork: string
   /** Ronda 7 D50 — el CV se visualiza en DocumentViewerOverlay (kind 'pdf'). */
   cvDocument: DocumentRef
-  /** D01: el portfolio anterior se servirá desde /old/ dentro del repo. */
+  /** D01: versión anterior publicada en /old-version/ dentro del sitio. */
   olderPortfolioUrl: string
 }
 
@@ -85,7 +85,7 @@ export const site: SiteData = {
   linkedin: 'https://www.linkedin.com/in/rva-developer/',
   /** Ronda 7: perfil real de Upwork (botón junto a LinkedIn). */
   upwork: 'https://www.upwork.com/freelancers/~011b7fd9b75d981e3c',
-  olderPortfolioUrl: '/portfolio/old/',
+  olderPortfolioUrl: '/portfolio/old-version/',
   /**
    * Ronda 7 D50 — el CV ya NO se descarga: se VISUALIZA en el
    * DocumentViewerOverlay (mismo patrón que certificaciones e idiomas).

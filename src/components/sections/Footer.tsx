@@ -6,7 +6,7 @@ import { ProjectOverlay } from '../overlays/ProjectOverlay'
 import styles from './Footer.module.css'
 
 /**
- * RF-22: pie con copyright + enlace discreto "Older Portfolio" → /portfolio/old/.
+ * RF-22: pie con copyright + enlace discreto "Older Portfolio" → /portfolio/old-version/.
  *
  * Ronda 3 F6: la línea de copyright es PULSABLE y abre la ficha del propio
  * portfolio (RVA Portfolio) reutilizando el ProjectOverlay existente, sin

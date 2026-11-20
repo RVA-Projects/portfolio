@@ -15,16 +15,16 @@ export const experience: Experience[] = [
     id: 'centro-medico-sector-v-web',
     period: { start: '2025' },
     organization: {
-      es: 'Centro Médico Sector V — web',
-      en: 'Centro Médico Sector V — website',
+      es: 'Centro Médico Sector V',
+      en: 'Centro Médico Sector V',
     },
     role: {
-      es: 'Diseño, desarrollo, despliegue y mantenimiento',
-      en: 'Design, development, deployment and maintenance',
+      es: 'Desarrollo de web empresarial',
+      en: 'Corporate website development',
     },
     description: {
-      es: 'Página web oficial del centro: sitio WordPress sobre hosting propio (SWHosting), posicionamiento SEO completo y canales de contacto instantáneos.',
-      en: 'Official website of the centre: WordPress site on its own hosting (SWHosting), full SEO work and instant contact channels.',
+      es: 'Sitio oficial del centro desarrollado en WordPress y alojado en SWHosting, con posicionamiento SEO y canales de contacto.',
+      en: 'Official centre website built with WordPress and hosted on SWHosting, with SEO positioning and contact channels.',
     },
     responsibilities: [
       {
@@ -66,16 +66,16 @@ export const experience: Experience[] = [
     id: 'redes-sociales-centro-medico',
     period: { start: '2025' },
     organization: {
-      es: 'Centro Médico Sector V — redes sociales',
-      en: 'Centro Médico Sector V — social media',
+      es: 'Centro Médico Sector V',
+      en: 'Centro Médico Sector V',
     },
     role: {
-      es: 'Gestión y optimización de redes',
-      en: 'Social media management and optimisation',
+      es: 'Gestión de redes sociales',
+      en: 'Social media management',
     },
     description: {
-      es: 'Gestión completa de la identidad y presencia del centro en redes con Meta Business Suite.',
-      en: 'Full management of the centre’s social identity and presence with Meta Business Suite.',
+      es: 'Gestión de la identidad y la presencia del centro en redes sociales mediante Meta Business Suite.',
+      en: 'Management of the centre’s identity and presence on social media using Meta Business Suite.',
     },
     responsibilities: [
       {
@@ -93,23 +93,23 @@ export const experience: Experience[] = [
         },
       },
     ],
-    technologyIds: [],
+    technologyIds: ['meta-business-suite'],
     projectIds: ['centro-medico-sector-v'],
   },
   {
     id: 'agente-ia-centro-medico',
     period: { start: '2026' },
     organization: {
-      es: 'Centro Médico Sector V — agente IA de asesoramiento',
-      en: 'Centro Médico Sector V — AI advisory agent',
+      es: 'Centro Médico Sector V',
+      en: 'Centro Médico Sector V',
     },
     role: {
-      es: 'Diseño y entrenamiento del agente',
-      en: 'Agent design and training',
+      es: 'Desarrollo de agente de IA para asesoramiento',
+      en: 'AI advisory agent development',
     },
     description: {
-      es: 'Agente de asesoramiento para las consultas de pacientes del sitio, con base de conocimiento Echo Knowledge Base y respuestas potenciadas por la API de Gemini.',
-      en: 'Advisory agent for patient enquiries on the site, backed by an Echo Knowledge Base with answers powered by the Gemini API.',
+      es: 'Agente de IA integrado en la web para atender consultas de pacientes, con una base de conocimiento Echo Knowledge Base y respuestas mediante la API de Gemini.',
+      en: 'AI agent integrated into the website to answer patient enquiries, using an Echo Knowledge Base and responses powered by the Gemini API.',
     },
     responsibilities: [
       {
@@ -127,23 +127,23 @@ export const experience: Experience[] = [
         },
       },
     ],
-    technologyIds: ['wordpress'],
+    technologyIds: ['wordpress', 'google-gemini'],
     projectIds: ['centro-medico-sector-v'],
   },
   {
     id: 'signature-application',
     period: { start: '2026' },
     organization: {
-      es: 'Centro Médico Sector V — firma digital',
-      en: 'Centro Médico Sector V — digital signature',
+      es: 'Centro Médico Sector V',
+      en: 'Centro Médico Sector V',
     },
     role: {
-      es: 'Diseño y desarrollo de la aplicación',
-      en: 'Application design and development',
+      es: 'Desarrollo de aplicación de firma digital',
+      en: 'Digital signature application development',
     },
     description: {
-      es: 'Aplicativo de firma de documentos para tableta de firma electrónica: exportación PDF y biometría integrada para el consentimiento de datos en informes médicos. En despliegue como herramienta de trabajo del centro.',
-      en: 'Document-signing application for an electronic signature tablet: PDF export and integrated biometrics for data consent in medical reports. Deployed as a working tool of the centre.',
+      es: 'Aplicación para firmar documentos en tableta electrónica, con exportación PDF y biometría integrada para el consentimiento sobre datos de informes médicos. En despliegue como herramienta del centro.',
+      en: 'Application for signing documents on an electronic tablet, with PDF export and integrated biometrics for consent to the use of data in medical reports. Being deployed as a centre tool.',
     },
     responsibilities: [
       {
@@ -178,12 +178,12 @@ export const experience: Experience[] = [
     period: { start: '2025' },
     organization: { es: 'Loki Home', en: 'Loki Home' },
     role: {
-      es: 'Diseño, desarrollo y despliegue web',
-      en: 'Web design, development and deployment',
+      es: 'Desarrollo de web para materiales de construcción y decoración',
+      en: 'Website development for building materials and home decor',
     },
     description: {
-      es: 'Página web oficial de la marca, desarrollada de principio a fin (HTML/CSS/JS vanilla) y publicada en dominio propio.',
-      en: 'Official brand website, developed end to end (vanilla HTML/CSS/JS) and published on its own domain.',
+      es: 'Sitio web de Loki Home para su actividad comercial en materiales de construcción y decoración, desarrollado con HTML, CSS y JavaScript y publicado en dominio propio.',
+      en: 'Loki Home website for its commercial activity in building materials and home decor, built with HTML, CSS and JavaScript and published on its own domain.',
     },
     responsibilities: [
       {
@@ -208,16 +208,16 @@ export const experience: Experience[] = [
   {
     id: 'smarti-data-datasets',
     organization: {
-      es: 'Smarti DATA — vía Upwork',
-      en: 'Smarti DATA — via Upwork',
+      es: 'Smarti DATA · Upwork',
+      en: 'Smarti DATA · Upwork',
     },
     role: {
-      es: 'Colaborador remoto',
-      en: 'Remote collaborator',
+      es: 'Registro y verificación de datos conversacionales para entrenamiento de IA',
+      en: 'Conversational data recording and verification for AI training',
     },
     description: {
-      es: 'Registraba conversational datasets para el entrenamiento de modelos de IA, como trabajo freelance vía Upwork.',
-      en: 'Recorded conversational datasets for AI-model training, as freelance work via Upwork.',
+      es: 'Registro y verificación de datos conversacionales destinados al entrenamiento de modelos de inteligencia artificial en una colaboración remota vía Upwork.',
+      en: 'Recording and verification of conversational data for training artificial intelligence models as a remote collaboration via Upwork.',
     },
     responsibilities: [
       {
@@ -239,16 +239,16 @@ export const experience: Experience[] = [
   {
     id: 'voz-asistentes-ia',
     organization: {
-      es: 'Captación de comandos de voz — vía Upwork',
-      en: 'Voice command collection — via Upwork',
+      es: 'Upwork',
+      en: 'Upwork',
     },
     role: {
-      es: 'Colaborador remoto',
-      en: 'Remote collaborator',
+      es: 'Grabación y verificación de comandos de activación para asistentes de IA',
+      en: 'Wake-word recording and verification for AI assistants',
     },
     description: {
-      es: 'Captación y entrega de Wake-Up voice commands para asistentes de IA, como trabajo freelance vía Upwork.',
-      en: 'Collected and delivered Wake-Up voice commands for AI assistants, as freelance work via Upwork.',
+      es: 'Captación, grabación y verificación de comandos de activación (Wake-Up) para asistentes de inteligencia artificial en una colaboración remota vía Upwork.',
+      en: 'Collection, recording and verification of wake-up voice commands for artificial intelligence assistants as a remote collaboration via Upwork.',
     },
     responsibilities: [
       {

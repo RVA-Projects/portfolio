@@ -55,7 +55,7 @@
   }
 }
 
-/* Zoom suave del icono al pasar por la fila (decorativo) */
-.techItem:hover img {
+/* Zoom suave para todos los iconos, incluidos los que usan mask + currentColor. */
+.techItem:hover [data-tech-icon] {
   transform: scale(1.15);
 }

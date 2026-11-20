@@ -1,0 +1,11 @@
+{
+  "name": "snake",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Snake clásico para navegador (HTML/CSS/JS vanilla, sin build).",
+  "type": "module",
+  "scripts": {
+    "check": "node --check main.js && node --check ui.js && node --check logic.js && node --check board.js && node --check snake.js && node --check food.js && node --check config.js && node --check i18n.js && node --check storage.js && node --check utils.js && node --check audio.js && node --check vendor/zzfx.js",
+    "test": "node --test"
+  }
+}

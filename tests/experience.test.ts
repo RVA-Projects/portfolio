@@ -66,6 +66,15 @@ describe('audit:content — integridad de datos de experiencia (RF-15, Fase 6)',
     }
   })
 
+  it('declara las herramientas de redes sociales y del agente IA en sus experiencias', () => {
+    expect(
+      experience.find((item) => item.id === 'redes-sociales-centro-medico')?.technologyIds,
+    ).toContain('meta-business-suite')
+    expect(
+      experience.find((item) => item.id === 'agente-ia-centro-medico')?.technologyIds,
+    ).toContain('google-gemini')
+  })
+
   it('los projectIds declarados existen en el catálogo de Proyectos (mapeo aprobado, Fase 5)', () => {
     const expected = new Map<string, string[]>([
       ['centro-medico-sector-v-web', ['centro-medico-sector-v']],

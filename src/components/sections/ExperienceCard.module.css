@@ -55,6 +55,12 @@
   line-height: 1.25;
 }
 
+.subtitle {
+  color: var(--color-text-muted);
+  font-size: var(--fs-small);
+  line-height: 1.35;
+}
+
 .period {
   font-family: var(--font-mono);
   font-size: var(--fs-small);

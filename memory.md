@@ -1,13 +1,20 @@
 # memory.md — RVA Portfolio
 
 > Memoria operativa del agente. Actualizar tras cada cambio relevante.
-> Última actualización: 2026-11-17 (ronda 6: F1 carrusel experiencia D47, F2 botón CV D48, F3 captcha CV D49; 174 tests).
+> Última actualización: 2026-11-19 (D52: años de experiencia e iconos del Stack).
+
+## Cambio operativo (2026-11-20)
+
+- Favicon actualizado al PNG existente `public/media/projects/favicon.png`.
+- El sitio histórico se sirve desde `public/old-version/`; el enlace del footer apunta a `/portfolio/old-version/`.
+- `oldPortfolio/` sigue ignorada por Git y se usa como fuente local; la copia publicada está bajo `public/` para incluirla en el artefacto de Pages.
+- Remoto `origin` conectado a `RVA-Projects/portfolio`; `main` remoto (commit `33b040d`) contiene el sitio histórico preservado en `public/old-version/`. Commit local preparado; falta integrar historias y publicar en `main`.
 
 ## Estado actual
 
 - **Fases:** 0 ✅ · 1 ✅ · 2 ✅ · 3 ✅ · 4 ✅ (deploy pendiente de remoto) · 5 ✅ (revisión móvil aplazada a post-despliegue, decisión del propietario) · 6 🔶 (F6.1–F6.7 hechas) · **PLAN DE ACTUALIZACIÓN 2026-11 en curso: Fase 1 (temas, D18) ✅ · Fase 2.1 (carrusel) ✅ · Fase 2.2 (filtros) ✅ · Fase 4 (flechas+fullscreen) ✅ · Fase 6 (integración experiencia) ✅ · Fase 5 (rediseño experiencia) ✅ · Fase 3 (visor ampliado/zoom, D21) ✅ · Fase 7 (menú compacto + grid tecnologías, D22) ✅ · Fase 8 (e2e Playwright) ✅ · D23 (fondo animado de puntos) ✅ · **D24 (clicker + tooltips + tags sólidos) ✅**.
-- **Harness:** `npm run validate` en VERDE (92 tests pasando; 1 warning aceptable react-refresh en `src/i18n/index.tsx`).
-- **Build:** JS 332.47KB (105.93KB gzip) / CSS 18.60KB; base `/portfolio/` verificada; cero dependencias de runtime (iconos como assets).
+- **Harness:** `npm run validate` en VERDE (179 tests; 1 warning react-refresh conocido en `src/i18n/index.tsx`). Playwright 16/16, incluido hover en iconos monocromos en ambos temas y responsive 375/768/1024/1440.
+- **Build:** JS 375.10KB (120.68KB gzip) / CSS 33.11KB; base `/portfolio/` verificada; cero dependencias de runtime (iconos como assets).
 
 ## Decisiones cerradas con el propietario (2026-11-10)
 
@@ -66,6 +73,8 @@ Ver detalle en `docs/decisions.md` (D01–D15). Resumen:
 
 ## Últimos cambios
 
+- 2026-11-19: **D52 — años puntuales y ajuste del Stack** — las experiencias muestran solo el año confirmado (sin «Actualidad»); Stack principal y tecnologías experimentadas ordenadas alfabéticamente; OpenCoDEX en principal y Codex en experimentadas; zoom hover unificado en raíces `<img>` y máscaras. `npm run validate`: 179 tests y build correctos; Playwright 16/16, incluidos hover en ambos temas y los cuatro viewports.
+- 2026-11-19: **D51 — jerarquía descriptiva de Experiencia** — `role` obligatorio como título y `organization` como subtítulo en tarjetas y overlays; copy profesional es/en para las 7 entradas; catálogo e iconos SVG locales de Meta Business Suite y Google Gemini; validación completa: `npm run validate` (178 pruebas) y Playwright 15/15.
 - 2026-11-17 (5): **D50 Upwork en la Hero + CV en el visor de documentos (ronda 7)** — `site.upwork` + `IconUpwork` (simple-icons) + `Button` externo tras LinkedIn; `site.cvDocument: DocumentRef` y `CaptchaPuzzleOverlay.onOpenCv`: el éxito abre el `DocumentViewerOverlay` de Introduction (patrón EducationSection) y CIERRA el captcha (sin doble modal); copys a «Ver CV» (pill + éxito); la descarga sigue disponible dentro del visor; 176 unitarios + validate ✓; diag e2e (borrado): fila completa 1440/375, traspaso captcha→visor, nota headless sin visor PDF (iframe validado por src).
 - 2026-11-17 (4): **Ronda 6 completa — F4 validación final** — suite e2e 15/15 (webServer build+preview); capturas fullPage 1440 oscuro/claro (carrusel experiencia 3 visibles 1/7, botón CV en quickLinks) + 375 oscuro/claro (sin overflow asertado); 174 unitarios + validate ✓. Estado: ronda 6 cerrada (D47-D49).
 - 2026-11-17 (3): **D49 CAPTCHA puzzle del CV (ronda 6 F3)** — lógica pura `utils/captcha.ts` (mulberry32, hueco ∈ [15%,85%], tolerancia ±10px) + `CaptchaPuzzleOverlay` sobre `Modal` (Canvas 2D 320×180, patrón determinista, pieza en % alineada a cualquier escala, slider ratón+táctil+teclado, éxito⇒snap+glow+descarga, fallo⇒shake+retry); `Modal` gana prop `className` (panel 420px); i18n `captcha.*`; 174 unitarios + validate ✓; diag e2e (borrado) verificó fallo/retry/éxito/tema claro/móvil. **Limitación D49 (aprobada, Alternativa A): validación local, NO protege el PDF de acceso directo a `/portfolio/docs/cv.pdf`.**

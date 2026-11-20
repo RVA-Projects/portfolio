@@ -6,9 +6,9 @@ Registro de decisiones (ADR ligero). Pueden añadirse con cualquier estado: `pro
 
 ## D01 — El nuevo portfolio ocupa el repo del portfolio anterior — ✅ Aprobada (2026-11-10)
 
-- **Decisión:** desplegar el nuevo portfolio en el repo existente (`RVA-Projects/portfolio`), con base path `/portfolio/`. El sitio anterior se preserva copiado en `public/old/` y se enlaza en la nueva app como "Older Portfolio".
+- **Decisión:** desplegar el nuevo portfolio en el repo existente (`RVA-Projects/portfolio`), con base path `/portfolio/`. El sitio anterior se preserva en `public/old-version/` y se enlaza en la nueva app como "Older Portfolio". La carpeta fuente `oldPortfolio/` se mantiene excluida por `.gitignore`; su copia publicable forma parte del artefacto de Pages.
 - **Alternativas:** repo nuevo (descartada por el propietario: quiere heredar la URL y que el viejo quede "como versión anterior").
-- **Impacto:** `vite.config.ts` (`base: '/portfolio/'`); hay que generar la URL de Pages sobre el repo con Actions; al empezar a desplegar, disponer del repositorio remoto en el local (clonar o conectar) y mover los ficheros del sitio anterior a `public/old/` antes del primer deploy para no romper la URL actual.
+- **Impacto:** `vite.config.ts` (`base: '/portfolio/'`); hay que generar la URL de Pages sobre el repo con Actions; antes del deploy, copiar el sitio anterior a `public/old-version/` para conservarlo en la URL nueva.
 - **Riesgo:** la configuración exacta del repo (rama Pages, si usa Actions o rama `gh-pages`) solo se confirmará al tener el remoto conectado.
 
 ## D02 — Contacto solo por email (sin formulario) — ✅ Aprobada (2026-11-10)
@@ -323,4 +323,16 @@ Tres ajustes aprobados por el propietario:
 - **Petición:** (1) botón Upwork junto a LinkedIn con el perfil real; (2) el éxito del CAPTCHA NO descarga: VISUALIZA el CV en el DocumentViewerOverlay (mismo componente que certificaciones/idiomas); al abrirse el visor, el CAPTCHA se cierra.
 - **Solución:** (1) `site.upwork` (URL en datos) + `IconUpwork` (glifo oficial simple-icons CC0) + `Button` externo tras LinkedIn/antes del Clicker. (2) `site.cvDocument: DocumentRef` (`kind: 'pdf'`, `src: /portfolio/docs/cv.pdf`) — el componente deja de hardcodear la URL; `CaptchaPuzzleOverlay` gana prop `onOpenCv` y su botón de éxito es un `Button` de click; `Introduction` coordina (patrón EducationSection): `openCvViewer` cierra el CAPTCHA y monta su PROPIA instancia de `DocumentViewerOverlay` (tercera, sin duplicación). Copys: `intro.cvTooltip` y `captcha.openCv` = «Ver CV»/«View CV»; la descarga sigue disponible DENTRO del visor (`documentViewer.download`).
 - **Nota de diagnóstico:** headless Chromium no tiene visor PDF embebido (navegar al PDF dispara descarga); el iframe del visor se valida por `src` en e2e y renderiza en navegadores reales (mecanismo idéntico al de certificaciones, ya en producción).
+
+## D51 — Jerarquía descriptiva para Experiencia — ✅ Aprobada (2026-11-19)
+
+- **Petición:** facilitar la identificación del trabajo realizado en las siete experiencias y redactar sus descripciones en tono profesional, manteniendo el carrusel y los overlays.
+- **Solución:** `role` es obligatorio y se presenta como título; `organization` identifica empresa, cliente o plataforma como subtítulo. Se actualizan los títulos y las descripciones es/en sin modificar responsabilidades, fechas ni enlaces. En el catálogo de tecnologías se añaden Meta Business Suite (marca Meta) y Google Gemini con SVG locales de Simple Icons, usados solo en las experiencias de redes sociales y del agente IA. El tamaño, distribución y comportamiento de los iconos del carrusel se conservan.
+- **Validación:** `npm run validate` — 178 pruebas unitarias, typecheck, lint, formato y build correctos; Playwright 15/15, incluidos los cuatro viewports y los overlays. Se mantiene un warning react-refresh existente en `src/i18n/index.tsx`.
+
+## D52 — Años puntuales y ajuste del Stack — ✅ Aprobada (2026-11-19)
+
+- **Petición:** quitar «Actualidad» de las experiencias, ordenar alfabéticamente cada grupo del Stack, añadir Codex a experimentadas y OpenCoDEX a Stack principal, y restaurar el zoom hover en los iconos que adaptan su color al tema.
+- **Solución:** tarjetas y overlays muestran solo `period.start`; las experiencias sin año confirmado siguen sin fecha. Ambos tiers se ordenan por nombre visible. Se añaden las entradas `Codex` y `OpenCoDEX` como elementos distintos, con el mismo icono Codex local del Marketplace oficial. El selector hover usa un atributo compartido en la raíz de cada icono (`img` o máscara `span`), sin alterar tamaño ni layout.
+- **Validación:** Vitest, `npm run validate` y Playwright con hover en oscuro/claro y comprobación responsive.
 - **Pruebas:** 176 unitarios ✓ (cv-button 4: tooltip «Ver CV», orden email→CV→GitHub→LinkedIn→Upwork, no-enlace, Upwork href/target/rel; captcha-overlay 7: éxito⇒«Ver CV» sin href que llama a onOpenCv + integración App con Math.random stubbed ⇒ captcha cerrado + dialog «CV — Andrei Ronai» abierto); diag e2e temporal (borrado): Upwork en la misma fila tras LinkedIn (1440 y 375 sin overflow), traspaso captcha→visor verificado; validate ✓.

@@ -41,6 +41,7 @@ describe('Sección Stack (D27)', () => {
            (<span> con mask-image + currentColor, aria-hidden). */
         const icon = item.firstElementChild as HTMLElement
         expect(icon.getAttribute('aria-hidden')).toBe('true')
+        expect(icon.hasAttribute('data-tech-icon')).toBe(true)
         expect(icon.tagName === 'IMG' || icon.tagName === 'svg' || icon.tagName === 'SPAN').toBe(
           true,
         )

@@ -31,6 +31,25 @@ test.describe('Temas (D18)', () => {
     await page.getByRole('button', { name: 'Cambiar a modo oscuro' }).click()
     await expect(page.locator('html')).not.toHaveAttribute('data-theme', 'light')
   })
+
+  test('los iconos monocromos conservan el zoom hover en ambos temas', async ({ page }) => {
+    const names = ['Meta Business Suite', 'Google Gemini', 'Unity', 'GitHub', 'Codex', 'OpenCoDEX']
+
+    const verifyZoom = async () => {
+      for (const name of names) {
+        const item = page.locator('#stack li').filter({ hasText: new RegExp(`^${name}$`) })
+        const icon = item.locator('[data-tech-icon]')
+        await icon.hover()
+        await expect(icon).toHaveCSS('transform', 'matrix(1.15, 0, 0, 1.15, 0, 0)')
+      }
+    }
+
+    await verifyZoom()
+    await page.mouse.move(0, 0)
+    await page.getByRole('button', { name: 'Cambiar a modo claro' }).click()
+    await expect(page.locator('html')).toHaveAttribute('data-theme', 'light')
+    await verifyZoom()
+  })
 })
 
 /**

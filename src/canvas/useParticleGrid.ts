@@ -50,7 +50,7 @@ const CURSOR_PULL = 3600
 const CLICK_RADIUS = 480
 /** Impulso hacia el punto del clic: fuerte en el centro, decae con falloff².
     Más valor = succión más dramática. */
-const CLICK_SPEED = 1100
+const CLICK_SPEED = 3100
 /** Velocidad máxima de cualquier punto (px/s): freno de seguridad. */
 const MAX_SPEED = 1500
 /** Desplazamiento máximo desde su posición home (px): el grid nunca se

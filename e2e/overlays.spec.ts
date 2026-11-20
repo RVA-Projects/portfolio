@@ -52,8 +52,14 @@ test.describe('Ficha de proyecto', () => {
 
 test.describe('Experiencia', () => {
   test('overlay de experiencia abre la ficha de su proyecto asociado', async ({ page }) => {
-    await page.getByRole('button', { name: 'Abrir experiencia: Loki Home' }).click()
-    const dialog = page.getByRole('dialog', { name: 'Loki Home' })
+    await page
+      .getByRole('button', {
+        name: 'Abrir experiencia: Desarrollo de web para materiales de construcción y decoración: Loki Home',
+      })
+      .click()
+    const dialog = page.getByRole('dialog', {
+      name: 'Desarrollo de web para materiales de construcción y decoración',
+    })
     await expect(dialog).toBeVisible()
 
     await dialog.getByRole('button', { name: 'Ver proyecto: Loki Home' }).click()
@@ -63,8 +69,14 @@ test.describe('Experiencia', () => {
   })
 
   test('cierra con Escape', async ({ page }) => {
-    await page.getByRole('button', { name: 'Abrir experiencia: Smarti DATA — vía Upwork' }).click()
-    const dialog = page.getByRole('dialog', { name: 'Smarti DATA — vía Upwork' })
+    await page
+      .getByRole('button', {
+        name: 'Abrir experiencia: Registro y verificación de datos conversacionales para entrenamiento de IA: Smarti DATA · Upwork',
+      })
+      .click()
+    const dialog = page.getByRole('dialog', {
+      name: 'Registro y verificación de datos conversacionales para entrenamiento de IA',
+    })
     await expect(dialog).toBeVisible()
     await page.keyboard.press('Escape')
     await expect(dialog).toBeHidden()

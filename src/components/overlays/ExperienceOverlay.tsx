@@ -96,10 +96,7 @@ export function ExperienceOverlay({
 
   if (experience === null) return null
 
-  const periodLabel =
-    experience.period === undefined
-      ? null
-      : `${experience.period.start} – ${experience.period.end ?? texts.experience.current}`
+  const periodLabel = experience.period?.start ?? null
 
   const associated = (experience.projectIds ?? [])
     .map((projectId) => projects.find((project) => project.id === projectId))
@@ -111,10 +108,10 @@ export function ExperienceOverlay({
         <header className={styles.header}>
           <div>
             <h2 id={TITLE_ID} className={styles.title}>
-              {experience.organization[language]}
+              {experience.role[language]}
             </h2>
             <p className={styles.meta}>
-              {experience.role !== undefined && <span>{experience.role[language]}</span>}
+              <span>{experience.organization[language]}</span>
               {periodLabel !== null && <span>{periodLabel}</span>}
             </p>
           </div>
