@@ -8,7 +8,7 @@
 - Favicon actualizado al PNG existente `public/media/projects/favicon.png`.
 - El sitio histórico se sirve desde `public/old-version/`; el enlace del footer apunta a `/portfolio/old-version/`.
 - `oldPortfolio/` sigue ignorada por Git y se usa como fuente local; la copia publicada está bajo `public/` para incluirla en el artefacto de Pages.
-- Remoto `origin` conectado a `RVA-Projects/portfolio`; `main` remoto (commit `33b040d`) contiene el sitio histórico preservado en `public/old-version/`. Commit local preparado; falta integrar historias y publicar en `main`.
+- Publicado en `RVA-Projects/portfolio` el 2026-11-20. El merge `63d8936` integra el historial previo (commit padre `33b040d`) y el release nuevo; Actions y Pages completados con éxito. Respuestas HTTP 200 en `/portfolio/`, `/portfolio/old-version/` y el favicon PNG.
 
 ## Estado actual
 
