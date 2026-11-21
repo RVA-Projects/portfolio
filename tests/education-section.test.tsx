@@ -9,6 +9,30 @@ beforeEach(() => {
 })
 
 describe('EducationSection (F6.6, RF-16)', () => {
+  it('usa tarjetas por defecto y permite cambiar a la lista completa y volver', () => {
+    render(<App />)
+    const section = document.getElementById('education') as HTMLElement
+    const cards = within(section).getByRole('group', { name: 'Vista de formación' })
+    expect(within(cards).getByRole('button', { name: 'Tarjetas' })).toHaveAttribute(
+      'aria-pressed',
+      'true',
+    )
+    expect(within(section).getAllByRole('article')).toHaveLength(11)
+    fireEvent.click(within(cards).getByRole('button', { name: 'Lista' }))
+    expect(within(cards).getByRole('button', { name: 'Lista' })).toHaveAttribute(
+      'aria-pressed',
+      'true',
+    )
+    expect(within(section).getAllByRole('article')).toHaveLength(11)
+    expect(within(section).getAllByRole('button', { name: 'Ver acreditación' })).toHaveLength(6)
+    expect(within(section).getAllByRole('link', { name: 'Ver acreditación' })).toHaveLength(3)
+    fireEvent.click(within(cards).getByRole('button', { name: 'Tarjetas' }))
+    expect(within(cards).getByRole('button', { name: 'Tarjetas' })).toHaveAttribute(
+      'aria-pressed',
+      'true',
+    )
+  })
+
   it('agrupa por jerarquía y no muestra grupos vacíos', () => {
     render(<App />)
     const section = document.getElementById('education')

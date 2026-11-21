@@ -46,7 +46,18 @@ describe('Sección Stack (D27)', () => {
           true,
         )
         if (icon.tagName === 'SPAN') {
-          expect(icon.style.maskImage).toContain('url(')
+          if (tech.icon === 'codex' || tech.icon === 'opencode') {
+            expect(icon.querySelectorAll('img')).toHaveLength(2)
+            const [light, dark] = icon.querySelectorAll('img')
+            expect(light.getAttribute('src')).toContain(`${tech.icon}-light.png`)
+            expect(dark.getAttribute('src')).toBe(
+              tech.icon === 'codex'
+                ? '/portfolio/assets/img/icons/codex-light.png'
+                : '/portfolio/assets/img/icons/opencode-dark.png',
+            )
+          } else {
+            expect(icon.style.maskImage).toContain('url(')
+          }
         }
       }
     }

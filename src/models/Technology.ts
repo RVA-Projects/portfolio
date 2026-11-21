@@ -1,6 +1,7 @@
 import type { BaseEntity } from './common'
 
-export type TechnologyTier = 'core' | 'explored'
+/** `project` se resuelve en fichas, pero no se incluye en el Stack visual. */
+export type TechnologyTier = 'core' | 'explored' | 'project'
 
 export interface Technology extends BaseEntity {
   /** Nombre canónico, igual en ambos idiomas. */
@@ -12,7 +13,7 @@ export interface Technology extends BaseEntity {
    * SVG disponible) o ausente ⇒ el componente TechIcon resuelve su SVG
    * inline por `id` (sin CDN externo).
    */
-  icon?: 'python' | 'unity' | 'xampp' | 'odoo' | 'codex'
+  icon?: 'python' | 'unity' | 'xampp' | 'odoo' | 'codex' | 'opencode'
   /**
    * D28 — adaptación visual de la marca (ronda 2, F4): 'mono' ⇒ silueta que
    * hereda el color del texto del tema (mask + currentColor; logotipos

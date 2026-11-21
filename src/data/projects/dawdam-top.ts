@@ -10,6 +10,7 @@ export const dawdamTop: Project = {
     en: 'Collaboration on the dawdam.top platform: subject and content management, plus optimised WordPress workflows.',
   },
   category: 'collab',
+  filterCategories: ['web'],
   technologyIds: ['wordpress'],
   media: [
     {

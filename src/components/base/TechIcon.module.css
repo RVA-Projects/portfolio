@@ -8,6 +8,27 @@
   transition: transform 150ms ease;
 }
 
+.themedLogo,
+.themedLogo img {
+  display: block;
+  width: var(--tech-icon-size, 24px);
+  height: var(--tech-icon-size, 24px);
+  flex-shrink: 0;
+  object-fit: contain;
+}
+
+.themedLogo img:nth-child(2) {
+  display: none;
+}
+
+:global(html:not([data-theme='light'])) .themedLogo img:first-child {
+  display: none;
+}
+
+:global(html:not([data-theme='light'])) .themedLogo img:nth-child(2) {
+  display: block;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .techIcon,
   .mono {

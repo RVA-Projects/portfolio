@@ -10,6 +10,7 @@ export const taskManager: Project = {
     en: 'Desktop application for daily task management with local SQLite persistence.',
   },
   category: 'desktop',
+  filterCategories: ['csharp'],
   technologyIds: ['csharp', 'sqlite'],
   media: [
     {

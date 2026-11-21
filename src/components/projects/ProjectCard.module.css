@@ -60,6 +60,9 @@
   position: absolute;
   top: var(--space-3);
   left: var(--space-3);
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1);
 }
 
 .body {

@@ -6,11 +6,12 @@ export const centroMedicoSectorV: Project = {
   year: 2025,
   name: { es: 'Centro Médico Sector V', en: 'Centro Médico Sector V' },
   summary: {
-    es: 'Web del centro médico con WordPress, posicionamiento SEO, formulario de contacto por WhatsApp y asistente de IA con Gemini API.',
-    en: 'Medical centre website on WordPress with SEO positioning, WhatsApp contact form and a Gemini API AI assistant.',
+    es: 'Web del centro médico y posicionamiento SEO, reservas con calendario de Google y asistente con Gemini API y base de conocimiento propia.',
+    en: 'Medical centre website and SEO, Google Calendar bookings, and a Gemini API assistant backed by a dedicated knowledge base.',
   },
   category: 'web',
-  technologyIds: ['wordpress', 'html', 'css', 'javascript'],
+  filterCategories: ['web'],
+  technologyIds: ['wordpress', 'html', 'css', 'javascript', 'google-gemini'],
   media: [
     {
       id: 'cmsv-1',
@@ -21,34 +22,41 @@ export const centroMedicoSectorV: Project = {
   ],
   links: [{ id: 'web', url: 'https://centromedicosectorv.es' }],
   goal: {
-    es: 'Dar al centro médico una web funcional, visible en buscadores y con canales de contacto instantáneos.',
-    en: 'Give the medical centre a functional, search-visible site with instant contact channels.',
+    es: 'Ofrecer información fiable del centro, facilitar las reservas y resolver dudas frecuentes de los visitantes.',
+    en: 'Provide reliable information about the centre, make bookings easier and answer visitors’ common questions.',
   },
   problem: {
-    es: 'El centro no tenía presencia web organizada y perdía pacientes que no podían solicitar cita en línea.',
-    en: 'The centre had no organised web presence and was losing patients who could not request appointments online.',
+    es: 'Los visitantes necesitaban consultar los servicios y resolver dudas, además de encontrar una vía clara para reservar cita.',
+    en: 'Visitors needed information about services and answers to common questions, as well as a clear way to book appointments.',
   },
   role: {
-    es: 'Desarrollo web, gestión del hosting (SWHosting), SEO, integración de contacto y asistente de IA.',
-    en: 'Web development, hosting management (SWHosting), SEO, contact and AI assistant integration.',
+    es: 'Desarrollo de la web, gestión del hosting (SWHosting), posicionamiento SEO e integración del agente de IA y del sistema de reservas.',
+    en: 'Website development, SWHosting management, SEO, and integration of the AI agent and booking system.',
   },
   architecture: {
-    es: 'WordPress sobre hosting propio (SWHosting) con plugins de optimización, integración de WhatsApp y llamadas a la API de Gemini.',
-    en: 'WordPress on its own hosting (SWHosting) with optimisation plugins, WhatsApp integration and calls to the Gemini API.',
+    es: 'WordPress en SWHosting, con el calendario oficial de reservas de Google integrado en la web y acceso a la página externa de reservas. El agente usa Gemini API y la Eko Knowledge Base propia como única fuente; el prompt limita sus respuestas a esa documentación, sin búsquedas externas.',
+    en: 'WordPress on SWHosting, with Google’s official booking calendar embedded in the site and a link to the external Google booking page. The Gemini API agent uses the custom Eko Knowledge Base as its sole source; its prompt restricts answers to that documentation and disallows external searches.',
   },
   features: [
     {
       id: 'f-1',
       text: {
-        es: 'Formulario de contacto integrado con WhatsApp',
-        en: 'Contact form integrated with WhatsApp',
+        es: 'Calendario oficial de reservas de Google integrado en la web y acceso a la página externa de reservas',
+        en: 'Google’s official booking calendar embedded in the site, with access to its external booking page',
       },
     },
     {
       id: 'f-2',
       text: {
-        es: 'Asistente conversacional con la API de Gemini',
-        en: 'Conversational assistant using the Gemini API',
+        es: 'Agente con Gemini API para responder dudas y dirigir las solicitudes de cita al sistema oficial',
+        en: 'Gemini API agent that answers questions and directs booking requests to the official system',
+      },
+    },
+    {
+      id: 'f-4',
+      text: {
+        es: 'Eko Knowledge Base: documentación del centro, sus servicios y preguntas frecuentes, utilizada como única fuente del agente',
+        en: 'Eko Knowledge Base: centre, service and FAQ documentation used as the agent’s sole information source',
       },
     },
     {
@@ -70,14 +78,14 @@ export const centroMedicoSectorV: Project = {
     {
       id: 'd-2',
       text: {
-        es: 'WhatsApp como canal de cita por la preferencia del paciente frente a formularios tradicionales',
-        en: 'WhatsApp as the booking channel given patient preference over classic forms',
+        es: 'Calendario de Google como sistema oficial de reserva; el agente deriva las solicitudes a ese sistema y responde solo con la Eko Knowledge Base',
+        en: 'Google Calendar as the official booking system; the agent routes booking requests there and answers only from the Eko Knowledge Base',
       },
     },
   ],
   outcomes: {
-    es: 'Web publicada en producción y presencia activa en buscadores; también gestioné la identidad del centro en redes sociales con Meta Business Suite.',
-    en: 'Site live in production with active search presence; I also managed the centre’s social-media identity with Meta Business Suite.',
+    es: 'Web publicada y utilizada por visitantes. El agente ofrece atención automatizada y ha reducido significativamente las consultas informativas que requerían respuesta directa. También gestioné la identidad del centro en redes sociales con Meta Business Suite.',
+    en: 'The published site is used by visitors. The agent provides automated support and has significantly reduced informational questions requiring a direct response. I also managed the centre’s social-media identity with Meta Business Suite.',
   },
   learnings: {
     es: 'SEO aplicado a un negocio real, integración de servicios de IA en WordPress y gestión de CMS para equipos no técnicos.',

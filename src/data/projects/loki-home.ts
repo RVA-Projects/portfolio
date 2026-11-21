@@ -10,6 +10,7 @@ export const lokiHome: Project = {
     en: 'Corporate responsive website developed and launched for the Loki Home brand.',
   },
   category: 'web',
+  filterCategories: ['web'],
   technologyIds: ['html', 'css', 'javascript'],
   media: [
     {
@@ -56,8 +57,22 @@ export const lokiHome: Project = {
     {
       id: 'd-1',
       text: {
-        es: 'Vanilla HTML/CSS/JS sin framework para peso mínimo y control total del diseño',
-        en: 'Vanilla HTML/CSS/JS with no framework for minimum weight and full design control',
+        es: 'Selección y adaptación de plantillas para aproximarse al diseño solicitado, validando de forma continua las preferencias del cliente.',
+        en: 'Selected and adapted templates to match the requested design, continuously validating the client’s preferences.',
+      },
+    },
+    {
+      id: 'd-2',
+      text: {
+        es: 'Adaptación de la estructura y el JavaScript, especialmente animaciones y carruseles, e integración del contenido comercial y técnico.',
+        en: 'Adapted the structure and JavaScript, especially animations and carousels, and integrated the commercial and technical content.',
+      },
+    },
+    {
+      id: 'd-3',
+      text: {
+        es: 'Configuración del sistema de cookies y consentimiento. Mantenimiento mediante tres actualizaciones importantes que incorporaron nuevas colecciones, información y apartados, especialmente de documentación técnica.',
+        en: 'Configured the cookie and consent system. Maintained the site through three major updates adding collections, information and new sections, especially technical documentation.',
       },
     },
   ],

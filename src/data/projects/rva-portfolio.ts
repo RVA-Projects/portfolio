@@ -1,20 +1,9 @@
 import type { Project } from '../../models/Project'
 
 /**
- * Ficha especial (ronda 3 F6, petición del propietario): el propio portfolio
- * documentado como proyecto, ACCESIBLE SOLO DESDE EL FOOTER — NO pertenece
- * al catálogo `projects` (no toca filtros ni carruseles).
- *
- * F7.1/ES: textos en español; EN = fallback del ES (D-E, ronda 3 F5: las
- * traducciones inglesas llegan cuando el propietario termine de revisar los
- * textos en español; NO se inventan ni traducen automáticamente).
- *
- * Atribución honesta (petición del propietario): arquitectura, diseño y
- * decisiones del propietario; código desarrollado con asistencia de IA
- * (OpenCode) bajo su dirección — no se atribuye la escritura manual del
- * código generado por IA, ni se presenta la IA como autora de las decisiones.
- * Sin métricas, herramientas ni enlaces que no estén en el repo (repo remoto
- * aún pendiente ⇒ links vacío).
+ * RVA Portfolio project record shared by its catalog card and Footer entry.
+ * Andrei defines, designs, directs and reviews the work; OpenCode and Codex
+ * assist implementation under his direction.
  */
 export const rvaPortfolio: Project = {
   id: 'rva-portfolio',
@@ -22,11 +11,12 @@ export const rvaPortfolio: Project = {
   year: 2026,
   name: { es: 'RVA Portfolio', en: 'RVA Portfolio' },
   summary: {
-    es: 'Portfolio profesional desarrollado desde cero con React y desarrollo asistido por IA (OpenCode).',
-    en: 'Portfolio profesional desarrollado desde cero con React y desarrollo asistido por IA (OpenCode).',
+    es: 'Portfolio profesional en React desarrollado con OpenCode y Codex mediante una metodología SDD, planificación y validación incremental.',
+    en: 'Professional React portfolio developed with OpenCode and Codex using SDD, structured planning and incremental validation.',
   },
-  category: 'ai-assisted',
-  technologyIds: ['react', 'css', 'git', 'vscode', 'github'],
+  category: 'web',
+  filterCategories: ['web'],
+  technologyIds: ['react', 'typescript', 'css', 'git', 'github', 'vscode', 'opencodex', 'codex'],
   media: [
     {
       id: 'rva-portfolio-home',
@@ -40,69 +30,69 @@ export const rvaPortfolio: Project = {
   ],
   links: [],
   goal: {
-    es: 'Crear un portfolio profesional, rápido y accesible que documente mi trabajo, desarrollado desde cero con React y con OpenCode (integrado en Visual Studio Code) como asistente de programación.',
-    en: 'Crear un portfolio profesional, rápido y accesible que documente mi trabajo, desarrollado desde cero con React y con OpenCode (integrado en Visual Studio Code) como asistente de programación.',
+    es: 'Crear un portfolio profesional que presente mi trabajo y aplicar lo aprendido experimentando con desarrollo asistido por IA, especialmente en Snake.',
+    en: 'Create a professional portfolio that presents my work and apply what I learned experimenting with AI-assisted development, especially on Snake.',
   },
   problem: {
-    es: 'Necesitaba un portfolio propio que representara mi trabajo real y, a la vez, sirviera como ejemplo de uso profesional de las herramientas de IA en el desarrollo de software en 2026.',
-    en: 'Necesitaba un portfolio propio que representara mi trabajo real y, a la vez, sirviera como ejemplo de uso profesional de las herramientas de IA en el desarrollo de software en 2026.',
+    es: 'El reto era dirigir varios agentes de IA en un producto real con requisitos, arquitectura, planificación y criterios de validación claros, manteniendo el contenido y la implementación coherentes.',
+    en: 'The challenge was to direct multiple AI agents on a real product with clear requirements, architecture, planning and validation criteria, while keeping content and implementation coherent.',
   },
   role: {
-    es: 'Arquitectura, diseño, lógica y decisiones de producto: mías (Andrei). Código: desarrollado íntegramente con asistencia de IA (OpenCode) bajo mi dirección y supervisión.',
-    en: 'Arquitectura, diseño, lógica y decisiones de producto: mías (Andrei). Código: desarrollado íntegramente con asistencia de IA (OpenCode) bajo mi dirección y supervisión.',
+    es: 'Defino el problema, los requisitos, el diseño, la arquitectura y las decisiones de producto; planifico, dirijo y superviso a OpenCode y Codex, y realizo los ajustes finales. La IA se utiliza como herramienta de implementación bajo mi dirección.',
+    en: 'I define the problem, requirements, design, architecture and product decisions; plan, direct and supervise OpenCode and Codex, and make final adjustments. AI is used as an implementation tool under my direction.',
   },
   architecture: {
-    es: 'SPA estática: React + TypeScript estricto + Vite, CSS nativo (custom properties) y Canvas 2D decorativo. Sin backend, desplegada en GitHub Pages con base /portfolio/. Cero dependencias de runtime.',
-    en: 'SPA estática: React + TypeScript estricto + Vite, CSS nativo (custom properties) y Canvas 2D decorativo. Sin backend, desplegada en GitHub Pages con base /portfolio/. Cero dependencias de runtime.',
+    es: 'Aplicación React con TypeScript estricto, Vite, CSS nativo y Canvas 2D. Especificaciones y contratos documentados, agentes guiados por instrucciones y memoria del proyecto; despliegue estático en GitHub Pages.',
+    en: 'React application with strict TypeScript, Vite, native CSS and Canvas 2D. Documented specifications and contracts, agents guided by project instructions and memory; static deployment to GitHub Pages.',
   },
   features: [
     {
       id: 'f-agents-md',
       text: {
         es: 'AGENTS.md: reglas permanentes para los agentes (stack cerrado, capas, validación).',
-        en: 'AGENTS.md: reglas permanentes para los agentes (stack cerrado, capas, validación).',
+        en: 'AGENTS.md: persistent instructions for agents covering the stack, architecture and validation.',
       },
     },
     {
       id: 'f-memory-md',
       text: {
         es: 'memory.md: estado operativo, decisiones cerradas y próximos pasos entre sesiones.',
-        en: 'memory.md: estado operativo, decisiones cerradas y próximos pasos entre sesiones.',
+        en: 'memory.md: project status, established decisions and next steps between sessions.',
       },
     },
     {
       id: 'f-docs',
       text: {
         es: 'Fuente de verdad en docs/: requisitos, decisiones (ADR), contratos y arquitectura como documentación viva.',
-        en: 'Fuente de verdad en docs/: requisitos, decisiones (ADR), contratos y arquitectura como documentación viva.',
+        en: 'docs/ as the source of truth for requirements, decisions, contracts and architecture.',
       },
     },
     {
       id: 'f-plan-mode',
       text: {
-        es: 'Planificación previa en Plan Mode antes de modificar cualquier fichero.',
-        en: 'Planificación previa en Plan Mode antes de modificar cualquier fichero.',
+        es: 'Metodología SDD con requisitos, arquitectura y plan definidos antes de implementar; uso de Plan Mode y Build Mode.',
+        en: 'SDD methodology with requirements, architecture and a plan defined before implementation; use of Plan Mode and Build Mode.',
       },
     },
     {
       id: 'f-incremental',
       text: {
-        es: 'Desarrollo incremental por fases: cada fase se valida antes de continuar y se registra en un commit.',
-        en: 'Desarrollo incremental por fases: cada fase se valida antes de continuar y se registra en un commit.',
+        es: 'Dirección estructurada de agentes de OpenCode y Codex, con instrucciones, memoria y criterios de aceptación.',
+        en: 'Structured direction of OpenCode and Codex agents using instructions, memory and acceptance criteria.',
       },
     },
     {
       id: 'f-validation',
       text: {
-        es: 'Validación continua: typecheck, lint, tests y build tras cada cambio, más revisión visual y pruebas e2e.',
-        en: 'Validación continua: typecheck, lint, tests y build tras cada cambio, más revisión visual y pruebas e2e.',
+        es: 'Harness y validación incremental con typecheck, lint, tests, build y revisión e2e.',
+        en: 'Harness and incremental validation with typecheck, lint, tests, build and e2e review.',
       },
     },
     {
       id: 'f-separation',
       text: {
         es: 'Separación de responsabilidades: datos declarativos, presentación, lógica e infraestructura no se mezclan.',
-        en: 'Separación de responsabilidades: datos declarativos, presentación, lógica e infraestructura no se mezclan.',
+        en: 'Separation of concerns between declarative data, presentation, logic and infrastructure.',
       },
     },
   ],
@@ -111,30 +101,30 @@ export const rvaPortfolio: Project = {
       id: 'td-zero-runtime',
       text: {
         es: 'Cero dependencias de runtime: todo con la plataforma (CSS nativo, Canvas 2D, i18n propio).',
-        en: 'Cero dependencias de runtime: todo con la plataforma (CSS nativo, Canvas 2D, i18n propio).',
+        en: 'No runtime dependencies: native CSS, Canvas 2D and the project’s own i18n implementation.',
       },
     },
     {
       id: 'td-typed-data',
       text: {
         es: 'Datos declarativos tipados separados de la presentación; modelos en src/models.',
-        en: 'Datos declarativos tipados separados de la presentación; modelos en src/models.',
+        en: 'Typed declarative data kept separate from presentation, with models in src/models.',
       },
     },
     {
       id: 'td-content-tests',
       text: {
-        es: 'Los tests actúan de guarda de contenido: ids únicos, assets presentes y textos es/en completos.',
-        en: 'Los tests actúan de guarda de contenido: ids únicos, assets presentes y textos es/en completos.',
+        es: 'Aplicación de lo aprendido en proyectos de experimentación previos, especialmente Snake, para reducir errores y limitar la intervención manual en el código.',
+        en: 'Applied lessons from earlier experimental projects, especially Snake, to reduce errors and limit manual code intervention.',
       },
     },
   ],
   outcomes: {
-    es: 'SPA estática publicada en GitHub Pages con suite de pruebas unitarias y e2e en verde, sin dependencias de runtime en el bundle.',
-    en: 'SPA estática publicada en GitHub Pages con suite de pruebas unitarias y e2e en verde, sin dependencias de runtime en el bundle.',
+    es: 'Portfolio estático publicado en GitHub Pages, con contenido de proyectos y validación automatizada.',
+    en: 'Static portfolio published on GitHub Pages, with project content and automated validation.',
   },
   learnings: {
-    es: 'Una metodología estructurada (documentación viva, planificación previa y validación por fases) convierte la asistencia de IA en un proceso profesional y controlado, no en generación de código ad hoc.',
-    en: 'Una metodología estructurada (documentación viva, planificación previa y validación por fases) convierte la asistencia de IA en un proceso profesional y controlado, no en generación de código ad hoc.',
+    es: 'La metodología SDD, la planificación y la validación incremental permiten dirigir agentes de IA en un desarrollo de mayor alcance y complejidad que los experimentos iniciales.',
+    en: 'SDD, structured planning and incremental validation make it possible to direct AI agents on a broader and more complex project than the initial experiments.',
   },
 }

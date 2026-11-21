@@ -336,3 +336,17 @@ Tres ajustes aprobados por el propietario:
 - **Solución:** tarjetas y overlays muestran solo `period.start`; las experiencias sin año confirmado siguen sin fecha. Ambos tiers se ordenan por nombre visible. Se añaden las entradas `Codex` y `OpenCoDEX` como elementos distintos, con el mismo icono Codex local del Marketplace oficial. El selector hover usa un atributo compartido en la raíz de cada icono (`img` o máscara `span`), sin alterar tamaño ni layout.
 - **Validación:** Vitest, `npm run validate` y Playwright con hover en oscuro/claro y comprobación responsive.
 - **Pruebas:** 176 unitarios ✓ (cv-button 4: tooltip «Ver CV», orden email→CV→GitHub→LinkedIn→Upwork, no-enlace, Upwork href/target/rel; captcha-overlay 7: éxito⇒«Ver CV» sin href que llama a onOpenCv + integración App con Math.random stubbed ⇒ captcha cerrado + dialog «CV — Andrei Ronai» abierto); diag e2e temporal (borrado): Upwork en la misma fila tras LinkedIn (1440 y 375 sin overflow), traspaso captcha→visor verificado; validate ✓.
+
+## D54 — Revisión final del catálogo y contenido de proyectos (2026-11-21)
+
+- Se añade `Project.filterCategories` como fuente de los badges de tarjetas y del filtro: Android, Web, C#, Python y Java. Signature Application puede declarar Web y C# simultáneamente. Los tipos de categoría amplios permanecen disponibles para los overlays.
+- RVA Portfolio reutiliza su único objeto de datos en la tarjeta final del catálogo y en el acceso del footer. TypeScript se cataloga como `project` para aparecer en fichas sin alterar los dos grids visibles del Stack; OpenCode y Codex reutilizan sus registros existentes.
+- Se revisan los contenidos del Centro Médico Sector V, LokiHome, MiniCRM, Snake y RVA Portfolio en español e inglés según información del propietario. La ficha del Centro Médico documenta Google Calendar y el agente Gemini con Eko Knowledge Base, sin WhatsApp.
+- Validación: `npm run validate` — typecheck, lint, formato, 185 tests y build correctos. Persiste el warning react-refresh conocido y el stderr de Canvas no implementado por jsdom.
+
+## D55 — Ajustes responsive de overlays y Stack (2026-11-21)
+
+- En móvil (≤767px), los contenidos de proyecto y experiencia limitan el ancho al panel, fuerzan el ajuste de palabras largas y reducen tipografía al 80%; las acciones reducen su ancho con padding compacto y mantienen el objetivo táctil de 44px. La galería limita medios al 100% de su contenedor.
+- El visor de documentos sigue embebido. En móvil ocupa hasta 82dvh y deja que el visor PDF nativo del navegador gestione el zoom por gestos; las acciones de abrir/descargar continúan como recuperación ante error de carga.
+- Git pasa de `core` a `explored`; Google Gemini pasa a `project` para conservar su referencia en fichas y retirarse de los dos grupos visibles. En móvil y tablet (≤1023px), ambos grids usan cuatro columnas con logo centrado sobre el nombre.
+- Contratos actualizados. Validación automatizada pendiente; no se ejecutó en esta ronda.

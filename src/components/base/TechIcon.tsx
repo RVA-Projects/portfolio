@@ -15,7 +15,7 @@ import styles from './TechIcon.module.css'
 
 interface TechIconProps {
   technologyId: string
-  icon?: 'python' | 'unity' | 'xampp' | 'odoo' | 'codex'
+  icon?: 'python' | 'unity' | 'xampp' | 'odoo' | 'codex' | 'opencode'
   /** D28 — adaptación de marca (mono: silueta del tema · dim: aclara en oscuro). */
   adapt?: 'mono' | 'dim'
 }
@@ -27,10 +27,23 @@ const svgUrls: Record<string, string> = import.meta.glob('./icons/*.svg', {
 })
 
 export function TechIcon({ technologyId, icon, adapt }: TechIconProps) {
+  const themedLogo = icon === 'codex' || icon === 'opencode'
   const src =
-    icon !== undefined
+    icon !== undefined && !themedLogo
       ? `/portfolio/assets/img/icons/${icon}.png`
       : svgUrls[`./icons/${technologyId}.svg`]
+
+  if (themedLogo) {
+    return (
+      <span className={styles.themedLogo} data-tech-icon aria-hidden="true">
+        <img src={`/portfolio/assets/img/icons/${icon}-light.png`} alt="" />
+        <img
+          src={`/portfolio/assets/img/icons/${icon === 'codex' ? 'codex-light' : 'opencode-dark'}.png`}
+          alt=""
+        />
+      </span>
+    )
+  }
 
   if (src === undefined) return null
 

@@ -103,6 +103,8 @@ export const en: Texts = {
   },
   /** RF-16 education section, grouped by hierarchy. */
   education: {
+    viewLabel: 'Education view',
+    views: { cards: 'Cards', list: 'List' },
     groups: {
       official: 'Official education',
       certification: 'Certifications',

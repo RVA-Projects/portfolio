@@ -1,4 +1,4 @@
-import { FILTER_CATEGORY_BY_TECH, type FilterCategoryId } from '../data/technologies'
+import type { FilterCategoryId } from '../models/common'
 import type { Project } from '../models/Project'
 
 /**
@@ -8,7 +8,5 @@ import type { Project } from '../models/Project'
  */
 export function filterProjects(projects: Project[], category: FilterCategoryId | null): Project[] {
   if (category === null) return projects
-  return projects.filter((project) =>
-    project.technologyIds.some((techId) => FILTER_CATEGORY_BY_TECH[techId] === category),
-  )
+  return projects.filter((project) => project.filterCategories.includes(category))
 }

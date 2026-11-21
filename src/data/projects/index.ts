@@ -5,6 +5,7 @@ import { flashcardsApp } from './flashcards-app'
 import { gbUtility } from './gb-utility'
 import { lokiHome } from './loki-home'
 import { miniCrm } from './mini-crm'
+import { rvaPortfolio } from './rva-portfolio'
 import { snake } from './snake'
 import { signatureApplication } from './signature-application'
 import { taskManager } from './task-manager'
@@ -14,10 +15,11 @@ export const projects: Project[] = [
   signatureApplication,
   centroMedicoSectorV,
   lokiHome,
+  miniCrm,
+  snake,
   taskManager,
   gbUtility,
   flashcardsApp,
-  miniCrm,
   dawdamTop,
-  snake,
+  rvaPortfolio,
 ]

@@ -10,6 +10,7 @@ export const gbUtility: Project = {
     en: 'Desktop companion for a board game: character/NPC management, random quests and events, and a reward system.',
   },
   category: 'desktop',
+  filterCategories: ['csharp'],
   technologyIds: ['csharp', 'sqlite'],
   media: [
     {

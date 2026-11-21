@@ -1,4 +1,4 @@
-import type { BaseEntity, CategoryId, LocalizedText } from './common'
+import type { BaseEntity, CategoryId, FilterCategoryId, LocalizedText } from './common'
 
 export type MediaKind = 'image' | 'gif' | 'video-local' | 'video-youtube' | 'external-demo'
 
@@ -33,6 +33,8 @@ export interface Project extends BaseEntity {
   /** Texto breve de la tarjeta. */
   summary: LocalizedText
   category: CategoryId
+  /** Categorías de filtrado visibles en el badge de la tarjeta. */
+  filterCategories: FilterCategoryId[]
   /** Referencias a Technology por id (catálogo de src/data/technologies.ts). */
   technologyIds: string[]
   /** ≥1 item; el primero es la media principal. */

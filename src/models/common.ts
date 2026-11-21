@@ -11,6 +11,9 @@ export interface LocalizedText {
 /** Categoría de proyecto. `ai-assisted`: desarrollado con agentes IA (OpenCode). */
 export type CategoryId = 'web' | 'desktop' | 'android' | 'collab' | 'ai-assisted'
 
+/** Categorías que aparecen como badges en tarjetas y en el filtro de proyectos. */
+export type FilterCategoryId = 'android' | 'web' | 'csharp' | 'python' | 'java'
+
 export type GlobalLinkId = 'github' | 'demo' | 'web' | 'docs' | 'cv' | 'older-portfolio'
 
 export interface GlobalLink {

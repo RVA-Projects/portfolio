@@ -3,6 +3,7 @@ import { join } from 'node:path'
 import { beforeEach, describe, expect, it } from 'vitest'
 import { cleanup, fireEvent, render, screen, within } from '@testing-library/react'
 import { App } from '../src/App'
+import { projects } from '../src/data/projects'
 import { rvaPortfolio } from '../src/data/projects/rva-portfolio'
 import { technologies } from '../src/data/technologies'
 
@@ -13,20 +14,23 @@ beforeEach(() => {
 })
 
 /**
- * Ronda 3 F6 — RVA Portfolio: ficha especial accesible SOLO desde el footer
- * (fuera del catálogo `projects`). Validación de datos + apertura del overlay.
+ * RVA Portfolio reuses one data record in the catalog and Footer overlay.
  */
 describe('Ficha RVA Portfolio (datos)', () => {
-  it('id estable, no está en el catálogo principal y tech ids existen', () => {
+  it('id estable, está al final del catálogo y sus tech ids existen', () => {
     expect(rvaPortfolio.id).toBe('rva-portfolio')
+    expect(projects.at(-1)).toBe(rvaPortfolio)
     expect(rvaPortfolio.technologyIds.length).toBeGreaterThan(0)
+    expect(rvaPortfolio.technologyIds).toEqual(
+      expect.arrayContaining(['typescript', 'opencodex', 'codex']),
+    )
     const techIds = new Set(technologies.map((t) => t.id))
     for (const technologyId of rvaPortfolio.technologyIds) {
       expect(techIds.has(technologyId), technologyId).toBe(true)
     }
   })
 
-  it('todos los textos es/en están completos (fallback D-E: en = es)', () => {
+  it('los textos del overlay tienen contenido es/en completo', () => {
     const texts: unknown[] = [
       rvaPortfolio.name,
       rvaPortfolio.summary,

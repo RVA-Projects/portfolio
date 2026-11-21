@@ -100,6 +100,8 @@ export const es = {
   },
   /** Sección de formación (RF-16), agrupada por jerarquía. */
   education: {
+    viewLabel: 'Vista de formación',
+    views: { cards: 'Tarjetas', list: 'Lista' },
     groups: {
       official: 'Formación oficial',
       certification: 'Certificaciones',

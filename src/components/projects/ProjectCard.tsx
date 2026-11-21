@@ -63,7 +63,9 @@ export function ProjectCard({ project, onSelect }: ProjectCardProps) {
         aria-label={`${texts.projectOverlay.open}: ${project.name[language]}`}
       />
       <div className={styles.categoryBadge}>
-        <Tag label={texts.categories[project.category]} variant="category" />
+        {project.filterCategories.map((category) => (
+          <Tag key={category} label={texts.filter.categories[category]} variant="category" />
+        ))}
       </div>
     </article>
   )

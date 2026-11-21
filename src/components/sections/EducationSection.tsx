@@ -7,6 +7,7 @@ import type { Education, EducationKind } from '../../models/Education'
 import { SectionHeading } from '../base/SectionHeading'
 import { DocumentViewerOverlay } from '../overlays/DocumentViewerOverlay'
 import { EducationRow } from './EducationRow'
+import { EducationCard } from './EducationCard'
 import styles from './EducationSection.module.css'
 
 /** Orden estable y semántico de grupos: jerarquía RF-16 (oficial arriba). */
@@ -34,6 +35,7 @@ function groupByKind(items: Education[]): Partial<Record<EducationKind, Educatio
 export function EducationSection() {
   const { texts } = useLanguage()
   const [activeDocument, setActiveDocument] = useState<DocumentRef | null>(null)
+  const [view, setView] = useState<'cards' | 'list'>('cards')
   const groups = groupByKind(education)
 
   return (
@@ -43,17 +45,61 @@ export function EducationSection() {
       aria-label={texts.sections.education}
     >
       <SectionHeading index={4} title={texts.sections.education} />
+      <div className={styles.viewToggle} role="group" aria-label={texts.education.viewLabel}>
+        {(['cards', 'list'] as const).map((mode) => (
+          <button
+            key={mode}
+            type="button"
+            className={styles.viewButton}
+            aria-pressed={view === mode}
+            onClick={() => setView(mode)}
+          >
+            <svg
+              className={styles.viewIcon}
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.8"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              aria-hidden="true"
+            >
+              {mode === 'cards' ? (
+                <>
+                  <rect x="3.5" y="3.5" width="7" height="7" rx="1" />
+                  <rect x="13.5" y="3.5" width="7" height="7" rx="1" />
+                  <rect x="3.5" y="13.5" width="7" height="7" rx="1" />
+                  <rect x="13.5" y="13.5" width="7" height="7" rx="1" />
+                </>
+              ) : (
+                <>
+                  <path d="M4 6h16M4 12h16M4 18h16" />
+                </>
+              )}
+            </svg>
+            <span className="visually-hidden">{texts.education.views[mode]}</span>
+          </button>
+        ))}
+      </div>
       {GROUP_ORDER.map((kind) => {
         const items = groups[kind]
         if (items === undefined || items.length === 0) return null
         return (
           <div key={kind} className={styles.group}>
             <h3 className={styles.groupTitle}>{texts.education.groups[kind]}</h3>
-            <div className={styles.list}>
-              {items.map((item) => (
-                <EducationRow key={item.id} item={item} onOpenDocument={setActiveDocument} />
-              ))}
-            </div>
+            {view === 'list' ? (
+              <div className={styles.list}>
+                {items.map((item) => (
+                  <EducationRow key={item.id} item={item} onOpenDocument={setActiveDocument} />
+                ))}
+              </div>
+            ) : (
+              <div className={styles.cards}>
+                {items.map((item) => (
+                  <EducationCard key={item.id} item={item} onOpenDocument={setActiveDocument} />
+                ))}
+              </div>
+            )}
           </div>
         )
       })}

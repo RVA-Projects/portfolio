@@ -39,9 +39,9 @@ describe('ProjectOverlay (RF-10/RF-12/RF-13/RF-14)', () => {
     expect(screen.queryByRole('dialog', { name: 'Signature Application' })).not.toBeInTheDocument()
   })
 
-  it('el último proyecto (snake) tiene next deshabilitado y prev vuelve al anterior', () => {
+  it('el último proyecto (RVA Portfolio) tiene next deshabilitado y prev vuelve al anterior', () => {
     render(<App />)
-    openProject('Snake')
+    openProject('RVA Portfolio')
     const next = screen.getByRole('button', { name: 'Proyecto siguiente' })
     expect(next).toBeDisabled()
     const prev = screen.getByRole('button', { name: 'Proyecto anterior' })
@@ -62,7 +62,7 @@ describe('ProjectOverlay (RF-10/RF-12/RF-13/RF-14)', () => {
     expect(next.className).toContain(styles.navNext)
 
     // Último proyecto: next deshabilitado PERO mantiene la clase de posición
-    openProject('Snake')
+    openProject('RVA Portfolio')
     const lastNext = screen.getByRole('button', { name: 'Proyecto siguiente' })
     expect(lastNext).toBeDisabled()
     expect(lastNext.className).toContain(styles.navNext)

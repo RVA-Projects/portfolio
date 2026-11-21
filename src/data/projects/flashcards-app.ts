@@ -10,6 +10,7 @@ export const flashcardsApp: Project = {
     en: 'Android app to study with CSV flashcards, including importing and session-based practice.',
   },
   category: 'android',
+  filterCategories: ['android'],
   technologyIds: ['kotlin', 'android-studio'],
   media: [
     {

@@ -11,6 +11,7 @@ export const signatureApplication: Project = {
     en: 'Digital signature application integrated with ePadLink hardware for collecting data-consent signatures in medical reports.',
   },
   category: 'web',
+  filterCategories: ['web', 'csharp'],
   technologyIds: ['html', 'css', 'javascript', 'csharp'],
   media: [
     {

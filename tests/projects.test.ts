@@ -91,21 +91,19 @@ describe('audit:content — integridad de datos de proyectos (RF-09)', () => {
     }
   })
 
-  it('el catálogo refleja los proyectos validados (9 fichas) con la categoría ai-assisted', () => {
-    expect(projects).toHaveLength(9)
-    expect(projects.map((p) => p.id)).toEqual(
-      expect.arrayContaining([
-        'signature-application',
-        'centro-medico-sector-v',
-        'loki-home',
-        'task-manager',
-        'gb-utility',
-        'flashcards-app',
-        'mini-crm',
-        'dawdam-top',
-        'snake',
-      ]),
-    )
+  it('el catálogo conserva el orden acordado y añade RVA Portfolio al final', () => {
+    expect(projects.map((p) => p.id)).toEqual([
+      'signature-application',
+      'centro-medico-sector-v',
+      'loki-home',
+      'mini-crm',
+      'snake',
+      'task-manager',
+      'gb-utility',
+      'flashcards-app',
+      'dawdam-top',
+      'rva-portfolio',
+    ])
     const snake = projects.find((p) => p.id === 'snake')
     expect(snake?.category).toBe('ai-assisted')
     expect(snake?.year).toBe(2026)
@@ -131,15 +129,45 @@ describe('utils/filter por categoría (RF-07 simplificado, F2.2)', () => {
     expect(android.map((p) => p.id).sort()).toEqual(['flashcards-app', 'mini-crm'])
   })
 
-  it('Web agrupa html/css/javascript/wordpress (5 proyectos)', () => {
+  it('Web agrupa los seis proyectos con badge Web', () => {
     const web = filterProjects(projects, 'web')
     expect(web.map((p) => p.id).sort()).toEqual([
       'centro-medico-sector-v',
       'dawdam-top',
       'loki-home',
+      'rva-portfolio',
       'signature-application',
       'snake',
     ])
+  })
+
+  it('badges superiores usan únicamente categorías de filtro, incluyendo múltiples categorías', () => {
+    const categories = Object.fromEntries(
+      projects.map((project) => [project.id, project.filterCategories]),
+    )
+    expect(categories['signature-application']).toEqual(['web', 'csharp'])
+    expect(categories['mini-crm']).toEqual(['android'])
+    expect(categories['snake']).toEqual(['web'])
+    expect(categories['dawdam-top']).toEqual(['web'])
+    expect(categories['rva-portfolio']).toEqual(['web'])
+    expect(projects.every((project) => project.filterCategories.length > 0)).toBe(true)
+  })
+
+  it('Centro Médico describe reservas Google y agente basado solo en la Eko Knowledge Base', () => {
+    const centre = projects.find((project) => project.id === 'centro-medico-sector-v')
+    expect(centre?.summary.es).toContain('calendario de Google')
+    expect(centre?.architecture.es).toContain('Eko Knowledge Base propia como única fuente')
+    expect(centre?.outcomes.es).toContain('reducido significativamente')
+    expect(JSON.stringify(centre)).not.toMatch(/whatsapp/i)
+  })
+
+  it('MiniCRM refleja el TFG y sus flujos de ruta y confirmación de visita', () => {
+    const crm = projects.find((project) => project.id === 'mini-crm')
+    expect(crm?.summary.es).toContain('Trabajo de Fin de Grado')
+    expect(crm?.problem.es).toContain('combustible')
+    expect(crm?.architecture.es).toContain('XML para la interfaz')
+    expect(crm?.features[2].text.es).toContain('recalcula el siguiente destino')
+    expect(crm?.technicalDecisions[1].text.es).toContain('Firebase')
   })
 
   it('C# agrupa csharp; sqlite NO filtra sola pero sus proyectos entran por csharp (3)', () => {

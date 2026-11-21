@@ -3,12 +3,26 @@
 > Memoria operativa del agente. Actualizar tras cada cambio relevante.
 > Última actualización: 2026-11-19 (D52: años de experiencia e iconos del Stack).
 
+## Cambio local (2026-11-21, D55)
+
+- Responsive de overlays en móvil: texto al 80%, ajuste de palabras y anchos acotados, medios limitados al contenedor y acciones más compactas preservando targets táctiles de 44px.
+- Visor PDF móvil permanece embebido en el overlay y ocupa hasta 82dvh para aprovechar el visor PDF del navegador y sus gestos de zoom.
+- Stack: Git pasa a tecnologías experimentadas; Google Gemini queda como tecnología de proyecto sin mostrarse en los grids. Móvil/tablet usa cuatro columnas con icono superior y nombre centrado.
+- Se actualizaron `docs/contracts.md` y `docs/decisions.md`. Sin pruebas ejecutadas en esta ronda.
+
 ## Cambio operativo (2026-11-20)
 
 - Favicon actualizado al PNG existente `public/media/projects/favicon.png`.
 - El sitio histórico se sirve desde `public/old-version/`; el enlace del footer apunta a `/portfolio/old-version/`.
 - `oldPortfolio/` sigue ignorada por Git y se usa como fuente local; la copia publicada está bajo `public/` para incluirla en el artefacto de Pages.
 - Publicado en `RVA-Projects/portfolio` el 2026-11-20. El merge `63d8936` integra el historial previo (commit padre `33b040d`) y el release nuevo; Actions y Pages completados con éxito. Respuestas HTTP 200 en `/portfolio/`, `/portfolio/old-version/` y el favicon PNG.
+
+## Cambio local (2026-11-21)
+
+- D53: catálogo corrige `OpenCoDEX` a `OpenCode`; Codex y OpenCode muestran logos acordes al tema desde assets locales. Codex usa el mismo logo azul en ambos temas; OpenCode usa sus variantes claro/oscuro. Copias exactas de los tres logos presentes en `public/media/projects/` organizadas en `public/assets/img/icons/`.
+- Formación ofrece selector Lista/Tarjetas (predeterminada), preservando `EducationRow` para Lista y añadiendo `EducationCard` compacta con todos los mismos datos, enlaces y visor; cuadrícula móvil 2, tablet 3 y escritorio 5 columnas. i18n es/en y contratos actualizados.
+- Ajuste solicitado: selector visual de Formación usa iconos de cuadrícula/lista con nombres accesibles ocultos visualmente.
+- Validación: `npm run validate` (typecheck, lint, formato, 180 tests y build) correcta; aviso de Fast Refresh existente y stderr conocido de Canvas/jsdom en tests.
 
 ## Estado actual
 
@@ -73,7 +87,7 @@ Ver detalle en `docs/decisions.md` (D01–D15). Resumen:
 
 ## Últimos cambios
 
-- 2026-11-19: **D52 — años puntuales y ajuste del Stack** — las experiencias muestran solo el año confirmado (sin «Actualidad»); Stack principal y tecnologías experimentadas ordenadas alfabéticamente; OpenCoDEX en principal y Codex en experimentadas; zoom hover unificado en raíces `<img>` y máscaras. `npm run validate`: 179 tests y build correctos; Playwright 16/16, incluidos hover en ambos temas y los cuatro viewports.
+- 2026-11-19: **D52 — años puntuales y ajuste del Stack** — las experiencias muestran solo el año confirmado (sin «Actualidad»); Stack principal y tecnologías experimentadas ordenadas alfabéticamente; OpenCoDEX en principal y Codex en experimentadas; zoom hover unificado en raíces `<img>` y máscaras. `npm run validate`: 180 tests y build correctos; Playwright 16/16, incluidos hover en ambos temas y los cuatro viewports.
 - 2026-11-19: **D51 — jerarquía descriptiva de Experiencia** — `role` obligatorio como título y `organization` como subtítulo en tarjetas y overlays; copy profesional es/en para las 7 entradas; catálogo e iconos SVG locales de Meta Business Suite y Google Gemini; validación completa: `npm run validate` (178 pruebas) y Playwright 15/15.
 - 2026-11-17 (5): **D50 Upwork en la Hero + CV en el visor de documentos (ronda 7)** — `site.upwork` + `IconUpwork` (simple-icons) + `Button` externo tras LinkedIn; `site.cvDocument: DocumentRef` y `CaptchaPuzzleOverlay.onOpenCv`: el éxito abre el `DocumentViewerOverlay` de Introduction (patrón EducationSection) y CIERRA el captcha (sin doble modal); copys a «Ver CV» (pill + éxito); la descarga sigue disponible dentro del visor; 176 unitarios + validate ✓; diag e2e (borrado): fila completa 1440/375, traspaso captcha→visor, nota headless sin visor PDF (iframe validado por src).
 - 2026-11-17 (4): **Ronda 6 completa — F4 validación final** — suite e2e 15/15 (webServer build+preview); capturas fullPage 1440 oscuro/claro (carrusel experiencia 3 visibles 1/7, botón CV en quickLinks) + 375 oscuro/claro (sin overflow asertado); 174 unitarios + validate ✓. Estado: ronda 6 cerrada (D47-D49).
@@ -164,3 +178,10 @@ Ver detalle en `docs/decisions.md` (D01–D15). Resumen:
 1. **F6.8 ContactSection real** (sigue `return null`).
 2. CV (PDF pendiente del propietario) y repo remoto.
 3. La revisión móvil se hace post-despliegue.
+
+## Revisión final de proyectos (2026-11-21)
+
+- D54: catálogo de 10 proyectos ordenado con MiniCRM y Snake tras LokiHome y RVA Portfolio al final; la ficha RVA se comparte entre tarjeta y footer. Tarjetas usan `filterCategories` y filtros emplean ese mismo dato; Signature Application tiene Web+C#.
+- Se actualizan textos es/en de Centro Médico (Google Calendar, Gemini API y Eko Knowledge Base; sin WhatsApp), LokiHome, MiniCRM (TFG de rutas comerciales), Snake (aprendizaje OpenCode/SDD) y RVA Portfolio (OpenCode + Codex).
+- TypeScript usa tier `project`, por lo que aparece en la ficha RVA sin entrar en los grupos visibles del Stack.
+- Validación final: `npm run validate` en verde (185 tests; typecheck, lint, formato y build correctos). Se mantienen el warning Fast Refresh conocido y los mensajes Canvas/jsdom de pruebas.

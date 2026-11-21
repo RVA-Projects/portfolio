@@ -10,10 +10,11 @@ export const snake: Project = {
   name: { es: 'Snake', en: 'Snake' },
   year: 2026,
   summary: {
-    es: 'Juego Snake para navegador desarrollado con OpenCode: agentes IA dirigidos con AGENTS.md, memory.md, documentación en docs/ y harness de pruebas Vitest.',
-    en: 'Browser Snake game developed with OpenCode: AI agents directed via AGENTS.md, memory.md, docs/ documentation and a Vitest test harness.',
+    es: 'Proyecto personal de aprendizaje sobre OpenCode, agentes de IA y Spec-Driven Development, aplicado a un juego Snake para navegador.',
+    en: 'Personal learning project exploring OpenCode, AI agents and Spec-Driven Development through a browser-based Snake game.',
   },
   category: 'ai-assisted',
+  filterCategories: ['web'],
   technologyIds: ['html', 'css', 'javascript', 'git'],
   media: [
     {
@@ -51,16 +52,16 @@ export const snake: Project = {
   /** Juego embebido en el overlay (RF-10): mismo despliegue público. */
   playUrl: 'https://rva-projects.github.io/snake/',
   goal: {
-    es: 'Construir un juego completo para navegador como entorno de aprendizaje de desarrollo asistido por IA, con la misma disciplina metodológica que un proyecto de producción.',
-    en: 'Build a complete browser game as a learning environment for AI-assisted development, with the same methodological discipline as a production project.',
+    es: 'Aprender a trabajar eficazmente con agentes de IA mediante OpenCode y desarrollo basado en especificaciones (SDD), usando un juego completo como proyecto de experimentación.',
+    en: 'Learn to work effectively with AI agents through OpenCode and Spec-Driven Development (SDD), using a complete game as an experimentation project.',
   },
   problem: {
-    es: 'Los proyectos de práctica suelen descuidar arquitectura, testing y gestión del conocimiento; aquí el reto era que el proceso agente-humano fuera trazable y reproducible.',
-    en: 'Practice projects usually skip architecture, testing and knowledge management; the challenge here was making the agent-human process traceable and reproducible.',
+    es: 'El reto era dirigir el desarrollo con poca intervención manual en el código, manteniendo el proceso controlado y verificable mediante especificaciones, instrucciones y validación incremental.',
+    en: 'The challenge was to direct development with little manual coding while keeping the process controlled and verifiable through specifications, instructions and incremental validation.',
   },
   role: {
-    es: 'Dirección del desarrollo: decisiones, revisión del trabajo de los agentes y validación del producto final.',
-    en: 'Development direction: decisions, agent-work review and validation of the final product.',
+    es: 'Definí el problema, los requisitos, las especificaciones, la arquitectura y los prompts; dirigí y revisé a los agentes y realicé ajustes finales. El desarrollo se hizo prácticamente de principio a fin con OpenCode y Gemma 4 mediante acceso gratuito, en aproximadamente dos tardes de tiempo libre. Mi intervención directa en el código fue mínima.',
+    en: 'I defined the problem, requirements, specifications, architecture and prompts; directed and reviewed the agents and made final adjustments. Development was carried out almost entirely with OpenCode and Gemma 4 through free access, over roughly two evenings of spare time. My direct coding involvement was minimal.',
   },
   architecture: {
     es: 'JavaScript vanilla módulo a módulo (board, logic, snake, food, ui, audio, storage, i18n) sobre Canvas, con zzfx para audio generado procedimentalmente y tests Vitest.',
@@ -93,22 +94,22 @@ export const snake: Project = {
     {
       id: 'd-1',
       text: {
-        es: 'AGENTS.md como manual operativo del agente + memory.md entre sesiones: proceso documentado y repetible',
-        en: 'AGENTS.md as the agent’s operating manual + memory.md across sessions: a documented, repeatable process',
+        es: 'AGENTS.md, memoria del proyecto y skills mantienen el contexto y guían a los agentes entre tareas y sesiones.',
+        en: 'AGENTS.md, project memory and skills maintain context and guide agents across tasks and sessions.',
       },
     },
     {
       id: 'd-2',
       text: {
-        es: 'Sujetos a docs/ (requirements, architecture, contracts, decisions, testing): jerarquía documental única de verdad',
-        en: 'Bound to docs/ (requirements, architecture, contracts, decisions, testing): a single documentary source of truth',
+        es: 'SDD: requisitos, especificaciones y arquitectura documentados antes de implementar; uso de Plan Mode y Build Mode para dirigir el trabajo.',
+        en: 'SDD: requirements, specifications and architecture documented before implementation; Plan Mode and Build Mode used to direct the work.',
       },
     },
     {
       id: 'd-3',
       text: {
-        es: 'Lógica de juego pura y testeable separada de la presentación',
-        en: 'Game logic kept pure and testable, separate from presentation',
+        es: 'Harness y pruebas para validar incrementalmente los resultados de los agentes, reducir errores y limitar la intervención manual en el código.',
+        en: 'A test harness and incremental validation to reduce agent errors and minimise manual code intervention.',
       },
     },
   ],
@@ -117,7 +118,7 @@ export const snake: Project = {
     en: 'Live in production on GitHub Pages; repository with passing tests and complete documentation.',
   },
   learnings: {
-    es: 'Dirección de agentes IA con contexto gobernado (AGENTS.md/memory.md), disciplina de documentación y testing aplicada a un juego real.',
-    en: 'Directing AI agents with governed context (AGENTS.md/memory.md), documentation discipline and testing applied to a real game.',
+    es: 'Diseño de un proceso de desarrollo asistido por IA basado en SDD: especificar, dirigir agentes y validar sus entregas.',
+    en: 'Designed an AI-assisted SDD workflow: specifying requirements, directing agents and validating their work.',
   },
 }

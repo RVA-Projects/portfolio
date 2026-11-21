@@ -18,6 +18,61 @@
   flex-direction: column;
 }
 
+.viewToggle {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--space-1);
+  margin-bottom: var(--space-4);
+}
+
+.viewButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  min-width: 44px;
+  padding-inline: var(--space-3);
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  color: var(--color-text-muted);
+  cursor: pointer;
+}
+
+.viewIcon {
+  width: 20px;
+  height: 20px;
+}
+
+.viewButton[aria-pressed='true'] {
+  border-color: var(--color-line-strong);
+  color: var(--color-text);
+}
+
+.viewButton:focus-visible {
+  outline: 2px solid var(--color-text);
+  outline-offset: 2px;
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: stretch;
+  gap: var(--space-3);
+}
+
+@media (min-width: 768px) {
+  .cards {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1200px) {
+  .cards {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
+}
+
 /* Ronda 5 F1 (D-A) — la sección entera adopta EXACTAMENTE el tratamiento
    de la Hero y de Stack: tarjeta translúcida --color-hero + borde
    --color-line + radius-lg, mismo ancho (el borde izquierdo queda alineado

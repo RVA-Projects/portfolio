@@ -2,6 +2,10 @@
   display: flex;
   flex-direction: column;
   gap: var(--space-3);
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+  overflow: hidden;
 }
 
 /* Media principal (RF-11): ratio fijo, nunca desborda el panel */
@@ -13,6 +17,8 @@
   background: var(--color-media-stage);
   border: 1px solid var(--color-line);
   border-radius: var(--radius-md);
+  width: 100%;
+  max-width: 100%;
 }
 
 .main :is(img, video, iframe) {
@@ -22,6 +28,7 @@
   object-fit: contain;
   background: var(--color-media-stage);
   border: 0;
+  max-width: 100%;
 }
 
 .fallback {
