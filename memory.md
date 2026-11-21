@@ -10,6 +10,12 @@
 - Stack: Git pasa a tecnologías experimentadas; Google Gemini queda como tecnología de proyecto sin mostrarse en los grids. Móvil/tablet usa cuatro columnas con icono superior y nombre centrado.
 - Se actualizaron `docs/contracts.md` y `docs/decisions.md`. Sin pruebas ejecutadas en esta ronda.
 
+## Cambio local (2026-11-21, D56)
+
+- Stack muestra el logo sobre el nombre en escritorio y móvil; flex-wrap centra filas incompletas. Cinco elementos por fila desde escritorio y cuatro hasta tablet.
+- Tarjetas de formación centran nombre, emisor, descripción y acción; el botón queda limitado al ancho de la tarjeta.
+- Contratos y decisiones actualizados. `npm run validate` correcta: typecheck, lint, formato, 185 pruebas y build; persisten el warning conocido de Fast Refresh y el stderr de Canvas/jsdom.
+
 ## Cambio operativo (2026-11-20)
 
 - Favicon actualizado al PNG existente `public/media/projects/favicon.png`.

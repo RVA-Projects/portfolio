@@ -350,3 +350,9 @@ Tres ajustes aprobados por el propietario:
 - El visor de documentos sigue embebido. En móvil ocupa hasta 82dvh y deja que el visor PDF nativo del navegador gestione el zoom por gestos; las acciones de abrir/descargar continúan como recuperación ante error de carga.
 - Git pasa de `core` a `explored`; Google Gemini pasa a `project` para conservar su referencia en fichas y retirarse de los dos grupos visibles. En móvil y tablet (≤1023px), ambos grids usan cuatro columnas con logo centrado sobre el nombre.
 - Contratos actualizados. Validación automatizada pendiente; no se ejecutó en esta ronda.
+
+## D56 — Centrado de filas del Stack y tarjetas de formación (2026-11-21)
+
+- El Stack usa filas flexibles centradas: cinco tecnologías por fila en escritorio y cuatro en móvil/tablet. Cada elemento presenta el logo encima del nombre; las filas finales incompletas quedan centradas.
+- Las tarjetas de Formación centran nombre, emisor, descripción y acción. El botón se limita al ancho disponible y se centra dentro de la tarjeta.
+- `npm run validate`: typecheck, lint, formato, 185 pruebas y build correctos. Se mantienen el warning conocido de Fast Refresh y el stderr de Canvas en jsdom.

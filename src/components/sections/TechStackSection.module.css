@@ -27,8 +27,8 @@
   margin-bottom: var(--space-4);
 }
 
-/* Flex-wrap centrado: filas agrupadas alrededor del eje con separación
-   uniforme (evita el estiramiento irregular de auto-fill al centrar). */
+/* Cada elemento tiene ancho de una quinta parte menos el espacio entre
+   columnas; flex centra automáticamente las filas incompletas. */
 .techGrid {
   margin: 0;
   padding: 0;
@@ -36,36 +36,29 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: var(--space-3) var(--space-5);
+  gap: var(--space-4) var(--space-5);
 }
 
 .techItem {
-  display: inline-flex;
+  display: flex;
+  flex: 0 0 calc(20% - 20px);
+  min-width: 0;
+  min-height: 72px;
+  flex-direction: column;
   align-items: center;
-  gap: var(--space-2);
+  justify-content: flex-start;
+  gap: var(--space-1);
   font-size: var(--fs-body);
   color: var(--color-text);
-  min-height: 36px;
+  text-align: center;
+  overflow-wrap: anywhere;
   --tech-icon-size: 28px;
 }
 
 @media (max-width: 1023px) {
-  .techGrid {
-    display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: var(--space-3) var(--space-2);
-  }
-
   .techItem {
-    min-width: 0;
-    min-height: 72px;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    gap: var(--space-1);
-    text-align: center;
+    flex-basis: calc(25% - 6px);
     font-size: calc(var(--fs-small) * 0.8);
-    overflow-wrap: anywhere;
   }
 }
 
