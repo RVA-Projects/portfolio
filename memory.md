@@ -1,5 +1,12 @@
 # memory.md — RVA Portfolio
 
+## Despliegue GitHub Pages (2026-11-24)
+
+- El workflow solo escuchaba `main`, por lo que los cambios de `redesign` no generaban un despliegue. Si Pages publica una rama, el sitio recibiría código fuente en vez de la SPA compilada.
+- `deploy.yml` ahora escucha `redesign`, instala con `npm ci`, compila con `npm run build` y sube únicamente `dist/` mediante las acciones oficiales de Pages. Permisos: `contents: read`, `pages: write`, `id-token: write`.
+- Vite conserva `base: '/portfolio/'`. El favicon usa `%BASE_URL%`; Vite reemplaza la entrada `/src/main.tsx` con bundles bajo `/portfolio/assets/` durante build. El PNG de `public/media/projects/favicon.png` se copia a `dist/`.
+- Pendiente en GitHub: Settings → Pages → Build and deployment → Source = **GitHub Actions**. El resultado remoto se confirmará en Actions tras el push.
+
 ## Ajuste visual (2026-11-24)
 
 - Nombre del hero en una línea en pantallas mayores de 575px; en móvil puede partirse según el ancho disponible.

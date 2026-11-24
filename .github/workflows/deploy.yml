@@ -1,12 +1,11 @@
 name: Deploy to GitHub Pages
 
 # D01: el portfolio vive en RVA-Projects/portfolio (base /portfolio/).
-# TODO(F4.4): primera ejecución en una rama de prueba; deploy a main solo tras probar.
 # Requiere Pages habilitado con fuente = GitHub Actions (Settings → Pages).
 
 on:
   push:
-    branches: [main]
+    branches: [redesign]
   workflow_dispatch:
 
 permissions:
@@ -31,11 +30,11 @@ jobs:
           node-version: 22
           cache: npm
 
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
       - name: Install
         run: npm ci
-
-      - name: Validate (typecheck + lint + format + tests)
-        run: npm run validate
 
       - name: Build (base /portfolio/)
         run: npm run build

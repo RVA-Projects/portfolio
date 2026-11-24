@@ -31,12 +31,12 @@ Estados: `pendiente · en curso · hecha · bloqueada`
 - F3.2 Esqueletos de componentes con props y `TODO` (sin estilos ni lógica real) ✅
 - CA: `typecheck` verde; nada de datos particulares hardcodeados. ✅
 
-## Fase 4 — Harness y entorno ✅ hecha (F4.4 parcial, bloqueada por remoto)
+## Fase 4 — Harness y entorno ✅ hecha
 
 - F4.1 Git init + `.gitignore` + primer commit de scaffold ✅ | CA: repo limpio, histórico con commit inicial ✅
 - F4.2 Vite + React + TS strict + ESLint/Prettier + Vitest ✅ | CA: `npm run validate` verde ✅
 - F4.3 `vite.config.ts` con `base: '/portfolio/'` + estilos tokens/base ✅ | CA: build verde respetando base ✅ (verificado: assets en `/portfolio/assets/…`)
-- F4.4 Workflow `deploy.yml` — creado 🔶 | CA: branch de test despliega y la app es visible con assets correctos → bloqueado hasta conectar el remoto (propietario)
+- F4.4 Workflow `deploy.yml` — despliega `dist/` al hacer push a `redesign` con Pages Actions; configuración del repositorio pendiente de seleccionar GitHub Actions
 - F4.5 README mínimo de operación ✅
 
 ## Fase 5 — Sistema visual 🔶 en curso (5.1–5.5 hechas; está en revisión del propietario)
@@ -90,9 +90,8 @@ Orden por dependencia (cada bloque tiene su CA propia en `testing.md`):
 
 | Riesgo                                                               | Mitigación                                                                                                |
 | -------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------- |
-| Configuración del repo remoto (rama Pages, Actions)                  | Confirmar al conectar el remoto (F4.1). Probar deploy en rama antes de fusionar                           |
+| Configuración de Pages en el repositorio                             | Seleccionar GitHub Actions en Settings → Pages; verificar el primer despliegue de `redesign`             |
 | Drive PDFs bloqueados en algunos navegadores si no se copian locales | D03 recomienda copia local; visor soporta ambos                                                           |
 | Contenido pesado (imágenes grandes heredadas del site anterior)      | Presupuestos de `testing.md` + conversión/comprimación en F7                                              |
 | Dependencia del propietario para PDFs/fotos/EN-ES definitivos        | Fase 7 marcada como bloqueada hasta entrega                                                               |
 | Localización del viejo portfolio en `/portfolio/old/`                | Copiar ficheros del repo actual a `public/old/` en F4 antes del primer deploy del nuevo                   |
-| Deploy sin remoto conectado                                          | F4.4 bloqueada: al recibir la info del repo (propietario), probar deploy en rama antes de fusionar a main |
