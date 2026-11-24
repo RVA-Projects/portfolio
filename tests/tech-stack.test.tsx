@@ -75,12 +75,12 @@ describe('Sección Stack (D27)', () => {
  * El fondo (D23) reacciona a cada pulsación; aquí se blinda contador y a11y.
  */
 describe('Clicker (D24/D26)', () => {
-  it('empieza a 0 y cuenta cada click con el aria-label nuevo', () => {
+  it('oculta el cero durante la carga y cuenta cada click con el aria-label nuevo', () => {
     render(<App />)
     const button = screen.getByRole('button', { name: 'Clicker: añade un clic' })
 
     const counter = button.nextElementSibling as HTMLElement
-    expect(counter).toHaveTextContent('0')
+    expect(counter).toHaveTextContent('…')
 
     fireEvent.click(button)
     fireEvent.click(button)

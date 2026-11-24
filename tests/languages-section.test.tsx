@@ -37,9 +37,10 @@ describe('LanguagesSection (F6.7, RF-19)', () => {
 
   it('abrir un certificado monta el DocumentViewerOverlay (dialog + título del documento)', () => {
     render(<App />)
-    /* Orden D04: castellano, valenciano, rumano, inglés, alemán — el primer
-       botón «Ver certificado» es el del valenciano. */
-    fireEvent.click(screen.getAllByRole('button', { name: 'Ver certificado' })[0])
+    /* La lista se ordena por nombre; seleccionamos valenciano por su nombre. */
+    const item = screen.getByRole('heading', { name: 'Valenciano' }).closest('article')
+    expect(item).not.toBeNull()
+    fireEvent.click(within(item as HTMLElement).getByRole('button', { name: 'Ver certificado' }))
 
     const dialog = screen.getByRole('dialog')
     expect(dialog).toBeInTheDocument()

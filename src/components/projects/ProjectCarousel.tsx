@@ -14,7 +14,7 @@ interface ProjectCarouselProps {
 
 /**
  * Carrusel horizontal (RF-08): scroll-snap nativo (swipe táctil) + botones
- * prev/next + indicador de posición + teclado (←/→). Sin autoplay. La lógica
+ * prev/next + teclado (←/→). Sin autoplay. La lógica
  * vive en hooks/useCarousel.ts; este componente solo presenta.
  */
 export function ProjectCarousel({ projects, onSelect }: ProjectCarouselProps) {
@@ -46,35 +46,19 @@ export function ProjectCarousel({ projects, onSelect }: ProjectCarouselProps) {
       </div>
 
       {projects.length > 0 && (
-        <>
-          <div
-            ref={state.ref}
-            className={styles.viewport}
-            onScroll={state.onScroll}
-            onKeyDown={state.onKeyDown}
-            tabIndex={0}
-            role="region"
-            aria-label={texts.carousel.viewport}
-          >
-            {projects.map((project) => (
-              <ProjectCard key={project.id} project={project} onSelect={onSelect} />
-            ))}
-          </div>
-
-          <p
-            className={styles.count}
-            aria-live="polite"
-            aria-atomic="true"
-            role="status"
-            style={{ marginTop: 'var(--space-2)' }}
-          >
-            {/* Indicador de posición 1/N (RF-08) */}
-            <span aria-hidden="true">
-              {state.index + 1} / {state.count}
-            </span>
-            <span className="visually-hidden">{texts.filter.a11yCount(state.count)}</span>
-          </p>
-        </>
+        <div
+          ref={state.ref}
+          className={styles.viewport}
+          onScroll={state.onScroll}
+          onKeyDown={state.onKeyDown}
+          tabIndex={0}
+          role="region"
+          aria-label={texts.carousel.viewport}
+        >
+          {projects.map((project) => (
+            <ProjectCard key={project.id} project={project} onSelect={onSelect} />
+          ))}
+        </div>
       )}
     </div>
   )

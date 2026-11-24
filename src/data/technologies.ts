@@ -1,5 +1,7 @@
 import type { Technology } from '../models/Technology'
 import type { FilterCategoryId } from '../models/common'
+import type { LanguageId } from '../models/common'
+import { naturalCompare } from '../utils/naturalSort'
 
 export type { FilterCategoryId } from '../models/common'
 
@@ -87,7 +89,16 @@ export const technologies: Technology[] = [
 ]
 
 export function technologiesByTier(tier: 'core' | 'explored'): Technology[] {
-  return technologies.filter((tech) => tech.tier === tier)
+  return technologies
+    .filter((tech) => tech.tier === tier)
+    .sort((a, b) => naturalCompare(a.name, b.name, 'en'))
+}
+
+/** Tecnologías de una ficha en orden alfabético por nombre visible. */
+export function sortTechnologyIds(ids: readonly string[], language: LanguageId): string[] {
+  return [...ids].sort((a, b) =>
+    naturalCompare(technologyNameById(a), technologyNameById(b), language),
+  )
 }
 
 export function technologyNameById(id: string): string {

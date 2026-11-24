@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { technologyNameById } from '../../data/technologies'
+import { sortTechnologyIds, technologyNameById } from '../../data/technologies'
 import { useLanguage } from '../../i18n'
 import type { EducationalTextItem, Project } from '../../models/Project'
 import { Button } from '../base/Button'
@@ -227,7 +227,7 @@ export function ProjectOverlay({
                 }}
               />
               <div className={styles.tags}>
-                {project.technologyIds.map((technologyId) => (
+                {sortTechnologyIds(project.technologyIds, language).map((technologyId) => (
                   <Tag key={technologyId} label={technologyNameById(technologyId)} />
                 ))}
               </div>

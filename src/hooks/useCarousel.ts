@@ -4,7 +4,6 @@ export interface CarouselState {
   ref: RefObject<HTMLDivElement | null>
   /** Índice 0-based de la primera tarjeta visible. */
   index: number
-  count: number
   canPrev: boolean
   canNext: boolean
   scrollPrev: () => void
@@ -85,7 +84,6 @@ export function useCarousel(itemCount: number): CarouselState {
   return {
     ref,
     index,
-    count: itemCount,
     canPrev: index > 0,
     canNext: index < itemCount - 1,
     scrollPrev: () => scrollToIndex(index - 1),

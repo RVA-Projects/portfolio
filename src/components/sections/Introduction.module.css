@@ -1,97 +1,84 @@
 .intro {
   position: relative;
-  /* F3.2 — la Hero es UNA tarjeta translúcida uniforme: la animación de
-     fondo se percibe sutilmente a través de toda la superficie (adiós al
-     scrim radial irregular de D23, que cubría zonas a mancha). El ancho
-     deja hueco lateral (= container-pad) y su borde IZQUIERDO queda alineado
-     con el contenido del resto de secciones en pantallas anchas. */
   width: min(var(--container-max), 100% - 2 * var(--container-pad));
-  margin-block: var(--space-6) 0;
-  margin-inline: auto;
-  padding-block: clamp(40px, 7vh, 88px) var(--space-8);
-  padding-inline: clamp(16px, 3vw, 48px);
-  border: 1px solid var(--color-line);
-  border-radius: var(--radius-lg);
-  background: var(--color-hero);
+  margin: var(--space-6) auto 0;
+  padding: clamp(60px, 11vh, 148px) clamp(8px, 3vw, 40px) clamp(48px, 8vh, 96px);
+  border-bottom: 1px solid var(--color-line-strong);
+  background: transparent;
 }
 
-/* ——— Nombre protagonista ——— */
 .name {
+  max-width: none;
+  white-space: nowrap;
   font-size: var(--fs-hero);
-  font-weight: 700;
+  font-weight: 400;
+  line-height: 0.92;
+  color: var(--color-text);
   animation: riseIn var(--dur-slow) var(--ease) both;
 }
 
 .role {
-  margin-top: var(--space-3);
-  font-size: var(--fs-h3);
-  font-weight: 500;
-  color: var(--color-text);
+  margin-top: var(--space-4);
+  color: var(--color-accent);
+  font-family: var(--font-mono);
+  font-size: clamp(1rem, 1.7vw, 1.25rem);
   animation: riseIn var(--dur-slow) var(--ease) 60ms both;
 }
 
 .role::after {
   content: '';
   display: inline-block;
-  width: 10px;
-  height: 10px;
-  margin-left: var(--space-3);
-  border-radius: 50%;
+  width: 22px;
+  height: 2px;
+  margin-left: var(--space-4);
   background: var(--color-accent);
   vertical-align: middle;
 }
 
-/* D25 — nota de nivel (junior): línea complementaria, mono y secundaria;
-   deliberadamente pequeña para no restar protagonismo al título principal. */
 .roleNote {
-  margin-top: var(--space-1);
+  margin-top: var(--space-2);
+  color: var(--color-text-muted);
   font-family: var(--font-mono);
   font-size: var(--fs-small);
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: var(--color-text-muted);
+  letter-spacing: 0.02em;
   animation: riseIn var(--dur-slow) var(--ease) 90ms both;
 }
 
 .location {
   margin-top: var(--space-2);
+  color: var(--color-text-muted);
   font-family: var(--font-mono);
   font-size: var(--fs-small);
-  color: var(--color-text-muted);
   animation: riseIn var(--dur-slow) var(--ease) 120ms both;
 }
 
 .description {
-  margin-top: var(--space-5);
-  /* F3.1: sin tope artificial de ancho — usa el ancho de la tarjeta. */
-  color: var(--color-text-muted);
+  max-width: 58ch;
+  margin-top: var(--space-7);
+  color: var(--color-text);
+  font-size: clamp(1.05rem, 1.6vw, 1.35rem);
+  line-height: 1.55;
   animation: riseIn var(--dur-slow) var(--ease) 180ms both;
 }
 
-/* ——— Contacto rápido ——— */
 .quickLinks {
   display: flex;
   flex-wrap: wrap;
-  /* Post-F2/D33: el bloque EmailReveal es el más alto de la fila (caja +
-     slider). Los botones (GitHub/LinkedIn/Clicker) se alinean con la FILA
-     de la caja del email (flex-start), no centrados verticalmente. */
   align-items: flex-start;
   gap: var(--space-3);
-  margin-top: var(--space-6);
+  margin-top: var(--space-8);
   animation: riseIn var(--dur-slow) var(--ease) 240ms both;
 }
 
 .quickLabel {
   inline-size: 100%;
+  margin-bottom: var(--space-1);
+  color: var(--color-text-muted);
   font-family: var(--font-mono);
   font-size: var(--fs-small);
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: var(--color-text-muted);
+  letter-spacing: 0.02em;
 }
 
-/* Ronda 6 F2 — etiqueta textual del botón CV dentro del IconButton (44px):
-   mono y versalita, misma voz que el selector ES/EN de la TopBar. */
 .cvLabel {
   font-family: var(--font-mono);
   font-size: var(--fs-small);
@@ -99,54 +86,33 @@
   letter-spacing: 0.05em;
 }
 
-/* ——— Clicker (D24/D26): botón circular + contador en su caja ——— */
 .clicker {
   display: inline-flex;
   align-items: center;
   gap: var(--space-2);
-  /* Empuja el juguete al extremo derecho de la fila de contacto rápido;
-     si envuelve a su propia línea (móvil), queda igualmente a la derecha. */
   margin-inline-start: auto;
   user-select: none;
 }
 
-/* IconButton vuelve perfectamente circular (el tooltip de D24 sigue). */
 .clickerBtn {
   border-radius: 50%;
 }
 
-/* Contador en caja propia (unidad visual con el botón): mono, ancho estable
-   (tabular-nums, sin jitter). Sin aria-live: clicks rápidos no deben
-   spamear al lector de pantalla (navegable en modo exploración). */
 .clickerCount {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   min-width: 3.5ch;
   height: 44px;
-  padding: 0 var(--space-3);
+  padding-inline: var(--space-3);
   border: 1px solid var(--color-line);
   border-radius: var(--radius-sm);
+  color: var(--color-text);
   font-family: var(--font-mono);
   font-size: var(--fs-small);
   font-variant-numeric: tabular-nums;
-  color: var(--color-text);
 }
 
-@keyframes riseIn {
-  from {
-    opacity: 0;
-    transform: translateY(14px);
-  }
-  to {
-    opacity: 1;
-    transform: none;
-  }
-}
-
-/* D38.1 — pulso cuando otros visitantes acumulan clicks (ventana ~4s):
-   dos latidos sutiles, borde verde de confirmación. Discreto, sin layout
-   shift (solo transform). reduced-motion lo apaga (bloque de abajo). */
 .countPulse {
   animation: countPulse 600ms var(--ease) 2;
 }
@@ -160,6 +126,50 @@
   50% {
     border-color: var(--color-ok);
     transform: scale(1.08);
+  }
+}
+
+@keyframes riseIn {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (max-width: 575px) {
+  .intro {
+    width: calc(100% - 40px);
+    margin-top: var(--space-4);
+    padding: 62px 0 40px;
+  }
+
+  .name {
+    max-width: 8ch;
+    font-size: clamp(3.1rem, 15vw, 4.7rem);
+    white-space: normal;
+  }
+
+  .description {
+    max-width: 38ch;
+    margin-top: var(--space-6);
+  }
+
+  .quickLinks {
+    gap: var(--space-2);
+    margin-top: var(--space-7);
+  }
+
+  .quickLabel {
+    margin-bottom: var(--space-2);
+  }
+  .clicker {
+    flex-basis: 100%;
+    justify-content: center;
+    margin-inline: 0;
   }
 }
 

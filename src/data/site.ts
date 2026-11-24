@@ -68,8 +68,8 @@ export const clickerCounter = {
 export const site: SiteData = {
   name: 'Andrei Ronai',
   role: {
-    es: 'Desarrollador de software',
-    en: 'Software developer',
+    es: 'Desarrollador Full Stack',
+    en: 'Full Stack Developer',
   },
   roleNote: {
     es: 'Perfil junior',

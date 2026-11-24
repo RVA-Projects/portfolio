@@ -7,7 +7,7 @@ import { IconChevronLeft, IconChevronRight, IconClose } from '../base/Icons'
 import { Button } from '../base/Button'
 import { Modal } from '../base/Modal'
 import { Tag } from '../base/Tag'
-import { technologyNameById } from '../../data/technologies'
+import { sortTechnologyIds, technologyNameById } from '../../data/technologies'
 import styles from './ExperienceOverlay.module.css'
 
 /**
@@ -162,7 +162,7 @@ export function ExperienceOverlay({
 
           {experience.technologyIds.length > 0 && (
             <div className={styles.tags}>
-              {experience.technologyIds.map((technologyId) => (
+              {sortTechnologyIds(experience.technologyIds, language).map((technologyId) => (
                 <Tag key={technologyId} label={technologyNameById(technologyId)} />
               ))}
             </div>

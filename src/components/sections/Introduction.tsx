@@ -141,7 +141,7 @@ interface ClickerButtonProps {
  * de pantalla en clicks rápidos).
  */
 function ClickerButton({ ariaLabel, totalLabel, othersLabel, language }: ClickerButtonProps) {
-  const { count, increment, othersActive } = useGlobalCounter(
+  const { count, loaded, increment, othersActive } = useGlobalCounter(
     `${clickerCounter.baseUrl}/get/${clickerCounter.namespace}/${clickerCounter.key}`,
     `${clickerCounter.baseUrl}/hit/${clickerCounter.namespace}/${clickerCounter.key}`,
     `${clickerCounter.baseUrl}/stream/${clickerCounter.namespace}/${clickerCounter.key}`,
@@ -161,7 +161,7 @@ function ClickerButton({ ariaLabel, totalLabel, othersLabel, language }: Clicker
         }
         title={othersActive ? othersLabel : totalLabel}
       >
-        {count.toLocaleString(language)}
+        {loaded || count > 0 ? count.toLocaleString(language) : '…'}
         <span className="visually-hidden">{totalLabel}</span>
       </span>
     </div>

@@ -12,11 +12,12 @@ function openFirstDocument() {
   render(<App />)
   const section = document.getElementById('education')
   expect(section).not.toBeNull()
-  // Solo los kind 'pdf' son botones: el primero es React fundamentals
-  // (los badges Credly/CertView son kind 'external' ⇒ enlace, pestaña nueva)
-  fireEvent.click(
-    within(section as HTMLElement).getAllByRole('button', { name: 'Ver acreditación' })[0],
-  )
+  // Se busca por nombre porque la formación se ordena por idioma dentro del grupo.
+  const item = within(section as HTMLElement)
+    .getByRole('heading', { name: 'React fundamentals' })
+    .closest('article')
+  expect(item).not.toBeNull()
+  fireEvent.click(within(item as HTMLElement).getByRole('button', { name: 'Ver acreditación' }))
   return screen.getByRole('dialog')
 }
 

@@ -38,11 +38,15 @@ describe('ProjectsSection (RF-06/RF-07/RF-08)', () => {
     expect(screen.getByRole('button', { name: 'Proyecto anterior' })).toBeEnabled()
   })
 
-  it('filtra por categoría Android y actualiza el contador (F2.2)', () => {
+  it('filtra por categoría Android y actualiza el total de resultados (F2.2)', () => {
     render(<App />)
     fireEvent.click(screen.getByRole('button', { name: 'Android' }))
     expect(screen.getByText('2 proyectos')).toBeInTheDocument()
-    expect(screen.getByText('1 / 2')).toBeInTheDocument()
+    expect(
+      within(screen.getByRole('region', { name: 'Carrusel de proyectos' })).getAllByRole('button', {
+        name: /^Abrir proyecto:/,
+      }),
+    ).toHaveLength(2)
   })
 
   it('las 5 categorías están SIEMPRE visibles, incluso Python/Java con 0 proyectos', () => {

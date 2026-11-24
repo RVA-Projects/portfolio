@@ -4,6 +4,14 @@ Registro de decisiones (ADR ligero). Pueden añadirse con cualquier estado: `pro
 
 ---
 
+## D57 — Dirección visual Studio — ✅ Aprobada por autonomía explícita (2026-11-24)
+
+- **Decisión:** sustituir el sistema de paneles negros/grises y acento rojo por una identidad editorial de cuaderno técnico: fondos tinta/papel según el tema, naranja de señalización, DM Serif Display + DM Sans + DM Mono, secciones delimitadas por reglas y tarjetas de esquinas casi rectas.
+- **Motivo:** el rediseño integral pedido busca una identidad deliberada y diferenciada, conservando todos los datos profesionales y la funcionalidad existente.
+- **Alternativas estudiadas:** una dirección de espécimen tipográfico con papel cálido y otra blueprint técnica. Se elige Studio por equilibrar lectura editorial y señales de trabajo técnico, y porque integra capturas reales de proyectos como prueba visual.
+- **Impacto:** cambia tokens, tipografía, fondos y composición CSS; no agrega dependencias ni modifica modelos, datos, destinos de enlaces o lógica de interacción.
+- **Riesgo/validación:** las fuentes remotas requieren red y ofrecen fallbacks locales. Revisar contraste y responsive en ambos temas.
+
 ## D01 — El nuevo portfolio ocupa el repo del portfolio anterior — ✅ Aprobada (2026-11-10)
 
 - **Decisión:** desplegar el nuevo portfolio en el repo existente (`RVA-Projects/portfolio`), con base path `/portfolio/`. El sitio anterior se preserva en `public/old-version/` y se enlaza en la nueva app como "Older Portfolio". La carpeta fuente `oldPortfolio/` se mantiene excluida por `.gitignore`; su copia publicable forma parte del artefacto de Pages.
@@ -231,9 +239,17 @@ Tres ajustes de acabado pedidos por el propietario tras ver D23 en producción:
 ### D38.1 — Fix de la carrera + sincronización EN VIVO (2026-11-16)
 
 - **Bug reportado** («cambio de modo y refresco → parece resetearse, luego se recupera y se acumulan los clicks»): NO era el tema — era una CARRERA entre la lectura inicial y los clicks hechos durante la carga. El GET desfasado SOBRESCRIBÍA los incrementos optimistas (los tapaba); los hits ya estaban en el servidor, así que al refrescar «se recuperaban acumulados». La correlación con el tema era un señuelo: toquetear el tema = clicks rápidos dentro de la ventana de carga (~100ms–1s).
-- **Fix triple** en `useGlobalCounter`: (1) reconciliación por MÁXIMO — el servidor jamás baja la cifra local (seguro: ambas solo crecen); (2) `cache: 'no-store'` en la lectura (el total jamás sale de caché HTTP; Abacus no manda cabeceras de caché); (3) `keepalive: true` en el hit (los clicks hechos justo antes de cerrar/recargar sobreviven al unload).
+- **Fix triple** en `useGlobalCounter`: (1) reconciliación por MÁXIMO — el servidor jamás baja la cifra local (seguro: ambas solo crecen); (2) `cache: 'no-store'` en la lectura (el total jamás sale de caché HTTP; Abacus no manda cabeceras de caché); (3) `keepalive: true` en el hit (los clicks hechos justo antes de cerrar/recargar sobreviven al unload). D38.2 precisa que la respuesta agregada de `/hit` no activa la pista verde.
 - **Sincronización EN VIVO** (elección del propietario: «más pro», mostrada antes como opcional): stream Server-Sent Events de Abacus (`/stream/rva-portfolio/clicker`, verificado con curl: emite el valor actual al conectar y cada actualización). El primer mensaje = primado (NO cuenta como «de otros»); si una actualización supera la cifra local, el delta son clicks ajenos → pista de ~4s: tooltip del número cambia a «¡Otros visitantes están acumulando clicks!» + pulso CSS (2 latidos, borde `--color-ok`, reduced-motion lo apaga). La respuesta del hit también se reconcilia (detecta a otros entre mi click y la respuesta). Degradación: sin EventSource o stream caído → sync solo al cargar; sin servicio → contador de sesión.
 - **Pruebas:** 8 tests (`global-counter.test.tsx`: + «los clicks durante la carga NO se tapan», + stream en vivo con EventSource falso: primado, pista 4s, cleanup, no baja la cifra, propio click sin pista) — 153 unitarios ✓. Verificado e2e contra el servicio REAL: hit desde fuera del navegador → la página abierta sube en vivo (76→77) + pista visible + expira a los 4s. Contador reseteado a 0 (D1) para la publicación.
+
+### D38.2 — Carga visible y primado seguro del stream (2026-11-24)
+
+- El Clicker ya no presenta `0` mientras la lectura inicial está pendiente; conserva la suma optimista si el usuario hace clic durante esa carga. Las lecturas HTTP fallidas se distinguen de una respuesta válida.
+- Cada apertura/reconexión del EventSource vuelve a primar su primera instantánea. Los valores repetidos o fuera de orden no reducen ni reactivan el contador. La respuesta de `/hit` actualiza el total, pero no dispara el indicador verde: solo lo hacen subidas posteriores recibidas por SSE, por encima del total local.
+- Abacus expone un contador agregado sin metadatos de origen; el cliente no puede atribuir cada delta a un visitante individual con certeza absoluta. El guardado sigue usando exactamente un `/hit` por pulsación, sin reintentos que puedan duplicarlo.
+- El Clicker se centra en pantallas de hasta 575px; la alineación de escritorio se conserva.
+- **Pruebas:** 10 pruebas del hook y 4 de integración Clicker correctas; Playwright 2/2 (persistencia simulada tras recargas, hits únicos y alineación responsive); typecheck/lint/formato y build correctos. La suite completa mantiene 6 aserciones antiguas sobre el orden de Educación/Idiomas y el indicador de posición de Proyectos, afectadas por cambios locales anteriores.
 
 ## D39 — Orientación profesional: Full Stack (ronda 4 F1) — ✅ Aprobada (2026-11-16)
 

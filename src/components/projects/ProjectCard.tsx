@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { technologyNameById } from '../../data/technologies'
+import { sortTechnologyIds, technologyNameById } from '../../data/technologies'
 import { useLanguage } from '../../i18n'
 import type { Project } from '../../models/Project'
 import { Tag } from '../base/Tag'
@@ -23,7 +23,7 @@ export function ProjectCard({ project, onSelect }: ProjectCardProps) {
   const [imageFailed, setImageFailed] = useState(false)
 
   const cover = project.media[0]
-  const techNames = project.technologyIds.map(technologyNameById)
+  const techNames = sortTechnologyIds(project.technologyIds, language).map(technologyNameById)
   const visibleTags = techNames.slice(0, MAX_VISIBLE_TAGS)
   const overflowCount = techNames.length - visibleTags.length
 

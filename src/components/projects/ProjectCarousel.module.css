@@ -3,7 +3,8 @@
   gap: var(--space-4);
   overflow-x: auto;
   scroll-snap-type: x mandatory;
-  padding-bottom: var(--space-4);
+  padding-bottom: var(--space-5);
+  scrollbar-color: var(--color-accent) transparent;
   /*Scroll nativo = swipe táctil gratuito (RF-08) */
   scrollbar-width: thin;
   scrollbar-color: var(--color-line-strong) transparent;

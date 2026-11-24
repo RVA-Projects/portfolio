@@ -1,5 +1,30 @@
 # memory.md — RVA Portfolio
 
+## Ajuste visual (2026-11-24)
+
+- Nombre del hero en una línea en pantallas mayores de 575px; en móvil puede partirse según el ancho disponible.
+- Kicker de secciones muestra `- NN` en lugar de `INDEX / NN`, independientemente del idioma.
+- Publicación preparada en `redesign`, basada en el estado que coincide con `origin/main`; `npm run validate` completó typecheck, lint, formato, 187 tests y build. Se ejecutó con permisos ampliados porque esbuild no podía leer un directorio padre bajo el sandbox.
+
+## Rediseño visual Studio (2026-11-24)
+
+- Se establece una nueva identidad editorial técnica: tinta y papel para los temas, acento naranja, DM Serif Display/DM Sans/DM Mono, hero tipográfica y secciones con reglas; se conserva Canvas, contenido, accesibilidad y controles.
+- La composición elimina paneles uniformes; proyectos y experiencia mantienen sus carruseles y acciones, educación mantiene sus vistas, y la navegación/overlays siguen intactos.
+- El perfil declara ahora “Desarrollador Full Stack / Full Stack Developer”, coherente con la descripción existente.
+- Hallmark: `theme.mjs deal` comparó tres direcciones y `sloplint --before` hizo auditoría estática. No se pudo ejecutar su tier de navegador por falta de `puppeteer-core`; la revisión del render se hizo con Playwright. Unslop se investigó y es incompatible con este proyecto CSS nativo (su alcance es React+Tailwind). Better Interface: se aplicaron sus criterios de layout, tipografía, color, accesibilidad, escritura visual, movimiento y acabado.
+- Validación final: `npm run validate` (typecheck, lint, formato, 187 tests y build) correcta; Playwright 18/18. Matriz de navegador verificada: 16 combinaciones de 375/768/1024/1440px, ambos temas e idiomas, sin overflow; el Clicker queda centrado en móvil. Warning preexistente de Fast Refresh y mensajes conocidos de Canvas/jsdom siguen en lint/tests.
+- Se actualizaron pruebas que aún dependían del orden anterior y del indicador 1/N retirado; los datos y el comportamiento de colecciones no cambiaron.
+
+## Cambio local (2026-11-24)
+
+- Clicker: se oculta el cero durante la carga del total; las lecturas no exitosas no se toman como valor. El SSE descarta la instantánea en cada apertura/reconexión, ignora valores repetidos/anteriores por reconciliación monotónica y los hits propios ya no activan el pulso verde. Cada pulsación sigue generando un único `/hit`. En móvil el control queda centrado; escritorio conserva alineación.
+- Pruebas Clicker: 10/10 del hook y 4/4 de integración correctas; Playwright 2/2 (recargas/hits simulados y alineación móvil/escritorio). TypeScript, ESLint y Prettier correctos; build correcto. En la suite completa, 6 aserciones anteriores siguen esperando el orden previo de Educación/Idiomas y el indicador de posición de Proyectos.
+
+- Se eliminaron los indicadores de posición inferiores de los carruseles de Proyectos y Experiencia; se conservan recuentos de resultados, flechas, teclado y desplazamiento. El hook deja de exponer el total redundante.
+- El fondo conserva sus eventos de partículas y descarta selecciones nuevas provocadas por clics cortos sobre texto no interactivo; los arrastres de selección y controles se preservan.
+- Formación e Idiomas se ordenan por nombre visible dentro de sus grupos/listas según el idioma activo. Tecnologías de tarjetas, fichas y experiencias usan orden natural A–Z. El Stack mantiene su jerarquía y secuencia ordenada.
+- Validación: typecheck, ESLint y Prettier correctos (permanece el warning conocido de Fast Refresh). Vitest y build no arrancan en este entorno porque esbuild no puede leer `../../..` al resolver `vite.config.ts` (`Access is denied`).
+
 > Memoria operativa del agente. Actualizar tras cada cambio relevante.
 > Última actualización: 2026-11-19 (D52: años de experiencia e iconos del Stack).
 

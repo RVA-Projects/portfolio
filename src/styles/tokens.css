@@ -1,48 +1,34 @@
-/* ============ RVA Portfolio — tokens del sistema visual (Fase 5) ============ */
+/* RVA Portfolio — sistema visual Studio: papel de trabajo, tinta y naranja técnico. */
 :root {
-  /* D07: paleta cerrada — negro/blanco/gris + acento rojo (design-system §2) */
-  --color-bg: #0b0b0c;
-  --color-surface: #141416;
-  --color-surface-2: #1e1e21;
-  --color-line: #2a2a2e;
-  --color-line-strong: #3a3a3f;
-  --color-text: #f4f4f5;
-  --color-text-muted: #9a9aa0;
-  --color-accent: #e23744;
-  --color-focus: #ffffff;
-  /* Verde de confirmación (estado completado, EmailReveal F2). */
-  --color-ok: #3fb950;
-  /* Backdrop de overlays (Modal); token para que ambos temas lo ajusten. */
-  --color-backdrop: rgba(10, 10, 11, 0.85);
-  /* F3.2 — tarjeta de la Hero: superficie translúcida uniforme (la animación
-     de fondo se percibe sutilmente a través de TODA la tarjeta). */
-  --color-hero: rgba(20, 20, 22, 0.62);
-  /* D30 — punto lupa (CursorSpot): acento translúcido que contrasta con el
-     texto de cada tema (núcleo, pulso al presionar y glow del neón). */
-  --color-spot: rgba(226, 55, 68, 0.13);
-  --color-spot-press: rgba(226, 55, 68, 0.26);
-  --color-spot-glow: rgba(226, 55, 68, 0.4);
-  /* Stage de reproductor/galería: oscuro en ambos temas (identidad de visor). */
-  --color-media-stage: #0a0a0b;
-  --shadow-overlay: 0 12px 32px rgba(0, 0, 0, 0.45);
-  /* Ronda 5 F2 — altura de la barra superior fija (nav permanente). La usan
-     la propia barra (min-height), el scroll-margin de las secciones y el
-     padding superior del main para que nada quede bajo la barra. */
+  --color-bg: #171916;
+  --color-surface: #20231f;
+  --color-surface-2: #2a2d28;
+  --color-line: #3d4039;
+  --color-line-strong: #77796f;
+  --color-text: #efeee7;
+  --color-text-muted: #b0b1a7;
+  --color-accent: #ed8054;
+  --color-focus: #fff7e8;
+  --color-ok: #73d293;
+  --color-backdrop: rgba(23, 25, 22, 0.94);
+  --color-hero: rgba(32, 35, 31, 0.94);
+  --color-spot: rgba(237, 128, 84, 0.08);
+  --color-spot-press: rgba(237, 128, 84, 0.16);
+  --color-spot-glow: rgba(237, 128, 84, 0.24);
+  --color-media-stage: #171916;
+  --shadow-overlay: 0 18px 56px rgba(32, 34, 31, 0.2);
   --topbar-h: 64px;
 
-  /* Tipografía (design-system §3) */
-  --font-display: 'Space Grotesk', system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
-  --font-body: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
-  --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  --font-display: 'DM Serif Display', Georgia, 'Times New Roman', serif;
+  --font-body: 'DM Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-mono: 'DM Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
 
-  /* Escala tipográfica fluida (§4) */
-  --fs-hero: clamp(2.4rem, 6vw, 4.5rem);
-  --fs-h2: clamp(1.6rem, 3.6vw, 2.4rem);
+  --fs-hero: clamp(3.35rem, 9vw, 8.5rem);
+  --fs-h2: clamp(2rem, 4.4vw, 3.55rem);
   --fs-h3: clamp(1.15rem, 2vw, 1.5rem);
   --fs-body: clamp(0.95rem, 1.05vw, 1.05rem);
-  --fs-small: 0.85rem;
+  --fs-small: 0.78rem;
 
-  /* Espaciado — escala 4px (§5) */
   --space-1: 4px;
   --space-2: 8px;
   --space-3: 12px;
@@ -53,50 +39,36 @@
   --space-8: 72px;
   --space-9: 96px;
   --space-10: 128px;
-  --container-max: 1200px;
-  --container-pad: clamp(20px, 5vw, 48px);
+  --container-max: 1280px;
+  --container-pad: clamp(20px, 6vw, 88px);
 
-  /* Radios (§6) */
-  --radius-sm: 6px;
-  --radius-md: 10px;
-  --radius-lg: 16px;
-
-  /* Movimiento (§6) — duraciones + easing institucionales */
+  --radius-sm: 2px;
+  --radius-md: 3px;
+  --radius-lg: 4px;
   --dur-fast: 150ms;
   --dur-base: 240ms;
   --dur-slow: 320ms;
   --ease: cubic-bezier(0.2, 0, 0, 1);
-
-  /* Z-index institucional */
   --z-nav: 40;
   --z-modal: 100;
 }
 
-/* ============ Tema claro (D18/D29) ============
-   D29 (ronda 2, F5): paleta re-diseñada — neutros fríos con sesgo azul-pizarra
-   (H≈210, armonía por analogía con el acento) + acento azul eléctrico #0a66c2.
-   Fondo anti-deslumbramiento (#eef1f4), texto pizarra (no negro puro).
-   Contraste verificado (WCAG 2.2): texto/fondo 13.3:1 · secundario 5.2:1 ·
-   blanco/acento 5.7:1 · acento/fondo 5.0:1. Modo oscuro INTACTO. */
 :root[data-theme='light'] {
-  --color-bg: #eef1f4;
-  --color-surface: #ffffff;
-  --color-surface-2: #e4e8ec;
-  --color-line: #d2d9df;
-  --color-line-strong: #aeb8c0;
-  --color-text: #1d2733;
-  --color-text-muted: #566775;
-  --color-accent: #0a66c2;
-  --color-focus: #1d2733;
-  /* Verde de confirmación (estado completado, EmailReveal F2): AA sobre #eef1f4. */
-  --color-ok: #1a7f37;
-  --color-backdrop: rgba(228, 233, 238, 0.88);
-  /* F3.2 — tarjeta de la Hero en claro: blanco translúcido sobre #eef1f4. */
-  --color-hero: rgba(255, 255, 255, 0.62);
-  /* D30 — punto lupa: azul translúcido (contraste con texto pizarra). */
-  --color-spot: rgba(10, 102, 194, 0.12);
-  --color-spot-press: rgba(10, 102, 194, 0.24);
-  --color-spot-glow: rgba(10, 102, 194, 0.4);
-  /* Sombra suave sobre fondo claro (misma geometría). */
-  --shadow-overlay: 0 12px 32px rgba(29, 39, 51, 0.16);
+  --color-bg: #eeece5;
+  --color-surface: #f7f6f1;
+  --color-surface-2: #e4e1d7;
+  --color-line: #c8c5ba;
+  --color-line-strong: #858276;
+  --color-text: #20221f;
+  --color-text-muted: #5e6059;
+  --color-accent: #a83c18;
+  --color-focus: #20221f;
+  --color-ok: #247344;
+  --color-backdrop: rgba(238, 236, 229, 0.94);
+  --color-hero: rgba(247, 246, 241, 0.94);
+  --color-spot: rgba(198, 78, 37, 0.08);
+  --color-spot-press: rgba(198, 78, 37, 0.16);
+  --color-spot-glow: rgba(198, 78, 37, 0.24);
+  --color-media-stage: #171916;
+  --shadow-overlay: 0 18px 56px rgba(32, 34, 31, 0.2);
 }

@@ -207,6 +207,8 @@ export function googleDriveEmbedUrl(src: string): string | null // Drive /view �
 
 ## 9. Reglas de validación de datos (`audit:content` en Vitest)
 
+Los carruseles de Proyectos y Experiencia conservan navegación por flechas, teclado y scroll-snap, sin indicador visual de posición.
+
 1. IDs de `technologyIds` existen en el catálogo de tecnologías.
 2. No hay IDs duplicados en ninguna colección.
 3. Todo `LocalizedText` tiene `es` y `en` no vacíos.

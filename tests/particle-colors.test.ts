@@ -3,9 +3,9 @@ import { lerpRgb, resolveThemeRgb, rgbaString } from '../src/canvas/particleColo
 
 /** D23 — colores del fondo animado: puro, sin canvas ni DOM. */
 describe('particleColors (D23)', () => {
-  it('oscuro = blanco puro; claro = pizarra frío del D29 (visible sobre #eef1f4)', () => {
-    expect(resolveThemeRgb('dark')).toEqual({ r: 255, g: 255, b: 255 })
-    expect(resolveThemeRgb('light')).toEqual({ r: 63, g: 78, b: 92 })
+  it('usa marfil en oscuro y taupe técnico sobre el papel claro', () => {
+    expect(resolveThemeRgb('dark')).toEqual({ r: 211, g: 207, b: 193 })
+    expect(resolveThemeRgb('light')).toEqual({ r: 112, g: 108, b: 97 })
   })
 
   it('lerpRgb interpala linealmente (flotantes) y se satura fuera de [0,1]', () => {
@@ -13,7 +13,7 @@ describe('particleColors (D23)', () => {
     const to = resolveThemeRgb('light')
     expect(lerpRgb(from, to, 0)).toEqual(from)
     expect(lerpRgb(from, to, 1)).toEqual(to)
-    expect(lerpRgb(from, to, 0.5)).toEqual({ r: 159, g: 166.5, b: 173.5 })
+    expect(lerpRgb(from, to, 0.5)).toEqual({ r: 161.5, g: 157.5, b: 145 })
     expect(lerpRgb(from, to, 2)).toEqual(to)
     expect(lerpRgb(from, to, -1)).toEqual(from)
   })

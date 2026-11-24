@@ -1,4 +1,4 @@
-import { technologyById } from '../../data/technologies'
+import { sortTechnologyIds, technologyById } from '../../data/technologies'
 import { useLanguage } from '../../i18n'
 import type { Experience } from '../../models/Experience'
 import { TechIcon } from '../base/TechIcon'
@@ -38,7 +38,7 @@ export function ExperienceCard({ item, onOpen }: ExperienceCardProps) {
       {periodLabel !== null && <p className={styles.period}>{periodLabel}</p>}
       {item.technologyIds.length > 0 && (
         <div className={styles.techs}>
-          {item.technologyIds.map((technologyId) => {
+          {sortTechnologyIds(item.technologyIds, language).map((technologyId) => {
             const technology = technologyById(technologyId)
             return (
               <TechIcon

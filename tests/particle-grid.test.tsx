@@ -238,10 +238,10 @@ describe('BackgroundCanvas / useParticleGrid (D23)', () => {
   it('el tema claro cambia el color objetivo (blanco → pizarra D29)', () => {
     const { rerender } = render(<BackgroundCanvas theme="dark" />)
     stepFrames(1)
-    expect(ctx.fillStyle).toContain('rgba(255, 255, 255,')
+    expect(ctx.fillStyle).toContain('rgba(211, 207, 193,')
 
     rerender(<BackgroundCanvas theme="light" />)
     stepFrames(120) // ~2s: la interpolación exponencial converge del todo
-    expect(ctx.fillStyle).toContain('rgba(63, 78, 92,')
+    expect(ctx.fillStyle).toContain('rgba(112, 108, 97,')
   })
 })

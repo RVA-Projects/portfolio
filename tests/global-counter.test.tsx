@@ -23,6 +23,7 @@ const OTHERS = '¡Otros visitantes están acumulando clicks!'
 /** Sustituto mínimo de EventSource: captura handlers para dispararlos a mano. */
 class FakeEventSource {
   static instances: FakeEventSource[] = []
+  onopen: (() => void) | null = null
   onmessage: ((event: { data: string }) => void) | null = null
   onerror: (() => void) | null = null
   close = vi.fn()
@@ -31,7 +32,7 @@ class FakeEventSource {
   }
 }
 
-const countBox = () => screen.getByTitle(TOTAL)
+const countBox = () => screen.queryByTitle(TOTAL) ?? screen.getByTitle(OTHERS)
 
 /** Asienta las microtareas de fetch→json→setState (las promesas NO son fake). */
 const flush = async () => {
@@ -59,6 +60,15 @@ describe('Clicker global (D38/D38.1, useGlobalCounter)', () => {
       getUrl,
       expect.objectContaining({ cache: 'no-store', signal: expect.anything() }),
     )
+  })
+
+  it('no muestra un cero temporal mientras la lectura inicial sigue pendiente', () => {
+    vi.stubGlobal(
+      'fetch',
+      vi.fn(() => new Promise<Response>(() => {})),
+    )
+    render(<App />)
+    expect(countBox()).toHaveTextContent('…')
   })
 
   it('cada click suma AL INSTANTE y dispara el hit con keepalive', () => {
@@ -113,12 +123,12 @@ describe('Clicker global (D38/D38.1, useGlobalCounter)', () => {
     expect(countBox()).toHaveTextContent('3')
   })
 
-  it('si el servicio falla, degrada a contador de sesión sin romper', () => {
+  it('si el servicio falla, degrada a contador de sesión sin romper', async () => {
     const fetchMock = vi.fn().mockRejectedValue(new Error('servicio caído'))
     vi.stubGlobal('fetch', fetchMock)
 
     render(<App />)
-    expect(countBox()).toHaveTextContent('0')
+    await waitFor(() => expect(countBox()).toHaveTextContent('0'))
 
     fireEvent.click(screen.getByRole('button', { name: 'Clicker: añade un clic' }))
     expect(countBox()).toHaveTextContent('1')
@@ -186,10 +196,35 @@ describe('Clicker global (D38/D38.1, useGlobalCounter)', () => {
     expect(countBox()).toHaveTextContent('6')
     expect(countBox()).toHaveAttribute('title', TOTAL)
 
+    /* El eco SSE del clic propio actualiza el total sin activar el pulso. */
+    act(() => source.onmessage!({ data: '{"value":6}' }))
+    expect(countBox()).toHaveAttribute('title', TOTAL)
+
     /* Un valor del stream inferior al local (entrega desfasada): se ignora */
     act(() => source.onmessage!({ data: '{"value":3}' }))
     expect(countBox()).toHaveTextContent('6')
     expect(countBox()).toHaveAttribute('title', TOTAL)
+  })
+
+  it('silencia la instantánea de reconexión y acepta solo actualizaciones posteriores', async () => {
+    const fetchMock = vi.fn().mockResolvedValue({ json: async () => ({ value: 20 }) })
+    vi.stubGlobal('fetch', fetchMock)
+    vi.stubGlobal('EventSource', FakeEventSource)
+    FakeEventSource.instances = []
+    render(<App />)
+    await waitFor(() => expect(countBox()).toHaveTextContent('20'))
+
+    const source = FakeEventSource.instances[0]
+    act(() => {
+      source.onopen?.()
+      source.onmessage?.({ data: '{"value":25}' })
+    })
+    expect(countBox()).toHaveTextContent('25')
+    expect(countBox()).toHaveAttribute('title', TOTAL)
+
+    act(() => source.onmessage?.({ data: '{"value":27}' }))
+    expect(countBox()).toHaveTextContent('27')
+    expect(countBox()).toHaveAttribute('title', OTHERS)
   })
 
   it('sin EventSource (navegador antiguo) funciona igual: sync solo al cargar', async () => {

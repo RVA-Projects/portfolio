@@ -155,11 +155,11 @@ describe('ExperienceSection (Fase 5/6 — tarjetas minimalistas + overlay)', () 
 })
 
 describe('Carrusel de experiencia (ronda 6 F1 — misma arquitectura que Proyectos)', () => {
-  it('el carrusel muestra contador, indicador 1/N y las 7 tarjetas', () => {
+  it('el carrusel muestra el total y las 7 tarjetas sin indicador de posición', () => {
     render(<App />)
     const section = document.getElementById('experience') as HTMLElement
-    expect(within(section).getAllByText('7 experiencias')).toHaveLength(2)
-    expect(within(section).getByText('1 / 7')).toBeInTheDocument()
+    expect(within(section).getByText('7 experiencias')).toBeInTheDocument()
+    expect(within(section).queryByText('1 / 7')).not.toBeInTheDocument()
     expect(within(section).getAllByRole('button', { name: /^Abrir experiencia:/ })).toHaveLength(7)
     expect(
       within(section).getByRole('region', { name: 'Carrusel de experiencia' }),

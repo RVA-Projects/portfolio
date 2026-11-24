@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { education } from '../../data/education'
 import type { SectionId } from '../../data/site'
 import { useLanguage } from '../../i18n'
+import { sortByLocalizedName } from '../../utils/naturalSort'
 import type { DocumentRef } from '../../models/common'
 import type { Education, EducationKind } from '../../models/Education'
 import { SectionHeading } from '../base/SectionHeading'
@@ -33,7 +34,7 @@ function groupByKind(items: Education[]): Partial<Record<EducationKind, Educatio
  * allá del agrupado.
  */
 export function EducationSection() {
-  const { texts } = useLanguage()
+  const { language, texts } = useLanguage()
   const [activeDocument, setActiveDocument] = useState<DocumentRef | null>(null)
   const [view, setView] = useState<'cards' | 'list'>('cards')
   const groups = groupByKind(education)
@@ -82,7 +83,9 @@ export function EducationSection() {
         ))}
       </div>
       {GROUP_ORDER.map((kind) => {
-        const items = groups[kind]
+        const groupItems = groups[kind]
+        const items =
+          groupItems === undefined ? undefined : sortByLocalizedName(groupItems, language)
         if (items === undefined || items.length === 0) return null
         return (
           <div key={kind} className={styles.group}>

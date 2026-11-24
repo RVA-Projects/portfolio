@@ -12,11 +12,11 @@ import { lerpRgb, resolveThemeRgb, rgbaString, type Rgb } from './particleColors
 /* ——— PUNTOS: tamaño y brillo (lo más visual) ——— */
 /** Tamaño base del punto EN REPOSO, en px (lado del cuadrado dibujado).
     Subir a 1.5–2 = puntos claramente visibles; bajar a 0.8 = casi polvo. */
-const POINT_SIZE_BASE = 5
+const POINT_SIZE_BASE = 4
 /** px EXTRA de tamaño en el punto de máxima actividad (muy desplazado).
     Tamaño real = POINT_SIZE_BASE + POINT_SIZE_BOOST × boost (0…1).
     Es lo que hace que los puntos "crezcan" al pasar el cursor o al hacer clic. */
-const POINT_SIZE_BOOST = 5.3
+const POINT_SIZE_BOOST = 3.8
 /** Tamaño del punto en modo ESTÁTICO (prefers-reduced-motion, sin animación). */
 const POINT_SIZE_STATIC = 3.8
 /** Opacidad de cada punto según su nivel de actividad (4 niveles, de reposo
@@ -29,7 +29,7 @@ const STATIC_ALPHA = 0.3
 /* ——— DENSIDAD DE LA REJILLA ——— */
 /** Separación entre puntos (px): los límites del clamp automático.
     Menor spacing = más puntos y más denso (cuidado con el rendimiento). */
-const SPACING_MIN = 36
+const SPACING_MIN = 30
 const SPACING_MAX = 56
 /** Spacing objetivo como fracción del ancho del viewport (5% ≈ 72px en
     1440, recortado al clamp de arriba). Súbelo si quieres rejilla más rala. */
@@ -43,7 +43,7 @@ const MEMORY_SPACING_FACTOR = 1.4
 const CURSOR_RADIUS = 180
 /** Fuerza de atracción. Con SPRING_K=90 el equilibrio es un arrastre
     máximo de ≈40px: sutil. Más valor = vórtice más agresivo. */
-const CURSOR_PULL = 3600
+const CURSOR_PULL = 3000
 
 /* ——— CLIC: colapso + eco de anillo (ambos botones por igual) ——— */
 /** Radio del colapso al pulsar (px): puntos que se ven afectados. */
@@ -173,6 +173,12 @@ export function useParticleGrid(theme: ThemeId): RefObject<HTMLCanvasElement | n
     let running = false
     let lastTime = 0
     let resizeTimer: ReturnType<typeof setTimeout> | undefined
+    let pointerDown: {
+      x: number
+      y: number
+      hadSelection: boolean
+      target: EventTarget | null
+    } | null = null
     const pointer: PointerState = { x: 0, y: 0, active: false, coarse: false }
 
     const buildGrid = () => {
@@ -406,8 +412,35 @@ export function useParticleGrid(theme: ThemeId): RefObject<HTMLCanvasElement | n
     const onPointerDown = (event: PointerEvent) => {
       pointer.x = event.clientX
       pointer.y = event.clientY
+      const selection = window.getSelection()
+      pointerDown = {
+        x: event.clientX,
+        y: event.clientY,
+        hadSelection: selection !== null && !selection.isCollapsed,
+        target: event.target,
+      }
       applyCollapse(event.clientX, event.clientY)
       rings.push({ x: event.clientX, y: event.clientY, t: 0 })
+    }
+
+    /* Un doble clic repetido sobre texto puede seleccionar una palabra de forma
+       accidental. Solo retiramos la selección recién creada por un tap/clic
+       corto; arrastrar para seleccionar y los controles conservan su conducta. */
+    const onPointerUp = (event: PointerEvent) => {
+      const down = pointerDown
+      pointerDown = null
+      if (down === null || down.hadSelection) return
+      const moved = Math.hypot(event.clientX - down.x, event.clientY - down.y)
+      if (moved > 4) return
+      const target = down.target instanceof Element ? down.target : null
+      if (
+        target?.closest(
+          'a, button, input, textarea, select, [contenteditable="true"], [role="button"]',
+        )
+      )
+        return
+      const selection = window.getSelection()
+      if (selection !== null && !selection.isCollapsed) selection.removeAllRanges()
     }
 
     const onBlur = () => {
@@ -444,6 +477,7 @@ export function useParticleGrid(theme: ThemeId): RefObject<HTMLCanvasElement | n
 
     window.addEventListener('pointermove', onPointerMove, { passive: true })
     window.addEventListener('pointerdown', onPointerDown, { passive: true })
+    window.addEventListener('pointerup', onPointerUp, { passive: true })
     window.addEventListener('blur', onBlur)
     document.addEventListener('visibilitychange', onVisibility)
     window.addEventListener('resize', onResize)
@@ -454,6 +488,7 @@ export function useParticleGrid(theme: ThemeId): RefObject<HTMLCanvasElement | n
       clearTimeout(resizeTimer)
       window.removeEventListener('pointermove', onPointerMove)
       window.removeEventListener('pointerdown', onPointerDown)
+      window.removeEventListener('pointerup', onPointerUp)
       window.removeEventListener('blur', onBlur)
       document.removeEventListener('visibilitychange', onVisibility)
       window.removeEventListener('resize', onResize)

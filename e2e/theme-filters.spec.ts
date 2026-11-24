@@ -33,7 +33,7 @@ test.describe('Temas (D18)', () => {
   })
 
   test('los iconos monocromos conservan el zoom hover en ambos temas', async ({ page }) => {
-    const names = ['Meta Business Suite', 'Google Gemini', 'Unity', 'GitHub', 'Codex', 'OpenCoDEX']
+    const names = ['Meta Business Suite', 'Unity', 'GitHub', 'Codex', 'OpenCode']
 
     const verifyZoom = async () => {
       for (const name of names) {
@@ -45,6 +45,7 @@ test.describe('Temas (D18)', () => {
     }
 
     await verifyZoom()
+    await expect(page.locator('#stack li').filter({ hasText: /^Google Gemini$/ })).toHaveCount(0)
     await page.mouse.move(0, 0)
     await page.getByRole('button', { name: 'Cambiar a modo claro' }).click()
     await expect(page.locator('html')).toHaveAttribute('data-theme', 'light')

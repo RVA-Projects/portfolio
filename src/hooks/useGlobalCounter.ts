@@ -3,6 +3,7 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 /** Estado del contador global: cifra visible, acción de incremento y señal de «otros». */
 export interface GlobalCounter {
   count: number
+  loaded: boolean
   increment: () => void
   /** D38.1: true ~4s cuando el stream reporta clicks de OTROS visitantes. */
   othersActive: boolean
@@ -30,8 +31,8 @@ const OTHERS_HINT_MS = 4000
  * actual al conectar (mensaje de primado, NO cuenta como «de otros») y
  * cada actualización posterior. Si una actualización supera la cifra
  * local, el delta son clicks ajenos: se marca `othersActive` ~4s para que
- * la UI muestre la pista. El hit devuelve el total actualizado y se
- * reconcilia igual (detecta a otros entre mi click y la respuesta).
+ * la UI muestre la pista. Las respuestas de `/hit` actualizan el total, pero
+ * no activan la pista: el valor agregado no permite atribuir su delta.
  *
  * Degradación: sin EventSource (navegadores antiguos, jsdom) o si el
  * stream falla → comportamiento anterior (sync solo al cargar). El
@@ -40,12 +41,11 @@ const OTHERS_HINT_MS = 4000
  */
 export function useGlobalCounter(getUrl: string, hitUrl: string, streamUrl: string): GlobalCounter {
   const [count, setCount] = useState(0)
+  const [loaded, setLoaded] = useState(false)
   const [othersActive, setOthersActive] = useState(false)
   /** Espejo del count: las callbacks de stream/hit necesitan el valor al día. */
   const countRef = useRef(0)
   const hintTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
-  /** Primer mensaje del stream = eco del valor actual al conectar. */
-  const streamPrimed = useRef(false)
 
   const notifyOthers = useCallback(() => {
     setOthersActive(true)
@@ -56,12 +56,13 @@ export function useGlobalCounter(getUrl: string, hitUrl: string, streamUrl: stri
   /** Reconciliación por máximo + detección de clicks ajenos (delta > 0). */
   const applyServerValue = useCallback(
     (value: number, notify: boolean) => {
-      if (!Number.isFinite(value)) return
+      if (!Number.isFinite(value) || value < 0) return
       if (value > countRef.current) {
         countRef.current = value
         setCount(value)
         if (notify) notifyOthers()
       }
+      setLoaded(true)
     },
     [notifyOthers],
   )
@@ -70,25 +71,36 @@ export function useGlobalCounter(getUrl: string, hitUrl: string, streamUrl: stri
   useEffect(() => {
     const controller = new AbortController()
     fetch(getUrl, { cache: 'no-store', signal: controller.signal })
-      .then((res) => res.json() as Promise<{ value: number }>)
+      .then((res) => {
+        if (res.ok === false) throw new Error(`Counter read failed: ${res.status}`)
+        return res.json() as Promise<{ value: number }>
+      })
       .then((data) => applyServerValue(data.value, false))
       .catch(() => undefined) // sin servicio (offline/abort): contador de sesión
+      .finally(() => {
+        if (!controller.signal.aborted) setLoaded(true)
+      })
     return () => controller.abort()
   }, [getUrl, applyServerValue])
 
   /* Stream en vivo (SSE). EventSource reintenta solo ante fallos. */
   useEffect(() => {
     if (typeof EventSource === 'undefined') return
-    streamPrimed.current = false
     const source = new EventSource(streamUrl)
+    let primed = false
+    /* EventSource se reconecta automáticamente. La instantánea enviada al
+       abrir cada conexión no es actividad nueva y debe quedar silenciada. */
+    source.onopen = () => {
+      primed = false
+    }
     source.onmessage = (event: MessageEvent) => {
       try {
         const data = JSON.parse(event.data as string) as { value: number }
-        applyServerValue(data.value, streamPrimed.current)
+        applyServerValue(data.value, primed)
+        primed = true
       } catch {
         /* mensaje corrupto: ignorar */
       }
-      streamPrimed.current = true
     }
     return () => source.close()
   }, [streamUrl, applyServerValue])
@@ -104,12 +116,12 @@ export function useGlobalCounter(getUrl: string, hitUrl: string, streamUrl: stri
   const increment = useCallback(() => {
     countRef.current += 1
     setCount(countRef.current)
-    /* Fire-and-forget, pero reconciliando la respuesta (detecta a otros). */
+    /* Un único hit por click; reconciliar cifra sin inferir actividad externa. */
     fetch(hitUrl, { keepalive: true })
       .then((res) => res.json() as Promise<{ value: number }>)
-      .then((data) => applyServerValue(data.value, true))
+      .then((data) => applyServerValue(data.value, false))
       .catch(() => undefined)
   }, [hitUrl, applyServerValue])
 
-  return { count, increment, othersActive }
+  return { count, loaded, increment, othersActive }
 }

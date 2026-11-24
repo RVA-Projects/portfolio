@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { languages } from '../../data/languages'
 import type { SectionId } from '../../data/site'
 import { useLanguage } from '../../i18n'
+import { sortByLocalizedName } from '../../utils/naturalSort'
 import type { DocumentRef } from '../../models/common'
 import { SectionHeading } from '../base/SectionHeading'
 import { DocumentViewerOverlay } from '../overlays/DocumentViewerOverlay'
@@ -15,7 +16,7 @@ import styles from './LanguagesSection.module.css'
  * presentación más allá del mapeo de tarjetas.
  */
 export function LanguagesSection() {
-  const { texts } = useLanguage()
+  const { language, texts } = useLanguage()
   const [activeDocument, setActiveDocument] = useState<DocumentRef | null>(null)
 
   return (
@@ -26,7 +27,7 @@ export function LanguagesSection() {
     >
       <SectionHeading index={5} title={texts.sections.languages} />
       <div className={styles.cards}>
-        {languages.map((item) => (
+        {sortByLocalizedName(languages, language).map((item) => (
           <LanguageCard key={item.id} item={item} onOpenDocument={setActiveDocument} />
         ))}
       </div>
