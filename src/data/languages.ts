@@ -17,6 +17,20 @@ export const languages: LanguageProfile[] = [
     cefr: 'nativo',
   },
   {
+    id: 'ingles',
+    code: 'en',
+    name: { es: 'Inglés', en: 'English' },
+    cefr: 'B2',
+    document: {
+      kind: 'pdf',
+      src: '/portfolio/docs/ingles.pdf',
+      name: {
+        es: 'Certificado — Inglés B2',
+        en: 'Certificate — English B2',
+      },
+    },
+  },
+  {
     id: 'valenciano',
     code: 'ca',
     name: { es: 'Valenciano', en: 'Valencian' },
@@ -35,20 +49,6 @@ export const languages: LanguageProfile[] = [
     code: 'ro',
     name: { es: 'Rumano', en: 'Romanian' },
     cefr: 'nativo',
-  },
-  {
-    id: 'ingles',
-    code: 'en',
-    name: { es: 'Inglés', en: 'English' },
-    cefr: 'B2',
-    document: {
-      kind: 'pdf',
-      src: '/portfolio/docs/ingles.pdf',
-      name: {
-        es: 'Certificado — Inglés B2',
-        en: 'Certificate — English B2',
-      },
-    },
   },
   {
     id: 'aleman',

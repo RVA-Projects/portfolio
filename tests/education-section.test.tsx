@@ -33,6 +33,49 @@ describe('EducationSection (F6.6, RF-16)', () => {
     )
   })
 
+  it('mantiene la ficha completa del DAM en ambas vistas', () => {
+    render(<App />)
+    const section = document.getElementById('education') as HTMLElement
+    const toggle = within(section).getByRole('group', { name: 'Vista de formación' })
+    const damTitle = 'Técnico Superior en Desarrollo de Aplicaciones Multiplataforma (DAM)'
+    const getDamCard = () =>
+      within(section).getByRole('heading', { name: damTitle }).closest('article') as HTMLElement
+
+    expect(
+      within(getDamCard()).getByText('Tecnologías y herramientas estudiadas'),
+    ).toBeInTheDocument()
+    expect(
+      within(getDamCard()).getByText(/Todas las asignaturas del ciclo están superadas/),
+    ).toBeInTheDocument()
+    expect(
+      within(getDamCard())
+        .getAllByRole('listitem')
+        .map((item) => item.textContent),
+    ).toEqual([
+      'C#',
+      'SQL',
+      'Java',
+      'HTML',
+      'CSS',
+      'JavaScript',
+      'Kotlin',
+      'Python',
+      'Unity',
+      'Visual Studio',
+      'Eclipse',
+      'NetBeans',
+      'Room',
+      'Git',
+    ])
+
+    fireEvent.click(within(toggle).getByRole('button', { name: 'Lista' }))
+    expect(getDamCard()).toHaveClass(/official/)
+    expect(
+      within(getDamCard()).getByText('Tecnologías y herramientas estudiadas'),
+    ).toBeInTheDocument()
+    expect(within(getDamCard()).getAllByRole('listitem')).toHaveLength(14)
+  })
+
   it('agrupa por jerarquía y no muestra grupos vacíos', () => {
     render(<App />)
     const section = document.getElementById('education')

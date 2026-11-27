@@ -92,9 +92,13 @@ export function EducationSection() {
             <h3 className={styles.groupTitle}>{texts.education.groups[kind]}</h3>
             {view === 'list' ? (
               <div className={styles.list}>
-                {items.map((item) => (
-                  <EducationRow key={item.id} item={item} onOpenDocument={setActiveDocument} />
-                ))}
+                {items.map((item) =>
+                  item.kind === 'official' ? (
+                    <EducationCard key={item.id} item={item} onOpenDocument={setActiveDocument} />
+                  ) : (
+                    <EducationRow key={item.id} item={item} onOpenDocument={setActiveDocument} />
+                  ),
+                )}
               </div>
             ) : (
               <div className={styles.cards}>

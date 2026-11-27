@@ -223,3 +223,33 @@ Ver detalle en `docs/decisions.md` (D01–D15). Resumen:
 - Se actualizan textos es/en de Centro Médico (Google Calendar, Gemini API y Eko Knowledge Base; sin WhatsApp), LokiHome, MiniCRM (TFG de rutas comerciales), Snake (aprendizaje OpenCode/SDD) y RVA Portfolio (OpenCode + Codex).
 - TypeScript usa tier `project`, por lo que aparece en la ficha RVA sin entrar en los grupos visibles del Stack.
 - Validación final: `npm run validate` en verde (185 tests; typecheck, lint, formato y build correctos). Se mantienen el warning Fast Refresh conocido y los mensajes Canvas/jsdom de pruebas.
+
+## Ajustes de contenido y legibilidad (2026-11-26)
+
+- Idiomas ordenados de forma declarativa: Castellano, Inglés, Valenciano, Rumano y Alemán; el cambio no afecta a otras secciones.
+- Certificaciones: títulos ligeramente mayores y peso 500, manteniendo la tarjeta compacta.
+- DAM: descripción ES/EN actualizada con inicio en 2024, asignaturas superadas y prácticas obligatorias aún pendientes; nota complementaria localizada; tecnologías formativas añadidas en orden explícito con iconos y nombres. La tarjeta oficial ocupa todo el ancho en la vista Tarjetas; la cuadrícula de tecnologías se adapta al espacio disponible.
+
+- Validación de esta ronda: typecheck, lint (sin errores; warning preexistente Fast Refresh), build correcto con acceso ampliado, Vitest 16/16 (incluye orden ES/EN y orden de tecnologías), Playwright smoke 4/4 en 375/768/1024/1440 px. Canvas/jsdom emite los mensajes conocidos. El formato de archivos modificados se comprobó aparte; el check global sigue señalando docs/implementation-plan.md preexistente.
+
+## Ajustes de presentación (2026-11-26, seguimiento)
+
+- La tarjeta DAM reduce su título; descripción y texto complementario pueden ocupar todo el ancho. En modo Lista se reutiliza la tarjeta DAM completa, incluida la lista de tecnologías.
+- El encabezado de tecnologías ahora indica ?estudiadas? en ES/EN. Títulos de cursos y certificaciones usan peso intermedio y envuelven el texto sin recortarlo.
+
+- Validación de seguimiento: typecheck correcto, lint sin errores (warning Fast Refresh preexistente), Vitest afectadas 14/14 y Playwright smoke 4/4 a 375/768/1024/1440 px; se comprobó que nivel y botón comparten línea en todos esos anchos. Build de producción completado por el servidor de Playwright. Formato correcto para los archivos modificados; siguen los mensajes conocidos de Canvas/jsdom.
+
+## Alineación de niveles de idiomas (2026-11-27)
+
+- Chips de nivel y botones de certificado comparten una altura mínima de 44px; los niveles llenan uniformemente su espacio y quedan centrados en una fila común dentro de cada tarjeta.
+- No se ejecutaron validaciones.
+
+## Texto final de la hero (2026-11-27)
+
+- La nota bajo el rol queda como ?Junior? en español e inglés. Se reemplaza la descripción ES por el texto proporcionado y se actualiza EN con su traducción equivalente. La ubicación ?Elche, España / Elche, Spain? se conserva.
+- No se ejecutaron validaciones.
+
+## Justificación de la descripción de la hero (2026-11-27)
+
+- La descripción de la hero usa alineación justificada para ES y EN mediante una regla compartida.
+- No se ejecutaron validaciones.

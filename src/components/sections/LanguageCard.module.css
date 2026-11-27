@@ -23,12 +23,26 @@
 
 .meta {
   display: flex;
-  flex-wrap: wrap;
   align-items: center;
-  gap: var(--space-2);
+  flex: 1 1 0;
   margin-top: 0;
   color: var(--color-text-muted);
   font-size: var(--fs-small);
+}
+
+.details {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  min-height: 44px;
+  gap: var(--space-2);
+}
+
+.meta :global(span) {
+  justify-content: center;
+  width: 100%;
+  min-height: 44px;
+  padding-block: 0;
 }
 
 /* El acceso al certificado se ancla abajo SIN estirar la tarjeta más allá
@@ -36,5 +50,16 @@
 .actions {
   display: flex;
   gap: var(--space-2);
-  margin-top: auto;
+}
+
+.actions :global(a),
+.actions :global(button) {
+  min-height: 44px;
+  padding-inline: var(--space-2);
+}
+
+@media (max-width: 575px) {
+  .hasDocument {
+    grid-column: 1 / -1;
+  }
 }

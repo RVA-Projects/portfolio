@@ -108,6 +108,7 @@ export const es = {
       course: 'Cursos',
     },
     openDocument: 'Ver acreditación',
+    technologiesTitle: 'Tecnologías y herramientas estudiadas',
   },
   /** Sección de idiomas (RF-19), niveles según D04. */
   languages: {

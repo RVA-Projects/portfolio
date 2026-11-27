@@ -216,3 +216,7 @@ Los carruseles de Proyectos y Experiencia conservan navegación por flechas, tec
 5. `Project.media` con ≥1 item y `alt` siempre presente en píxeles de imagen.
 6. Certificados con `document.src` habilitados para verificar antes de entrar a Fase 7.
 7. Campos obligatorios de ProjectOverlay (goal/problem/role/architecture/outcomes/learnings) con contenido en ambos idiomas.
+
+Education (ajuste de contenido): Education.supplementalDescription es texto complementario localizado y Education.technologyIds conserva el orden específico de tecnologías de la formación oficial. EducationCard expande la tarjeta oficial a todo el ancho; las tarjetas de certificación mantienen el grid compacto.
+
+Education presentation follow-up: EducationCard is also used for the official item in List view so its localized description and ordered technologies remain available. Certification and course titles wrap without line clamping. LanguageCard groups CEFR level and certificate action on one compact row.

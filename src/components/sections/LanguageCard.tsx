@@ -31,28 +31,31 @@ export function LanguageCard({ item, onOpenDocument }: LanguageCardProps) {
   }
 
   return (
-    <article className={styles.card}>
+    <article className={`${styles.card} ${document !== undefined ? styles.hasDocument : ''}`}>
       <h3 className={styles.title}>{item.name[language]}</h3>
-      <p className={styles.meta}>
-        {levelLabel !== null && <Tag label={levelLabel} variant="category" />}
-      </p>
-
-      {document !== undefined &&
-        (document.kind === 'external' ? (
-          /* Ronda 4 F4/D-E: recurso externo ⇒ pestaña nueva, nunca iframe. */
-          <div className={styles.actions}>
-            <Button label={texts.languages.openCertificate} href={document.src} external />
-          </div>
-        ) : (
-          <div className={styles.actions}>
-            <Button
-              label={texts.languages.openCertificate}
-              onClick={() => {
-                onOpenDocument(document)
-              }}
-            />
-          </div>
-        ))}
+      <div className={styles.details}>
+        {levelLabel !== null && (
+          <p className={styles.meta}>
+            <Tag label={levelLabel} variant="category" />
+          </p>
+        )}
+        {document !== undefined &&
+          (document.kind === 'external' ? (
+            /* Ronda 4 F4/D-E: recurso externo ⇒ pestaña nueva, nunca iframe. */
+            <div className={styles.actions}>
+              <Button label={texts.languages.openCertificate} href={document.src} external />
+            </div>
+          ) : (
+            <div className={styles.actions}>
+              <Button
+                label={texts.languages.openCertificate}
+                onClick={() => {
+                  onOpenDocument(document)
+                }}
+              />
+            </div>
+          ))}
+      </div>
     </article>
   )
 }

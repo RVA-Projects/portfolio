@@ -72,13 +72,13 @@ export const site: SiteData = {
     en: 'Full Stack Developer',
   },
   roleNote: {
-    es: 'Perfil junior',
-    en: 'Junior profile',
+    es: 'Junior',
+    en: 'Junior',
   },
   location: { es: 'Elche, España', en: 'Elche, Spain' },
   description: {
-    es: 'Desarrollador con proyectos reales en web, escritorio y Android. Enfoque Full Stack: diseño y desarrollo de interfaces y experiencia de usuario, además de la lógica y los sistemas que las hacen funcionar.',
-    en: 'Developer with real projects in web, desktop and Android. Full Stack focus: designing and building interfaces and user experience, plus the logic and systems that make them work.',
+    es: 'Estudiante de Desarrollo de Aplicaciones Multiplataforma (DAM) con base sólida en programación y gestión de bases de datos. He desarrollado aplicaciones móviles, web y de escritorio, cuidando la arquitectura y la fiabilidad. Me esfuerzo por aprender nuevas herramientas y aplicarlas en proyectos reales, tanto personales como colaborativos y profesionales. Estoy iniciando mi trayectoria profesional en el desarrollo de software y busco una oportunidad para formar parte de un equipo, donde crecer y aprender.',
+    en: 'Multiplatform Application Development (DAM) student with a solid foundation in programming and database management. I have developed mobile, web and desktop applications, with a focus on architecture and reliability. I strive to learn new tools and apply them in real projects, both personal, collaborative and professional. I am beginning my career in software development and looking for an opportunity to join a team where I can grow and learn.',
   },
   // TODO(F7): confirmar definitivamente con el propietario antes de publicar.
   github: 'https://github.com/RVA-Projects',

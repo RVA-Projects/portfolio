@@ -22,6 +22,21 @@ describe('LanguagesSection (F6.7, RF-19)', () => {
     expect(levels).toHaveLength(5)
   })
 
+  it('mantiene el orden solicitado en español e inglés', () => {
+    render(<App />)
+    const section = document.getElementById('languages') as HTMLElement
+    const spanishNames = within(section)
+      .getAllByRole('heading', { level: 3 })
+      .map((heading) => heading.textContent)
+    expect(spanishNames).toEqual(['Castellano', 'Inglés', 'Valenciano', 'Rumano', 'Alemán'])
+
+    fireEvent.click(screen.getByRole('button', { name: 'Cambiar a inglés' }))
+    const englishNames = within(section)
+      .getAllByRole('heading', { level: 3 })
+      .map((heading) => heading.textContent)
+    expect(englishNames).toEqual(['Spanish', 'English', 'Valencian', 'Romanian', 'German'])
+  })
+
   it('con PDFs de certificados subidos (ingles/valenciano), ofrece el visor', () => {
     render(<App />)
     const section = document.getElementById('languages')
@@ -33,11 +48,19 @@ describe('LanguagesSection (F6.7, RF-19)', () => {
     expect(buttons).toHaveLength(2)
     // El visor genérico permanece cerrado hasta pulsar
     expect(screen.queryByRole('dialog')).not.toBeInTheDocument()
+    for (const name of ['Inglés', 'Valenciano']) {
+      const card = within(section as HTMLElement)
+        .getByRole('heading', { name })
+        .closest('article')
+      const details = (card as HTMLElement).querySelector('[class*="details"]') as HTMLElement
+      expect(within(details).getByText(name === 'Inglés' ? 'B2' : 'C1')).toBeInTheDocument()
+      expect(within(details).getByRole('button', { name: 'Ver certificado' })).toBeInTheDocument()
+    }
   })
 
   it('abrir un certificado monta el DocumentViewerOverlay (dialog + título del documento)', () => {
     render(<App />)
-    /* La lista se ordena por nombre; seleccionamos valenciano por su nombre. */
+    /* El orden personalizado conserva el certificado valenciano. */
     const item = screen.getByRole('heading', { name: 'Valenciano' }).closest('article')
     expect(item).not.toBeNull()
     fireEvent.click(within(item as HTMLElement).getByRole('button', { name: 'Ver certificado' }))

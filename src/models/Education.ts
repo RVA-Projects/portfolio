@@ -16,6 +16,10 @@ export interface Education extends BaseEntity {
   /** Duración en formato libre ("40 h"). */
   duration?: string
   description?: LocalizedText
+  /** Contexto complementario de la formación oficial. */
+  supplementalDescription?: LocalizedText
+  /** Tecnologías cursadas, en el orden declarado para la formación oficial. */
+  technologyIds?: string[]
   /** Presente ⇒ el ítem es clicable y abre DocumentViewerOverlay. */
   document?: DocumentRef
 }

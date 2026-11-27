@@ -25,9 +25,29 @@ export const education: Education[] = [
     },
     issuer: 'ILERNA',
     description: {
-      es: 'Programa oficial de Grado Superior, en curso.',
-      en: 'Official higher-technician programme, currently enrolled.',
+      es: 'Formación iniciada en 2024. Todas las asignaturas del ciclo están superadas; queda pendiente completar el periodo obligatorio de Formación en Empresa. Durante el ciclo también se han realizado cursos y certificaciones, detallados en sus secciones correspondientes.',
+      en: 'Started in 2024. All programme subjects have been passed; completion of the required in-company training period remains pending. Additional courses and certifications completed during the programme are listed in their respective sections.',
     },
+    supplementalDescription: {
+      es: 'El itinerario ofrece una base estructurada en diversas tecnologías y herramientas profesionales, combinando profundidad técnica, versatilidad y capacidad de adaptación a distintos entornos de trabajo.',
+      en: 'The structured curriculum provides a broad foundation in professional technologies and tools, combining technical depth with the versatility to adapt to different work environments.',
+    },
+    technologyIds: [
+      'csharp',
+      'sql',
+      'java',
+      'html',
+      'css',
+      'javascript',
+      'kotlin',
+      'python',
+      'unity',
+      'visual-studio',
+      'eclipse',
+      'netbeans',
+      'room',
+      'git',
+    ],
   },
 
   // ——— Certificaciones

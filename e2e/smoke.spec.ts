@@ -25,6 +25,20 @@ for (const width of [375, 768, 1024, 1440]) {
     )
     expect(overflow).toBeLessThanOrEqual(0)
 
+    /* En idiomas con certificado, nivel y acción comparten una línea. */
+    const certificateRows = await page.locator('#languages article').evaluateAll((cards) =>
+      cards
+        .filter((card) => card.querySelector('button'))
+        .map((card) => {
+          const level = card.querySelector('[class*="tag--category"]')?.getBoundingClientRect()
+          const action = card.querySelector('button')?.getBoundingClientRect()
+          return level === undefined || action === undefined
+            ? false
+            : Math.abs(level.top + level.height / 2 - action.top - action.height / 2) < 2
+        }),
+    )
+    expect(certificateRows).toEqual([true, true])
+
     /* Los títulos descriptivos de Experiencia pueden ocupar varias líneas,
        pero deben quedar dentro del ancho de cada tarjeta en cada viewport. */
     const overflowingExperienceTitles = await page

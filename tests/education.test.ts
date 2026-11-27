@@ -34,7 +34,25 @@ describe('data/education — integridad (F6.6, RF-16)', () => {
     expect(dam).toBeDefined()
     expect(dam?.kind).toBe('official')
     expect(dam?.issuer).toBe('ILERNA')
-    expect(dam?.description?.es).toContain('Programa oficial de Grado Superior')
+    expect(dam?.description?.es).toContain('Formación iniciada en 2024')
+    expect(dam?.description?.es).toContain('pendiente completar el periodo obligatorio')
+    expect(dam?.supplementalDescription?.en).toContain('structured curriculum')
+    expect(dam?.technologyIds).toEqual([
+      'csharp',
+      'sql',
+      'java',
+      'html',
+      'css',
+      'javascript',
+      'kotlin',
+      'python',
+      'unity',
+      'visual-studio',
+      'eclipse',
+      'netbeans',
+      'room',
+      'git',
+    ])
     expect(dam?.document).toBeUndefined()
   })
 
