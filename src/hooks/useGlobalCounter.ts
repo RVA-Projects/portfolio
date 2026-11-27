@@ -11,6 +11,10 @@ export interface GlobalCounter {
 
 /** Ventana en la que el número muestra la pista de «otros visitantes». */
 const OTHERS_HINT_MS = 4000
+/* Abacus allows 30 requests per 10 seconds per IP. Keep the hit queue below
+   that ceiling and leave room for the initial read and SSE connection. */
+const MIN_HIT_INTERVAL_MS = 450
+const DEFAULT_RATE_LIMIT_RETRY_MS = 2000
 
 /**
  * D38 — contador global del Clicker (Abacus, servicio público sin clave).
@@ -46,6 +50,11 @@ export function useGlobalCounter(getUrl: string, hitUrl: string, streamUrl: stri
   /** Espejo del count: las callbacks de stream/hit necesitan el valor al día. */
   const countRef = useRef(0)
   const hintTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
+  const pendingHits = useRef(0)
+  const hitTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
+  const hitInFlight = useRef(false)
+  const lastHitAt = useRef(0)
+  const scheduleHitRef = useRef<(minimumDelay?: number) => void>(() => {})
 
   const notifyOthers = useCallback(() => {
     setOthersActive(true)
@@ -109,19 +118,59 @@ export function useGlobalCounter(getUrl: string, hitUrl: string, streamUrl: stri
   useEffect(
     () => () => {
       if (hintTimer.current !== null) clearTimeout(hintTimer.current)
+      if (hitTimer.current !== null) clearTimeout(hitTimer.current)
     },
     [],
   )
 
+  const sendQueuedHit = useCallback(async () => {
+    if (pendingHits.current === 0 || hitInFlight.current) return
+
+    hitInFlight.current = true
+    lastHitAt.current = Date.now()
+    let retryDelay = 0
+    try {
+      const response = await fetch(hitUrl, { keepalive: true })
+      if (response.status === 429) {
+        /* Abacus documents Retry-After in milliseconds. Retain this click and
+           retry after the provider's window; never fan out another request. */
+        const retryAfter = Number(response.headers.get('Retry-After'))
+        retryDelay = Number.isFinite(retryAfter) && retryAfter > 0
+          ? retryAfter
+          : DEFAULT_RATE_LIMIT_RETRY_MS
+        return
+      }
+
+      pendingHits.current -= 1
+      if (response.ok) {
+        const data = (await response.json()) as { value: number }
+        applyServerValue(data.value, false)
+      }
+    } catch {
+      /* A network failure cannot safely be retried: the server may have
+         counted it before the response was lost. Keep session count usable. */
+      pendingHits.current -= 1
+    } finally {
+      hitInFlight.current = false
+      if (pendingHits.current > 0) scheduleHitRef.current(retryDelay)
+    }
+  }, [hitUrl, applyServerValue])
+
+  scheduleHitRef.current = (minimumDelay = 0) => {
+    if (pendingHits.current === 0 || hitInFlight.current || hitTimer.current !== null) return
+    const spacing = Math.max(0, MIN_HIT_INTERVAL_MS - (Date.now() - lastHitAt.current))
+    hitTimer.current = setTimeout(() => {
+      hitTimer.current = null
+      void sendQueuedHit()
+    }, Math.max(minimumDelay, spacing))
+  }
+
   const increment = useCallback(() => {
     countRef.current += 1
     setCount(countRef.current)
-    /* Un único hit por click; reconciliar cifra sin inferir actividad externa. */
-    fetch(hitUrl, { keepalive: true })
-      .then((res) => res.json() as Promise<{ value: number }>)
-      .then((data) => applyServerValue(data.value, false))
-      .catch(() => undefined)
-  }, [hitUrl, applyServerValue])
+    pendingHits.current += 1
+    scheduleHitRef.current()
+  }, [])
 
   return { count, loaded, increment, othersActive }
 }

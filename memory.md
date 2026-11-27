@@ -253,3 +253,8 @@ Ver detalle en `docs/decisions.md` (D01–D15). Resumen:
 
 - La descripción de la hero usa alineación justificada para ES y EN mediante una regla compartida.
 - No se ejecutaron validaciones.
+
+## Cola de incrementos del Clicker (2026-11-27)
+
+- Se serializan los `/hit` con 450 ms mínimos entre solicitudes para respetar el límite de Abacus (30 solicitudes/10 s/IP). La cifra local sigue incrementando al instante; las respuestas 429 conservan el hit pendiente y lo reintentan tras `Retry-After` o 2 s por defecto.
+- `npm run typecheck` correcto. No se ejecutaron pruebas.

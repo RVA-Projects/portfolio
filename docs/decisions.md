@@ -249,7 +249,14 @@ Tres ajustes de acabado pedidos por el propietario tras ver D23 en producción:
 - Cada apertura/reconexión del EventSource vuelve a primar su primera instantánea. Los valores repetidos o fuera de orden no reducen ni reactivan el contador. La respuesta de `/hit` actualiza el total, pero no dispara el indicador verde: solo lo hacen subidas posteriores recibidas por SSE, por encima del total local.
 - Abacus expone un contador agregado sin metadatos de origen; el cliente no puede atribuir cada delta a un visitante individual con certeza absoluta. El guardado sigue usando exactamente un `/hit` por pulsación, sin reintentos que puedan duplicarlo.
 - El Clicker se centra en pantallas de hasta 575px; la alineación de escritorio se conserva.
+
 - **Pruebas:** 10 pruebas del hook y 4 de integración Clicker correctas; Playwright 2/2 (persistencia simulada tras recargas, hits únicos y alineación responsive); typecheck/lint/formato y build correctos. La suite completa mantiene 6 aserciones antiguas sobre el orden de Educación/Idiomas y el indicador de posición de Proyectos, afectadas por cambios locales anteriores.
+
+### D38.3 — Cola de hits y límite de Abacus (2026-11-27)
+
+- Abacus limita a 30 solicitudes cada 10 segundos por IP. Enviar un `/hit` simultáneo por cada pulsación provocaba `429` durante ráfagas.
+- La UI sigue incrementando al instante; los hits se serializan con al menos 450ms entre solicitudes. Si Abacus devuelve `429`, la pulsación permanece en cola y se reintenta tras `Retry-After` (2s por defecto si falta el encabezado). Los errores de red ambiguos no se reintentan para evitar duplicar incrementos ya aceptados.
+- Cada pulsación aceptada sigue usando un único `/hit`; el envío global puede tardar en ponerse al día cuando la cola sea larga.
 
 ## D39 — Orientación profesional: Full Stack (ronda 4 F1) — ✅ Aprobada (2026-11-16)
 
