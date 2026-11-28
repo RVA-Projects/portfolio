@@ -111,7 +111,7 @@ export const en: Texts = {
       course: 'Courses',
     },
     openDocument: 'View accreditation',
-    technologiesTitle: 'Technologies and tools studied',
+    technologiesTitle: 'Technologies and tools studied during the programme',
   },
   /** RF-19 languages section, levels per D04. */
   languages: {

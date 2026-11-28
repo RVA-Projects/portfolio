@@ -1,5 +1,12 @@
 # memory.md — RVA Portfolio
 
+## Ajustes de Stack y formación (2026-11-28)
+
+- Java y React se clasifican como tecnologías exploradas; Git y VS Code pasan al Stack principal.
+- Los encabezados de ambos grupos del Stack se centran y aumentan ligeramente. La descripción complementaria del DAM usa el mismo tamaño que la principal.
+- El título de tecnologías del DAM ahora indica que fueron estudiadas durante el ciclo formativo (también actualizado en inglés).
+- Decisión registrada en D57. Typecheck y lint correctos (lint mantiene el warning conocido de Fast Refresh); el formato de los archivos de código/documentación modificados pasa al comprobarlo directamente. `format:check` global señala `memory.md` y cuatro archivos sin relación con este cambio. Build correcto tras ejecutar fuera del sandbox (esbuild no podía leer el directorio padre bajo el sandbox). No se ejecutaron tests.
+
 ## Despliegue GitHub Pages (2026-11-24)
 
 - El workflow solo escuchaba `main`, por lo que los cambios de `redesign` no generaban un despliegue. Si Pages publica una rama, el sitio recibiría código fuente en vez de la SPA compilada.

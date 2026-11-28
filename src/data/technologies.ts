@@ -52,13 +52,13 @@ export const technologies: Technology[] = [
   { id: 'csharp', name: 'C#', tier: 'core' },
   { id: 'css', name: 'CSS', tier: 'core' },
   { id: 'html', name: 'HTML', tier: 'core' },
-  { id: 'java', name: 'Java', tier: 'core' },
   { id: 'javascript', name: 'JavaScript', tier: 'core' },
   { id: 'kotlin', name: 'Kotlin', tier: 'core' },
   { id: 'opencodex', name: 'OpenCode', tier: 'core', icon: 'opencode' },
   { id: 'python', name: 'Python', tier: 'core', icon: 'python' },
-  { id: 'react', name: 'React', tier: 'core' },
   { id: 'sql', name: 'SQL', tier: 'core' },
+  { id: 'git', name: 'Git', tier: 'core' },
+  { id: 'vscode', name: 'VS Code', tier: 'core' },
 
   // ——— Tecnologías con las que he experimentado (D27: unificado)
   /* D28: adapt flags — mono = silueta con color del tema; dim = aclara solo en oscuro. */
@@ -67,7 +67,7 @@ export const technologies: Technology[] = [
   { id: 'docker', name: 'Docker', tier: 'explored' },
   { id: 'eclipse', name: 'Eclipse', tier: 'explored', adapt: 'dim' },
   { id: 'firebase', name: 'Firebase', tier: 'explored' },
-  { id: 'git', name: 'Git', tier: 'explored' },
+  { id: 'java', name: 'Java', tier: 'explored' },
   { id: 'github', name: 'GitHub', tier: 'explored', adapt: 'mono' },
   { id: 'google-gemini', name: 'Google Gemini', tier: 'project', adapt: 'mono' },
   { id: 'meta-business-suite', name: 'Meta Business Suite', tier: 'explored', adapt: 'mono' },
@@ -76,11 +76,11 @@ export const technologies: Technology[] = [
   { id: 'nodejs', name: 'Node.js', tier: 'explored' },
   { id: 'postgresql', name: 'PostgreSQL', tier: 'explored' },
   { id: 'postman', name: 'Postman', tier: 'explored' },
+  { id: 'react', name: 'React', tier: 'explored' },
   { id: 'room', name: 'Room', tier: 'explored' },
   { id: 'sqlite', name: 'SQLite', tier: 'explored', adapt: 'dim' },
   { id: 'unity', name: 'Unity', tier: 'explored', icon: 'unity', adapt: 'mono' },
   { id: 'visual-studio', name: 'Visual Studio', tier: 'explored', adapt: 'dim' },
-  { id: 'vscode', name: 'VS Code', tier: 'explored' },
   { id: 'wordpress', name: 'WordPress', tier: 'explored', adapt: 'mono' },
   { id: 'xampp', name: 'XAMPP', tier: 'explored', icon: 'xampp' },
 

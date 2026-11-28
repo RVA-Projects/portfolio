@@ -379,3 +379,9 @@ Tres ajustes aprobados por el propietario:
 - El Stack usa filas flexibles centradas: cinco tecnologías por fila en escritorio y cuatro en móvil/tablet. Cada elemento presenta el logo encima del nombre; las filas finales incompletas quedan centradas.
 - Las tarjetas de Formación centran nombre, emisor, descripción y acción. El botón se limita al ancho disponible y se centra dentro de la tarjeta.
 - `npm run validate`: typecheck, lint, formato, 185 pruebas y build correctos. Se mantienen el warning conocido de Fast Refresh y el stderr de Canvas en jsdom.
+
+## D57 — Revisión de tecnologías visibles y legibilidad (2026-11-28)
+
+- Java y React pasan de `core` a `explored`; Git y VS Code pasan de `explored` a `core`.
+- Los encabezados de ambos grupos del Stack se centran y aumentan a tamaño de texto de cuerpo. La descripción complementaria del DAM adopta el mismo tamaño que su descripción principal.
+- El título de tecnologías del DAM especifica «estudiadas durante el ciclo formativo» (y su traducción en inglés).

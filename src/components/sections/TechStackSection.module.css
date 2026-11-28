@@ -2,8 +2,7 @@
    tarjeta translúcida con el mismo lenguaje visual que la Hero (D-B:
    tokens directos, sin componente nuevo): --color-hero + borde --color-line
    + radius-lg, y el mismo ancho (la animación de fondo se percibe a través).
-   2.2: título y títulos de grupo a la IZQUIERDA (misma referencia que el
-   resto de secciones); los grids de tecnologías siguen centrados. */
+   títulos de grupo centrados y grids de tecnologías siguen centrados. */
 .section {
   width: min(var(--container-max), 100% - 2 * var(--container-pad));
   margin-inline: auto;
@@ -20,11 +19,12 @@
 
 .groupTitle {
   font-family: var(--font-mono);
-  font-size: var(--fs-small);
+  font-size: var(--fs-body);
   text-transform: uppercase;
   letter-spacing: 0.08em;
   color: var(--color-text-muted);
   margin-bottom: var(--space-4);
+  text-align: center;
 }
 
 /* Cada elemento tiene ancho de una quinta parte menos el espacio entre
